@@ -1,0 +1,18 @@
+name: aesir-gameworks
+version: 1.0.0
+description: "Hermes-native game studio workflow derived from Claude Code Game Studios"
+hermes_requires: ">=0.21.0"
+author: "Aesir Gameworks contributors; derived from work by Donchitos"
+license: MIT
+distribution_owned:
+  - SOUL.md
+  - config.yaml
+  - skills/aesir-core/
+  - skills/aesir-workflows/
+  - skills/aesir-agents/
+  - skills/aesir-rules/
+  - skills/aesir-engines/
+  - skills/aesir-quality/
+  - skills/aesir-support/
+  - agent-hooks/aesir-gameworks/
+  - skill-bundles/aesir-gameworks.yaml

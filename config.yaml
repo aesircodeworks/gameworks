@@ -1,0 +1,72 @@
+approvals:
+  mode: smart
+  deny:
+    - "rm -rf *"
+    - "git push --force*"
+    - "git push -f *"
+    - "git reset --hard*"
+    - "git clean -f*"
+    - "sudo *"
+    - "chmod 777*"
+    - "*>.env*"
+    - "cat *.env*"
+    - "type *.env*"
+command_allowlist:
+  - "git status*"
+  - "git diff*"
+  - "git log*"
+  - "git branch*"
+  - "git rev-parse*"
+  - "python -m json.tool*"
+  - "python -m pytest*"
+  - "py -m pytest*"
+memory:
+  write_approval: true
+skills:
+  write_approval: true
+delegation:
+  max_concurrent_children: 4
+checkpoints:
+  enabled: true
+agent:
+  verify_on_stop: true
+hooks_auto_accept: false
+hooks:
+  pre_tool_call:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/validate-commit.sh'
+      matcher: terminal
+      timeout: 15
+      fail_closed: true
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/validate-push.sh'
+      matcher: terminal
+      timeout: 10
+      fail_closed: true
+  post_tool_call:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/validate-project-assets.sh'
+      matcher: write_file|patch
+      timeout: 10
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/validate-aesir-skill-change.sh'
+      matcher: write_file|patch|skill_manage
+      timeout: 5
+  pre_llm_call:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/session-start.sh'
+      timeout: 10
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/detect-project-gaps.sh'
+      timeout: 10
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/restore-session-context.sh'
+      timeout: 10
+  pre_verify:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/checkpoint-session-state.sh'
+      timeout: 10
+  on_session_end:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/notify-session.sh'
+      timeout: 10
+  on_session_finalize:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/session-end.sh'
+      timeout: 10
+  subagent_start:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/log-subagent-start.sh'
+      timeout: 5
+  subagent_stop:
+    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/log-subagent-stop.sh'
+      timeout: 5
