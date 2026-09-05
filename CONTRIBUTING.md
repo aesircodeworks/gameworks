@@ -8,8 +8,8 @@ A distributable Hermes profile. It is not a place to store games built with it. 
 
 ## Rules
 
-- Skills live in `skills/aesir-*/<name>/SKILL.md` with Hermes frontmatter (`name`, `description`, `metadata.hermes`).
-- Prefix migrated commands with `aesir-` so they never collide with Hermes built-ins.
+- Skills live in `skills/<category>/<name>/SKILL.md` with Hermes frontmatter (`name`, `description`, `metadata.hermes`).
+- Do not prefix skill names with `aesir-`. Rename only exact Hermes slash collisions (`help` → `studio-help`, `start` → `studio-start`).
 - Use Hermes tools (`read_file`, `search_files`, `write_file`, `patch`, `terminal`, `delegate_task`, `clarify`).
 - Hooks must speak the Hermes JSON wire protocol and stay profile-name agnostic via `"$HERMES_HOME"`.
 - Do not commit `.env`, `auth.json`, memories, sessions, state databases, or live profile data.

@@ -14,7 +14,7 @@ The original MIT license and copyright notice are preserved in `LICENSE`. Aesir 
 
 | Category | Count | Description |
 |----------|-------|-------------|
-| Workflow skills | 73 | Prefixed `/aesir-*` studio commands |
+| Workflow skills | 73 | Studio commands (`/brainstorm`, `/dev-story`, …) |
 | Role skills | 49 | Director, lead, and specialist roles for `delegate_task` |
 | Rule skills | 11 | Path-aware practices for a target game workspace |
 | Support/core skills | 7 | Routing, templates, bootstrap, engine reference, QA, status, memory policy |
@@ -30,9 +30,9 @@ Existing credentials, memories, sessions, and unrelated skills are not part of `
 
 ## Use
 
-Start a game workspace (not this repository) and load `/aesir-gameworks`. Design work follows Question → Options → Decision → Draft → Approval → Write.
+Start a game workspace (not this repository) and load `/gameworks`. Design work follows Question → Options → Decision → Draft → Approval → Write.
 
-Engine references for Godot, Unity, and Unreal live behind `/aesir-engine-reference`. Read that engine's `VERSION.md` before suggesting post-cutoff APIs.
+Engine references for Godot, Unity, and Unreal live behind `/engine-reference`. Read that engine's `VERSION.md` before suggesting post-cutoff APIs.
 
 ## Compression-hook note
 

@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Hermes profile conversion of Claude Code Game Studios into Aesir Gameworks.
+- Dropped `aesir-` prefixes from skill names and folders. Commands are `/brainstorm`, roles are `game-designer`. Hermes collisions: `/studio-help`, `/studio-start`. Brand remains on the profile, hooks, and distribution name.
 
 ## 1.0.0 — Hermes profile conversion
 
