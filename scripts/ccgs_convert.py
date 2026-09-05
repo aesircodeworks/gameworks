@@ -307,14 +307,10 @@ def convert_markdown(text: str, *, kind: str, source_name: str, workflow_names: 
     last = 0
     for fence in FENCE_RE.finditer(body):
         pieces.append(_transform_live(body[last:fence.start()], prefix_slash))
-        fenced = fence.group(0)
-        # Convert instruction-like fences; leave engine/code samples mostly intact
-        # except forbidden runtime tokens that contract tests scan for in SKILL.md.
-        if kind in {"workflow", "agent", "rule", "behavior-spec"}:
-            fenced = prefix_slash(fenced)
-            for pattern, repl in TOOL_PHRASES:
-                fenced = pattern.sub(repl, fenced)
-            fenced = fenced.replace(".claude/", "(game-workspace)/")
+        # Fenced examples can contain executable instructions and profile paths too.
+        # Apply the same vocabulary/path conversion as prose; the replacements are
+        # specific enough not to alter ordinary engine code samples.
+        fenced = _transform_live(fence.group(0), prefix_slash)
         pieces.append(fenced)
         last = fence.end()
     pieces.append(_transform_live(body[last:], prefix_slash))

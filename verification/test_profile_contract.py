@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import re
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -44,6 +46,16 @@ class ProfileContractTests(unittest.TestCase):
     def test_identity_files_exist(self) -> None:
         for name in ("distribution.yaml", "SOUL.md", "NOTICE.md", "config.yaml", "MIGRATION-MANIFEST.csv"):
             self.assertTrue((ROOT / name).is_file(), f"missing {name}")
+
+    def test_distribution_validator_accepts_committed_profile(self) -> None:
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "scripts/verify_distribution.py"), "--scope", "all"],
+            cwd=ROOT,
+            text=True,
+            capture_output=True,
+            timeout=30,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_forbidden_top_level_directories_absent(self) -> None:
         for name in (".claude", "CCGS Skill Testing Framework", "design", "docs", "src"):

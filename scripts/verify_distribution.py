@@ -19,6 +19,7 @@ TASK_TOOL_RE = re.compile(
     r"(?:the Task tool|`Task`|Task subagent|Use Task |, Task,)",
     re.I,
 )
+MARKDOWN_CODE_RE = re.compile(r"```[\s\S]*?```|~~~[\s\S]*?~~~|`[^`\n]*`")
 
 
 def _workflows() -> list[Path]:
@@ -172,7 +173,8 @@ def scope_docs(failures: list[str]) -> None:
             forbidden += 1
         if prefix_re.search(text):
             leftover_prefix += 1
-        for href in link_re.findall(text):
+        prose = MARKDOWN_CODE_RE.sub("", text)
+        for href in link_re.findall(prose):
             if href.startswith(("http://", "https://", "mailto:", "#")):
                 continue
             href = href.split("#", 1)[0]

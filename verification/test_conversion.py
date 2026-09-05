@@ -9,6 +9,9 @@ import re
 import unittest
 from pathlib import Path
 
+from scripts.build_migration import _convert_file
+from scripts.ccgs_convert import convert_markdown
+
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = (ROOT / "verification" / "expected_sources.txt").read_text(encoding="utf-8").splitlines()
 MANIFEST = ROOT / "MIGRATION-MANIFEST.csv"
@@ -24,6 +27,30 @@ DELETE_SOURCES = {
     "production/session-state/.gitkeep",
     "src/.gitkeep",
 }
+
+
+class ConversionTransformTests(unittest.TestCase):
+    def test_reference_fence_rewrites_claude_runtime_tokens(self) -> None:
+        source = "```text\nAskUserQuestion\n.claude/docs/example.md\n```\n"
+
+        converted = convert_markdown(source, kind="reference", source_name="example")
+
+        self.assertIn("clarify", converted)
+        self.assertNotIn("AskUserQuestion", converted)
+        self.assertNotIn(".claude/", converted)
+
+    def test_workflow_catalog_uses_reference_conversion(self) -> None:
+        source = "artifact:\n  glob: .claude/docs/technical-preferences.md\n"
+
+        converted = _convert_file(
+            source,
+            ".claude/docs/workflow-catalog.yaml",
+            "skills/studio/gameworks/references/workflow-catalog.yaml",
+            [],
+        )
+
+        self.assertNotIn(".claude/", converted)
+        self.assertIn("gameworks references/technical-preferences.md", converted)
 
 
 def _rows() -> list[dict]:

@@ -16,8 +16,8 @@ all key Tier 2 leads. Any skill, team orchestrator, or workflow may invoke these
 In any skill, replace an inline director prompt with a reference:
 
 ```
-Spawn `creative-director` via Task using gate **CD-PILLARS** from
-`.claude/docs/director-gates.md`.
+Spawn `creative-director` with `delegate_task` using gate **CD-PILLARS** from
+`gameworks references/director-gates.md`.
 ```
 
 Pass the context listed under that gate's **Context to pass** field, then handle
@@ -80,8 +80,8 @@ Apply the resolved mode:
 
 ```
 # Apply mode check, then:
-Spawn `[agent-name]` via Task:
-- Gate: [GATE-ID] (see .claude/docs/director-gates.md)
+Spawn `[agent-name]` with `delegate_task`:
+- Gate: [GATE-ID] (see `gameworks references/director-gates.md`)
 - Context: [fields listed under that gate]
 - Await the verdict before proceeding.
 ```
@@ -90,7 +90,7 @@ For parallel spawning (multiple directors at the same gate point):
 
 ```
 # Apply mode check for each gate first, then spawn all that survive:
-Spawn all [N] agents simultaneously via Task — issue all Task calls before
+Spawn all [N] agents simultaneously with `delegate_task` — issue all calls before
 waiting for any result. Collect all verdicts before proceeding.
 ```
 

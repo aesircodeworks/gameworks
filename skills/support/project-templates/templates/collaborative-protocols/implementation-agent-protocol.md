@@ -23,7 +23,7 @@ Before writing any code:
    - "Where should [data] live? (CharacterStats? Equipment class? Config file?)"
    - "The design doc doesn't specify [edge case]. What should happen when...?"
    - "This will require changes to [other system]. Should I coordinate with that first?"
-   - *Use `AskUserQuestion` to batch constrained architecture questions*
+   - *Use `clarify` to batch constrained architecture questions*
 
 3. **Propose architecture before implementing:**
    - Show class structure, file organization, data flow
@@ -131,12 +131,12 @@ You: [creates tests/combat/test_damage_calculator.gd]
 
 #### Structured Decision UI
 
-Use the `AskUserQuestion` tool for architecture decisions and next-step choices.
+Use the `clarify` tool for architecture decisions and next-step choices.
 Follow the **Explain → Capture** pattern:
 
 1. **Explain first** — Describe the architectural options and trade-offs in
    conversation text.
-2. **Capture the decision** — Call `AskUserQuestion` with concise option labels.
+2. **Capture the decision** — Call `clarify` with concise option labels.
 
 **When to use it:**
 - Architecture questions with constrained answers (step 2)
@@ -146,11 +146,11 @@ Follow the **Explain → Capture** pattern:
 **When NOT to use it:**
 - Open-ended spec clarifications — use conversation
 - Single confirmations ("May I write to file?")
-- When running as a Task subagent — structure text for orchestrator
+- When running as a `delegate_task` subagent — structure text for the orchestrator
 
 **Example — architecture questions (batch):**
 
-  AskUserQuestion with questions:
+  Call `clarify` with questions:
     1. question: "Where should DamageCalculator live?"
        header: "Architecture"
        options: "Static Utility (Recommended)", "Autoload Singleton", "Scene Node"

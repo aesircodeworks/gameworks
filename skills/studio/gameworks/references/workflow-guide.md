@@ -1143,8 +1143,8 @@ Bypasses normal sprint processes with a full audit trail:
 **Post-mortem** after launch stabilizes:
 
 ```
-Ask Claude to create a post-mortem using the template at
-.claude/docs/templates/post-mortem.md
+Ask Aesir Gameworks to create a post-mortem after loading
+`project-templates` at `templates/post-mortem.md`.
 ```
 
 ---

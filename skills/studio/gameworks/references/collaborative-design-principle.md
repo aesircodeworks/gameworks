@@ -377,7 +377,7 @@ pattern:
 After introducing the topic in conversation, batch constrained questions:
 
 ```
-AskUserQuestion:
+clarify:
   questions:
     - question: "Should crafting recipes be discovered or learned?"
       header: "Discovery"
@@ -404,7 +404,7 @@ AskUserQuestion:
 After writing the full pros/cons analysis in conversation text:
 
 ```
-AskUserQuestion:
+clarify:
   questions:
     - question: "Which crafting approach fits your vision?"
       header: "Approach"
@@ -422,7 +422,7 @@ AskUserQuestion:
 After presenting the full strategic analysis with pillar alignment:
 
 ```
-AskUserQuestion:
+clarify:
   questions:
     - question: "How should we handle crafting scope for Alpha?"
       header: "Scope"
@@ -443,7 +443,7 @@ In team skills, subagents return their analysis as text. The **orchestrator**
 ```
 [game-designer returns 3 combat approaches with analysis]
 
-Orchestrator uses AskUserQuestion:
+Orchestrator calls `clarify`:
   question: "Which combat approach should we develop?"
   options: [concise summaries of the 3 approaches]
 

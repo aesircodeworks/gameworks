@@ -79,7 +79,7 @@ def _convert_file(src_text: str, src: str, dest: str, workflows: list[str]) -> s
         if dest.endswith(".md") and ATTRIBUTION.strip() not in body:
             body = ATTRIBUTION + "\n" + body
         return body
-    if dest.endswith("catalog.yaml"):
+    if dest == "skills/quality/framework-qa/references/catalog.yaml":
         return convert_catalog(src_text, workflows, [])
     if dest.endswith(".yaml") or dest.endswith(".yml"):
         converted = convert_markdown(src_text, kind="reference", source_name=name, workflow_names=workflows)

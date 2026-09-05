@@ -272,22 +272,20 @@ If you have design docs, prototypes, or code already:
 ## File Structure Reference
 
 ```
-CLAUDE.md                          -- Master config (read this first, ~60 lines)
-.claude/
-  settings.json                    -- Claude Code hooks and project settings
-  agents/                          -- 49 agent definitions (YAML frontmatter)
-  skills/                          -- 73 slash command definitions (YAML frontmatter)
-  hooks/                           -- 12 hook scripts (.sh) wired by settings.json
-  rules/                           -- 11 path-specific rule files
-  docs/
-    quick-start.md                 -- This file
-    technical-preferences.md       -- Project-specific standards (populated by /setup-engine)
-    coding-standards.md            -- Coding and design doc standards
-    coordination-rules.md          -- Agent coordination rules
-    context-management.md          -- Context budgets and compaction instructions
-    directory-structure.md         -- Project directory layout
-    workflow-catalog.yaml          -- 7-phase pipeline definition (read by /studio-help)
-    setup-requirements.md          -- System prerequisites (Git Bash, jq, Python)
-    settings-local-template.md     -- Personal settings.local.json guide
-    templates/                     -- 41 document templates
+Hermes profile (installed separately from the game workspace):
+SOUL.md                            -- Aesir Gameworks identity and operating posture
+config.yaml                        -- Hermes hook and profile settings
+skills/
+  studio/                          -- Studio routing and operating references
+  workflows/                       -- 73 slash-command workflows
+  agents/                          -- 49 specialist role definitions
+  rules/                           -- 11 path-specific rule skills
+  support/                         -- Bootstrap, templates, and status helpers
+  engines/                         -- Version-pinned engine references
+  quality/                         -- Framework QA specifications
+
+Game workspace:
+AGENTS.md                          -- Project-specific agent instructions
+src/  assets/  design/  docs/      -- Game implementation and documentation
+tests/  prototypes/  production/   -- Validation, experiments, and delivery records
 ```
