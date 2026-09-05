@@ -35,21 +35,31 @@ class HookTests(unittest.TestCase):
             self.assertEqual(proc.returncode, 0, script.name + proc.stderr)
 
     def test_observers_return_json(self) -> None:
-        payload = {"hook_event_name": "pre_llm_call", "session_id": "s", "cwd": str(ROOT), "tool_input": {}}
-        for name in (
-            "session-start.sh",
-            "detect-project-gaps.sh",
-            "restore-session-context.sh",
-            "checkpoint-session-state.sh",
-            "session-end.sh",
-            "notify-session.sh",
-            "log-subagent-start.sh",
-            "log-subagent-stop.sh",
-        ):
-            result = run_hook(name, payload)
-            self.assertEqual(result.returncode, 0, name + result.stderr)
-            data = json.loads(result.stdout.strip() or "{}")
-            self.assertTrue(data == {} or "context" in data, name)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            workspace = Path(tmpdir)
+            payload = {
+                "hook_event_name": "pre_llm_call",
+                "session_id": "s",
+                "cwd": str(workspace),
+                "tool_input": {},
+            }
+            for name in (
+                "session-start.sh",
+                "detect-project-gaps.sh",
+                "restore-session-context.sh",
+                "checkpoint-session-state.sh",
+                "session-end.sh",
+                "notify-session.sh",
+                "log-subagent-start.sh",
+                "log-subagent-stop.sh",
+            ):
+                result = run_hook(name, payload, cwd=workspace)
+                self.assertEqual(result.returncode, 0, name + result.stderr)
+                data = json.loads(result.stdout.strip() or "{}")
+                self.assertTrue(data == {} or "context" in data, name)
+
+            log = workspace / "production/session-logs/subagents.jsonl"
+            self.assertTrue(log.is_file())
 
     def test_validate_commit_blocks_bad_json(self) -> None:
         tmp = Path(tempfile.mkdtemp())
