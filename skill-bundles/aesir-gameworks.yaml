@@ -1,9 +1,9 @@
 name: aesir-gameworks
 description: "Core Aesir studio operating context"
 skills:
-  - aesir-gameworks
-  - aesir-project-bootstrap
-  - aesir-project-templates
-  - aesir-framework-qa
-  - aesir-engine-reference
+  - gameworks
+  - project-bootstrap
+  - project-templates
+  - framework-qa
+  - engine-reference
 instruction: "Use Aesir workflows only in the selected game workspace; preserve user decision authority."

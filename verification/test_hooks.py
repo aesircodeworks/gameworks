@@ -97,7 +97,7 @@ class HookTests(unittest.TestCase):
     def test_assets_ignore_non_asset_paths(self) -> None:
         result = run_hook(
             "validate-project-assets.sh",
-            {"tool_name": "write_file", "tool_input": {"path": "skills/aesir-core/foo.md"}},
+            {"tool_name": "write_file", "tool_input": {"path": "skills/studio/foo.md"}},
         )
         self.assertEqual(result.returncode, 0)
         self.assertEqual(json.loads(result.stdout.strip() or "{}"), {})

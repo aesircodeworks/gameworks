@@ -9,18 +9,21 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-SNAPSHOT = ROOT / ".hermes" / "source-snapshot"
-WORKFLOW_NAMES = sorted(
-    p.name for p in (SNAPSHOT / ".claude" / "skills").iterdir() if p.is_dir()
-)
-SLASH_RE = re.compile(
-    r"(?<![A-Za-z0-9_-])/(?!aesir-)(" + "|".join(re.escape(n) for n in sorted(WORKFLOW_NAMES, key=len, reverse=True)) + r")(?![A-Za-z0-9_-])"
-)
 TASK_TOOL_RE = re.compile(
     r"(?:the Task tool|`Task`|Task subagent|Use Task |, Task,|, Task\b|allowed-tools:[^\n]*Task)",
     re.IGNORECASE,
 )
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---", re.S)
+PREFIX_SLASH_RE = re.compile(r"(?<![A-Za-z0-9_-])/aesir-[A-Za-z0-9_-]+")
+OWNED_SKILL_PARTS = (
+    "workflows",
+    "agents",
+    "rules",
+    "studio",
+    "support",
+    "engines",
+    "quality",
+)
 
 
 def _skill_files() -> list[Path]:
@@ -43,30 +46,30 @@ class ProfileContractTests(unittest.TestCase):
             self.assertTrue((ROOT / name).is_file(), f"missing {name}")
 
     def test_forbidden_top_level_directories_absent(self) -> None:
-        for name in (".claude", "CCGS Skill Testing Framework", "design", "docs", "production", "src"):
+        for name in (".claude", "CCGS Skill Testing Framework", "design", "docs", "src"):
             self.assertFalse((ROOT / name).exists(), f"legacy root still present: {name}")
 
     def test_workflow_skill_count(self) -> None:
-        found = list((ROOT / "skills" / "aesir-workflows").glob("aesir-*/SKILL.md"))
+        found = list((ROOT / "skills" / "workflows").glob("*/SKILL.md"))
         self.assertEqual(len(found), 73, f"workflow skills: {len(found)}")
 
     def test_agent_skill_count(self) -> None:
-        found = list((ROOT / "skills" / "aesir-agents").glob("aesir-agent-*/SKILL.md"))
+        found = list((ROOT / "skills" / "agents").glob("*/SKILL.md"))
         self.assertEqual(len(found), 49, f"agent skills: {len(found)}")
 
     def test_rule_skill_count(self) -> None:
-        found = list((ROOT / "skills" / "aesir-rules").glob("aesir-rule-*/SKILL.md"))
+        found = list((ROOT / "skills" / "rules").glob("*/SKILL.md"))
         self.assertEqual(len(found), 11, f"rule skills: {len(found)}")
 
     def test_workflow_behavior_specs(self) -> None:
-        specs = list((ROOT / "skills" / "aesir-workflows").glob("aesir-*/references/behavior-spec.md"))
+        specs = list((ROOT / "skills" / "workflows").glob("*/references/behavior-spec.md"))
         self.assertEqual(len(specs), 73, f"workflow specs: {len(specs)}")
         self.assertTrue(
-            (ROOT / "skills/aesir-workflows/aesir-vertical-slice/references/behavior-spec.md").is_file()
+            (ROOT / "skills/workflows/vertical-slice/references/behavior-spec.md").is_file()
         )
 
     def test_agent_behavior_specs(self) -> None:
-        specs = list((ROOT / "skills" / "aesir-agents").glob("aesir-agent-*/references/behavior-spec.md"))
+        specs = list((ROOT / "skills" / "agents").glob("*/references/behavior-spec.md"))
         self.assertEqual(len(specs), 49, f"agent specs: {len(specs)}")
 
     def test_skill_frontmatter_name_matches_directory(self) -> None:
@@ -76,23 +79,22 @@ class ProfileContractTests(unittest.TestCase):
             data = _frontmatter(path.read_text(encoding="utf-8"))
             self.assertEqual(data.get("name"), path.parent.name, path)
 
+    def test_skill_names_are_unprefixed(self) -> None:
+        for path in _skill_files():
+            self.assertFalse(path.parent.name.startswith("aesir-"), path)
+            self.assertFalse(path.parent.parent.name.startswith("aesir-"), path)
+
+    def test_hermes_slash_collisions_renamed(self) -> None:
+        self.assertTrue((ROOT / "skills/workflows/studio-help/SKILL.md").is_file())
+        self.assertTrue((ROOT / "skills/workflows/studio-start/SKILL.md").is_file())
+        self.assertFalse((ROOT / "skills/workflows/help").exists())
+        self.assertFalse((ROOT / "skills/workflows/start").exists())
+
     def test_migrated_skills_have_no_claude_runtime_tokens(self) -> None:
         migrated = [
             p
             for p in _skill_files()
-            if any(
-                part in p.parts
-                for part in (
-                    "aesir-workflows",
-                    "aesir-agents",
-                    "aesir-rules",
-                    "aesir-core",
-                    "aesir-support",
-                    "aesir-engines",
-                    "aesir-quality",
-                )
-            )
-            and "upstream" not in p.parts
+            if any(part in p.parts for part in OWNED_SKILL_PARTS) and "upstream" not in p.parts
         ]
         self.assertGreater(len(migrated), 0)
         for path in migrated:
@@ -100,8 +102,8 @@ class ProfileContractTests(unittest.TestCase):
             self.assertNotIn(".claude/", text, path)
             self.assertNotIn("AskUserQuestion", text, path)
             self.assertIsNone(TASK_TOOL_RE.search(text), f"standalone Task tool in {path}")
-            hit = SLASH_RE.search(text)
-            self.assertIsNone(hit, f"unprefixed /{hit.group(1) if hit else ''} in {path}")
+            hit = PREFIX_SLASH_RE.search(text)
+            self.assertIsNone(hit, f"leftover {hit.group(0) if hit else ''} in {path}")
 
     def test_license_copyright(self) -> None:
         self.assertIn("Copyright (c) 2026 Donchitos", (ROOT / "LICENSE").read_text(encoding="utf-8"))

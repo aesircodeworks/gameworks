@@ -46,7 +46,7 @@ class PreservationTests(unittest.TestCase):
 
     def test_owned_paths_may_change(self) -> None:
         capture(self.home, self.baseline)
-        dest = self.home / "skills/aesir-core/aesir-gameworks"
+        dest = self.home / "skills/studio/gameworks"
         dest.mkdir(parents=True)
         (dest / "SKILL.md").write_text("new\n")
         self.assertEqual(verify(self.home, self.baseline), 0)

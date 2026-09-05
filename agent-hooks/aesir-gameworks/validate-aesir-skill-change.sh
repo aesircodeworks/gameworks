@@ -5,8 +5,8 @@ aesir_read_payload
 path=$(aesir_json_get tool_input.path)
 name=$(aesir_json_get tool_input.name)
 case "$path$name" in
-  *aesir-*|*skills/aesir*)
-    aesir_context "Aesir skill changed. Consider running /aesir-skill-test. No files were mutated by this hook."
+  *skills/studio*|*skills/workflows*|*skills/agents*|*skills/rules*|*skills/engines*|*skills/quality*|*skills/support*)
+    aesir_context "Studio skill changed. Consider running /skill-test. No files were mutated by this hook."
     ;;
   *)
     aesir_emit_empty

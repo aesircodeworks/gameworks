@@ -20,6 +20,8 @@ HOOK_RENAMES = {
     "validate-skill-change.sh": "validate-aesir-skill-change.sh",
 }
 
+SLASH_COLLISIONS = {"help": "studio-help", "start": "studio-start"}
+
 ATTRIBUTION = (
     "> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). "
     "https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.\n"
@@ -76,94 +78,94 @@ def map_source(src: str) -> tuple[str, list[str]]:
     if src == "CLAUDE.md":
         return "split", [
             "SOUL.md",
-            "skills/aesir-core/aesir-gameworks/references/original-studio-architecture.md",
+            "skills/studio/gameworks/references/original-studio-architecture.md",
         ]
     if src == ".claude/settings.json":
         return "split", [
             "config.yaml",
-            "skills/aesir-core/aesir-gameworks/references/upstream/claude-settings.json",
+            "skills/studio/gameworks/references/upstream/claude-settings.json",
         ]
     if src == "UPGRADING.md":
-        return "rewrite", ["skills/aesir-core/aesir-gameworks/references/upstream/UPGRADING-CCGS.md"]
+        return "rewrite", ["skills/studio/gameworks/references/upstream/UPGRADING-CCGS.md"]
     if src == ".claude/docs/CLAUDE-local-template.md":
-        return "rewrite", ["skills/aesir-support/aesir-project-bootstrap/templates/AGENTS.md"]
+        return "rewrite", ["skills/support/project-bootstrap/templates/AGENTS.md"]
     if src == ".claude/docs/settings-local-template.md":
-        return "rewrite", ["skills/aesir-core/aesir-gameworks/references/profile-settings-template.md"]
+        return "rewrite", ["skills/studio/gameworks/references/profile-settings-template.md"]
     if src == ".claude/statusline.sh":
-        return "rewrite", ["skills/aesir-support/aesir-studio-status/scripts/status.sh"]
+        return "rewrite", ["skills/support/studio-status/scripts/status.sh"]
     if src == "CCGS Skill Testing Framework/catalog.yaml":
-        return "rewrite", ["skills/aesir-quality/aesir-framework-qa/references/catalog.yaml"]
+        return "rewrite", ["skills/quality/framework-qa/references/catalog.yaml"]
     if src == "CCGS Skill Testing Framework/CLAUDE.md":
-        return "convert", ["skills/aesir-quality/aesir-framework-qa/references/authoring-policy.md"]
+        return "convert", ["skills/quality/framework-qa/references/authoring-policy.md"]
     if src == "CCGS Skill Testing Framework/README.md":
-        return "convert", ["skills/aesir-quality/aesir-framework-qa/references/README.md"]
+        return "convert", ["skills/quality/framework-qa/references/README.md"]
     if src == "CCGS Skill Testing Framework/quality-rubric.md":
-        return "convert", ["skills/aesir-quality/aesir-framework-qa/references/quality-rubric.md"]
+        return "convert", ["skills/quality/framework-qa/references/quality-rubric.md"]
     if src == "CCGS Skill Testing Framework/templates/agent-test-spec.md":
-        return "convert", ["skills/aesir-quality/aesir-framework-qa/templates/agent-test-spec.md"]
+        return "convert", ["skills/quality/framework-qa/templates/agent-test-spec.md"]
     if src == "CCGS Skill Testing Framework/templates/skill-test-spec.md":
-        return "convert", ["skills/aesir-quality/aesir-framework-qa/templates/skill-test-spec.md"]
+        return "convert", ["skills/quality/framework-qa/templates/skill-test-spec.md"]
     if src.startswith(".claude/hooks/"):
         return "rewrite", [f"agent-hooks/aesir-gameworks/{HOOK_RENAMES[name]}"]
     if src.startswith(".claude/agents/") and src.endswith(".md"):
         stem = posix.stem
-        return "convert", [f"skills/aesir-agents/aesir-agent-{stem}/SKILL.md"]
+        return "convert", [f"skills/agents/{stem}/SKILL.md"]
     if src.startswith(".claude/rules/") and src.endswith(".md"):
         stem = posix.stem
-        return "convert", [f"skills/aesir-rules/aesir-rule-{stem}/SKILL.md"]
+        return "convert", [f"skills/rules/{stem}/SKILL.md"]
     if src.startswith(".claude/skills/") and src.endswith("/SKILL.md"):
-        stem = posix.parts[2]
-        return "convert", [f"skills/aesir-workflows/aesir-{stem}/SKILL.md"]
+        stem = SLASH_COLLISIONS.get(posix.parts[2], posix.parts[2])
+        return "convert", [f"skills/workflows/{stem}/SKILL.md"]
     if src == ".claude/agent-memory/lead-programmer/MEMORY.md":
-        return "convert", ["skills/aesir-agents/aesir-agent-lead-programmer/references/upstream-memory.md"]
+        return "convert", ["skills/agents/lead-programmer/references/upstream-memory.md"]
     if src.startswith(".claude/docs/templates/"):
         rel = "/".join(posix.parts[3:])
-        return "convert", [f"skills/aesir-support/aesir-project-templates/templates/{rel}"]
+        return "convert", [f"skills/support/project-templates/templates/{rel}"]
     if src.startswith(".claude/docs/hooks-reference/"):
         rel = "/".join(posix.parts[3:])
-        return "convert", [f"skills/aesir-core/aesir-gameworks/references/hooks/{rel}"]
+        return "convert", [f"skills/studio/gameworks/references/hooks/{rel}"]
     if src.startswith(".claude/docs/"):
         rel = "/".join(posix.parts[2:])
-        return "convert", [f"skills/aesir-core/aesir-gameworks/references/{rel}"]
+        return "convert", [f"skills/studio/gameworks/references/{rel}"]
     if src.startswith("CCGS Skill Testing Framework/skills/"):
-        stem = posix.stem
-        return "convert", [f"skills/aesir-workflows/aesir-{stem}/references/behavior-spec.md"]
+        stem = SLASH_COLLISIONS.get(posix.stem, posix.stem)
+        return "convert", [f"skills/workflows/{stem}/references/behavior-spec.md"]
     if src.startswith("CCGS Skill Testing Framework/agents/"):
         stem = posix.stem
-        return "convert", [f"skills/aesir-agents/aesir-agent-{stem}/references/behavior-spec.md"]
+        return "convert", [f"skills/agents/{stem}/references/behavior-spec.md"]
     if src == "design/CLAUDE.md":
-        return "convert", ["skills/aesir-core/aesir-gameworks/references/project-policies/design.md"]
+        return "convert", ["skills/studio/gameworks/references/project-policies/design.md"]
     if src == "design/registry/entities.yaml":
-        return "convert", ["skills/aesir-support/aesir-project-templates/templates/registries/entities.yaml"]
+        return "convert", ["skills/support/project-templates/templates/registries/entities.yaml"]
     if src == "docs/CLAUDE.md":
-        return "convert", ["skills/aesir-core/aesir-gameworks/references/project-policies/documentation.md"]
+        return "convert", ["skills/studio/gameworks/references/project-policies/documentation.md"]
     if src == "docs/COLLABORATIVE-DESIGN-PRINCIPLE.md":
-        return "convert", ["skills/aesir-core/aesir-gameworks/references/collaborative-design-principle.md"]
+        return "convert", ["skills/studio/gameworks/references/collaborative-design-principle.md"]
     if src == "docs/WORKFLOW-GUIDE.md":
-        return "convert", ["skills/aesir-core/aesir-gameworks/references/workflow-guide.md"]
+        return "convert", ["skills/studio/gameworks/references/workflow-guide.md"]
     if src == "docs/architecture/tr-registry.yaml":
-        return "convert", ["skills/aesir-support/aesir-project-templates/templates/registries/tr-registry.yaml"]
+        return "convert", ["skills/support/project-templates/templates/registries/tr-registry.yaml"]
     if src == "docs/registry/architecture.yaml":
-        return "convert", ["skills/aesir-support/aesir-project-templates/templates/registries/architecture.yaml"]
+        return "convert", ["skills/support/project-templates/templates/registries/architecture.yaml"]
     if src == "docs/engine-reference/README.md":
-        return "convert", ["skills/aesir-engines/aesir-engine-reference/references/README.md"]
+        return "convert", ["skills/engines/engine-reference/references/README.md"]
     if src.startswith("docs/engine-reference/"):
         rel = "/".join(posix.parts[2:])
-        return "convert", [f"skills/aesir-engines/aesir-engine-reference/references/{rel}"]
+        return "convert", [f"skills/engines/engine-reference/references/{rel}"]
     if src.startswith("docs/examples/"):
         rel = "/".join(posix.parts[2:])
-        return "convert", [f"skills/aesir-core/aesir-gameworks/examples/{rel}"]
+        return "convert", [f"skills/studio/gameworks/examples/{rel}"]
     if src == "src/CLAUDE.md":
-        return "convert", ["skills/aesir-core/aesir-gameworks/references/project-policies/source.md"]
+        return "convert", ["skills/studio/gameworks/references/project-policies/source.md"]
     raise KeyError(f"unmapped source: {src}")
 
 
 def kind_for(src: str, dest: str) -> str:
-    if dest.endswith("/SKILL.md") and "/aesir-workflows/" in dest:
+    if dest.endswith("/SKILL.md") and "/workflows/" in dest:
         return "workflow"
-    if dest.endswith("/SKILL.md") and "/aesir-agents/" in dest:
+    if dest.endswith("/SKILL.md") and "/agents/" in dest:
         return "agent"
-    if dest.endswith("/SKILL.md") and "/aesir-rules/" in dest:
+    if dest.endswith("/SKILL.md") and "/rules/" in dest:
         return "rule"
     if dest.endswith("behavior-spec.md"):
         return "behavior-spec"
@@ -194,25 +196,25 @@ def _parse_yaml_simple(block: str) -> dict[str, str]:
 def _hermes_frontmatter(kind: str, source_name: str, original: dict[str, str]) -> str:
     original_desc = original.get("description", "").strip()
     if kind == "workflow":
-        name = f"aesir-{source_name}"
+        name = source_name
         trigger = f"Use when running the Aesir {source_name} workflow."
         tags = "workflow"
-        related = "[aesir-gameworks]"
+        related = "[gameworks]"
     elif kind == "agent":
-        name = f"aesir-agent-{source_name}"
+        name = source_name
         trigger = f"Use when delegating work to the {source_name} role."
         tags = "agent-role"
-        related = "[aesir-gameworks]"
+        related = "[gameworks]"
     elif kind == "rule":
-        name = f"aesir-rule-{source_name}"
+        name = source_name
         trigger = f"Use when changing files governed by {source_name} rules."
         tags = "path-rules"
-        related = "[aesir-gameworks]"
+        related = "[gameworks]"
     else:
         name = original.get("name", source_name)
         trigger = original_desc or f"Use when working with Aesir {source_name}."
         tags = "reference"
-        related = "[aesir-gameworks]"
+        related = "[gameworks]"
     description = trigger if not original_desc or original_desc.startswith("Use when") else f"{trigger} {original_desc}"
     description = description.replace('"', "'")
     return (
@@ -231,13 +233,10 @@ def _hermes_frontmatter(kind: str, source_name: str, original: dict[str, str]) -
 
 
 def _slash_replacer(names: list[str]):
-    ordered = sorted(set(names), key=len, reverse=True)
-    pattern = re.compile(
-        r"(?<![A-Za-z0-9_-])/(?!aesir-)(" + "|".join(re.escape(n) for n in ordered) + r")(?![A-Za-z0-9_-])"
-    )
+    pattern = re.compile(r"(?<![A-Za-z0-9_-])/(help|start)(?![A-Za-z0-9_-])")
 
     def repl(match: re.Match) -> str:
-        return f"/aesir-{match.group(1)}"
+        return "/" + SLASH_COLLISIONS[match.group(1)]
 
     return lambda text: pattern.sub(repl, text)
 
@@ -245,26 +244,30 @@ def _slash_replacer(names: list[str]):
 def _rewrite_claude_paths(text: str) -> str:
     text = text.replace("../modules/input.md", "modules/input.md")
     text = text.replace("../modules/ui.md", "modules/ui.md")
-    text = text.replace(".claude/docs/templates/", "skill_view('aesir-project-templates', file_path='templates/")
+    text = text.replace(".claude/docs/templates/", "skill_view('project-templates', file_path='templates/")
     # Fix the above if it created unclosed quotes: do targeted regex instead.
     return text
 
 
 def _rewrite_paths(text: str) -> str:
     replacements = [
-        (".claude/docs/templates/", "aesir-project-templates templates/"),
-        (".claude/docs/hooks-reference/", "aesir-gameworks references/hooks/"),
-        (".claude/docs/", "aesir-gameworks references/"),
+        (".claude/docs/templates/", "project-templates templates/"),
+        (".claude/docs/hooks-reference/", "gameworks references/hooks/"),
+        (".claude/docs/", "gameworks references/"),
         (".claude/hooks/", "agent-hooks/aesir-gameworks/"),
-        (".claude/statusline.sh", "aesir-studio-status scripts/status.sh"),
-        ("CCGS Skill Testing Framework/skills/", "aesir-workflows behavior specs: "),
-        ("CCGS Skill Testing Framework/", "aesir-framework-qa references/"),
+        (".claude/statusline.sh", "studio-status scripts/status.sh"),
+        ("CCGS Skill Testing Framework/skills/", "workflows behavior specs: "),
+        ("CCGS Skill Testing Framework/", "framework-qa references/"),
     ]
     for old, new in replacements:
         text = text.replace(old, new)
-    text = re.sub(r"\.claude/agents/([A-Za-z0-9_-]+)(?:\.md)?", r"skill_view('aesir-agent-\1')", text)
-    text = re.sub(r"\.claude/skills/([A-Za-z0-9_-]+)", r"skill_view('aesir-\1')", text)
-    text = re.sub(r"\.claude/rules/([A-Za-z0-9_-]+)(?:\.md)?", r"skill_view('aesir-rule-\1')", text)
+    text = re.sub(r"\.claude/agents/([A-Za-z0-9_-]+)(?:\.md)?", r"skill_view('\1')", text)
+    text = re.sub(
+        r"\.claude/skills/([A-Za-z0-9_-]+)",
+        lambda m: f"skill_view('{SLASH_COLLISIONS.get(m.group(1), m.group(1))}')",
+        text,
+    )
+    text = re.sub(r"\.claude/rules/([A-Za-z0-9_-]+)(?:\.md)?", r"skill_view('\1')", text)
     text = text.replace(".claude/", "(game-workspace)/")
     return text
 
@@ -341,26 +344,27 @@ def convert_catalog(text: str, workflow_names: list[str], agent_names: list[str]
     data = yaml.safe_load(text) or {}
     for skill in data.get("skills") or []:
         name = str(skill.get("name") or "")
-        if name and not name.startswith("aesir-"):
-            skill["name"] = f"aesir-{name}"
+        if name:
+            skill["name"] = SLASH_COLLISIONS.get(name.removeprefix("aesir-"), name.removeprefix("aesir-"))
         spec = str(skill.get("spec") or "")
         match = re.search(r"/([A-Za-z0-9_-]+)\.md$", spec)
         if match:
-            skill["spec"] = f"skills/aesir-workflows/aesir-{match.group(1)}/references/behavior-spec.md"
+            stem = SLASH_COLLISIONS.get(match.group(1), match.group(1))
+            skill["spec"] = f"skills/workflows/{stem}/references/behavior-spec.md"
     for agent in data.get("agents") or []:
         name = str(agent.get("name") or "")
-        if name and not name.startswith("aesir-"):
-            agent["name"] = f"aesir-agent-{name}"
+        if name:
+            agent["name"] = name.removeprefix("aesir-agent-").removeprefix("aesir-")
         spec = str(agent.get("spec") or "")
         match = re.search(r"/([A-Za-z0-9_-]+)\.md$", spec)
         if match:
-            agent["spec"] = f"skills/aesir-agents/aesir-agent-{match.group(1)}/references/behavior-spec.md"
+            agent["spec"] = f"skills/agents/{match.group(1)}/references/behavior-spec.md"
     names = {s.get("name") for s in data.get("skills") or []}
-    if "aesir-vertical-slice" not in names:
+    if "vertical-slice" not in names:
         data.setdefault("skills", []).append(
             {
-                "name": "aesir-vertical-slice",
-                "spec": "skills/aesir-workflows/aesir-vertical-slice/references/behavior-spec.md",
+                "name": "vertical-slice",
+                "spec": "skills/workflows/vertical-slice/references/behavior-spec.md",
                 "last_static": "",
                 "last_static_result": "",
                 "last_spec": "",

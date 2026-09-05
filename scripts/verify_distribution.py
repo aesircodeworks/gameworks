@@ -22,15 +22,15 @@ TASK_TOOL_RE = re.compile(
 
 
 def _workflows() -> list[Path]:
-    return sorted((ROOT / "skills/aesir-workflows").glob("aesir-*/SKILL.md"))
+    return sorted((ROOT / "skills/workflows").glob("*/SKILL.md"))
 
 
 def _agents() -> list[Path]:
-    return sorted((ROOT / "skills/aesir-agents").glob("aesir-agent-*/SKILL.md"))
+    return sorted((ROOT / "skills/agents").glob("*/SKILL.md"))
 
 
 def _rules() -> list[Path]:
-    return sorted((ROOT / "skills/aesir-rules").glob("aesir-rule-*/SKILL.md"))
+    return sorted((ROOT / "skills/rules").glob("*/SKILL.md"))
 
 
 def _fail(message: str, failures: list[str]) -> None:
@@ -50,13 +50,13 @@ def _frontmatter(path: Path) -> dict:
 
 def scope_support(failures: list[str]) -> None:
     required = [
-        ROOT / "skills/aesir-core/aesir-gameworks/SKILL.md",
-        ROOT / "skills/aesir-core/aesir-memory-policy/SKILL.md",
-        ROOT / "skills/aesir-support/aesir-project-bootstrap/SKILL.md",
-        ROOT / "skills/aesir-support/aesir-project-templates/SKILL.md",
-        ROOT / "skills/aesir-support/aesir-studio-status/SKILL.md",
-        ROOT / "skills/aesir-engines/aesir-engine-reference/SKILL.md",
-        ROOT / "skills/aesir-quality/aesir-framework-qa/SKILL.md",
+        ROOT / "skills/studio/gameworks/SKILL.md",
+        ROOT / "skills/studio/memory-policy/SKILL.md",
+        ROOT / "skills/support/project-bootstrap/SKILL.md",
+        ROOT / "skills/support/project-templates/SKILL.md",
+        ROOT / "skills/support/studio-status/SKILL.md",
+        ROOT / "skills/engines/engine-reference/SKILL.md",
+        ROOT / "skills/quality/framework-qa/SKILL.md",
     ]
     for path in required:
         if not path.is_file():
@@ -66,7 +66,7 @@ def scope_support(failures: list[str]) -> None:
             if data.get("name") != path.parent.name:
                 _fail(f"name mismatch {path}", failures)
     plugins = ROOT / "docs/engine-reference/unity/PLUGINS.md"
-    converted = ROOT / "skills/aesir-engines/aesir-engine-reference/references/unity/PLUGINS.md"
+    converted = ROOT / "skills/engines/engine-reference/references/unity/PLUGINS.md"
     if converted.is_file():
         text = converted.read_text(encoding="utf-8")
         if "../modules/input.md" in text or "../modules/ui.md" in text:
@@ -77,10 +77,10 @@ def scope_support(failures: list[str]) -> None:
 def scope_workflows(failures: list[str], names: set[str] | None) -> None:
     found = _workflows()
     if names:
-        found = [p for p in found if p.parent.name.removeprefix("aesir-") in names]
-        missing = names - {p.parent.name.removeprefix("aesir-") for p in found}
+        found = [p for p in found if p.parent.name in names]
+        missing = names - {p.parent.name for p in found}
         for name in sorted(missing):
-            _fail(f"missing workflow aesir-{name}", failures)
+            _fail(f"missing workflow {name}", failures)
     else:
         if len(found) != 73:
             _fail(f"workflow skills: {len(found)}/73", failures)
@@ -94,7 +94,7 @@ def scope_agents(failures: list[str]) -> None:
     found = _agents()
     if len(found) != 49:
         _fail(f"agents: {len(found)}/49", failures)
-    specs = list((ROOT / "skills/aesir-agents").glob("aesir-agent-*/references/behavior-spec.md"))
+    specs = list((ROOT / "skills/agents").glob("*/references/behavior-spec.md"))
     if len(specs) != 49:
         _fail(f"behavior specs: {len(specs)}/49", failures)
     unresolved = 0
@@ -126,9 +126,9 @@ def scope_rules(failures: list[str]) -> None:
 
 
 def scope_qa(failures: list[str]) -> None:
-    wf = list((ROOT / "skills/aesir-workflows").glob("aesir-*/references/behavior-spec.md"))
-    ag = list((ROOT / "skills/aesir-agents").glob("aesir-agent-*/references/behavior-spec.md"))
-    catalog = ROOT / "skills/aesir-quality/aesir-framework-qa/references/catalog.yaml"
+    wf = list((ROOT / "skills/workflows").glob("*/references/behavior-spec.md"))
+    ag = list((ROOT / "skills/agents").glob("*/references/behavior-spec.md"))
+    catalog = ROOT / "skills/quality/framework-qa/references/catalog.yaml"
     gaps = 0
     if catalog.is_file():
         data = yaml.safe_load(catalog.read_text(encoding="utf-8")) or {}
@@ -161,21 +161,17 @@ def _markdown_files() -> list[Path]:
 def scope_docs(failures: list[str]) -> None:
     broken = 0
     forbidden = 0
-    unprefixed = 0
-    snapshot_skills = ROOT / ".hermes/source-snapshot/.claude/skills"
-    names = [p.name for p in snapshot_skills.iterdir() if p.is_dir()] if snapshot_skills.is_dir() else []
-    slash = re.compile(
-        r"(?<![A-Za-z0-9_-])/(?!aesir-)(" + "|".join(re.escape(n) for n in sorted(names, key=len, reverse=True)) + r")(?![A-Za-z0-9_-])"
-    ) if names else None
+    leftover_prefix = 0
     link_re = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+    prefix_re = re.compile(r"(?<![A-Za-z0-9_-])/aesir-[A-Za-z0-9_-]+")
     for path in _markdown_files():
         if "upstream" in path.parts:
             continue
         text = path.read_text(encoding="utf-8")
         if any(tok in text for tok in CLAUDE_TOKENS):
             forbidden += 1
-        if slash and slash.search(text):
-            unprefixed += 1
+        if prefix_re.search(text):
+            leftover_prefix += 1
         for href in link_re.findall(text):
             if href.startswith(("http://", "https://", "mailto:", "#")):
                 continue
@@ -189,8 +185,8 @@ def scope_docs(failures: list[str]) -> None:
                 continue
             if not target.exists():
                 broken += 1
-    print(f"broken links: {broken}; forbidden live Claude references: {forbidden}; unprefixed workflow references: {unprefixed}")
-    if broken or forbidden or unprefixed:
+    print(f"broken links: {broken}; forbidden live Claude references: {forbidden}; leftover /aesir- slashes: {leftover_prefix}")
+    if broken or forbidden or leftover_prefix:
         _fail("docs scan failed", failures)
 
 
@@ -201,9 +197,9 @@ def scope_all(failures: list[str]) -> None:
         with manifest.open(newline="", encoding="utf-8") as handle:
             sources = sum(1 for _ in csv.DictReader(handle))
     wf = _workflows()
-    wfs = list((ROOT / "skills/aesir-workflows").glob("aesir-*/references/behavior-spec.md"))
+    wfs = list((ROOT / "skills/workflows").glob("*/references/behavior-spec.md"))
     ag = _agents()
-    ags = list((ROOT / "skills/aesir-agents").glob("aesir-agent-*/references/behavior-spec.md"))
+    ags = list((ROOT / "skills/agents").glob("*/references/behavior-spec.md"))
     rules = _rules()
     hooks = list((ROOT / "agent-hooks/aesir-gameworks").glob("*.sh"))
     hooks = [p for p in hooks if p.name != "lib.sh"]

@@ -7,12 +7,12 @@ license: MIT
 distribution_owned:
   - SOUL.md
   - config.yaml
-  - skills/aesir-core/
-  - skills/aesir-workflows/
-  - skills/aesir-agents/
-  - skills/aesir-rules/
-  - skills/aesir-engines/
-  - skills/aesir-quality/
-  - skills/aesir-support/
+  - skills/studio/
+  - skills/workflows/
+  - skills/agents/
+  - skills/rules/
+  - skills/engines/
+  - skills/quality/
+  - skills/support/
   - agent-hooks/aesir-gameworks/
   - skill-bundles/aesir-gameworks.yaml

@@ -58,7 +58,7 @@ aesir_is_game_workspace() {
   local cwd
   cwd=$(aesir_json_get cwd)
   [ -z "$cwd" ] && cwd="."
-  if [ -f "$cwd/distribution.yaml" ] || [ -d "$cwd/skills/aesir-core" ]; then
+  if [ -f "$cwd/distribution.yaml" ] || [ -d "$cwd/skills/studio" ]; then
     return 1
   fi
   return 0
