@@ -5,7 +5,7 @@
 ## Agent Summary
 - **Domain**: Internationalization (i18n) architecture, string extraction workflows and tooling configuration, locale testing methodology, translation pipeline design (extraction → TMS → import), string quality standards, locale-specific formatting rules (plurals, RTL, date/number formats)
 - **Does NOT own**: Game narrative content and dialogue writing (writer), code implementation of i18n calls (gameplay-programmer), translation work itself (external translators)
-- **Model tier**: Sonnet
+- **Model tier**: Medium
 - **Gate IDs**: None; escalates pipeline architecture decisions to technical-director when they affect build systems
 
 ---
@@ -13,8 +13,8 @@
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references i18n, string extraction, locale pipeline, localization)
-- [ ] `Hermes tools:` list matches the agent's role (Read/Write for localization config, pipeline docs, string tables; no game source editing or deployment tools)
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list matches the agent's role (read_file/write_file/patch for localization config, pipeline docs, string tables; no game source editing or deployment tools)
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over narrative content, game code implementation, or translation quality
 
 ---

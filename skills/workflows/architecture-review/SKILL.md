@@ -18,6 +18,8 @@ metadata:
 
 # Architecture Review
 
+**Model tier:** Heavy
+
 The architecture review validates that the complete body of architectural decisions
 covers all game design requirements, is internally consistent, and correctly targets
 the project's pinned engine version. It is the quality gate between Technical Setup
@@ -41,16 +43,16 @@ and Pre-Production.
 
 ### Phase 1a — L0: Summary Scan (fast, low tokens)
 
-Before reading any full document, use Grep to extract `## Summary` sections
+Before reading any full document, use search_files to extract `## Summary` sections
 from all GDDs and ADRs:
 
 ```
-Grep pattern="## Summary" glob="design/gdd/*.md" output_mode="content" -A 4
-Grep pattern="## Summary" glob="docs/architecture/adr-*.md" output_mode="content" -A 3
+search_files query="## Summary" file_glob="design/gdd/*.md" context=4
+search_files query="## Summary" file_glob="docs/architecture/adr-*.md" context=3
 ```
 
 For `single-gdd [path]` mode: use the target GDD's summary to identify which
-ADRs reference the same system (Grep ADRs for the system name), then full-read
+ADRs reference the same system (search_files ADRs for the system name), then full-read
 only those ADRs. Skip full-reading unrelated GDDs entirely.
 
 For `engine` mode: only full-read ADRs — GDDs are not needed for engine checks.
@@ -76,7 +78,7 @@ Read all inputs appropriate to the mode:
 - All files in `docs/engine-reference/[engine]/modules/`
 
 ### Project Standards
-- `gameworks references/technical-preferences.md`
+- `docs/technical-preferences.md`
 
 Report a count: "Loaded [N] GDDs, [M] ADRs, engine: [name + version]."
 
@@ -182,7 +184,7 @@ Requirements Traceability Matrix (RTM).
 
 ### Step 3b-1 — Load stories
 
-Glob `production/epics/**/*.md` (excluding EPIC.md index files). For each
+Use search_files with `file_glob="production/epics/**/*.md"` (excluding EPIC.md index files). For each
 story file:
 - Extract `TR-ID` from the story's Context section
 - Extract story file path, title, Status
@@ -190,10 +192,10 @@ story file:
 
 ### Step 3b-2 — Load test files
 
-Glob `tests/unit/**/*_test.*` and `tests/integration/**/*_test.*`.
+Use search_files with `file_glob="tests/unit/**/*_test.*"` and `file_glob="tests/integration/**/*_test.*"`.
 Build an index: system → [test file paths].
 
-For each test file path from Step 3b-1, confirm via Glob whether the file
+For each test file path from Step 3b-1, confirm via search_files whether the file
 actually exists. Note MISSING if the stated path does not exist.
 
 ### Step 3b-3 — Build the extended RTM
@@ -304,7 +306,7 @@ Across all ADRs, check for engine consistency:
 - Check that no two ADRs make contradictory assumptions about the same post-cutoff API
 
 ### Deprecated API Check
-- Grep all ADRs for API names listed in `deprecated-apis.md`
+- Use search_files on all ADRs for API names listed in `deprecated-apis.md`
 - Flag any ADR referencing a deprecated API
 
 ### Missing Engine Compatibility Sections
@@ -331,10 +333,10 @@ Post-Cutoff API Conflicts:
 
 ### Engine Specialist Consultation
 
-After completing the engine audit above, spawn the **primary engine specialist** via Task for a domain-expert second opinion:
-- Read `gameworks references/technical-preferences.md` `Engine Specialists` section to get the primary specialist
+After completing the engine audit above, spawn the **primary engine specialist** with delegate_task for a domain-expert second opinion:
+- Read `docs/technical-preferences.md` `Engine Specialists` section to get the primary specialist
 - If no engine is configured, skip this consultation
-- Spawn `subagent_type: [primary specialist]` with: all ADRs that contain engine-specific decisions or `Post-Cutoff APIs Used` fields, the engine reference docs, and the Phase 5 audit findings. Ask them to:
+- Spawn `[primary specialist]` with `delegate_task`. Pass: all ADRs that contain engine-specific decisions or `Post-Cutoff APIs Used` fields, the engine reference docs, and the Phase 5 audit findings. Ask them to:
   1. Confirm or challenge each audit finding — specialists may know of engine nuances not captured in the reference docs
   2. Identify engine-specific anti-patterns in the ADRs that the audit may have missed (e.g., using the wrong Godot node type, Unity component coupling, Unreal subsystem misuse)
   3. Flag ADRs that make assumptions about engine behaviour that differ from the actual pinned version
@@ -614,7 +616,7 @@ After completing the review and writing approved files, present:
 
 1. **Immediate actions**: List the top 3 ADRs to create (highest-impact gaps first,
    Foundation layer before Feature layer)
-2. **Pre-gate checklist**: Check whether these exist via Glob and mark each ✅ or ❌:
+2. **Pre-gate checklist**: Check whether these exist via search_files and mark each ✅ or ❌:
    - `tests/unit/` and `tests/integration/` directories — if ❌: run `/test-setup`
    - `.github/workflows/tests.yml` — if ❌: run `/test-setup`
    - `design/accessibility-requirements.md` — if ❌: run `/ux-design`

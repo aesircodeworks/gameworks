@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 ## 1. Parse Arguments & Determine Mode
@@ -68,7 +70,7 @@ Also add to the UX spec's Open Questions section:
 
 ### 2c: GDD UI Requirements
 
-Glob `design/gdd/*.md` and grep for `UI Requirements` sections. Read any GDD whose
+Use search_files with `file_glob="design/gdd/*.md"` and query `UI Requirements` sections. Read any GDD whose
 UI Requirements section references this screen by name or category.
 
 These GDD UI Requirements are the **requirements input** to this spec. Collect them
@@ -79,7 +81,7 @@ requirements from every system.
 
 ### 2d: Existing UX Specs
 
-Glob `design/ux/*.md` and note which screens already have specs. For screens that
+Use search_files with `file_glob="design/ux/*.md"` and note which screens already have specs. For screens that
 will link to or from the current screen, read their navigation/flow sections to
 find the entry and exit points this spec must match.
 
@@ -102,7 +104,7 @@ must satisfy the accessibility tier committed to there.
 
 ### 2h: Input Method (from Project Config)
 
-Read `gameworks references/technical-preferences.md` and extract the `## Input & Platform`
+Read `docs/technical-preferences.md` and extract the `## Input & Platform`
 section. Store these values for use throughout the skill — they drive the
 Interaction Map and inform accessibility requirements:
 
@@ -142,7 +144,7 @@ Then ask: "Anything else I should read before we start, or shall we proceed?"
 
 Before creating a skeleton, check if the target output file already exists.
 
-Glob `design/ux/[filename].md` (where `[filename]` is the resolved output path from Phase 1).
+Use search_files with `file_glob="design/ux/[filename].md"` (where `[filename]` is the resolved output path from Phase 1).
 
 **If the file exists — retrofit mode:**
 - Read the file in full
@@ -794,7 +796,7 @@ Pattern library authoring is additive and catalog-driven, not linear.
 
 #### Phase 1: Catalog Existing Patterns
 
-Glob `design/ux/*.md` (excluding `interaction-patterns.md`) and read the Component
+Use search_files with `file_glob="design/ux/*.md"` (excluding `interaction-patterns.md`) and read the Component
 Inventory and Interaction Map sections of each spec. Extract every interaction
 pattern used.
 

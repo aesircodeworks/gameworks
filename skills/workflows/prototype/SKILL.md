@@ -18,6 +18,8 @@ metadata:
 
 ## Purpose
 
+**Model tier:** Medium
+
 This is the **concept prototype** — a fast, throwaway build that answers one question:
 *"Is this core idea actually fun to interact with?"*
 
@@ -101,7 +103,7 @@ Read `design/gdd/game-concept.md` if it exists. Extract:
 - Core fantasy (what the player is supposed to feel)
 - Core loop (the moment-to-moment action being tested)
 
-Read `CLAUDE.md` and `gameworks references/technical-preferences.md` for the engine and
+Read `AGENTS.md` and `docs/technical-preferences.md` for the engine and
 language in use.
 
 ---
@@ -422,7 +424,7 @@ is the project's complete history of what was tried and what was learned.
 **Review mode check:**
 - `solo` → skip. Note: "CD-PLAYTEST skipped — Solo mode."
 - `lean` → skip. Note: "CD-PLAYTEST skipped — Lean mode."
-- `full` → spawn `creative-director` via Task using gate **CD-PLAYTEST** if
+- `full` → spawn `creative-director` with delegate_task using gate **CD-PLAYTEST** if
   `design/gdd/game-concept.md` exists with game pillars defined. If pillars are
   not yet defined, note: "CD-PLAYTEST skipped — game pillars not yet defined at
   concept prototype stage."

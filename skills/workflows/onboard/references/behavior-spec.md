@@ -2,12 +2,14 @@
 
 # Skill Test Spec: /onboard
 
+**Model tier:** Light
+
 ## Skill Summary
 
 `/onboard` generates a contextual project onboarding summary tailored for a new
-team member. It reads CLAUDE.md, `technical-preferences.md`, the active sprint
+team member. It reads `AGENTS.md`, `docs/technical-preferences.md`, the active sprint
 file, recent git commits, and `production/stage.txt` to produce a structured
-orientation document. The skill runs on the Haiku model (read-only, formatting
+orientation document. The skill runs on model tier Light (read-only, formatting
 task) and produces no file writes — all output is conversational.
 
 The skill optionally accepts a role argument (e.g., `/onboard artist`) to tailor
@@ -21,7 +23,7 @@ always ONBOARDING COMPLETE — the skill is purely informational.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: ONBOARDING COMPLETE
 - [ ] Does NOT contain "May I write" language (skill is read-only)
@@ -41,14 +43,14 @@ None. `/onboard` is a read-only orientation skill. No director gates apply.
 
 **Fixture:**
 - `production/stage.txt` contains `Production`
-- `technical-preferences.md` has engine, language, and specialists populated
+- `docs/technical-preferences.md` has engine, language, and specialists populated
 - `production/sprints/sprint-005.md` exists with stories in progress
 - Git log contains 5 recent commits
 
 **Input:** `/onboard`
 
 **Expected behavior:**
-1. Skill reads stage.txt, technical-preferences.md, active sprint, and git log
+1. Skill reads stage.txt, `docs/technical-preferences.md`, active sprint, and git log
 2. Skill produces an onboarding summary with sections: Project Overview, Tech Stack,
    Current Stage, Active Sprint Summary, Recent Activity
 3. Summary is formatted for readability (headers, bullet points)
@@ -58,7 +60,7 @@ None. `/onboard` is a read-only orientation skill. No director gates apply.
 
 **Assertions:**
 - [ ] Output includes current stage name from stage.txt
-- [ ] Output includes engine and language from technical-preferences.md
+- [ ] Output includes engine and language from `docs/technical-preferences.md`
 - [ ] Active sprint stories are summarized (not just the sprint file name)
 - [ ] Recent commit context is present
 - [ ] Verdict is ONBOARDING COMPLETE
@@ -69,10 +71,10 @@ None. `/onboard` is a read-only orientation skill. No director gates apply.
 ### Case 2: Fresh Project — No engine, no sprint, suggests /studio-start
 
 **Fixture:**
-- `technical-preferences.md` contains only placeholders (`[TO BE CONFIGURED]`)
+- `docs/technical-preferences.md` is missing, or contains only placeholders (`[TO BE CONFIGURED]`)
 - No `production/stage.txt`
 - No sprint files
-- No CLAUDE.md overrides beyond defaults
+- No AGENTS.md overrides beyond defaults
 
 **Input:** `/onboard`
 
@@ -91,22 +93,22 @@ None. `/onboard` is a read-only orientation skill. No director gates apply.
 
 ---
 
-### Case 3: No CLAUDE.md Found — Error with remediation
+### Case 3: No AGENTS.md Found — Error with remediation
 
 **Fixture:**
-- `CLAUDE.md` file does not exist (deleted or never created)
+- `AGENTS.md` file does not exist (deleted or never created)
 - All other files may or may not exist
 
 **Input:** `/onboard`
 
 **Expected behavior:**
-1. Skill attempts to read CLAUDE.md and fails
-2. Skill outputs an error: "CLAUDE.md not found — cannot generate onboarding summary"
+1. Skill attempts to read AGENTS.md and fails
+2. Skill outputs an error: "AGENTS.md not found — cannot generate onboarding summary"
 3. Skill provides remediation: "Run `/studio-start` to initialize the project configuration"
 4. No partial summary is generated
 
 **Assertions:**
-- [ ] Error message clearly identifies the missing file as CLAUDE.md
+- [ ] Error message clearly identifies the missing file as AGENTS.md
 - [ ] Remediation step (`/studio-start`) is explicitly named
 - [ ] Skill does NOT produce a partial output when the root config is missing
 - [ ] Verdict is ONBOARDING COMPLETE (with error context, not a crash)
@@ -123,7 +125,7 @@ None. `/onboard` is a read-only orientation skill. No director gates apply.
 **Input:** `/onboard artist`
 
 **Expected behavior:**
-1. Skill reads all standard files plus any art-relevant docs (art bible, asset specs)
+1. Skill reads all standard files plus any art-relevant docs (art bible, asset specs). Role text comes from `skill_view('art-director')` / `skill_view('technical-artist')` in the profile `skills/agents/`, not `(game-workspace)/agents/`.
 2. Summary is tailored to the artist role: art bible overview, asset pipeline,
    current visual stories in the active sprint
 3. Technical architecture details (code structure, ADRs) are de-emphasized
@@ -172,9 +174,11 @@ None. `/onboard` is a read-only orientation skill. No director gates apply.
 
 ## Coverage Notes
 
-- The case where `technical-preferences.md` is missing entirely (as opposed to
-  having placeholders) is not separately tested; behavior follows the graceful
-  error pattern of Case 3.
+- The case where `docs/technical-preferences.md` is missing entirely (as opposed to
+  having placeholders) is not separately tested; treat the engine as unset and
+  continue the graceful empty-project pattern of Case 2. Role skills are loaded
+  with `skill_view('<role>')` from the profile `skills/agents/`, never
+  `(game-workspace)/agents/`.
 - Git history reading is assumed available; offline/no-git scenarios are not
   tested here.
 - Discipline roles beyond "artist" (e.g., programmer, designer, producer) follow

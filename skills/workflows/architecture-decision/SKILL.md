@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 ## 0. Parse Arguments — Detect Retrofit Mode
@@ -344,10 +346,10 @@ to implement it.]
 - [Links to related design documents]
 ```
 
-5.5. **Engine Specialist Validation** — Before saving, spawn the **primary engine specialist** via Task to validate the drafted ADR:
-   - Read `gameworks references/technical-preferences.md` `Engine Specialists` section to get the primary specialist
+5.5. **Engine Specialist Validation** — Before saving, spawn the **primary engine specialist** with delegate_task to validate the drafted ADR:
+   - Read `docs/technical-preferences.md` `Engine Specialists` section to get the primary specialist
    - If no engine is configured (`[TO BE CONFIGURED]`), skip this step
-   - Spawn `subagent_type: [primary specialist]` with: the ADR's Engine Compatibility section, Decision section, Key Interfaces, and the engine reference docs path. Ask them to:
+   - Spawn `[primary specialist]` with `delegate_task`. Pass: the ADR's Engine Compatibility section, Decision section, Key Interfaces, and the engine reference docs path. Ask them to:
      1. Confirm the proposed approach is idiomatic for the pinned engine version
      2. Flag any APIs or patterns that are deprecated or changed post-training-cutoff
      3. Identify engine-specific risks or gotchas not captured in the current ADR draft
@@ -359,7 +361,7 @@ to implement it.]
 - `lean` → skip (not a PHASE-GATE). Note: "TD-ADR skipped — Lean mode." Proceed to Step 5.7 (GDD sync check).
 - `full` → spawn as normal.
 
-5.6. **Technical Director Strategic Review** — After the engine specialist validation, spawn `technical-director` via Task using gate **TD-ADR** (`gameworks references/director-gates.md`):
+5.6. **Technical Director Strategic Review** — After the engine specialist validation, spawn `technical-director` with delegate_task using gate **TD-ADR** (`gameworks references/director-gates.md`):
    - Pass: the ADR file path (or draft content), engine version, domain, any existing ADRs in the same domain
    - The TD validates architectural coherence (is this decision consistent with the whole system?) — distinct from the engine specialist's API-level check
    - If CONCERNS or REJECT: revise the Decision or Alternatives sections accordingly before proceeding
@@ -416,7 +418,7 @@ Registry candidates from this ADR:
   EXISTING (referenced_by update only): player_health → already registered ✅
 ```
 
-**Registry append logic**: When writing to `docs/registry/architecture.yaml`, do NOT assume sections are empty. The file may already have entries from previous ADRs written in this session. Before each Edit call:
+**Registry append logic**: When writing to `docs/registry/architecture.yaml`, do NOT assume sections are empty. The file may already have entries from previous ADRs written in this session. Before each `patch` call:
 1. Read the current state of `docs/registry/architecture.yaml`
 2. Find the correct section (state_ownership, interfaces, forbidden_patterns, api_decisions)
 3. Append the new entry AFTER the last existing entry in that section — do not try to replace a `[]` placeholder that may no longer exist

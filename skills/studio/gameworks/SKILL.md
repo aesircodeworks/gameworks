@@ -63,12 +63,25 @@ Load with `skill_view('gameworks', file_path='...')` when needed:
 - `references/rules-reference.md` — path rules index
 - `references/setup-requirements.md` — prerequisites
 - `references/skills-reference.md` — workflow index
-- `references/technical-preferences.md` — engine/language placeholders for a game workspace
+- `references/technical-preferences.md` — template copied into the game workspace as `docs/technical-preferences.md`
 - `references/collaborative-design-principle.md` — approval model
 - `references/review-workflow.md` — review routing
 - `examples/README.md` — worked sessions
-- `references/upstream/` — historical CCGS material; not executable
 
 ## Delegation
 
-Batch independent `delegate_task` calls. Pass role text, approved scope, and decisions in `delegate_task.context`. Children return new decisions or blockers to the coordinator, not directly to the user. Blocked child results halt dependent phases.
+Batch independent `delegate_task` calls. Pass role text, approved scope, and decisions in `delegate_task.context`. Do not pass Claude Code `subagent_type` or `Task` fields.
+
+**Parent (talks to the user):** use `clarify` for unresolved design choices. Question → Options → Decision → Draft → Approval → Write.
+
+**Child (running under `delegate_task`):** `clarify` is unavailable. Do not interview the user. Return only to the coordinator. If a director gate was requested, begin with `[GATE-ID]: TOKEN` on its own line, then:
+
+```
+status: ...
+findings: ...
+recommendations: ...
+blockers: ...
+artifacts: ...
+```
+
+Coordinators parse the first-line gate token when present, then the five fields. Surface `blockers` and missing decisions to the user; do not assume the child asked them. Blocked child results halt dependent phases.

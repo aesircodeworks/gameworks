@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 0: Parse Arguments
 
+**Model tier:** Medium
+
 Extract `--depth [full|lean|solo]` if present. Default is `full` when no flag is given.
 
 **Note**: `--depth` controls the *analysis depth* of this skill (how many specialist agents are spawned). It is independent of the global review mode in `production/review-mode.txt`, which controls director gate spawning. These are two different concepts — `--depth` is about how thoroughly *this* skill analyses the document.
@@ -30,9 +32,9 @@ Extract `--depth [full|lean|solo]` if present. Default is `full` when no flag is
 
 ## Phase 1: Load Documents
 
-Read the target design document in full. Read CLAUDE.md to understand project context and standards. Read related design documents referenced or implied by the target doc (check `design/gdd/` for related systems).
+Read the target design document in full. Read AGENTS.md to understand project context and standards. Read related design documents referenced or implied by the target doc (check `design/gdd/` for related systems).
 
-**Dependency graph validation:** For every system listed in the Dependencies section, use Glob to check whether its GDD file exists in `design/gdd/`. Flag any that don't exist yet — these are broken references that downstream authors will hit.
+**Dependency graph validation:** For every system listed in the Dependencies section, use search_files with `file_glob="design/gdd/*.md"` to check whether its GDD file exists. Flag any that don't exist yet — these are broken references that downstream authors will hit.
 
 **Lore/narrative alignment:** If `design/gdd/game-concept.md` or any file in `design/narrative/` exists, read it. Note any mechanical choices in this GDD that contradict established world rules, tone, or design pillars. Pass this context to `game-designer` in Phase 3b.
 
@@ -100,7 +102,7 @@ Read the GDD and identify every domain present. A GDD can touch multiple domains
 | Multiplayer, sync, replication | `network-programmer` |
 | Audio cues, music triggers | `audio-director` |
 | Performance, draw calls, memory | `performance-analyst` |
-| Engine-specific patterns or APIs | Primary engine specialist (from `gameworks references/technical-preferences.md`) |
+| Engine-specific patterns or APIs | Primary engine specialist (from `docs/technical-preferences.md`) |
 | Acceptance criteria, test coverage | `qa-lead` |
 | Data schema, resource structure | `systems-designer` |
 | Any gameplay system | `game-designer` (always) |
@@ -111,12 +113,12 @@ These are the most common baselines — but not required for pure UI specs, audi
 
 ### Step 2 — Spawn all relevant specialists in parallel
 
-**CRITICAL: Task in this skill spawns a SUBAGENT — a separate independent Claude session
-with its own context window. It is NOT task tracking. Do NOT simulate specialist
+**CRITICAL: `delegate_task` in this skill spawns a SUBAGENT — a separate independent
+session with its own context window. It is NOT task tracking. Do NOT simulate specialist
 perspectives internally. Do NOT reason through domain views yourself. You MUST issue
-actual Task calls. A simulated review is not a specialist review.**
+actual delegate_task calls. A simulated review is not a specialist review.**
 
-Issue all Task calls simultaneously. Do NOT spawn one at a time.
+Issue all delegate_task calls simultaneously. Do NOT spawn one at a time.
 
 **Prompt each specialist adversarially:**
 > "Here is the GDD for [system] and the main review's structural findings so far.

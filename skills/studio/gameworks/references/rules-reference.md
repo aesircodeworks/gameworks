@@ -15,5 +15,5 @@ Rules in `(game-workspace)/rules/` are automatically enforced when editing files
 | `narrative.md` | `design/narrative/**` | Lore consistency, character voice, canon levels |
 | `data-files.md` | `assets/data/**` | JSON validity, naming conventions, schema rules |
 | `test-standards.md` | `tests/**` | Test naming, coverage requirements, fixture patterns |
-| `prototype-code.md` | `prototypes/**` | Relaxed standards, README required, hypothesis documented |
+| `prototype-code.md` | `prototypes/**` | Relaxed standards, REPORT.md required, hypothesis documented |
 | `shader-code.md` | `assets/shaders/**` | Naming conventions, performance targets, cross-platform rules |

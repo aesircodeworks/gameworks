@@ -46,7 +46,7 @@ read-only and must not trigger director gates during the analysis phase.
 | **R5 — Structured findings** | Output contains a per-section status table or checklist before the final verdict |
 
 > **Exceptions:**
-> - `design-review`: Has `Write, Edit` in allowed-tools to support an optional "Revise now" path (all writes gated behind user approval) and to write review logs. R1 is satisfied because the reviewed document is never silently modified.
+> - `design-review`: Body may instruct `write_file` / `patch` for an optional "Revise now" path and review logs; all writes gated by scoped authorization. R1 is satisfied because the reviewed document is never silently modified.
 > - `architecture-review`: Spawns TD-ARCHITECTURE and LP-FEASIBILITY gates after its analysis is complete. This is intentional — architecture review is high-stakes and benefits from director sign-off. R4 is satisfied because the gates run post-analysis, not during it.
 
 ---
@@ -117,7 +117,7 @@ analysis and must ask before recommending any file writes.
 
 | Metric | PASS criteria |
 |---|---|
-| **AN1 — Read-only scan** | Analysis phase uses only Read/search_files tools; no Write or Edit during the scan itself |
+| **AN1 — Read-only scan** | Analysis phase uses `read_file` / `search_files`; no `write_file` or `patch` during the scan itself |
 | **AN2 — Structured findings table** | Output includes a findings table or checklist (not prose only) with severity/priority per finding |
 | **AN3 — No auto-write** | Any suggested file writes (e.g., tech-debt register, fix patches) are gated behind "May I write" |
 | **AN4 — No director gates during analysis** | Analysis skills do not spawn director gates; they produce findings for human review |
@@ -135,7 +135,7 @@ spawn the right agents, run independent ones in parallel, and surface blocks imm
 | Metric | PASS criteria |
 |---|---|
 | **T1 — Named agent list** | Skill explicitly names which agents it spawns and in what order |
-| **T2 — Parallel where independent** | Agents whose inputs don't depend on each other are spawned in parallel (single message, multiple Task calls) |
+| **T2 — Parallel where independent** | Agents whose inputs don't depend on each other are spawned in parallel (multiple `delegate_task` calls). Do not use Claude `Task` calls. |
 | **T3 — BLOCKED surfacing** | If any spawned agent returns BLOCKED or fails, skill surfaces it immediately and halts dependent work — never silently skips |
 | **T4 — Collect all verdicts before proceeding** | Dependent phases wait for all parallel agents to complete before proceeding |
 | **T5 — Usage error on no argument** | If required argument (e.g., feature name) is missing, skill outputs usage hint and stops without spawning agents |
@@ -178,7 +178,8 @@ gates, the gate mode logic must also be correct.
 
 ## Agent Categories
 
-Used to validate agent spec files in `tests/agents/`.
+Used to validate role skills at `skills/agents/<name>/SKILL.md` and their specs at
+catalog `spec:` paths (`skills/agents/<name>/references/behavior-spec.md`).
 
 ### `director`
 
@@ -189,7 +190,7 @@ Used to validate agent spec files in `tests/agents/`.
 | **D1 — Correct verdict vocabulary** | Returns APPROVE / CONCERNS / REJECT (or domain equivalent: REALISTIC/CONCERNS/UNREALISTIC for producer) |
 | **D2 — Domain boundary respected** | Does not make binding decisions outside its declared domain |
 | **D3 — Conflict escalation** | When two departments conflict, escalates to correct parent (creative-director or technical-director) rather than unilaterally deciding |
-| **D4 — Opus model tier** | Agent is assigned Opus model per coordination-rules.md |
+| **D4 — Model tier** | Spec or role skill states **Model tier: Heavy** for `creative-director`, `technical-director`, and `producer`; **Model tier: Medium** for `art-director` |
 
 ### `lead`
 
@@ -200,7 +201,7 @@ systems-designer, level-designer
 |---|---|
 | **L1 — Domain verdict** | Returns a domain-specific verdict (e.g., FEASIBLE/INFEASIBLE for lead-programmer, PASS/FAIL for qa-lead) |
 | **L2 — Escalates to shared parent** | Out-of-domain conflicts escalate to creative-director (design) or technical-director (tech) |
-| **L3 — Sonnet model tier** | Agent is assigned Sonnet model (default) per coordination-rules.md |
+| **L3 — Model tier** | Spec or role skill states **Model tier: Medium** |
 
 ### `specialist`
 
@@ -214,6 +215,7 @@ qa-tester, writer, world-builder
 | **S1 — Stays in domain** | Explicitly scopes itself to its declared domain; defers out-of-domain requests |
 | **S2 — No binding cross-domain decisions** | Does not unilaterally decide matters owned by another specialist |
 | **S3 — Defers correctly** | Out-of-domain requests are redirected to the correct agent, not refused silently |
+| **S4 — Model tier** | Spec or role skill states **Model tier: Light** (`qa-tester`, `accessibility-specialist`) or **Model tier: Medium** (all other specialists in this category) |
 
 ### `engine`
 
@@ -228,6 +230,7 @@ ue-replication-specialist
 | **E1 — Version-aware** | References engine version from `docs/engine-reference/` before suggesting API calls; flags post-cutoff risk |
 | **E2 — File routing** | Routes file types to the correct sub-specialist (e.g., `.gdshader` → godot-shader-specialist, not godot-gdscript-specialist) |
 | **E3 — Engine-specific patterns** | Enforces engine-specific idioms (e.g., GDScript static typing, C# attribute exports, Blueprint function libraries) |
+| **E4 — Model tier** | Spec or role skill states **Model tier: Medium** |
 
 ### `qa`
 
@@ -238,6 +241,7 @@ ue-replication-specialist
 | **Q1 — Produces artifacts not code** | Primary output is test cases, bug reports, or coverage gaps — not implementation code |
 | **Q2 — Evidence format** | Test cases follow the project's test evidence format (unit/integration/visual/UI per coding-standards.md) |
 | **Q3 — No scope creep** | Does not propose new features; flags gaps for humans to decide |
+| **Q4 — Model tier** | Spec or role skill states **Model tier: Light** (`qa-tester`, `accessibility-specialist`) or **Model tier: Medium** (`qa-lead`, `security-engineer`) |
 
 ### `operations`
 
@@ -248,4 +252,5 @@ analytics-engineer, economy-designer, localization-lead
 |---|---|
 | **O1 — Domain ownership clear** | Agent description clearly states what it owns (pipeline, releases, economy, etc.) |
 | **O2 — Defers implementation** | Does not write game logic or engine code; delegates to appropriate specialist |
-| **O3 — Toolset matches role** | `allowed-tools` in frontmatter matches the operational (not coding) nature of the role |
+| **O3 — Toolset matches role** | Role skill tool instructions use Hermes tools (`read_file`, `search_files`, `write_file`, `patch`, `terminal`, `delegate_task`, `clarify`) and match the operational (not coding) nature of the role |
+| **O4 — Model tier** | Spec or role skill states **Model tier: Light** (`devops-engineer`, `community-manager`) or **Model tier: Medium** (all other operations roles in this category) |

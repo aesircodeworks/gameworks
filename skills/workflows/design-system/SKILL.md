@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 ## 1. Parse Arguments & Validate
@@ -67,7 +69,7 @@ existing `.md` file in `design/gdd/`, enter **retrofit mode**:
    skip creating the skeleton (file already exists) and in **Phase 4** skip
    sections that are already complete. Only run the section cycle for missing/
    incomplete sections.
-7. **Never overwrite existing section content.** Use Edit tool to replace only
+7. **Never overwrite existing section content.** Use `patch` to replace only
    `[To be designed]` placeholders or empty section bodies.
 
 If NOT in retrofit mode, normalize the system name to kebab-case for the
@@ -90,8 +92,8 @@ primary advantage over ad-hoc design — it arrives informed.
   > "[system-name] is not in the systems index. Would you like to add it, or
   > design it as an off-index system?"
 - **Entity registry**: Read `design/registry/entities.yaml` if it exists.
-  Extract all entries referenced by or relevant to this system (grep
-  `referenced_by.*[system-name]` and `source.*[system-name]`). Hold these
+  Extract all entries referenced by or relevant to this system (search_files
+  query=`referenced_by.*[system-name]` and `source.*[system-name]`). Hold these
   in context as **known facts** — values that other GDDs have already
   established and this GDD must not contradict.
 - **Reflexion log**: Read `docs/consistency-failures.md` if it exists.
@@ -119,7 +121,7 @@ For each dependency GDD that exists, extract and hold in context:
 - **Game pillars**: Read `design/gdd/game-pillars.md` if it exists
 - **Existing GDD**: Read `design/gdd/[system-name].md` if it exists (resume, don't
   restart from scratch)
-- **Related GDDs**: Glob `design/gdd/*.md` and read any that are thematically related
+- **Related GDDs**: Use search_files with `file_glob="design/gdd/*.md"` and read any that are thematically related
   (e.g., if designing a system that overlaps with another in scope, read the related GDD
   even if it's not a formal dependency)
 
@@ -170,11 +172,11 @@ Map the system's category (from systems-index.md) to an engine domain:
 | Dialogue, quests, narrative | Scripting |
 
 **Step 2 — Read engine context (if available):**
-- Read `gameworks references/technical-preferences.md` to identify the engine and version
+- Read `docs/technical-preferences.md` to identify the engine and version
 - If engine is configured, read `docs/engine-reference/[engine]/VERSION.md`
 - Read `docs/engine-reference/[engine]/modules/[domain].md` if it exists
 - Read `docs/engine-reference/[engine]/breaking-changes.md` for domain-relevant entries
-- Glob `docs/architecture/adr-*.md` and read any ADRs whose domain matches
+- Use search_files with `file_glob="docs/architecture/adr-*.md"` and read any ADRs whose domain matches
   (check the Engine Compatibility table's "Domain" field)
 
 **Step 3 — Present the Feasibility Brief:**
@@ -296,9 +298,9 @@ If the user declines: Stop with the following message:
 Do not proceed to Section A.
 
 After writing, update `production/session-state/active.md`:
-- Use Glob to check if the file exists.
-- If it **does not exist**: use the **Write** tool to create it. Never attempt Edit on a file that may not exist.
-- If it **already exists**: use the **Edit** tool to update the relevant fields.
+- Use search_files with `file_glob="production/session-state/active.md"` to check if the file exists.
+- If it **does not exist**: use `write_file` to create it. Never attempt `patch` on a file that may not exist.
+- If it **already exists**: use `patch` to update the relevant fields.
 
 File content:
 - Task: Designing [system-name] GDD
@@ -364,8 +366,8 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
      (will be handled in Phase 5).
 
 After writing each section, update `production/session-state/active.md` with the
-completed section name. Use Glob to check if the file exists — use Write to create
-it if absent, Edit to update it if present.
+completed section name. Use search_files with `file_glob="production/session-state/active.md"` to check if the file exists — use `write_file` to create
+it if absent, `patch` to update it if present.
 
 ### Section-Specific Guidance
 
@@ -379,7 +381,7 @@ Each section has unique design considerations and may benefit from specialist ag
 
 **Derive recommended options before building the widget**: Read the system's category and layer from the systems index (already in context from Phase 2), then determine the recommended option for each tab:
 - **Framing tab**: Foundation/Infrastructure layer → `[A]` recommended. Player-facing categories (Combat, UI, Dialogue, Character, Animation, Visual Effects, Audio) → `[C] Both` recommended.
-- **ADR ref tab**: Glob `docs/architecture/adr-*.md` and grep for the system name in the GDD Requirements section of any ADR. If a matching ADR is found → `[A] Yes — cite the ADR` recommended. If none found → `[B] No` recommended.
+- **ADR ref tab**: Use search_files with `file_glob="docs/architecture/adr-*.md"` and query the system name in the GDD Requirements section of any ADR. If a matching ADR is found → `[A] Yes — cite the ADR` recommended. If none found → `[B] No` recommended.
 - **Fantasy tab**: Foundation/Infrastructure layer → `[B] No` recommended. All other categories → `[A] Yes` recommended.
 
 Append `(Recommended)` to the appropriate option text in each tab.
@@ -439,7 +441,7 @@ quote the relevant pillar text.
 - `full` → spawn as described below.
 
 **Agent delegation (MANDATORY)**: After the framing answer is given but before drafting,
-spawn `creative-director` via Task:
+spawn `creative-director` with delegate_task:
 - Provide: system name, framing answer (direct/indirect/both), game pillars, any reference games the user mentioned, the game concept summary
 - Ask: "Shape the Player Fantasy for this system. What emotion or power fantasy should it serve? What player moment should we anchor to? What tone and language fits the game's established feeling? Be specific — give me 2-3 candidate framings."
 - Collect the creative-director's framings and present them to the user alongside the draft.
@@ -473,7 +475,7 @@ This is usually the largest section. Break it into sub-sections:
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Before drafting Section C, spawn specialist agents via Task in parallel:
+**Agent delegation (MANDATORY)**: Before drafting Section C, spawn specialist agents with delegate_task in parallel:
 - Look up the system category in the routing table (Section 6 of this skill)
 - Spawn the Primary Agent AND Supporting Agent(s) listed for this category
 - Provide each agent: system name, game concept summary, pillar set, dependency GDD excerpts, the specific section being worked on
@@ -523,7 +525,7 @@ table. A formula without defined variables cannot be implemented without guesswo
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Before proposing any formulas or balance values, spawn specialist agents via Task in parallel:
+**Agent delegation (MANDATORY)**: Before proposing any formulas or balance values, spawn specialist agents with delegate_task in parallel:
 - **Always spawn `systems-designer`**: provide Core Rules from Section C, tuning goals from user, balance context from dependency GDDs. Ask them to propose formulas with variable tables and output ranges.
 - **For economy/cost systems, also spawn `economy-designer`**: provide placement costs, upgrade cost intent, and progression goals. Ask them to validate cost curves and ratios.
 - Present the specialists' proposals to the user for review via `clarify`
@@ -560,7 +562,7 @@ design question, not a specification.
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Spawn `systems-designer` via Task before finalising edge cases. Provide: the completed Sections C and D, and ask them to identify edge cases from the formula and rule space that the main session may have missed. For narrative systems, also spawn `narrative-director`. Present their findings and ask the user which to include.
+**Agent delegation (MANDATORY)**: Spawn `systems-designer` with delegate_task before finalising edge cases. Provide: the completed Sections C and D, and ask them to identify edge cases from the formula and rule space that the main session may have missed. For narrative systems, also spawn `narrative-director`. Present their findings and ask the user which to include.
 
 **Cross-reference**: Check edge cases against dependency GDDs. If a dependency
 defines a floor, cap, or resolution rule that this system could violate, flag it.
@@ -621,7 +623,7 @@ be independently verifiable by a QA tester without reading the GDD.
 - `lean` → skip unless this is a section with HIGH implementation risk (Sections D and H only). For other sections, draft without the agent.
 - `full` → spawn as described below.
 
-**Agent delegation (MANDATORY)**: Spawn `qa-lead` via Task before finalising acceptance criteria. Provide: the completed GDD sections C, D, E, and ask them to validate that the criteria are independently testable and cover all core rules and formulas. Surface any gaps or untestable criteria to the user.
+**Agent delegation (MANDATORY)**: Spawn `qa-lead` with delegate_task before finalising acceptance criteria. Provide: the completed GDD sections C, D, E, and ask them to validate that the criteria are independently testable and cover all core rules and formulas. Surface any gaps or untestable criteria to the user.
 
 **Questions to ask**:
 - What's the minimum set of tests that prove this works?
@@ -646,7 +648,7 @@ These sections are included in the template. Visual/Audio is **REQUIRED** for vi
 - Dialogue, quests, lore
 - Level/world systems
 
-For required systems: **spawn `art-director` via Task** before drafting this section. Provide: system name, game concept, game pillars, art bible sections 1–4 if they exist. Ask them to specify: (1) VFX and visual feedback requirements for this system's events, (2) any animation or visual style constraints, (3) which art bible principles most directly apply to this system. Present their output; do NOT leave this section as `[To be designed]` for visual systems.
+For required systems: **spawn `art-director` with delegate_task** before drafting this section. Provide: system name, game concept, game pillars, art bible sections 1–4 if they exist. Ask them to specify: (1) VFX and visual feedback requirements for this system's events, (2) any animation or visual style constraints, (3) which art bible principles most directly apply to this system. Present their output; do NOT leave this section as `[To be designed]` for visual systems.
 
 For **all other system categories** (Foundation/Infrastructure, Economy, AI/pathfinding, Camera/input), offer the optional sections after the required sections:
 
@@ -698,7 +700,7 @@ the source of truth). Verify:
 - `lean` → skip (not a PHASE-GATE). Note: "CD-GDD-ALIGN skipped — Lean mode." Proceed to Step 5b.
 - `full` → spawn as normal.
 
-Before finalizing the GDD, spawn `creative-director` via Task using gate **CD-GDD-ALIGN** (`gameworks references/director-gates.md`).
+Before finalizing the GDD, spawn `creative-director` with delegate_task using gate **CD-GDD-ALIGN** (`gameworks references/director-gates.md`).
 
 Pass: completed GDD file path, game pillars (from `design/gdd/game-concept.md` or `design/gdd/game-pillars.md`), MDA aesthetics target.
 
@@ -717,7 +719,7 @@ Scan the completed GDD for cross-system facts that should be registered:
 
 For each candidate, check if it already exists in `design/registry/entities.yaml`:
 ```
-Grep pattern="  - name: [candidate_name]" path="design/registry/entities.yaml"
+search_files query="  - name: [candidate_name]" file_glob="design/registry/entities.yaml"
 ```
 
 Present a summary:
@@ -813,7 +815,7 @@ orchestrates the overall flow; agents provide expert content.
 | Visual effects, particles, shaders | `game-designer` | `art-director` (VFX visual direction), `technical-artist` (performance budget, shader complexity), `systems-designer` (trigger/state integration) |
 | Character systems (stats, archetypes) | `game-designer` | `art-director` (character visual archetype), `narrative-director` (character arc alignment), `systems-designer` (stat formulas) |
 
-**When delegating via Task tool**:
+**When delegating with delegate_task tool**:
 - Provide: system name, game concept summary, dependency GDD excerpts, the specific
   section being worked on, and what question needs expert input
 - The agent returns analysis/proposals to the main session

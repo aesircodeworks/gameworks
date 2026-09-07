@@ -1,39 +1,26 @@
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
-# CLAUDE.local.md Template
+# Game workspace instructions
 
-Copy this file to the project root as `CLAUDE.local.md` for personal overrides.
-This file is gitignored and will not be committed.
+Hermes loads this file as workspace context (`.hermes.md` → `AGENTS.md` → `CLAUDE.md`). It is read as raw UTF-8. Do not use `@` imports; they are not expanded.
 
-```markdown
-# Personal Preferences
+`/setup-engine` fills the Technology Stack. Keep `docs/technical-preferences.md` in sync with it.
 
-## Model Preferences
-- Prefer Opus for complex design tasks
-- Use Haiku for quick lookups and simple edits
+## Technology Stack
 
-## Workflow Preferences
-- Always run tests after code changes
-- Compact context proactively at 60% usage
-- Use /clear between unrelated tasks
+- **Engine**: [CHOOSE]
+- **Language**: [CHOOSE]
+- **Build System**: [CHOOSE]
+- **Asset Pipeline**: [CHOOSE]
 
-## Local Environment
-- Python command: python (or py / python3)
-- Shell: Git Bash on Windows
-- IDE: VS Code with Claude Code extension
+## Engine Version Reference
 
-## Communication Style
-- Keep responses concise
-- Show file paths in all code references
-- Explain architectural decisions briefly
+Before suggesting engine APIs, read `docs/engine-reference/<engine>/VERSION.md` in this game workspace (created by `/setup-engine`). Do not invent post-cutoff APIs.
 
-## Personal Shortcuts
-- When I say "review", run /code-review on the last changed files
-- When I say "status", show git status + sprint progress
-```
+## Project standards
 
-## Setup
+Naming conventions, performance budgets, input/platform, and specialist routing live in `docs/technical-preferences.md`. If that file still contains `[TO BE CONFIGURED]`, run `/setup-engine`.
 
-1. Copy this template to your project root: `cp gameworks references/CLAUDE-local-template.md CLAUDE.local.md`
-2. Edit to match your preferences
-3. Verify `CLAUDE.local.md` is in `.gitignore` (Hermes Agent reads it from the project root)
+## Collaboration
+
+The user owns creative and strategic decisions. Read-only discovery needs no extra permission. An explicit request to implement a stated changeset authorizes its edits and verification. Ask at new scope or unresolved decision boundaries. Delegated children return decisions and blockers to the coordinator, not directly to the user.

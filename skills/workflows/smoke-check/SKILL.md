@@ -18,6 +18,8 @@ metadata:
 
 # Smoke Check
 
+**Model tier:** Medium
+
 This skill is the gate between "implementation done" and "ready for QA
 hand-off". It runs the automated test suite, checks for test coverage gaps,
 batch-verifies critical paths with the developer, and produces a PASS/FAIL
@@ -63,7 +65,7 @@ Before running anything, understand the environment:
 2. **CI check**: check whether `.github/workflows/` contains a workflow file
    referencing tests. Note in the report whether CI is configured.
 
-3. **Engine detection**: read `gameworks references/technical-preferences.md` and
+3. **Engine detection**: read `docs/technical-preferences.md` and
    extract the `Engine:` value. Store this for test command selection in
    Phase 2.
 
@@ -72,7 +74,7 @@ Before running anything, understand the environment:
    Phase 4. If neither exists, smoke tests will be drawn from the current QA
    plan (Phase 4 fallback).
 
-5. **QA plan check**: glob `production/qa/qa-plan-*.md` and take the most
+5. **QA plan check**: use search_files with `file_glob="production/qa/qa-plan-*.md"` and take the most
    recently modified file. If found, note the path — it will be used in
    Phase 3 and Phase 4. If not found, note: "No QA plan found. Run
    `/qa-plan sprint` before smoke-checking for best results."
@@ -120,7 +122,7 @@ If no matching log found: "UE automation tests must be run via the Session
 Frontend or CI pipeline. Please confirm test status manually."
 
 **Unknown engine / not configured:**
-"Engine not configured in `gameworks references/technical-preferences.md`. Run
+"Engine not configured in `docs/technical-preferences.md`. Run
 `/setup-engine` to specify the engine, then re-run `/smoke-check`."
 
 **If the test runner is not available in this environment** (engine binary not
@@ -158,7 +160,7 @@ For each story in scope:
 
 1. Extract the system slug from the story's file path
    (e.g., `production/epics/combat/story-001.md` → `combat`)
-2. Glob `tests/unit/[system]/` and `tests/integration/[system]/` for files
+2. Use search_files with `file_glob="tests/unit/[system]/**"` and `file_glob="tests/integration/[system]/**"` for files
    whose name contains the story slug or a closely related term
 3. Check the story file itself for a `Test file:` header field or a
    "Test Evidence" section

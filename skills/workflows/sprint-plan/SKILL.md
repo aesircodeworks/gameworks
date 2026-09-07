@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 0: Parse Arguments
 
+**Model tier:** Medium
+
 Extract the mode argument (`new`, `update`, or `status`) and resolve the review mode (once, store for all gate spawns this run):
 1. If `--review [full|lean|solo]` was passed → use that
 2. Else read `production/review-mode.txt` → use that value
@@ -48,7 +50,9 @@ See `gameworks references/director-gates.md` for the full check pattern.
 3. **Scan design documents** in `design/gdd/` for features tagged as ready
    for implementation.
 
-4. **Check the risk register** at `production/risk-register/`.
+4. **Scan stories** under `production/epics/**/story-*.md` (and `production/sprint-status.yaml` if present).
+
+5. **Check the risk register** at `production/risk-register/`.
 
 ---
 
@@ -186,7 +190,7 @@ updated: "[YYYY-MM-DD]"
 stories:
   - id: "[epic-story, e.g. 1-1]"
     name: "[story name]"
-    file: "[production/stories/path.md]"
+    file: "[production/epics/[epic-slug]/story-NNN-[slug].md]"
     priority: must-have        # must-have | should-have | nice-to-have
     status: ready-for-dev      # backlog | ready-for-dev | in-progress | review | done | blocked
     owner: ""
@@ -212,7 +216,7 @@ stories that haven't changed, add new stories, remove dropped ones.
 - `lean` → skip (not a PHASE-GATE). Note: "PR-SPRINT skipped — Lean mode." Proceed to Phase 5 (QA plan gate).
 - `full` → spawn as normal.
 
-Before finalising the sprint plan, spawn `producer` via Task using gate **PR-SPRINT** (`gameworks references/director-gates.md`).
+Before finalising the sprint plan, spawn `producer` with `delegate_task` using gate **PR-SPRINT** (`gameworks references/director-gates.md`). Parse the first line for `[PR-SPRINT]: TOKEN`.
 
 Pass: proposed story list (titles, estimates, dependencies), total team capacity in hours/days, any carryover from the previous sprint, milestone constraints and deadline.
 

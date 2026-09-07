@@ -9,7 +9,7 @@
 - `design/gdd/systems-index.md` — 6 MVP systems listed, all marked `Status: GDD Complete`
 - `design/gdd/` — 6 GDD files present
 - `design/gdd/gdd-cross-review-2026-03-10.md` — cross-review report, verdict: CONCERNS (1 low-priority note)
-- Engine configured (Godot 4.6, `/setup-engine` complete)
+- Engine configured (Godot 4.6 in `AGENTS.md` Technology Stack and `docs/technical-preferences.md`, `/setup-engine` complete)
 
 **Session Duration:** ~20 minutes
 **Turns:** 7
@@ -39,7 +39,7 @@
 > | `/design-review` per GDD | Each GDD reviewed | ✅ (6/6 review comments found) |
 > | Cross-GDD review report | `design/gdd/gdd-cross-review-*.md` exists | ✅ |
 > | Cross-review verdict | PASS or CONCERNS (not FAIL) | ✅ CONCERNS |
-> | Engine configured | `production/stage.txt` or CLAUDE.md engine entry | ✅ Godot 4.6 |
+> | Engine configured | `AGENTS.md` Technology Stack + `docs/technical-preferences.md` | ✅ Godot 4.6 |
 >
 > ---
 > **Content Scan:**

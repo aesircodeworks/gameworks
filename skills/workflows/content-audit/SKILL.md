@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 Parse the argument:
@@ -30,10 +32,10 @@ Parse the argument:
 1. **Read `design/gdd/systems-index.md`** for the full list of systems, their
    categories, and MVP/priority tier.
 
-2. **L0 pre-scan**: Before full-reading any GDDs, Grep all GDD files for
+2. **L0 pre-scan**: Before full-reading any GDDs, use search_files on all GDD files for
    `## Summary` sections plus common content-count keywords:
    ```
-   Grep pattern="(## Summary|N enemies|N levels|N items|N abilities|enemy types|item types)" glob="design/gdd/*.md" output_mode="files_with_matches"
+   search_files query="(## Summary|N enemies|N levels|N items|N abilities|enemy types|item types)" file_glob="design/gdd/*.md"
    ```
    For a single-system audit: skip this step and go straight to full-read.
    For a full audit: full-read only the GDDs that matched content-count keywords.
@@ -66,37 +68,37 @@ Parse the argument:
 ## Phase 2 — Implementation Scan
 
 For each content type found in Phase 1, scan the relevant directories to count
-what has been implemented. Use Glob and Grep to locate files.
+what has been implemented. Use search_files to locate files.
 
 **Levels / Areas / Maps:**
-- Glob `assets/**/*.tscn`, `assets/**/*.unity`, `assets/**/*.umap`
-- Glob `src/**/*.tscn`, `src/**/*.unity`
+- search_files `file_glob="assets/**/*.tscn"`, `file_glob="assets/**/*.unity"`, `file_glob="assets/**/*.umap"`
+- search_files `file_glob="src/**/*.tscn"`, `file_glob="src/**/*.unity"`
 - Look for scene files in subdirectories named `levels/`, `areas/`, `maps/`,
   `worlds/`, `stages/`
 - Count unique files that appear to be level/scene definitions (not UI scenes)
 
 **Enemies / Characters / NPCs:**
-- Glob `assets/data/**/enemies/**`, `assets/data/**/characters/**`
-- Glob `src/**/enemies/**`, `src/**/characters/**`
+- search_files `file_glob="assets/data/**/enemies/**"`, `file_glob="assets/data/**/characters/**"`
+- search_files `file_glob="src/**/enemies/**"`, `file_glob="src/**/characters/**"`
 - Look for `.json`, `.tres`, `.asset`, `.yaml` data files defining entity stats
 - Look for scene/prefab files in character subdirectories
 
 **Items / Equipment / Loot:**
-- Glob `assets/data/**/items/**`, `assets/data/**/equipment/**`,
-  `assets/data/**/loot/**`
+- search_files `file_glob="assets/data/**/items/**"`, `file_glob="assets/data/**/equipment/**"`,
+  `file_glob="assets/data/**/loot/**"`
 - Look for `.json`, `.tres`, `.asset` data files
 
 **Abilities / Skills / Spells:**
-- Glob `assets/data/**/abilities/**`, `assets/data/**/skills/**`,
-  `assets/data/**/spells/**`
+- search_files `file_glob="assets/data/**/abilities/**"`, `file_glob="assets/data/**/skills/**"`,
+  `file_glob="assets/data/**/spells/**"`
 - Look for `.json`, `.tres`, `.asset` data files
 
 **Dialogue / Conversations / Cutscenes:**
-- Glob `assets/**/*.dialogue`, `assets/**/*.csv`, `assets/**/*.ink`
-- Grep for dialogue data files in `assets/data/`
+- search_files `file_glob="assets/**/*.dialogue"`, `file_glob="assets/**/*.csv"`, `file_glob="assets/**/*.ink"`
+- Use search_files for dialogue data files in `assets/data/`
 
 **Quests / Missions:**
-- Glob `assets/data/**/quests/**`, `assets/data/**/missions/**`
+- search_files `file_glob="assets/data/**/quests/**"`, `file_glob="assets/data/**/missions/**"`
 - Look for `.json`, `.yaml` definition files
 
 **Engine-specific notes (acknowledge in the report):**

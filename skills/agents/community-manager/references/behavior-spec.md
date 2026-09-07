@@ -5,7 +5,7 @@
 ## Agent Summary
 - **Domain**: Player-facing communications — patch notes text (player-friendly), social media post drafts, community update announcements, crisis communication response plans, bug triage and routing from player reports (not fixing)
 - **Does NOT own**: Technical patch content (devops-engineer), QA verification and test execution (qa-lead), bug fixes (programmers), brand strategy direction (creative-director)
-- **Model tier**: Sonnet
+- **Model tier**: Light
 - **Gate IDs**: None; escalates brand voice conflicts to creative-director
 
 ---
@@ -13,8 +13,8 @@
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references player communication, patch notes, community management)
-- [ ] `Hermes tools:` list matches the agent's role (Read/Write for production/releases/patch-notes/ and communication drafts; no code or build tools)
-- [ ] Model tier is Sonnet (default for operations specialists)
+- [ ] `Hermes tools:` list matches the agent's role (read_file/write_file/patch for production/releases/patch-notes/ and communication drafts; no code or build tools)
+- [ ] Model tier: Light
 - [ ] Agent definition does not claim authority over technical content, QA strategy, or bug fixing
 
 ---

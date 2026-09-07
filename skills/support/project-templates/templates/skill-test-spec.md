@@ -14,11 +14,13 @@ it belongs to.]
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`
-- [ ] Has ≥2 phase headings (## Phase N or numbered ## sections)
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
+- [ ] Has ≥2 phase headings (`## Phase N` or numbered `##` sections)
 - [ ] Contains verdict keywords: [list the ones expected, e.g., PASS, FAIL, CONCERNS]
-- [ ] Contains "May I write" collaborative protocol language (if skill writes files)
+- [ ] If the body instructs `write_file` or `patch`: scoped write-authorization language is present
 - [ ] Has a next-step handoff at the end
+- [ ] `metadata.hermes.tags` includes a framework tag (e.g. `aesir-gameworks`) or `related_skills` is a list
+- [ ] `description` is non-empty and states when to use; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
 
 ---
 
@@ -81,7 +83,7 @@ No files exist in design/gdd/."]
 
 ## Protocol Compliance
 
-- [ ] Uses "May I write" before all file writes
+- [ ] Uses scoped write authorization before `write_file` / `patch`
 - [ ] Presents findings or report before asking for write approval
 - [ ] Ends with a recommended next step or follow-up skill
 - [ ] Never auto-creates files without explicit user approval

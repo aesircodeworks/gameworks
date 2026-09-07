@@ -68,19 +68,12 @@ This guided onboarding asks where you are and routes you to the right phase:
 
 ### Step 3: Verify Hooks Are Working
 
-Start a new Hermes Agent session. You should see output from the
-`session-start.sh` hook:
+Start a new Hermes Agent session in a game workspace. The first `pre_llm_call`
+runs `session-start.sh`, which injects branch, recent commits, stage, sprint,
+and whether `production/session-state/active.md` exists.
 
-```
-=== Claude Code Game Studios -- Session Context ===
-Branch: main
-Recent commits:
-  abc1234 Initial commit
-===================================
-```
-
-If you see this, hooks are working. If not, check `(game-workspace)/settings.json` to
-make sure the hook paths are correct for your OS.
+Hooks are wired in the installed profile `config.yaml`, not `(game-workspace)/settings.json`.
+If nothing appears, confirm the profile install and `"$HERMES_HOME"/agent-hooks/aesir-gameworks/`.
 
 ### Step 4: Ask for Help Anytime
 
@@ -129,7 +122,7 @@ production/           # Sprint plans, milestones, releases
   milestones/
   releases/
   epics/              # Epic and story files (from /create-epics + /create-stories)
-  playtests/          # Playtest reports
+  qa/playtests/       # Playtest reports from /playtest-report
   session-state/      # Ephemeral session state (gitignored)
   session-logs/       # Session audit trail (gitignored)
 ```
@@ -232,7 +225,7 @@ Or with a specific engine:
 
 **What /setup-engine does:**
 
-- Populates `gameworks references/technical-preferences.md` with naming conventions,
+- Populates `docs/technical-preferences.md` with naming conventions,
   performance budgets, and engine-specific defaults
 - Detects knowledge gaps (engine version newer than LLM training data) and
   advises cross-referencing `docs/engine-reference/`
@@ -728,7 +721,7 @@ played the build unguided.
 
 - At least 1 UX spec reviewed in `design/ux/`
 - UX review completed (APPROVED or NEEDS REVISION with documented risks)
-- At least 1 prototype with README
+- At least 1 concept prototype with `prototypes/*-concept/REPORT.md`
 - Story files exist in `production/epics/[epic-slug]/`
 - At least 1 sprint plan exists
 - At least 1 playtest report exists (Vertical Slice played in 3+ sessions)
@@ -1237,22 +1230,21 @@ Tier 3 (Specialists):  gameplay-programmer, engine-programmer,
 
 ### Automated Hooks (Safety Net)
 
-The system has 12 hooks that run automatically:
+The profile registers these Hermes hooks (see `hooks-reference.md`):
 
-| Hook | Trigger | What It Does |
+| Hook | Hermes event | What It Does |
 |------|---------|-------------|
-| `session-start.sh` | Session start | Shows branch, recent commits, detects active.md for recovery |
-| `detect-gaps.sh` | Session start | Detects fresh projects (no engine, no concept) and suggests `/studio-start` |
-| `pre-compact.sh` | Before compaction | Dumps session state into conversation for auto-recovery |
-| `post-compact.sh` | After compaction | Reminds Claude to restore session state from `active.md` |
-| `notify.sh` | Notification event | Shows Windows toast notification via PowerShell |
-| `validate-commit.sh` | Before commit | Checks for design doc references, valid JSON, no hardcoded values |
-| `validate-push.sh` | Before push | Warns on pushes to main/develop |
-| `validate-assets.sh` | Before commit | Checks asset naming and size |
-| `validate-skill-change.sh` | Skill file written | Advises running `/skill-test` after `(game-workspace)/skills/` changes |
-| `log-agent.sh` | Agent start | Logs agent invocations for audit trail |
-| `log-agent-stop.sh` | Agent stop | Completes agent audit trail (start + stop) |
-| `session-stop.sh` | Session end | Final session logging |
+| `session-start.sh` | `pre_llm_call` | Branch, recent commits, stage, sprint, `active.md` |
+| `detect-project-gaps.sh` | `pre_llm_call` | Notes a missing game-concept |
+| `restore-session-context.sh` | `pre_llm_call` | Restores `active.md` on first turn (no compact hooks) |
+| `checkpoint-session-state.sh` | `pre_verify` | Date-stamps a session checkpoint |
+| `validate-commit.sh` | `pre_tool_call` | JSON + TODO format on `git commit` |
+| `validate-push.sh` | `pre_tool_call` | Warns on pushes to main/develop |
+| `validate-project-assets.sh` | `post_tool_call` | Asset filename + JSON checks |
+| `validate-aesir-skill-change.sh` | `post_tool_call` | Advises `/skill-test` after framework skill edits |
+| `log-subagent-start.sh` | `subagent_start` | Subagent audit trail start |
+| `log-subagent-stop.sh` | `subagent_stop` | Subagent audit trail stop |
+| `session-end.sh` | `on_session_finalize` | Session log + optional local toast |
 
 ### Context Resilience
 
@@ -1266,9 +1258,9 @@ section to file immediately after approval. This means completed sections
 survive crashes and context compactions. Previous discussion about written
 sections can be safely compacted.
 
-**Automatic recovery:** The `session-start.sh` hook detects and previews
-`active.md` automatically. The `pre-compact.sh` hook dumps state into the
-conversation before compaction.
+**Automatic recovery:** `session-start.sh` and `restore-session-context.sh` run
+on first `pre_llm_call`. `checkpoint-session-state.sh` runs on `pre_verify`.
+Hermes has no pre/post-compression shell hooks.
 
 **Sprint status tracking:** `production/sprint-status.yaml` is the
 machine-readable story tracker. Written by `/sprint-plan` (init) and
@@ -1343,57 +1335,57 @@ Reads existing code and generates GDD-format design documentation from it.
 
 ### "I need to do X -- which agent do I use?"
 
-| I need to... | Agent | Tier |
-|-------------|-------|------|
-| Come up with a game idea | `/brainstorm` skill | -- |
-| Design a game mechanic | `game-designer` | 2 |
-| Design specific formulas/numbers | `systems-designer` | 3 |
-| Design a game level | `level-designer` | 3 |
-| Design loot tables / economy | `economy-designer` | 3 |
-| Build world lore | `world-builder` | 3 |
-| Write dialogue | `writer` | 3 |
-| Plan the story | `narrative-director` | 2 |
-| Plan a sprint | `producer` | 1 |
-| Make a creative decision | `creative-director` | 1 |
-| Make a technical decision | `technical-director` | 1 |
-| Implement gameplay code | `gameplay-programmer` | 3 |
-| Implement core engine systems | `engine-programmer` | 3 |
-| Implement AI behavior | `ai-programmer` | 3 |
-| Implement multiplayer | `network-programmer` | 3 |
-| Implement UI | `ui-programmer` | 3 |
-| Build dev tools | `tools-programmer` | 3 |
-| Review code architecture | `lead-programmer` | 2 |
-| Create shaders / VFX | `technical-artist` | 3 |
-| Define visual style | `art-director` | 2 |
-| Define audio style | `audio-director` | 2 |
-| Design sound effects | `sound-designer` | 3 |
-| Design UX flows | `ux-designer` | 3 |
-| Write test cases | `qa-tester` | 3 |
-| Plan test strategy | `qa-lead` | 2 |
-| Profile performance | `performance-analyst` | 3 |
-| Set up CI/CD | `devops-engineer` | 3 |
-| Design analytics | `analytics-engineer` | 3 |
-| Check accessibility | `accessibility-specialist` | 3 |
-| Plan live operations | `live-ops-designer` | 3 |
-| Manage a release | `release-manager` | 2 |
-| Manage localization | `localization-lead` | 2 |
-| Prototype quickly | `prototyper` | 3 |
-| Audit security | `security-engineer` | 3 |
-| Communicate with players | `community-manager` | 3 |
-| Godot-specific help | `godot-specialist` | 3 |
-| GDScript-specific help | `godot-gdscript-specialist` | 3 |
-| Godot shader help | `godot-shader-specialist` | 3 |
-| GDExtension modules | `godot-gdextension-specialist` | 3 |
-| Unity-specific help | `unity-specialist` | 3 |
-| Unity DOTS/ECS | `unity-dots-specialist` | 3 |
-| Unity shaders/VFX | `unity-shader-specialist` | 3 |
-| Unity Addressables | `unity-addressables-specialist` | 3 |
-| Unity UI Toolkit | `unity-ui-specialist` | 3 |
-| Unreal-specific help | `unreal-specialist` | 3 |
-| Unreal GAS | `ue-gas-specialist` | 3 |
-| Unreal Blueprints | `ue-blueprint-specialist` | 3 |
-| Unreal replication | `ue-replication-specialist` | 3 |
-| Unreal UMG/CommonUI | `ue-umg-specialist` | 3 |
+| I need to... | Agent | Tier | Model |
+| ------------- | ------- | ------ | ------- |
+| Come up with a game idea | `/brainstorm` skill | -- | — |
+| Design a game mechanic | `game-designer` | 2 | Medium |
+| Design specific formulas/numbers | `systems-designer` | 3 | Medium |
+| Design a game level | `level-designer` | 3 | Medium |
+| Design loot tables / economy | `economy-designer` | 3 | Medium |
+| Build world lore | `world-builder` | 3 | Medium |
+| Write dialogue | `writer` | 3 | Medium |
+| Plan the story | `narrative-director` | 2 | Medium |
+| Plan a sprint | `producer` | 1 | Heavy |
+| Make a creative decision | `creative-director` | 1 | Heavy |
+| Make a technical decision | `technical-director` | 1 | Heavy |
+| Implement gameplay code | `gameplay-programmer` | 3 | Medium |
+| Implement core engine systems | `engine-programmer` | 3 | Medium |
+| Implement AI behavior | `ai-programmer` | 3 | Medium |
+| Implement multiplayer | `network-programmer` | 3 | Medium |
+| Implement UI | `ui-programmer` | 3 | Medium |
+| Build dev tools | `tools-programmer` | 3 | Medium |
+| Review code architecture | `lead-programmer` | 2 | Medium |
+| Create shaders / VFX | `technical-artist` | 3 | Medium |
+| Define visual style | `art-director` | 2 | Medium |
+| Define audio style | `audio-director` | 2 | Medium |
+| Design sound effects | `sound-designer` | 3 | Medium |
+| Design UX flows | `ux-designer` | 3 | Medium |
+| Write test cases | `qa-tester` | 3 | Light |
+| Plan test strategy | `qa-lead` | 2 | Medium |
+| Profile performance | `performance-analyst` | 3 | Medium |
+| Set up CI/CD | `devops-engineer` | 3 | Light |
+| Design analytics | `analytics-engineer` | 3 | Medium |
+| Check accessibility | `accessibility-specialist` | 3 | Light |
+| Plan live operations | `live-ops-designer` | 3 | Medium |
+| Manage a release | `release-manager` | 2 | Medium |
+| Manage localization | `localization-lead` | 2 | Medium |
+| Prototype quickly | `prototyper` | 3 | Medium |
+| Audit security | `security-engineer` | 3 | Medium |
+| Communicate with players | `community-manager` | 3 | Light |
+| Godot-specific help | `godot-specialist` | 3 | Medium |
+| GDScript-specific help | `godot-gdscript-specialist` | 3 | Medium |
+| Godot shader help | `godot-shader-specialist` | 3 | Medium |
+| GDExtension modules | `godot-gdextension-specialist` | 3 | Medium |
+| Unity-specific help | `unity-specialist` | 3 | Medium |
+| Unity DOTS/ECS | `unity-dots-specialist` | 3 | Medium |
+| Unity shaders/VFX | `unity-shader-specialist` | 3 | Medium |
+| Unity Addressables | `unity-addressables-specialist` | 3 | Medium |
+| Unity UI Toolkit | `unity-ui-specialist` | 3 | Medium |
+| Unreal-specific help | `unreal-specialist` | 3 | Medium |
+| Unreal GAS | `ue-gas-specialist` | 3 | Medium |
+| Unreal Blueprints | `ue-blueprint-specialist` | 3 | Medium |
+| Unreal replication | `ue-replication-specialist` | 3 | Medium |
+| Unreal UMG/CommonUI | `ue-umg-specialist` | 3 | Medium |
 
 ### Agent Hierarchy
 
@@ -1423,131 +1415,131 @@ conflicts go to `producer`.
 
 #### Onboarding and Navigation (6)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/studio-start` | Guided onboarding, routes to right workflow | Any (first session) |
-| `/studio-help` | Context-aware "what do I do next?" | Any |
-| `/project-stage-detect` | Full project audit to determine current phase | Any |
-| `/setup-engine` | Configure engine, pin version, set preferences | 1 |
-| `/adopt` | Brownfield audit and migration plan | Any (existing projects) |
-| `/skill-improve` | Improve a skill via test-fix-retest loop | Any |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/studio-start` | Medium | Guided onboarding, routes to right workflow | Any (first session) |
+| `/studio-help` | Light | Context-aware "what do I do next?" | Any |
+| `/project-stage-detect` | Light | Full project audit to determine current phase | Any |
+| `/setup-engine` | Medium | Configure engine, pin version, set preferences | 1 |
+| `/adopt` | Medium | Brownfield audit and migration plan | Any (existing projects) |
+| `/skill-improve` | Medium | Improve a skill via test-fix-retest loop | Any |
 
 #### Game Design (6)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/brainstorm` | Collaborative ideation with MDA analysis | 1 |
-| `/map-systems` | Decompose concept into systems index | 1-2 |
-| `/design-system` | Guided section-by-section GDD authoring | 2 |
-| `/quick-design` | Lightweight spec for small changes | 2+ |
-| `/review-all-gdds` | Cross-GDD consistency and design theory review | 2 |
-| `/propagate-design-change` | Find ADRs/stories affected by GDD changes | 5 |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/brainstorm` | Medium | Collaborative ideation with MDA analysis | 1 |
+| `/map-systems` | Medium | Decompose concept into systems index | 1-2 |
+| `/design-system` | Medium | Guided section-by-section GDD authoring | 2 |
+| `/quick-design` | Medium | Lightweight spec for small changes | 2+ |
+| `/review-all-gdds` | Heavy | Cross-GDD consistency and design theory review | 2 |
+| `/propagate-design-change` | Medium | Find ADRs/stories affected by GDD changes | 5 |
 
 #### UX and Interface (2)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/ux-design` | Author UX specs (screen/flow, HUD, patterns) | 4 |
-| `/ux-review` | Validate UX specs for accessibility and GDD alignment | 4 |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/ux-design` | Medium | Author UX specs (screen/flow, HUD, patterns) | 4 |
+| `/ux-review` | Medium | Validate UX specs for accessibility and GDD alignment | 4 |
 
 #### Architecture (4)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/create-architecture` | Master architecture document | 3 |
-| `/architecture-decision` | Create or retrofit an ADR | 3 |
-| `/architecture-review` | Validate all ADRs, dependency ordering | 3 |
-| `/create-control-manifest` | Flat programmer rules from Accepted ADRs | 3 |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/create-architecture` | Medium | Master architecture document | 3 |
+| `/architecture-decision` | Medium | Create or retrofit an ADR | 3 |
+| `/architecture-review` | Heavy | Validate all ADRs, dependency ordering | 3 |
+| `/create-control-manifest` | Medium | Flat programmer rules from Accepted ADRs | 3 |
 
 #### Stories and Sprints (8)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/create-epics` | Translate GDDs + ADRs into epics (one per module) | 4 |
-| `/create-stories` | Break a single epic into story files | 4 |
-| `/dev-story` | Implement a story — routes to the correct programmer agent | 5 |
-| `/sprint-plan` | Create or manage sprint plans | 4-5 |
-| `/sprint-status` | Quick 30-line sprint snapshot | 5 |
-| `/story-readiness` | Validate story is implementation-ready | 4-5 |
-| `/story-done` | 8-phase story completion review | 5 |
-| `/estimate` | Effort estimation with risk assessment | 4-5 |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/create-epics` | Medium | Translate GDDs + ADRs into epics (one per module) | 4 |
+| `/create-stories` | Medium | Break a single epic into story files | 4 |
+| `/dev-story` | Medium | Implement a story — routes to the correct programmer agent | 5 |
+| `/sprint-plan` | Medium | Create or manage sprint plans | 4-5 |
+| `/sprint-status` | Light | Quick 30-line sprint snapshot | 5 |
+| `/story-readiness` | Light | Validate story is implementation-ready | 4-5 |
+| `/story-done` | Medium | 8-phase story completion review | 5 |
+| `/estimate` | Medium | Effort estimation with risk assessment | 4-5 |
 
 #### Reviews and Analysis (13)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/design-review` | Validate GDD against 8-section standard | 1-2 |
-| `/code-review` | Architectural code review | 5+ |
-| `/balance-check` | Game balance formula analysis | 5-6 |
-| `/asset-audit` | Asset naming, format, size verification | 6 |
-| `/asset-spec` | Per-asset visual specs and AI generation prompts | 5-6 |
-| `/content-audit` | GDD-specified content vs. implemented | 5 |
-| `/consistency-check` | Cross-GDD entity and formula inconsistency scan | 2+ |
-| `/scope-check` | Scope creep detection | 5 |
-| `/perf-profile` | Performance profiling workflow | 6 |
-| `/tech-debt` | Tech debt scanning and prioritization | 6 |
-| `/gate-check` | Formal phase gate with PASS/CONCERNS/FAIL | All transitions |
-| `/reverse-document` | Generate design docs from existing code | Any |
-| `/security-audit` | Security vulnerability audit (save, network, input) | 6-7 |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/design-review` | Medium | Validate GDD against 8-section standard | 1-2 |
+| `/code-review` | Medium | Architectural code review | 5+ |
+| `/balance-check` | Medium | Game balance formula analysis | 5-6 |
+| `/asset-audit` | Medium | Asset naming, format, size verification | 6 |
+| `/asset-spec` | Medium | Per-asset visual specs and AI generation prompts | 5-6 |
+| `/content-audit` | Medium | GDD-specified content vs. implemented | 5 |
+| `/consistency-check` | Medium | Cross-GDD entity and formula inconsistency scan | 2+ |
+| `/scope-check` | Light | Scope creep detection | 5 |
+| `/perf-profile` | Medium | Performance profiling workflow | 6 |
+| `/tech-debt` | Medium | Tech debt scanning and prioritization | 6 |
+| `/gate-check` | Heavy | Formal phase gate with PASS/CONCERNS/FAIL | All transitions |
+| `/reverse-document` | Medium | Generate design docs from existing code | Any |
+| `/security-audit` | Medium | Security vulnerability audit (save, network, input) | 6-7 |
 
 #### QA and Testing (9)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/qa-plan` | Generate QA test plan for a sprint or feature | 5 |
-| `/smoke-check` | Critical path smoke test gate before QA hand-off | 5-6 |
-| `/soak-test` | Soak test protocol for extended play sessions | 6 |
-| `/regression-suite` | Map test coverage, identify fixed bugs lacking regression tests | 5-6 |
-| `/test-setup` | Scaffold test framework and CI/CD pipeline | 4 |
-| `/test-helpers` | Generate engine-specific test helper libraries | 4-5 |
-| `/test-evidence-review` | Quality review of test files and manual evidence | 5 |
-| `/test-flakiness` | Detect non-deterministic tests from CI logs | 5-6 |
-| `/skill-test` | Validate skill files for structural and behavioral correctness | Any |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/qa-plan` | Medium | Generate QA test plan for a sprint or feature | 5 |
+| `/smoke-check` | Medium | Critical path smoke test gate before QA hand-off | 5-6 |
+| `/soak-test` | Medium | Soak test protocol for extended play sessions | 6 |
+| `/regression-suite` | Medium | Map test coverage, identify fixed bugs lacking regression tests | 5-6 |
+| `/test-setup` | Medium | Scaffold test framework and CI/CD pipeline | 4 |
+| `/test-helpers` | Medium | Generate engine-specific test helper libraries | 4-5 |
+| `/test-evidence-review` | Medium | Quality review of test files and manual evidence | 5 |
+| `/test-flakiness` | Medium | Detect non-deterministic tests from CI logs | 5-6 |
+| `/skill-test` | Medium | Validate skill files for structural and behavioral correctness | Any |
 
 #### Production Management (6)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/milestone-review` | Milestone progress and go/no-go | 5 |
-| `/retrospective` | Sprint retrospective analysis | 5 |
-| `/bug-report` | Structured bug report creation | 5+ |
-| `/bug-triage` | Re-evaluate open bugs for priority, severity, and owner | 5+ |
-| `/playtest-report` | Structured playtest session report | 4-6 |
-| `/onboard` | Onboard a new team member | Any |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/milestone-review` | Medium | Milestone progress and go/no-go | 5 |
+| `/retrospective` | Medium | Sprint retrospective analysis | 5 |
+| `/bug-report` | Medium | Structured bug report creation | 5+ |
+| `/bug-triage` | Light | Re-evaluate open bugs for priority, severity, and owner | 5+ |
+| `/playtest-report` | Medium | Structured playtest session report | 4-6 |
+| `/onboard` | Light | Onboard a new team member | Any |
 
 #### Release (6)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/release-checklist` | Pre-release validation | 7 |
-| `/launch-checklist` | Full cross-department launch readiness | 7 |
-| `/changelog` | Auto-generate internal changelog | 7 |
-| `/patch-notes` | Player-facing patch notes | 7 |
-| `/hotfix` | Emergency fix workflow | 7+ |
-| `/day-one-patch` | Scoped patch for issues found after gold master | 7+ |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/release-checklist` | Medium | Pre-release validation | 7 |
+| `/launch-checklist` | Medium | Full cross-department launch readiness | 7 |
+| `/changelog` | Light | Auto-generate internal changelog | 7 |
+| `/patch-notes` | Light | Player-facing patch notes | 7 |
+| `/hotfix` | Medium | Emergency fix workflow | 7+ |
+| `/day-one-patch` | Medium | Scoped patch for issues found after gold master | 7+ |
 
 #### Creative (4)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/prototype` | Concept prototype — validate core idea before GDDs | 1 |
-| `/art-bible` | Guided Art Bible authoring — visual identity spec | 1-2 |
-| `/vertical-slice` | Production-quality end-to-end build before Production | 4 |
-| `/localize` | String extraction and validation | 6-7 |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/prototype` | Medium | Concept prototype — validate core idea before GDDs | 1 |
+| `/art-bible` | Medium | Guided Art Bible authoring — visual identity spec | 1-2 |
+| `/vertical-slice` | Medium | Production-quality end-to-end build before Production | 4 |
+| `/localize` | Medium | String extraction and validation | 6-7 |
 
 #### Team Orchestration (9)
 
-| Command | Purpose | Phase |
-|---------|---------|-------|
-| `/team-combat` | Combat feature: design through implementation | 5 |
-| `/team-narrative` | Narrative content: structure through dialogue | 5 |
-| `/team-ui` | UI feature: UX spec through polished implementation | 5 |
-| `/team-level` | Level: layout through dressed encounters | 5 |
-| `/team-audio` | Audio: direction through implemented events | 5-6 |
-| `/team-polish` | Coordinated polish: perf + art + audio + QA | 6 |
-| `/team-release` | Release coordination: build + QA + deployment | 7 |
-| `/team-live-ops` | Live-ops planning: seasonal events, battle pass, retention | 7+ |
-| `/team-qa` | Full QA cycle: strategy, execution, coverage, sign-off | 6-7 |
+| Command | Model | Purpose | Phase |
+| --------- | ------- | --------- | ------- |
+| `/team-combat` | Medium | Combat feature: design through implementation | 5 |
+| `/team-narrative` | Medium | Narrative content: structure through dialogue | 5 |
+| `/team-ui` | Medium | UI feature: UX spec through polished implementation | 5 |
+| `/team-level` | Medium | Level: layout through dressed encounters | 5 |
+| `/team-audio` | Medium | Audio: direction through implemented events | 5-6 |
+| `/team-polish` | Medium | Coordinated polish: perf + art + audio + QA | 6 |
+| `/team-release` | Medium | Release coordination: build + QA + deployment | 7 |
+| `/team-live-ops` | Medium | Live-ops planning: seasonal events, battle pass, retention | 7+ |
+| `/team-qa` | Medium | Full QA cycle: strategy, execution, coverage, sign-off | 6-7 |
 
 ---
 
@@ -1666,8 +1658,8 @@ conflicts go to `producer`.
    delta time, accessibility, etc.).
 
 4. **Compact proactively.** At ~65-70% context usage, compact or `/clear`.
-   The pre-compact hook saves your progress. Do not wait until you are at the
-   limit.
+   `checkpoint-session-state.sh` and `restore-session-context.sh` cover session
+   continuity. Hermes has no compact shell hooks.
 
 5. **Use the right tier of agent.** Do not ask `creative-director` to write a
    shader. Do not ask `qa-tester` to make design decisions. The hierarchy

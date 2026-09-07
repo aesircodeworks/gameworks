@@ -18,6 +18,8 @@ metadata:
 
 # Guided Onboarding
 
+**Model tier:** Medium
+
 This skill writes one file: `production/review-mode.txt` (review mode config set in Phase 3b).
 
 This skill is the entry point for new users. It does NOT assume you have a game idea, an engine preference, or any prior experience. It asks first, then routes you to the right workflow.
@@ -29,9 +31,9 @@ This skill is the entry point for new users. It does NOT assume you have a game 
 Before asking anything, silently gather context so you can tailor your guidance. Do NOT show these results unprompted — they inform your recommendations, not the conversation opener.
 
 Check:
-- **Engine configured?** Read `gameworks references/technical-preferences.md`. If the Engine field contains `[TO BE CONFIGURED]`, the engine is not set.
+- **Engine configured?** Read the game-workspace file `docs/technical-preferences.md` (not the profile template `skills/studio/gameworks/references/technical-preferences.md`). If the file is missing, or the Engine field contains `[TO BE CONFIGURED]`, the engine is unset.
 - **Game concept exists?** Check for `design/gdd/game-concept.md`.
-- **Source code exists?** Glob for source files in `src/` (`*.gd`, `*.cs`, `*.cpp`, `*.h`, `*.rs`, `*.py`, `*.js`, `*.ts`).
+- **Source code exists?** Use search_files with `file_glob` under `src/` (`*.gd`, `*.cs`, `*.cpp`, `*.h`, `*.rs`, `*.py`, `*.js`, `*.ts`).
 - **Prototypes exist?** Check for subdirectories in `prototypes/`.
 - **Design docs exist?** Count markdown files in `design/gdd/`.
 - **Production artifacts?** Check for files in `production/sprints/` or `production/milestones/`.

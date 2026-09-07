@@ -13,7 +13,7 @@ These show what runs before and after each skill, and what artifacts flow betwee
 PHASE 1: CONCEPT
   /studio-start ──────────────────────────────────────────────────────► routes to A/B/C/D
   /brainstorm ──────────────────────────────────────────────────► design/gdd/game-concept.md
-  /setup-engine ────────────────────────────────────────────────► CLAUDE.md + technical-preferences.md
+  /setup-engine ────────────────────────────────────────────────► AGENTS.md + docs/technical-preferences.md
   /prototype [core-mechanic] ───────────────────────────────────► prototypes/[name]-concept/REPORT.md
         │ PROCEED                                                  (validate idea BEFORE writing GDDs)
         ▼
@@ -52,7 +52,7 @@ PHASE 4: PRE-PRODUCTION
 
   [Vertical slice — before epics, validate full game loop]
   /vertical-slice ─────────────────────────────────────────────► prototypes/[name]-vertical-slice/REPORT.md
-  /playtest-report ────────────────────────────────────────────► production/playtests/
+  /playtest-report ────────────────────────────────────────────► production/qa/playtests/
 
   [Stories + sprint plan — only after vertical slice PROCEEDS]
   /create-epics [layer] ───────────────────────────────────────► production/epics/*/EPIC.md

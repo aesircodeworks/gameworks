@@ -18,6 +18,8 @@ metadata:
 
 # Day-One Patch
 
+**Model tier:** Medium
+
 Every shipped game has a day-one patch. Planning it before launch day prevents
 chaos. This skill scopes the patch to only what is safe and necessary, gates it
 through a lightweight QA pass, and ensures a rollback plan exists before anything
@@ -93,7 +95,7 @@ Use `clarify` to confirm proceeding or reduce scope.
 
 Before any code is written, define the rollback procedure. This is non-negotiable.
 
-Spawn `release-manager` via Task. Ask them to produce a rollback plan covering:
+Spawn `release-manager` with delegate_task. Ask them to produce a rollback plan covering:
 - How to revert to the gold master build on each target platform
 - Platform-specific rollback constraints (some platforms cannot roll back cert builds)
 - Who is responsible for triggering the rollback
@@ -109,14 +111,14 @@ Do not proceed to Phase 4 until the rollback plan is written.
 
 For each bug in the approved scope, spawn a focused implementation loop:
 
-1. Spawn `lead-programmer` via Task with:
+1. Spawn `lead-programmer` with delegate_task with:
    - The bug report (exact reproduction steps and root cause if known)
    - The constraint: minimum viable fix only, no cleanup
    - The affected files (from bug report Technical Context section)
 
 2. The lead-programmer implements and runs targeted tests.
 
-3. Spawn `qa-tester` via Task to verify: does the bug reproduce after the fix?
+3. Spawn `qa-tester` with delegate_task to verify: does the bug reproduce after the fix?
 
 For config/data-only fixes: make the change directly (no programmer agent needed). Confirm the value changed and re-run any relevant smoke test.
 
@@ -126,7 +128,7 @@ For config/data-only fixes: make the change directly (no programmer agent needed
 
 This is a lightweight QA pass — not a full `/team-qa`. The patch is already QA-approved from the release gate; we are only re-verifying the changed areas.
 
-Spawn `qa-lead` via Task with:
+Spawn `qa-lead` with delegate_task with:
 - List of all changed files
 - List of bugs fixed (with verification status from Phase 4)
 - The smoke check scope for the affected systems

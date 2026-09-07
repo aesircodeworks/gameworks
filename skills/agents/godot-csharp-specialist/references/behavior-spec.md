@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: C# patterns in Godot 4, .NET idioms applied to Godot, [Export] attribute usage, signal delegates, and async/await patterns.
 Does NOT own: GDScript code (gdscript-specialist), GDExtension C/C++ bindings (gdextension-specialist).
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references C# in Godot 4 / .NET patterns / signal delegates)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, terminal, search_files
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over GDScript or GDExtension code
 
 ---

@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 > **Explicit invocation only**: This skill should only run when the user explicitly requests it with `/hotfix`. Do not auto-invoke based on context matching.
 
 ## Phase 1: Assess Severity
@@ -108,9 +110,9 @@ Update the hotfix record with root cause, fix details, and test results.
 
 Use the delegate_task tool to request sign-off in parallel:
 
-- `subagent_type: lead-programmer` — Review the fix for correctness and side effects
-- `subagent_type: qa-tester` — Run targeted regression tests on the affected system
-- `subagent_type: producer` — Approve deployment timing and communication plan
+- Spawn `lead-programmer` with `delegate_task` — Review the fix for correctness and side effects
+- Spawn `qa-tester` with `delegate_task` — Run targeted regression tests on the affected system
+- Spawn `producer` with `delegate_task` — Approve deployment timing and communication plan
 
 All three must return APPROVE before proceeding. If any returns CONCERNS or REJECT, do not deploy — surface the issue and resolve it first.
 
@@ -118,10 +120,10 @@ All three must return APPROVE before proceeding. If any returns CONCERNS or REJE
 
 ## Phase 5b: QA Re-Entry Gate
 
-After approvals, determine the QA scope required before deploying the hotfix. Spawn `qa-lead` via Task with:
+After approvals, determine the QA scope required before deploying the hotfix. Spawn `qa-lead` with delegate_task with:
 - The hotfix description and affected system
 - The regression test results from Phase 5
-- A list of all systems that touch the changed files (use Grep to find callers)
+- A list of all systems that touch the changed files (use search_files to find callers)
 
 Ask qa-lead: **Is a full smoke check sufficient, or does this fix require a targeted team-qa pass?**
 

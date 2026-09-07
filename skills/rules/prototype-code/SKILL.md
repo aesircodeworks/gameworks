@@ -32,12 +32,12 @@ relaxed to maximize iteration speed. The goal is learning, not production qualit
 - Quick-and-dirty solutions
 
 ## What's Still Required
-- Each prototype lives in its own subdirectory: `prototypes/[name]/`
-- Every prototype MUST have a `README.md` with:
+- Each prototype lives in its own subdirectory: `prototypes/[name]-concept/` or `prototypes/[name]-vertical-slice/`
+- Every prototype MUST have a `REPORT.md` (written by `/prototype` or `/vertical-slice`) with:
   - What hypothesis is being tested
   - How to run the prototype
   - Current status (in-progress / concluded)
-  - Findings (updated when prototype concludes)
+  - Findings (updated when the prototype concludes)
 - No production code may reference or import from `prototypes/`
 - Prototypes must not modify files outside `prototypes/`
 - Prototypes must not be deployed or shipped
@@ -45,7 +45,7 @@ relaxed to maximize iteration speed. The goal is learning, not production qualit
 ## When a Prototype Succeeds
 If a prototype validates a concept and the feature moves to production:
 1. The prototype code is NOT migrated directly — it is rewritten to production standards
-2. The prototype `README.md` findings inform the production design document
+2. The prototype `REPORT.md` findings inform the production design document
 3. The prototype directory is preserved for reference but never extended
 
 ## Cleanup

@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Parse Arguments
 
+**Model tier:** Medium
+
 Resolve the review mode (once, store for all gate spawns this run):
 1. If `--review [full|lean|solo]` was passed → use that
 2. Else read `production/review-mode.txt` → use that value
@@ -131,7 +133,7 @@ Present the categorized list, then route:
 - `lean` → skip (not a PHASE-GATE). Note: "CD-PLAYTEST skipped — Lean mode." Proceed to Phase 4 (save the report).
 - `full` → spawn as normal.
 
-After categorising findings, spawn `creative-director` via Task using gate **CD-PLAYTEST** (`gameworks references/director-gates.md`).
+After categorising findings, spawn `creative-director` with delegate_task using gate **CD-PLAYTEST** (`gameworks references/director-gates.md`).
 
 Pass: the structured report content, game pillars and core fantasy (from `design/gdd/game-concept.md`), the specific hypothesis being tested.
 

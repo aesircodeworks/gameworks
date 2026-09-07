@@ -18,6 +18,8 @@ metadata:
 
 # Dev Story
 
+**Model tier:** Medium
+
 This skill bridges planning and code. It reads a story file in full, assembles
 all the context a programmer needs, routes to the correct specialist agent, and
 drives implementation to completion — including writing the test.
@@ -43,8 +45,8 @@ drives implementation to completion — including writing the test.
 
 **If no argument**: check `production/session-state/active.md` for the active
 story. If found, confirm: "Continuing work on [story title] — is that correct?"
-If not found, ask: "Which story are we implementing?" Glob
-`production/epics/**/*.md` and list stories with Status: Ready.
+If not found, ask: "Which story are we implementing?" Use search_files with
+`file_glob="production/epics/**/*.md"` and list stories with Status: Ready.
 
 ---
 
@@ -108,7 +110,7 @@ If [C]: stop. Do not spawn any agent. Let the user review and re-run `/dev-story
 
 After extracting the **Dependencies** list from the story file, validate each:
 
-1. Glob `production/epics/**/*.md` to find each dependency story file.
+1. Use search_files with `file_glob="production/epics/**/*.md"` to find each dependency story file.
 2. Read its `Status:` field.
 3. If any dependency has Status other than `Complete` or `Done`:
    - Use `clarify`:
@@ -126,7 +128,7 @@ If a dependency file cannot be found: warn "Dependency story not found: [path]. 
 ---
 
 ### Engine reference
-Read `gameworks references/technical-preferences.md`:
+Read `docs/technical-preferences.md`:
 - `Engine:` value — determines which programmer agents to use
 - Naming conventions (class names, file names, signal/event names)
 - Performance budgets (frame budget, memory ceiling)
@@ -145,7 +147,7 @@ Silently update two things before spawning any agent:
 ## Phase 3: Route to the Right Programmer
 
 Based on the story's **Layer**, **Type**, and **system name**, determine which
-specialist to spawn via Task.
+specialist to spawn with delegate_task.
 
 **Config/Data stories — skip agent spawning entirely:**
 If the story's Type is `Config/Data`, no programmer agent or engine specialist is needed. Jump directly to Phase 4 (Config/Data note). The implementation is a data file edit — no routing table evaluation, no engine specialist.
@@ -164,7 +166,7 @@ If the story's Type is `Config/Data`, no programmer agent or engine specialist i
 
 ### Engine specialist — always spawn as secondary for code stories
 
-Read the `Engine Specialists` section of `gameworks references/technical-preferences.md`
+Read the `Engine Specialists` section of `docs/technical-preferences.md`
 to get the configured primary specialist. Spawn them alongside the primary agent
 when the story involves engine-specific APIs, patterns, or the ADR has HIGH
 engine risk.
@@ -183,15 +185,15 @@ assumptions about post-cutoff engine APIs that need expert verification.
 
 ## Phase 4: Implement
 
-Spawn the chosen programmer agent(s) via Task with the full context package:
+Spawn the chosen programmer agent(s) with delegate_task with the full context package:
 
-Brief the agent with file paths and targeted reading instructions — do not serialize document content into the Task prompt. The agent reads what it needs directly:
+Brief the agent with file paths and targeted reading instructions — do not serialize document content into the delegate_task prompt. The agent reads what it needs directly:
 
 1. **Story file**: `[story-path]` — read in full
 2. **GDD requirement**: look up TR-ID `[TR-XXX-NNN]` in `docs/architecture/tr-registry.yaml` — use the `requirement` field as source of truth
 3. **ADR**: `docs/architecture/[adr-file].md` — read the **Decision** and **Implementation Guidelines** sections only
 4. **Control manifest**: `docs/architecture/control-manifest.md` — read rules for the **[layer]** layer only
-5. **Engine preferences**: `gameworks references/technical-preferences.md` — read naming conventions and performance budgets
+5. **Engine preferences**: `docs/technical-preferences.md` — read naming conventions and performance budgets
 6. **Test file path**: `[path from story's Test Evidence section]` — this file must be created as part of implementation
 7. **Test requirement** (Logic and Integration stories only): The test file MUST be created at `[path from the story's Test Evidence section]`. Write the test alongside the implementation — do not defer it. The story cannot be closed via `/story-done` without this file present. Each acceptance criterion must have at least one test function covering it. Test file naming: `[system]_[feature]_test.[ext]`. Function naming: `test_[scenario]_[expected_outcome]`. No random seeds, no time-dependent assertions, no external I/O.
 8. **Explicit instruction**: implement this story following the ADR guidelines, respect the manifest rules, stay within the story's Out of Scope boundaries. Write clean, doc-commented public APIs.
@@ -287,7 +289,7 @@ Do not create `production/session-state/active.md` unless that path is already a
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
@@ -306,7 +308,7 @@ Common blockers:
 
 ## Collaborative Protocol
 
-- **File writes are delegated** — all source code, test files, and evidence docs are written by sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+- **File writes are delegated** — all source code, test files, and evidence docs are written by sub-agents spawned with delegate_task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 - **Load before implementing** — do not start coding until all context is loaded
   (story, TR-ID, ADR, manifest, engine prefs). Incomplete context produces code
   that drifts from design.

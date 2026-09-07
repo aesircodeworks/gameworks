@@ -18,6 +18,8 @@ metadata:
 
 # Story Done
 
+**Model tier:** Medium
+
 This skill closes the loop between design and implementation. Run it at the end
 of implementing any story. It ensures every acceptance criterion is verified
 before the story is marked done, GDD and ADR deviations are explicitly
@@ -180,7 +182,7 @@ If none found: flag as **BLOCKING** (same rule as Logic).
 **For Visual/Feel and UI stories**: glob `production/qa/evidence/` for a file
 referencing this story.
 - If none: flag as **ADVISORY** — "No manual test evidence found. Create `production/qa/evidence/[story-slug]-evidence.md` using the test-evidence template and obtain sign-off before final closure."
-- If found: read the file and check the sign-off table for unchecked boxes. Grep for lines matching `| .* | .* | .* | \[ \] Approved` (a sign-off row with an unchecked checkbox). If any unchecked sign-off rows are found: flag as **ADVISORY** — "Evidence file found at `[path]` but [N] sign-off(s) are still pending (shown as `[ ] Approved` in the sign-off table). Obtain required sign-offs before final closure. Note: for solo developers, all roles may be signed off by the same person."
+- If found: read the file and check the sign-off table for unchecked boxes. Use search_files query=`| .* | .* | .* | \[ \] Approved` (a sign-off row with an unchecked checkbox). If any unchecked sign-off rows are found: flag as **ADVISORY** — "Evidence file found at `[path]` but [N] sign-off(s) are still pending (shown as `[ ] Approved` in the sign-off table). Obtain required sign-offs before final closure. Note: for solo developers, all roles may be signed off by the same person."
 - If all sign-off rows show `[x] Approved` or equivalent: note "Evidence file found and all sign-offs complete — ADVISORY passed."
 
 **For Config/Data stories**: check for any `production/qa/smoke-*.md` file.
@@ -243,7 +245,7 @@ For each deviation found, categorize:
 - `lean` → skip (not a PHASE-GATE). Note: "QL-TEST-COVERAGE skipped — Lean mode." Proceed to Phase 5.
 - `full` → spawn as normal.
 
-After completing the deviation checks in Phase 4, spawn `qa-lead` via Task using gate **QL-TEST-COVERAGE** (`gameworks references/director-gates.md`).
+After completing the deviation checks in Phase 4, spawn `qa-lead` with delegate_task using gate **QL-TEST-COVERAGE** (`gameworks references/director-gates.md`).
 
 Pass:
 - The story file path and story type
@@ -275,7 +277,7 @@ Skip this phase for Config/Data stories (no code tests required).
   - Record the answer in the completion notes (Phase 7). All three options proceed to Phase 6.
 - `full` → spawn as normal.
 
-Spawn `lead-programmer` via Task using gate **LP-CODE-REVIEW** (`gameworks references/director-gates.md`).
+Spawn `lead-programmer` with delegate_task using gate **LP-CODE-REVIEW** (`gameworks references/director-gates.md`).
 
 Pass: implementation file paths, story file path, relevant GDD section, governing ADR.
 

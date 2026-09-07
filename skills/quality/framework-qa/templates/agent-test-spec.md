@@ -5,6 +5,7 @@
 > **Tier**: [directors | leads | specialists | godot | unity | unreal | operations | creative]
 > **Category**: [director | lead | specialist | engine | operations | creative]
 > **Spec written**: [YYYY-MM-DD]
+> **Role skill**: `skills/agents/[name]/SKILL.md`
 
 ## Agent Summary
 
@@ -19,11 +20,14 @@ delegates vs. handles directly. Include which gates it triggers (if any).]
 
 ## Static Assertions
 
-- [ ] Agent file exists at `(game-workspace)/agents/[name].md`
-- [ ] Frontmatter has `name`, `description`, `model`, `tools` fields
+- [ ] Role skill exists at `skills/agents/[name]/SKILL.md`
+- [ ] Frontmatter has `name`, `description`, `metadata.hermes`
+- [ ] `model` and `tools` are **not** required in frontmatter
+- [ ] **Model tier: Light**, **Medium**, or **Heavy** is stated (see `agent-roster.md`)
 - [ ] Domain clearly stated
 - [ ] Escalation path documented
 - [ ] Does not make decisions outside its domain
+- [ ] Tool instructions (if any) use Hermes tools (`read_file`, `search_files`, `write_file`, `patch`, `terminal`, `delegate_task`, `clarify`) and match this role's domain
 
 ---
 
@@ -140,9 +144,10 @@ delegates vs. handles directly. Include which gates it triggers (if any).]
 
 - [ ] Stays within declared domain — no unilateral cross-domain changes
 - [ ] Escalates conflicts to correct parent
-- [ ] Uses `"May I write"` before file writes (or is read-only)
+- [ ] Uses scoped write authorization before `write_file` / `patch` (or is read-only)
 - [ ] Presents findings before requesting approval
 - [ ] Does not skip tiers in the delegation hierarchy
+- [ ] Spawned via `delegate_task`
 
 ---
 

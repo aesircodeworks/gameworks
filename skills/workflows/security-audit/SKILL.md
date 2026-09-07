@@ -18,6 +18,8 @@ metadata:
 
 # Security Audit
 
+**Model tier:** Medium
+
 Security is not optional for any shipped game. Even single-player games have
 save tampering vectors. Multiplayer games have cheat surfaces, data exposure
 risks, and denial-of-service potential. This skill systematically audits the
@@ -44,7 +46,7 @@ remediation plan.
 - `quick` — high-severity checks only (fastest, for iterative use)
 - No argument — run `full`
 
-Read `gameworks references/technical-preferences.md` to determine:
+Read `docs/technical-preferences.md` to determine:
 - Engine and language (affects which patterns to search for)
 - Target platforms (affects which attack surfaces apply)
 - Whether multiplayer/networking is in scope
@@ -53,7 +55,7 @@ Read `gameworks references/technical-preferences.md` to determine:
 
 ## Phase 2: Spawn Security Engineer
 
-Spawn `security-engineer` via Task. Pass:
+Spawn `security-engineer` with delegate_task. Pass:
 - The audit scope/mode
 - Engine and language from technical preferences
 - A manifest of all source directories: `src/`, `assets/data/`, any config files
@@ -73,7 +75,7 @@ The security-engineer evaluates each of the following. Skip categories not appli
 - Does the game trust numeric values from save files without bounds checking?
 - Are there any eval() or dynamic code execution calls near save loading?
 
-Grep patterns: `File.open`, `load`, `deserialize`, `JSON.parse`, `from_json`, `read_file` — check each for validation.
+search_files queries: `File.open`, `load`, `deserialize`, `JSON.parse`, `from_json`, `read_file` — check each for validation.
 
 ### Category 2: Network and Multiplayer Security (skip if single-player only)
 - Is game state authoritative on the server, or does the client dictate outcomes?
@@ -83,7 +85,7 @@ Grep patterns: `File.open`, `load`, `deserialize`, `JSON.parse`, `from_json`, `r
 - Are authentication tokens handled correctly (never sent in plaintext)?
 - Does the game expose any debug endpoints in release builds?
 
-Grep for: `recv`, `receive`, `PacketPeer`, `socket`, `NetworkedMultiplayerPeer`, `rpc`, `rpc_id` — check each call site for validation.
+Use search_files for: `recv`, `receive`, `PacketPeer`, `socket`, `NetworkedMultiplayerPeer`, `rpc`, `rpc_id` — check each call site for validation.
 
 ### Category 3: Input Validation
 - Are any player-supplied strings used in file paths? (path traversal)
@@ -91,7 +93,7 @@ Grep for: `recv`, `receive`, `PacketPeer`, `socket`, `NetworkedMultiplayerPeer`,
 - Are numeric inputs (e.g., item quantities, character stats) bounds-checked before use?
 - Are achievement/stat values checked before being written to any backend?
 
-Grep for: `get_input`, `Input.get_`, `input_map`, user-facing text fields — check validation.
+Use search_files for: `get_input`, `Input.get_`, `input_map`, user-facing text fields — check validation.
 
 ### Category 4: Data Exposure
 - Are any API keys, credentials, or secrets hardcoded in `src/` or `assets/`?
@@ -99,7 +101,7 @@ Grep for: `get_input`, `Input.get_`, `input_map`, user-facing text fields — ch
 - Does the game log sensitive player data to disk or console?
 - Are any internal file paths or system information exposed to players?
 
-Grep for: `api_key`, `secret`, `password`, `token`, `private_key`, `DEBUG`, `print(` in release-facing code.
+Use search_files for: `api_key`, `secret`, `password`, `token`, `private_key`, `DEBUG`, `print(` in release-facing code.
 
 ### Category 5: Cheat and Anti-Tamper Vectors
 - Are gameplay-critical values stored only in memory, not in easily-editable files?
@@ -114,7 +116,7 @@ Note: Client-side anti-cheat is largely unenforceable. Focus on server-side vali
 - Do any plugins have known CVEs in the version being used?
 - Are plugin sources verified (official marketplace, reviewed repository)?
 
-Glob for: `addons/`, `plugins/`, `third_party/`, `vendor/` — list all external dependencies.
+search_files `file_glob` for: `addons/`, `plugins/`, `third_party/`, `vendor/` — list all external dependencies.
 
 ---
 

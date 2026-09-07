@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /gate-check
 
+**Model tier:** Heavy
+
 ## Skill Summary
 
 `/gate-check` validates whether the project is ready to advance to the next
@@ -17,7 +19,7 @@ critical gate-keeping skill in the pipeline.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings (numbered Phase N or ## sections)
 - [ ] Contains verdict keywords: PASS, CONCERNS, FAIL
 - [ ] Documents explicit stage-transition authorization, separate from approval of earlier work; no exact write-question wording is required
@@ -45,7 +47,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 6. If PASS: skill asks "May I update `production/stage.txt` to 'Systems Design'?"
 
 **Assertions:**
-- [ ] Skill uses Glob or Read to verify `design/gdd/game-concept.md` exists before marking it checked
+- [ ] Skill uses search_files or read_file to verify `design/gdd/game-concept.md` exists before marking it checked
 - [ ] Output includes a "Required Artifacts" section with check status per item
 - [ ] Output includes a "Quality Checks" section with check status per item
 - [ ] Output includes a "Verdict" line with one of PASS / CONCERNS / FAIL
@@ -140,18 +142,20 @@ Verified automatically by `/skill-test static` — no fixture needed.
 
 **Expected behavior:**
 1. Skill reads review mode — determines `full`
-2. Skill spawns all 4 PHASE-GATE director prompts in parallel:
+2. Skill spawns all 4 PHASE-GATE directors in parallel with `delegate_task`:
    - CD-PHASE-GATE (creative-director)
    - TD-PHASE-GATE (technical-director)
    - PR-PHASE-GATE (producer)
    - AD-PHASE-GATE (art-director)
-3. If one director returns CONCERNS → overall gate verdict is at minimum CONCERNS
-4. All 4 verdicts are collected before producing final output
+3. Skill parses the first line of each response for `[GATE-ID]: TOKEN`
+4. If one director returns CONCERNS → overall gate verdict is at minimum CONCERNS
+5. All 4 verdicts are collected before producing final output
 
 **Assertions (5a):**
 - [ ] Skill reads review-mode before deciding which directors to spawn
-- [ ] All 4 PHASE-GATE director prompts are spawned (not just 1 or 2)
+- [ ] All 4 PHASE-GATE directors are spawned with `delegate_task` (not just 1 or 2)
 - [ ] Directors are spawned in parallel (simultaneous, not sequential)
+- [ ] First line of each response is parsed as `[GATE-ID]: TOKEN`
 - [ ] A CONCERNS verdict from any one director propagates to overall verdict
 - [ ] Verdict is NOT auto-PASS if any director returns CONCERNS or REJECT
 

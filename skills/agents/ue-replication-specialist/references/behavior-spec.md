@@ -5,7 +5,7 @@
 ## Agent Summary
 - **Domain**: Property replication (UPROPERTY Replicated/ReplicatedUsing), RPCs (Server/Client/NetMulticast), client prediction and reconciliation, net relevancy and always-relevant settings, net serialization (FArchive/NetSerialize), bandwidth optimization and replication frequency tuning
 - **Does NOT own**: Gameplay logic being replicated (gameplay-programmer), server infrastructure and hosting (devops-engineer), GAS-specific prediction (ue-gas-specialist handles GAS net prediction)
-- **Model tier**: Sonnet
+- **Model tier**: Medium
 - **Gate IDs**: None; escalates security-relevant replication concerns to lead-programmer
 
 ---
@@ -13,8 +13,8 @@
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references replication, RPCs, client prediction, bandwidth)
-- [ ] `Hermes tools:` list matches the agent's role (Read/Write for C++ and Blueprint source files; no infrastructure or deployment tools)
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list matches the agent's role (read_file/write_file/patch for C++ and Blueprint source files; no infrastructure or deployment tools)
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over server infrastructure, game server architecture, or gameplay logic correctness
 
 ---

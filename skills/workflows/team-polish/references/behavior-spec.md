@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /team-polish
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 Orchestrates the polish team through a six-phase pipeline: performance assessment
@@ -24,7 +26,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 ## Static Assertions (Structural)
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: READY FOR RELEASE, NEEDS MORE WORK
 - [ ] Contains "File Write Protocol" section
@@ -69,7 +71,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 **Assertions:**
 - [ ] performance-analyst is spawned first in Phase 1 before any other agents
 - [ ] `clarify` appears after Phase 1 output and before Phases 2/3/4 launch
-- [ ] Phases 3 and 4 Task calls are issued at the same time as Phase 2 (not after Phase 2 completes)
+- [ ] Phases 3 and 4 delegate_task calls are issued at the same time as Phase 2 (not after Phase 2 completes)
 - [ ] engine-programmer is NOT spawned when Phase 1 finds no engine-level root causes
 - [ ] qa-tester (Phase 5) is not launched until the parallel phases complete and user approves
 - [ ] Phase 6 verdict is based on comparison of metrics against defined budgets
@@ -153,7 +155,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 **Assertions:**
 - [ ] engine-programmer is NOT spawned in Phase 2 unless Phase 1 explicitly identifies an engine-level root cause
 - [ ] engine-programmer is spawned in Phase 2 when Phase 1 identifies an engine-level root cause
-- [ ] engine-programmer and performance-analyst Task calls in Phase 2 are issued simultaneously (not sequentially)
+- [ ] engine-programmer and performance-analyst delegate_task calls in Phase 2 are issued simultaneously (not sequentially)
 - [ ] Phases 3 and 4 also run in parallel with Phase 2 (not deferred until Phase 2 completes)
 - [ ] engine-programmer's output includes profiler validation of the fix
 - [ ] qa-tester in Phase 5 runs regression tests that cover the engine-level change

@@ -18,6 +18,8 @@ metadata:
 
 # Adopt — Brownfield Template Adoption
 
+**Model tier:** Medium
+
 This skill audits an existing project's artifacts for **format compliance** with
 the template's skill pipeline, then produces a prioritised migration plan.
 
@@ -57,9 +59,9 @@ Then read silently before presenting anything else.
 - Count GDD files: `design/gdd/*.md` (excluding game-concept.md and systems-index.md)
 - Count ADR files: `docs/architecture/adr-*.md`
 - Count story files: `production/epics/**/*.md` (excluding EPIC.md)
-- `gameworks references/technical-preferences.md` — engine configured?
+- `docs/technical-preferences.md` — engine configured?
 - `docs/engine-reference/` — engine reference docs present?
-- Glob `docs/adoption-plan-*.md` — note the filename of the most recent prior plan if any exist
+- Use search_files with `file_glob="docs/adoption-plan-*.md"` — note the filename of the most recent prior plan if any exist
 
 ### Infer phase (if no stage.txt)
 Use the same heuristic as `/project-stage-detect`:
@@ -132,7 +134,7 @@ if the Status section exists.
 
 If `design/gdd/systems-index.md` exists:
 
-1. **Parenthetical status values** — Grep for any Status cell containing
+1. **Parenthetical status values** — Use search_files for any Status cell containing
    parentheses: `"Needs Revision ("`, `"In Progress ("`, etc.
    These break exact-string matching in `/gate-check`, `/create-stories`,
    and `/architecture-review`. **BLOCKING.**
@@ -168,7 +170,7 @@ For each story file found:
 
 ### 2f: Technical Preferences Audit
 
-Read `gameworks references/technical-preferences.md`. Check each field for `[TO BE CONFIGURED]`:
+Read `docs/technical-preferences.md`. Check each field for `[TO BE CONFIGURED]`:
 - Engine, Language, Rendering, Physics → HIGH if unconfigured (ADR skills fail)
 - Naming conventions → MEDIUM
 - Performance budgets → MEDIUM

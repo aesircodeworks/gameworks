@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Parse Arguments
 
+**Model tier:** Medium
+
 Determine the mode from the argument:
 
 - No keyword → **Description Mode**: generate a structured bug report from the provided description
@@ -33,7 +35,7 @@ If no argument is provided, ask the user for a bug description before proceeding
 
 1. **Parse the description** for key information: what broke, when, how to reproduce it, and what the expected behavior is.
 
-2. **Search the codebase** for related files using Grep/Glob to add context (affected system, likely files).
+2. **Search the codebase** for related files using search_files to add context (affected system, likely files).
 
 3. **Draft the bug report**:
 
@@ -103,7 +105,7 @@ If no argument is provided, ask the user for a bug description before proceeding
 
 Read `production/qa/bugs/[BUG-ID].md`. Extract the reproduction steps and expected result.
 
-1. **Re-run reproduction steps** — use Grep/Glob to check whether the root cause code path still exists as described. If the fix removed or changed it, note the change.
+1. **Re-run reproduction steps** — use search_files to check whether the root cause code path still exists as described. If the fix removed or changed it, note the change.
 2. **Run the related test** — if the bug's system has a test file in `tests/`, run it via Bash and report pass/fail.
 3. **Check for regression** — grep the codebase for any new occurrence of the pattern that caused the bug.
 

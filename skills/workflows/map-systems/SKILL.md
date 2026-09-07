@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 ## Parse Arguments
@@ -50,7 +52,7 @@ for systems decomposition.
 - Read `design/gdd/game-pillars.md` — pillars constrain priority and scope
 - Read `design/gdd/systems-index.md` — if exists, **resume** from where it left off
   (update, don't recreate from scratch)
-- Glob `design/gdd/*.md` — check which system GDDs already exist
+- Use search_files with `file_glob="design/gdd/*.md"` — check which system GDDs already exist
 
 **If the systems index already exists:**
 - Read it and present current status to the user
@@ -159,7 +161,7 @@ dependencies I'm missing or that should be removed?"
 - `lean` → skip (not a PHASE-GATE). Note: "TD-SYSTEM-BOUNDARY skipped — Lean mode." Proceed to priority assignment.
 - `full` → spawn as normal.
 
-**After dependency mapping is approved, spawn `technical-director` via Task using gate TD-SYSTEM-BOUNDARY (`gameworks references/director-gates.md`) before proceeding to priority assignment.**
+**After dependency mapping is approved, spawn `technical-director` with delegate_task using gate TD-SYSTEM-BOUNDARY (`gameworks references/director-gates.md`) before proceeding to priority assignment.**
 
 Pass: the dependency map summary, layer assignments, bottleneck systems list, any circular dependency resolutions.
 
@@ -203,7 +205,7 @@ Pure technical necessity ("X depends on Y") is insufficient alone when the syste
 - `lean` → skip (not a PHASE-GATE). Note: "PR-SCOPE skipped — Lean mode." Proceed to writing the systems index.
 - `full` → spawn as normal.
 
-**After priorities are approved, spawn `producer` via Task using gate PR-SCOPE (`gameworks references/director-gates.md`) before writing the index.**
+**After priorities are approved, spawn `producer` with delegate_task using gate PR-SCOPE (`gameworks references/director-gates.md`) before writing the index.**
 
 Pass: total system count per milestone tier, estimated implementation volume per tier (system count × average complexity), team size, stated project timeline.
 
@@ -251,7 +253,7 @@ Wait for approval. Write the file only after "yes."
 - `lean` → skip (not a PHASE-GATE). Note: "CD-SYSTEMS skipped — Lean mode." Proceed to Phase 7 next steps.
 - `full` → spawn as normal.
 
-**After the systems index is written, spawn `creative-director` via Task using gate CD-SYSTEMS (`gameworks references/director-gates.md`).**
+**After the systems index is written, spawn `creative-director` with delegate_task using gate CD-SYSTEMS (`gameworks references/director-gates.md`).**
 
 Pass: systems index path, game pillars and core fantasy (from `design/gdd/game-concept.md`), MVP priority tier system list.
 

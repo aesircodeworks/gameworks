@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: GDExtension API, godot-cpp C++ bindings, godot-rust bindings, native library integration, and native performance optimization.
 Does NOT own: GDScript code (gdscript-specialist), shader code (godot-shader-specialist).
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references GDExtension / godot-cpp / native bindings)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, terminal, search_files
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over GDScript or shader authoring
 
 ---

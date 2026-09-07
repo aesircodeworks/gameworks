@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: SFX specs, audio events, mixing parameters, and sound category definitions.
 Does NOT own: music composition direction (audio-director), code implementation of audio systems.
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references SFX / audio events / mixing)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Glob, Grep — does NOT include engine code execution tools
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, search_files — does NOT include engine code execution tools
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over music direction or audio code implementation
 
 ---

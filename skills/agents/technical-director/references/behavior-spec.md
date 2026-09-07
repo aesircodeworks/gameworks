@@ -5,7 +5,7 @@
 ## Agent Summary
 **Domain owned:** System architecture decisions, technical feasibility assessment, ADR oversight and approval, engine risk evaluation, technical phase gate.
 **Does NOT own:** Game design decisions (creative-director / game-designer), creative direction, visual art style, production scheduling (producer).
-**Model tier:** Opus (multi-document synthesis, high-stakes architecture and phase gate verdicts).
+**Model tier:** Heavy (multi-document synthesis, high-stakes architecture and phase gate verdicts).
 **Gate IDs handled:** TD-SYSTEM-BOUNDARY, TD-FEASIBILITY, TD-ARCHITECTURE, TD-ADR, TD-ENGINE-RISK, TD-PHASE-GATE.
 
 ---
@@ -15,8 +15,8 @@
 Verified by reading the agent's `skill_view('technical-director')` frontmatter:
 
 - [ ] `description:` field is present and domain-specific (references architecture, feasibility, ADR — not generic)
-- [ ] `Hermes tools:` list may include Read for architecture documents; Bash only if required for technical checks
-- [ ] Model tier is `claude-opus-4-6` per coordination-rules.md (directors with gate synthesis = Opus)
+- [ ] `Hermes tools:` list may include read_file for architecture documents; terminal only if required for technical checks
+- [ ] Model tier is Heavy (directors with gate synthesis = Heavy)
 - [ ] Agent definition does not claim authority over game design decisions or creative direction
 
 ---

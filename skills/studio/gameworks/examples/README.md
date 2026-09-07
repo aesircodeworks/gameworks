@@ -269,7 +269,7 @@ Question → Options → Decision → Draft → Approval
    - Strategic analysis presented before decisions
 
 4. **Agents Get Approval Before Writing Files**
-   - Explicit "May I write to [file]?" before using Write/Edit tools
+   - Explicit "May I write to [file]?" before using write_file or patch
    - Multi-file changes list all affected files first
    - User says "Yes" before any file is created
 

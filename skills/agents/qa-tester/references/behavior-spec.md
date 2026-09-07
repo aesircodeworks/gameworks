@@ -6,7 +6,7 @@
 - **Domain**: Detailed test case authoring, bug reports (structured format), test execution documentation, regression checklists, smoke check execution docs, test evidence recording per the project's coding standards
 - **Does NOT own**: Test strategy and test plan design (qa-lead), implementation fixes for found bugs (appropriate programmer), QA process architecture (qa-lead)
 - **Category**: qa
-- **Model tier**: Sonnet
+- **Model tier**: Light
 - **Gate IDs**: None; flags ambiguous acceptance criteria to qa-lead rather than resolving independently
 
 ---
@@ -14,8 +14,8 @@
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references test cases, bug reports, test execution, regression testing)
-- [ ] `Hermes tools:` list matches the agent's role (Read/Write for tests/ and production/qa/evidence/; no source code editing tools)
-- [ ] Model tier is Sonnet (default for QA specialists)
+- [ ] `Hermes tools:` list matches the agent's role (read_file/write_file/patch for tests/ and production/qa/evidence/; no source code editing tools)
+- [ ] Model tier: Light
 - [ ] Agent definition does not claim authority over test strategy, fix implementation, or acceptance criterion definition
 
 ---

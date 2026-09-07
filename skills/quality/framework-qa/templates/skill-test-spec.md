@@ -5,6 +5,8 @@
 > **Category**: [gate | review | authoring | readiness | pipeline | analysis | team | sprint | utility]
 > **Priority**: [critical | high | medium | low]
 > **Spec written**: [YYYY-MM-DD]
+> **Skill path**: `skills/<category>/[skill-name]/SKILL.md`
+> **Model tier**: [Light | Medium | Heavy]
 
 ## Skill Summary
 
@@ -14,13 +16,16 @@
 
 ## Static Assertions
 
-These should pass before any behavioral testing:
+These should pass before any behavioral testing (`/skill-test static` — 7 checks):
 
-- [ ] Frontmatter has all required fields (`name`, `description`, `argument-hint`, `user-invocable`, `allowed-tools`)
+- [ ] Frontmatter has required fields only: `name`, `description`, `metadata.hermes`
 - [ ] 2+ phase headings found
 - [ ] At least one verdict keyword present (`PASS`, `FAIL`, `CONCERNS`, `APPROVED`, `BLOCKED`, `COMPLETE`, `READY`)
-- [ ] If `allowed-tools` includes Write/Edit: `"May I write"` language present
+- [ ] If the body instructs `write_file` or `patch`: scoped write-authorization language is present
 - [ ] Next-step handoff section present at end
+- [ ] `metadata.hermes.tags` includes a framework tag (e.g. `aesir-gameworks`) or `related_skills` is a list
+- [ ] `description` is non-empty and states when to use; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
+- [ ] **Model tier: Light**, **Medium**, or **Heavy** is stated (see `coordination-rules.md`)
 
 ---
 
@@ -131,7 +136,7 @@ These should pass before any behavioral testing:
 
 ## Protocol Compliance
 
-- [ ] Uses `"May I write"` before any file writes (or is read-only and skips this)
+- [ ] Uses scoped write authorization before `write_file` / `patch` (or is read-only and skips this)
 - [ ] Presents findings/draft to user before requesting approval
 - [ ] Ends with a recommended next step or follow-up action
 - [ ] Does not auto-create files without user approval

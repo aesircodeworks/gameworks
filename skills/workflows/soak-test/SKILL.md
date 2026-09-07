@@ -18,6 +18,8 @@ metadata:
 
 # Soak Test
 
+**Model tier:** Medium
+
 A soak test (also called an endurance test) is an extended play session run
 with specific observation goals. Unlike a smoke check (broad critical path,
 ~10 min) or a single-feature playtest (~30 min), a soak test runs for **30
@@ -62,11 +64,11 @@ human does the actual playing.**
 ## 2. Load Context
 
 Read:
-- `gameworks references/technical-preferences.md` — engine (for engine-specific memory
+- `docs/technical-preferences.md` — engine (for engine-specific memory
   monitoring guidance), performance budgets (memory ceiling, target FPS)
 - `design/gdd/game-concept.md` — intended session length (for comparison against
   soak duration), core loop description
-- Most recent file in `production/playtests/` — prior playtest findings
+- Most recent file in `production/qa/playtests/` — prior playtest findings
   (to avoid re-documenting known issues)
 - Most recent file in `production/qa/qa-plan-*.md` — current sprint test coverage
   (to understand what has been formally tested vs. what the soak covers)

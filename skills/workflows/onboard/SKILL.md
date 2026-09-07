@@ -18,9 +18,13 @@ metadata:
 
 ## Phase 1: Load Project Context
 
-Read CLAUDE.md for project overview and standards.
+**Model tier:** Light
 
-Read the relevant agent definition from `(game-workspace)/agents/` if a specific role is specified.
+Read `AGENTS.md` for project overview and standards.
+
+Read `docs/technical-preferences.md` if present for engine, language, and specialist routing. If the file is missing, treat the engine as unset.
+
+If a specific role is specified, load that role skill from the installed profile with `skill_view('<role>')` (`skills/agents/<role>/SKILL.md`). Do not read `(game-workspace)/agents/` — role skills live in the profile, not the game workspace.
 
 ---
 
@@ -59,7 +63,7 @@ Read recent changes (git log if available) to understand current momentum.
 |------|---------|--------------|
 
 ## Current Standards and Conventions
-[Summary of conventions relevant to this role from CLAUDE.md and agent definition]
+[Summary of conventions relevant to this role from `AGENTS.md`, `docs/technical-preferences.md`, and the role skill]
 
 ## Current State of Your Area
 [What has been built, what is in progress, what is planned next]

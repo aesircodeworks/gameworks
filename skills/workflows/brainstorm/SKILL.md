@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 1. **Parse the argument** for an optional genre/theme hint (e.g., `roguelike`,
@@ -211,7 +213,7 @@ Repeat until the user selects [A] Lock these in.
 - `lean` → skip both (not PHASE-GATEs). Note: "CD-PILLARS skipped — Lean mode. AD-CONCEPT-VISUAL skipped — Lean mode." Proceed to Phase 5.
 - `full` → spawn as normal.
 
-**After pillars and anti-pillars are agreed, spawn BOTH `creative-director` AND `art-director` via Task in parallel before moving to Phase 5. Issue both Task calls simultaneously — do not wait for one before starting the other.**
+**After pillars and anti-pillars are agreed, spawn BOTH `creative-director` AND `art-director` with delegate_task in parallel before moving to Phase 5. Issue both delegate_task calls simultaneously — do not wait for one before starting the other.**
 
 - **`creative-director`** — gate **CD-PILLARS** (`gameworks references/director-gates.md`)
   Pass: full pillar set with design tests, anti-pillars, core fantasy, unique hook.
@@ -269,7 +271,7 @@ Ground the concept in reality:
 - `lean` → skip (not a PHASE-GATE). Note: "TD-FEASIBILITY skipped — Lean mode." Proceed directly to scope tier definition.
 - `full` → spawn as normal.
 
-**After identifying biggest technical risks, spawn `technical-director` via Task using gate TD-FEASIBILITY (`gameworks references/director-gates.md`) before scope tiers are defined.**
+**After identifying biggest technical risks, spawn `technical-director` with delegate_task using gate TD-FEASIBILITY (`gameworks references/director-gates.md`) before scope tiers are defined.**
 
 Pass: core loop description, platform target, engine choice (or "undecided"), list of identified technical risks.
 
@@ -280,7 +282,7 @@ Present the assessment to the user. If HIGH RISK, offer to revisit scope before 
 - `lean` → skip (not a PHASE-GATE). Note: "PR-SCOPE skipped — Lean mode." Proceed to document generation.
 - `full` → spawn as normal.
 
-**After scope tiers are defined, spawn `producer` via Task using gate PR-SCOPE (`gameworks references/director-gates.md`).**
+**After scope tiers are defined, spawn `producer` with delegate_task using gate PR-SCOPE (`gameworks references/director-gates.md`).**
 
 Pass: full vision scope, MVP definition, timeline estimate, team size.
 

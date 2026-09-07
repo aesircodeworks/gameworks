@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /design-system
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/design-system` guides the user through section-by-section authoring of a Game
@@ -29,7 +31,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: APPROVED, NEEDS REVISION, MAJOR REVISION
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
@@ -194,7 +196,7 @@ In `solo` mode: CD-GDD-ALIGN is skipped. Output notes:
 ## Coverage Notes
 
 - The 8 required sections are validated against the project's design document
-  standards defined in `CLAUDE.md` — not re-enumerated here.
+  standards defined in `AGENTS.md` — not re-enumerated here.
 - The skill's internal section-ordering logic (which section to author first) is
   not independently tested — the order follows the standard GDD template.
 - Pillar alignment checking within CD-GDD-ALIGN is evaluated holistically by

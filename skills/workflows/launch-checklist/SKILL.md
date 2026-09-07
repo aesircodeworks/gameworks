@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 > **Explicit invocation only**: This skill should only run when the user explicitly requests it with `/launch-checklist`. Do not auto-invoke based on context matching.
 
 ## Phase 1: Parse Arguments
@@ -26,7 +28,7 @@ Read the argument for the launch date or `dry-run` mode. Dry-run mode generates 
 
 ## Phase 2: Gather Project Context
 
-- Read `CLAUDE.md` for tech stack, target platforms, and team structure
+- Read `AGENTS.md` for tech stack, target platforms, and team structure
 - Read the latest milestone in `production/milestones/`
 - Read any existing release checklist in `production/releases/`
 - Read the content calendar in `design/live-ops/content-calendar.md` if it exists

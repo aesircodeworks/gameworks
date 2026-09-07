@@ -2,8 +2,11 @@
 
 # Technical Preferences
 
-<!-- Populated by /setup-engine. Updated as the user makes decisions throughout development. -->
-<!-- All agents reference this file for project-specific standards and conventions. -->
+<!-- TEMPLATE ONLY. Lives in the installed profile. /setup-engine and project-bootstrap
+     copy this file to the game workspace as docs/technical-preferences.md and fill it there.
+     Do not write game-specific values into this profile copy. -->
+<!-- Populated by /setup-engine in the game workspace. Updated as the user makes decisions. -->
+<!-- All agents reference the game-workspace copy for project-specific standards. -->
 
 ## Engine & Language
 

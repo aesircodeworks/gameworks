@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked, orchestrate the QA team through a structured testing cycle.
 
 **Decision Points:** At each phase transition, use `clarify` to present
@@ -44,8 +46,8 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: qa-lead` — Strategy, planning, classification, sign-off
-- `subagent_type: qa-tester` — Test case writing and bug report writing
+- Spawn `qa-lead` with `delegate_task` — Strategy, planning, classification, sign-off
+- Spawn `qa-tester` with `delegate_task` — Test case writing and bug report writing
 
 Always provide full context in each agent's prompt (story file paths, QA plan path, scope constraints). Launch independent qa-tester tasks in parallel where possible (e.g., multiple stories in Phase 5 can be scaffolded simultaneously).
 
@@ -56,8 +58,8 @@ Always provide full context in each agent's prompt (story file paths, QA plan pa
 Before doing anything else, gather the full scope:
 
 1. Detect the current sprint or feature scope from the argument:
-   - If argument is a sprint identifier (e.g., `sprint-03`): Glob `production/sprints/` for files matching `*[sprint-identifier]*.md`. Read the matched file. If multiple match, use the most recently modified.
-   - If argument is `feature: [system-name]`: glob story files tagged for that system
+   - If argument is a sprint identifier (e.g., `sprint-03`): Use search_files with `file_glob="production/sprints/*[sprint-identifier]*.md"`. Read the matched file. If multiple match, use the most recently modified.
+   - If argument is `feature: [system-name]`: use search_files for story files tagged for that system
    - If no argument: read `production/session-state/active.md` and `production/sprint-status.yaml` (if present) to infer the active sprint
 
 2. Read `production/stage.txt` to confirm the current project phase.
@@ -67,7 +69,7 @@ Before doing anything else, gather the full scope:
 
 ### Phase 2: QA Strategy (qa-lead)
 
-Spawn `qa-lead` via Task to review all in-scope stories and produce a QA strategy.
+Spawn `qa-lead` with delegate_task to review all in-scope stories and produce a QA strategy.
 
 Prompt the qa-lead to:
 - Read each story file
@@ -75,7 +77,7 @@ Prompt the qa-lead to:
 - Identify which stories require automated test evidence vs. manual QA
 - Flag any stories with missing acceptance criteria or missing test evidence that would block QA
 - Estimate manual QA effort (number of test sessions needed)
-- **Before assessing smoke status, check for an existing smoke check report**: Glob `production/qa/smoke-*.md` and read the most recently modified file (if found). If a report exists, use its verdict and findings directly — do not re-interview the user. If no report exists, note: "No prior smoke check report found — run `/smoke-check sprint` before proceeding." and set smoke check status to UNKNOWN (treat as PASS WITH WARNINGS for the purpose of continuing). Produce a smoke check verdict: **PASS** / **PASS WITH WARNINGS [list]** / **FAIL [list of failures]** / **UNKNOWN (no report found)**
+- **Before assessing smoke status, check for an existing smoke check report**: Use search_files with `file_glob="production/qa/smoke-*.md"` and read the most recently modified file (if found). If a report exists, use its verdict and findings directly — do not re-interview the user. If no report exists, note: "No prior smoke check report found — run `/smoke-check sprint` before proceeding." and set smoke check status to UNKNOWN (treat as PASS WITH WARNINGS for the purpose of continuing). Produce a smoke check verdict: **PASS** / **PASS WITH WARNINGS [list]** / **FAIL [list of failures]** / **UNKNOWN (no report found)**
 - Produce a strategy summary table and smoke check result:
 
   | Story | Type | Automated Required | Manual Required | Blocker? |
@@ -125,7 +127,7 @@ Write only after receiving approval.
 
 For each story requiring manual QA (Visual/Feel, UI, Integration without automated tests):
 
-Spawn `qa-tester` via Task for each story (run in parallel where possible), providing:
+Spawn `qa-tester` with delegate_task for each story (run in parallel where possible), providing:
 - The story file path
 - The relevant section of the QA plan for that story
 - The GDD acceptance criteria for the system being tested (if available)
@@ -165,7 +167,7 @@ options:
   - "BLOCKED — cannot test yet (reason)"
 ```
 
-After each FAIL result: use `clarify` to collect the failure description, then spawn `qa-tester` via Task to write a formal bug report in `production/qa/bugs/`.
+After each FAIL result: use `clarify` to collect the failure description, then spawn `qa-tester` with delegate_task to write a formal bug report in `production/qa/bugs/`.
 
 Bug report naming: `BUG-[NNN]-[short-slug].md` (increment NNN from existing bugs in the directory).
 
@@ -177,7 +179,7 @@ After collecting all results, summarize:
 
 ### Phase 6: QA Sign-Off Report
 
-Spawn `qa-lead` via Task to produce the sign-off report using all results from Phases 4–6.
+Spawn `qa-lead` with delegate_task to produce the sign-off report using all results from Phases 4–6.
 
 The sign-off report format:
 
@@ -220,7 +222,7 @@ Write only after receiving approval.
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

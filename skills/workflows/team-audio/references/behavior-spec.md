@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /team-audio
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 Orchestrates the audio team through a four-step pipeline: audio direction
@@ -26,7 +28,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 ## Static Assertions (Structural)
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 step/phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "File Write Protocol" section
@@ -50,7 +52,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 - GDD for the target feature exists at `design/gdd/combat.md`
 - Sound bible exists at `design/gdd/sound-bible.md`
 - Existing audio assets are listed in `assets/audio/`
-- Engine is configured in `gameworks references/technical-preferences.md`
+- Engine is configured in `docs/technical-preferences.md`
 - No accessibility gaps exist in the planned audio event list
 
 **Input:** `/team-audio combat`
@@ -73,8 +75,8 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 - [ ] Sound bible is read during context gathering (before Step 1) when it exists
 - [ ] audio-director is spawned before sound-designer or accessibility-specialist
 - [ ] `clarify` appears after Step 1 output and before Step 2 launch
-- [ ] sound-designer and accessibility-specialist Task calls are issued simultaneously in Step 2
-- [ ] technical-artist and engine specialist Task calls are issued simultaneously in Step 3
+- [ ] sound-designer and accessibility-specialist delegate_task calls are issued simultaneously in Step 2
+- [ ] technical-artist and engine specialist delegate_task calls are issued simultaneously in Step 3
 - [ ] gameplay-programmer is not launched until Step 3 `clarify` is approved
 - [ ] Audio design document is written to `design/gdd/audio-combat.md` (not another path)
 - [ ] Summary includes audio event count and estimated asset count
@@ -163,14 +165,14 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 ### Case 5: Engine Not Configured — Engine specialist step skipped gracefully
 
 **Fixture:**
-- Engine is NOT configured in `gameworks references/technical-preferences.md` (shows `[TO BE CONFIGURED]`)
+- Engine is NOT configured in `docs/technical-preferences.md` (shows `[TO BE CONFIGURED]`)
 - GDD for the target feature exists
 - Sound bible may or may not exist
 
 **Input:** `/team-audio boss encounter`
 
 **Expected behavior:**
-1. Context gathering: orchestrator reads `gameworks references/technical-preferences.md` and detects no engine is configured
+1. Context gathering: orchestrator reads `docs/technical-preferences.md` and detects no engine is configured
 2. Steps 1–2 proceed normally (audio-director, sound-designer, accessibility-specialist)
 3. Step 3: technical-artist is spawned normally; engine specialist spawn is SKIPPED
 4. Orchestrator notes in conversation: "Engine specialist not spawned — no engine configured in technical-preferences.md. Engine integration validation will be deferred until an engine is selected."
@@ -193,7 +195,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 - [ ] Context gathering (GDDs, sound bible, asset list) runs before any agent is spawned
 - [ ] `clarify` is used after every step output before the next step launches
-- [ ] Parallel spawning: Step 2 (sound-designer + accessibility-specialist) and Step 3 (technical-artist + engine specialist) issue all Task calls before waiting for results
+- [ ] Parallel spawning: Step 2 (sound-designer + accessibility-specialist) and Step 3 (technical-artist + engine specialist) issue all delegate_task calls before waiting for results
 - [ ] No files are written by the orchestrator directly — all writes are delegated to sub-agents
 - [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] BLOCKED status from any agent is surfaced immediately — not silently skipped

@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: Rendering pipeline, physics integration, memory management, resource loading, and core engine framework.
 Does NOT own: gameplay mechanics (gameplay-programmer), editor/debug tool UI (tools-programmer).
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references rendering / memory / engine core)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, terminal, search_files
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over gameplay mechanics or tool UI
 
 ---

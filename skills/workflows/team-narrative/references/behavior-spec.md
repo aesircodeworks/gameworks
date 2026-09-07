@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /team-narrative
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 Orchestrates the narrative team through a five-phase pipeline: narrative direction
@@ -25,7 +27,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 ## Static Assertions (Structural)
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "File Write Protocol" section
@@ -67,7 +69,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 **Assertions:**
 - [ ] narrative-director is spawned in Phase 1 before any other agents
 - [ ] `clarify` appears after Phase 1 output and before Phase 2 launch
-- [ ] world-builder and writer Task calls are issued simultaneously in Phase 2 (not sequentially)
+- [ ] world-builder and writer delegate_task calls are issued simultaneously in Phase 2 (not sequentially)
 - [ ] level-designer is not launched until Phase 2 `clarify` is approved
 - [ ] narrative-director is re-spawned in Phase 4 for consistency review
 - [ ] Phase 5 spawns all three agents (writer, localization-lead, world-builder) simultaneously
@@ -193,7 +195,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 ## Protocol Compliance
 
 - [ ] `clarify` is used after every phase output before the next phase launches
-- [ ] Parallel spawning: Phase 2 (world-builder + writer) and Phase 5 (writer + localization-lead + world-builder) issue all Task calls before waiting for results
+- [ ] Parallel spawning: Phase 2 (world-builder + writer) and Phase 5 (writer + localization-lead + world-builder) issue all delegate_task calls before waiting for results
 - [ ] No files are written by the orchestrator directly — all writes are delegated to sub-agents
 - [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] BLOCKED status from any agent is surfaced immediately — not silently skipped

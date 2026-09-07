@@ -25,7 +25,8 @@ This distribution repository and `$HERMES_HOME` are not game projects.
 
 ## Linked files
 
-- `templates/AGENTS.md` — game-workspace agent instructions (Hermes-native; rewritten from the CCGS local template)
+- `templates/AGENTS.md` — game-workspace Hermes context (Technology Stack placeholders). Copy to the game root as `AGENTS.md`.
+- `gameworks` `references/technical-preferences.md` — template only. Copy to the game workspace as `docs/technical-preferences.md` (leave placeholders until `/setup-engine`).
 
 ## Required behavior
 
@@ -33,3 +34,4 @@ This distribution repository and `$HERMES_HOME` are not game projects.
 2. Identify the exact paths to create.
 3. Obtain approval if the request has not already supplied it; ask about expanded scope.
 4. Write only approved paths, using `project-templates` for document scaffolds.
+5. Always create `AGENTS.md` from `templates/AGENTS.md` and `docs/technical-preferences.md` from the gameworks technical-preferences template unless those files already exist. Do not write engine values into the installed profile.

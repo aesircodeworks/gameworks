@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Determine Scope
 
+**Model tier:** Medium
+
 Read the argument:
 
 - System name → focus profiling on that specific system
@@ -27,7 +29,7 @@ Read the argument:
 
 ## Phase 2: Load Performance Budgets
 
-Check for existing performance targets in design docs or CLAUDE.md:
+Check for existing performance targets in design docs or AGENTS.md:
 
 - Target FPS (e.g., 60fps = 16.67ms frame budget)
 - Memory budget (total and per-system)

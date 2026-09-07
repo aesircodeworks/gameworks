@@ -23,13 +23,13 @@
 #             /create-stories (to embed architectural constraints in stories)
 #             /dev-story (to check implementation against accepted stances)
 #
-# SEARCH PATTERNS (for skills using Grep):
-#   All state owners:       Grep pattern="^  - state:" path="docs/registry/architecture.yaml"
-#   Who owns player_health: Grep pattern="state: player_health"
-#   All signal contracts:   Grep pattern="pattern: signal"
-#   Budget for combat:      Grep pattern="system: combat"
-#   All forbidden patterns: Grep pattern="^  - pattern:" (forbidden_patterns section)
-#   Superseded entries:     Grep pattern="status: superseded"
+# SEARCH PATTERNS (for skills using search_files):
+#   All state owners:       search_files query="^  - state:" file_glob="docs/registry/architecture.yaml"
+#   Who owns player_health: search_files query="state: player_health"
+#   All signal contracts:   search_files query="pattern: signal"
+#   Budget for combat:      search_files query="system: combat"
+#   All forbidden patterns: search_files query="^  - pattern:" (forbidden_patterns section)
+#   Superseded entries:     search_files query="status: superseded"
 
 version: 1
 last_updated: ""

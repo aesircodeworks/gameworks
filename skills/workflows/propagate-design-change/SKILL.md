@@ -18,6 +18,8 @@ metadata:
 
 # Propagate Design Change
 
+**Model tier:** Medium
+
 When a GDD changes, architectural decisions written against it may no longer be
 valid. This skill finds every affected ADR, compares what the ADR assumed against
 what the GDD now says, and guides the user through resolution.
@@ -161,7 +163,7 @@ ADRs referencing this GDD: [M]
 - `lean` → skip. Note: "TD-CHANGE-IMPACT skipped — Lean mode." Proceed to Phase 7.
 - `full` → spawn as normal.
 
-Spawn `technical-director` via Task using gate **TD-CHANGE-IMPACT** (`gameworks references/director-gates.md`).
+Spawn `technical-director` with `delegate_task` using gate **TD-CHANGE-IMPACT** (`gameworks references/director-gates.md`). Parse the first line for `[TD-CHANGE-IMPACT]: TOKEN`.
 
 Pass: the full Design Change Impact Report from Phase 6 (change summary, all affected ADRs with their Still Valid / Needs Review / Likely Superseded classifications, and recommended actions).
 

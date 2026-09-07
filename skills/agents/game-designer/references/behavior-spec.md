@@ -5,7 +5,7 @@
 ## Agent Summary
 **Domain owned:** Core loop design, progression systems, combat mechanics rules, economy design, player-facing rules and interactions.
 **Does NOT own:** Code implementation (lead-programmer / gameplay-programmer), visual art (art-director), narrative lore and story (narrative-director — coordinates with), balance formula math (systems-designer — collaborates with).
-**Model tier:** Sonnet (individual system design authoring and review).
+**Model tier:** Medium (individual system design authoring and review).
 **Gate IDs handled:** Design review verdicts on mechanic specs (no named gate ID prefix — uses APPROVED / NEEDS REVISION vocabulary).
 
 ---
@@ -15,8 +15,8 @@
 Verified by reading the agent's `skill_view('game-designer')` frontmatter:
 
 - [ ] `description:` field is present and domain-specific (references core loop, progression, combat rules, economy, player-facing design — not generic)
-- [ ] `Hermes tools:` list is read-focused; includes Read for GDDs and design docs; no Bash unless design tooling requires it
-- [ ] Model tier is `claude-sonnet-4-6` per coordination-rules.md
+- [ ] `Hermes tools:` list is read-focused; includes read_file for GDDs and design docs; no terminal unless design tooling requires it
+- [ ] Model tier is Medium per coordination-rules.md
 - [ ] Agent definition does not claim authority over code implementation, visual art style, or standalone narrative lore decisions
 
 ---

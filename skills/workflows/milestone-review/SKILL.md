@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 0: Parse Arguments
 
+**Model tier:** Medium
+
 Extract the milestone name (`current` or a specific name) and resolve the review mode (once, store for all gate spawns this run):
 1. If `--review [full|lean|solo]` was passed → use that
 2. Else read `production/review-mode.txt` → use that value
@@ -123,7 +125,7 @@ Read all sprint reports for sprints within this milestone from `production/sprin
 - `lean` → skip (not a PHASE-GATE). Note: "PR-MILESTONE skipped — Lean mode." Present the Go/No-Go section without a producer verdict.
 - `full` → spawn as normal.
 
-Before generating the Go/No-Go recommendation, spawn `producer` via Task using gate **PR-MILESTONE** (`gameworks references/director-gates.md`).
+Before generating the Go/No-Go recommendation, spawn `producer` with delegate_task using gate **PR-MILESTONE** (`gameworks references/director-gates.md`).
 
 Pass: milestone name and target date, current completion percentage, blocked story count, velocity data from sprint reports (if available), list of cut candidates.
 

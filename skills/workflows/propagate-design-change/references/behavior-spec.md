@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /propagate-design-change
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/propagate-design-change` handles GDD revision cascades. When a GDD is updated,
@@ -12,8 +14,9 @@ proposes edits for each affected artifact and asks "May I write" per artifact
 before making any modification.
 
 The skill is read-only during analysis and write-gated per artifact during the
-update phase. It has no director gates — the analysis itself is mechanical
-tracing, not a creative review.
+update phase. In `full` review mode, **TD-CHANGE-IMPACT** (`technical-director`)
+runs after the impact report and before ADR dispositions. Parse the first line
+for `[TD-CHANGE-IMPACT]: TOKEN`. Lean and solo skip the gate.
 
 ---
 
@@ -28,20 +31,26 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED, NO IMPACT
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff at the end
 - [ ] Documents that changes are proposed, not applied automatically
+- [ ] Documents gate behavior: TD-CHANGE-IMPACT in full mode; skipped in lean/solo
 
 ---
 
 ## Director Gate Checks
 
-No director gates — this skill spawns no director gate agents during analysis.
-The impact report is a mechanical tracing operation; no creative or technical
-director review is required at the analysis stage.
+In `full` mode: spawn `technical-director` with `delegate_task` using gate
+**TD-CHANGE-IMPACT** after the Design Change Impact Report and before Phase 7
+resolution. Parse the first line for `[TD-CHANGE-IMPACT]: TOKEN`. APPROVE proceeds;
+CONCERNS surfaces via `clarify`; REJECT re-analyzes before ADR dispositions.
+
+In `lean` mode: skip. Note: "TD-CHANGE-IMPACT skipped — Lean mode."
+
+In `solo` mode: skip. Note: "TD-CHANGE-IMPACT skipped — Solo mode."
 
 ---
 
@@ -140,25 +149,27 @@ director review is required at the analysis stage.
 
 ---
 
-### Case 5: Director Gate — No gate spawned regardless of review mode
+### Case 5: Director Gate — TD-CHANGE-IMPACT in full mode; skipped in lean/solo
 
 **Fixture:**
-- A GDD has been revised with downstream references
-- `production/session-state/review-mode.txt` exists with `full`
+- A GDD has been revised with downstream ADR references
+- `production/review-mode.txt` exists with `full`
 
 **Input:** `/propagate-design-change design/gdd/[system].md`
 
 **Expected behavior:**
-1. Skill reads the GDD and traces downstream references
-2. Skill does NOT read `production/session-state/review-mode.txt`
-3. No director gate agents are spawned at any point
-4. Impact report is produced and per-artifact approval proceeds normally
+1. Skill reads the GDD, traces affected ADRs, and presents the impact report
+2. Skill reads `production/review-mode.txt` — determines `full`
+3. Skill spawns `technical-director` with `delegate_task` using gate **TD-CHANGE-IMPACT**
+4. Skill parses the first line for `[TD-CHANGE-IMPACT]: TOKEN`
+5. APPROVE → Phase 7 resolution; CONCERNS → `clarify`; REJECT → re-analyze, no ADR dispositions
+6. In lean/solo: skip with "TD-CHANGE-IMPACT skipped — Lean/Solo mode" and proceed to Phase 7
 
 **Assertions:**
-- [ ] No director gate agents are spawned (no CD-, TD-, PR-, AD- prefixed gates)
-- [ ] Skill does NOT read `production/session-state/review-mode.txt`
-- [ ] Output contains no "Gate: [GATE-ID]" or gate-skipped entries
-- [ ] Review mode has no effect on this skill's behavior
+- [ ] TD-CHANGE-IMPACT is spawned in full mode (not during analysis, after the impact report)
+- [ ] First-line gate token `[TD-CHANGE-IMPACT]: TOKEN` is parsed
+- [ ] REJECT blocks ADR disposition until re-analysis
+- [ ] Lean and solo skip the gate with an explicit skip note
 
 ---
 
@@ -168,7 +179,7 @@ director review is required at the analysis stage.
 - [ ] Impact report shown in full before any "May I write" ask
 - [ ] Accepts authorization for the stated downstream changeset without repeated per-artifact questions
 - [ ] In Progress stories flagged with elevated warning before their approval ask
-- [ ] No director gates — no review-mode.txt read
+- [ ] TD-CHANGE-IMPACT runs in full mode; skipped and noted in lean/solo
 - [ ] Ends with next-step handoff appropriate to verdict (COMPLETE or NO IMPACT)
 
 ---

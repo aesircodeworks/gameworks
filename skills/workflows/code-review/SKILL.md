@@ -18,13 +18,15 @@ metadata:
 
 ## Phase 1: Load Target Files
 
-Read the target file(s) in full. Read CLAUDE.md for project coding standards.
+**Model tier:** Medium
+
+Read the target file(s) in full. Read AGENTS.md for project coding standards.
 
 ---
 
 ## Phase 2: Identify Engine Specialists
 
-Read `gameworks references/technical-preferences.md`, section `## Engine Specialists`. Note:
+Read `docs/technical-preferences.md`, section `## Engine Specialists`. Note:
 
 - The **Primary** specialist (used for architecture and broad engine concerns)
 - The **Language/Code Specialist** (used when reviewing the project's primary language files)
@@ -99,7 +101,7 @@ Identify the system category (engine, gameplay, AI, networking, UI, tools) and e
 
 ## Phase 7: Specialist Reviews (Parallel)
 
-Spawn all applicable specialists simultaneously via Task — do not wait for one before starting the next.
+Spawn all applicable specialists simultaneously with delegate_task — do not wait for one before starting the next.
 
 ### Engine Specialists
 
@@ -114,7 +116,7 @@ Also spawn the **Primary Specialist** for any file touching engine architecture 
 
 ### QA Testability Review
 
-For Logic and Integration stories, also spawn `qa-tester` via Task in parallel with the engine specialists. Pass:
+For Logic and Integration stories, also spawn `qa-tester` with delegate_task in parallel with the engine specialists. Pass:
 - The implementation files being reviewed
 - The story's `## QA Test Cases` section (the pre-written test specs from qa-lead)
 - The story's `## Acceptance Criteria`

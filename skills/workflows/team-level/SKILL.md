@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 **Decision Points:** At each step transition, use `clarify` to present
@@ -49,13 +51,13 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: narrative-director` — Narrative purpose, characters, emotional arc
-- `subagent_type: world-builder` — Lore context, environmental storytelling, world rules
-- `subagent_type: level-designer` — Spatial layout, pacing, encounters, navigation
-- `subagent_type: systems-designer` — Enemy compositions, loot tables, difficulty balance
-- `subagent_type: art-director` — Visual theme, color palette, lighting, asset requirements
-- `subagent_type: accessibility-specialist` — Navigation clarity, colorblind safety, cognitive load
-- `subagent_type: qa-tester` — Test cases, boundary testing, playtest checklist
+- Spawn `narrative-director` with `delegate_task` — Narrative purpose, characters, emotional arc
+- Spawn `world-builder` with `delegate_task` — Lore context, environmental storytelling, world rules
+- Spawn `level-designer` with `delegate_task` — Spatial layout, pacing, encounters, navigation
+- Spawn `systems-designer` with `delegate_task` — Enemy compositions, loot tables, difficulty balance
+- Spawn `art-director` with `delegate_task` — Visual theme, color palette, lighting, asset requirements
+- Spawn `accessibility-specialist` with `delegate_task` — Navigation clarity, colorblind safety, cognitive load
+- Spawn `qa-tester` with `delegate_task` — Test cases, boundary testing, playtest checklist
 
 Always provide full context in each agent's prompt (game concept, pillars, existing level docs, narrative docs).
 
@@ -63,7 +65,7 @@ Always provide full context in each agent's prompt (game concept, pillars, exist
 
 ### Step 1: Narrative + Visual Direction (narrative-director + world-builder + art-director, parallel)
 
-Spawn all three agents simultaneously — issue all three Task calls before waiting for any result.
+Spawn all three agents simultaneously — issue all three delegate_task calls before waiting for any result.
 
 Spawn the `narrative-director` agent to:
 - Define the narrative purpose of this area (what story beats happen here?)
@@ -157,10 +159,10 @@ Spawn the `qa-tester` agent to:
 4. **Compile the level design document** combining all team outputs into the
    level design template format.
 
-After all subagent outputs are collected, spawn `level-designer` via Task to compile and write the final document:
+After all subagent outputs are collected, spawn `level-designer` with delegate_task to compile and write the final document:
 - Pass: all subagent outputs (verbatim), the level brief, game pillars, relevant GDD sections
 - Ask level-designer to compile a draft into the level design document format. The coordinator obtains any missing approval for `design/levels/[level-name].md`, then delegates the approved write; the child returns blockers instead of asking the user directly.
-- The orchestrator does NOT call Write directly for the final document.
+- The orchestrator does NOT call write_file directly for the final document.
 
 5. **Save to** `design/levels/[level-name].md` (handled by the level-designer subagent after user approval — see above).
 
@@ -172,7 +174,7 @@ After all subagent outputs are collected, spawn `level-designer` via Task to com
 ## File Write Protocol
 
 All file writes (level design docs, narrative docs, test checklists) are delegated
-to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+to sub-agents spawned with delegate_task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 Verdict: **COMPLETE** — level design document produced and all team outputs compiled.
 Verdict: **BLOCKED** — one or more agents blocked; partial report produced with unresolved items listed.
@@ -185,7 +187,7 @@ Verdict: **BLOCKED** — one or more agents blocked; partial report produced wit
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

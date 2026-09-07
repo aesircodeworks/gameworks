@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /story-readiness
 
+**Model tier:** Light
+
 ## Skill Summary
 
 `/story-readiness` validates that a story file is ready for a developer to
@@ -17,7 +19,7 @@ before any developer picks up a story.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings or numbered check sections
 - [ ] Contains verdict keywords: READY, NEEDS WORK, BLOCKED
 - [ ] Does NOT require "May I write" language (read-only skill)
@@ -178,7 +180,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 
 ## Protocol Compliance
 
-- [ ] Does NOT use Write or Edit tools (read-only skill)
+- [ ] Does NOT use write_file or patch (read-only skill)
 - [ ] Presents complete check results before verdict
 - [ ] Does not ask for approval (no file writes)
 - [ ] Ends with recommended next step (fix issues or proceed to implementation)

@@ -98,7 +98,7 @@ You (request approval):
 
 User: "Yes"
 
-You: [uses Write tool]
+You: [uses write_file]
      "Created design/gdd/crafting-system.md. Would you like me to run /design-review to validate it?"
 ```
 

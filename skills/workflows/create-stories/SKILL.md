@@ -18,6 +18,8 @@ metadata:
 
 # Create Stories
 
+**Model tier:** Medium
+
 A story is a single implementable behaviour — small enough to complete in one
 focused session, self-contained, and fully traceable to a GDD requirement and
 an ADR decision. Stories are what developers pick up. Epics are what architects
@@ -44,7 +46,7 @@ before every gate invocation.
 - `/create-stories [epic-slug]` — e.g. `/create-stories combat`
 - `/create-stories production/epics/combat/EPIC.md` — full path also accepted
 - No argument — ask: "Which epic would you like to break into stories?"
-  Glob `production/epics/*/EPIC.md` and list available epics with their status.
+  Use search_files with `file_glob="production/epics/*/EPIC.md"` and list available epics with their status.
 
 ---
 
@@ -118,13 +120,13 @@ For each story, determine:
 - `lean` → skip (not a PHASE-GATE). Note: "QL-STORY-READY skipped — Lean mode." Proceed to Step 5 (present stories for review).
 - `full` → spawn as normal.
 
-After decomposing all stories (Step 4 complete) but before presenting them for write approval, spawn `qa-lead` via Task using gate **QL-STORY-READY** (`gameworks references/director-gates.md`).
+After decomposing all stories (Step 4 complete) but before presenting them for write approval, spawn `qa-lead` with delegate_task using gate **QL-STORY-READY** (`gameworks references/director-gates.md`).
 
 Pass: the full story list with acceptance criteria, story types, and TR-IDs; the epic's GDD acceptance criteria for reference.
 
 Present the QA lead's assessment. For each story flagged as GAPS or INADEQUATE, revise the acceptance criteria before proceeding — stories with untestable criteria cannot be implemented correctly. Once all stories reach ADEQUATE, proceed.
 
-**Before generating test specs**: Glob `production/qa/qa-plan-*.md` for the most recently modified file. If found, read it and check whether it contains test case specifications for the stories in this epic (look for story titles or slugs in the plan's Automated Tests Required section). If matching specs exist:
+**Before generating test specs**: Use search_files with `file_glob="production/qa/qa-plan-*.md"` for the most recently modified file. If found, read it and check whether it contains test case specifications for the stories in this epic (look for story titles or slugs in the plan's Automated Tests Required section). If matching specs exist:
 - Use `clarify`:
   - Prompt: "A QA plan exists at [path] with test specs for some of these stories. How do you want to proceed?"
   - Options:

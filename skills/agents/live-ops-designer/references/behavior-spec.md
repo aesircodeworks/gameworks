@@ -5,7 +5,7 @@
 ## Agent Summary
 - **Domain**: Post-launch content strategy, seasonal events (design and structure), battle pass design, content cadence planning, player retention mechanic design, live service feature roadmaps
 - **Does NOT own**: Economy math and reward value calculations (economy-designer), analytics tracking implementation (analytics-engineer), narrative content within events (writer), code implementation
-- **Model tier**: Sonnet
+- **Model tier**: Medium
 - **Gate IDs**: None; escalates monetization concerns to creative-director for brand/ethics review
 
 ---
@@ -13,8 +13,8 @@
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references live ops, seasonal events, battle pass, retention)
-- [ ] `Hermes tools:` list matches the agent's role (Read/Write for design/live-ops/ documents; no code or analytics tools)
-- [ ] Model tier is Sonnet (default for design specialists)
+- [ ] `Hermes tools:` list matches the agent's role (read_file/write_file/patch for design/live-ops/ documents; no code or analytics tools)
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over economy math, analytics pipelines, or narrative direction
 
 ---

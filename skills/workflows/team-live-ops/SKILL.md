@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 **Argument check:** If no season name or event description is provided, output:
 > "Usage: `/team-live-ops [season name or event description]` — Provide the name or description of the season or live event to plan."
 Then stop immediately without spawning any subagents or reading any files.
@@ -51,12 +53,12 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: live-ops-designer` — Season/event structure and retention mechanics
-- `subagent_type: economy-designer` — Live economy balance and reward pricing
-- `subagent_type: analytics-engineer` — Success metrics, A/B tests, event instrumentation
-- `subagent_type: community-manager` — Player-facing communication and messaging
-- `subagent_type: narrative-director` — Seasonal theme and narrative framing
-- `subagent_type: writer` — All player-facing text: event descriptions, item names, copy
+- Spawn `live-ops-designer` with `delegate_task` — Season/event structure and retention mechanics
+- Spawn `economy-designer` with `delegate_task` — Live economy balance and reward pricing
+- Spawn `analytics-engineer` with `delegate_task` — Success metrics, A/B tests, event instrumentation
+- Spawn `community-manager` with `delegate_task` — Player-facing communication and messaging
+- Spawn `narrative-director` with `delegate_task` — Seasonal theme and narrative framing
+- Spawn `writer` with `delegate_task` — All player-facing text: event descriptions, item names, copy
 
 Always provide full context in each agent's prompt (game concept path, existing season docs, ethics policy path, current economy state). Launch independent agents in parallel where the pipeline allows it (Phases 3 and 4 can run simultaneously).
 
@@ -138,7 +140,7 @@ All documents save to `design/live-ops/`:
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
@@ -153,7 +155,7 @@ If a BLOCKED state is unresolvable, end with Verdict: **BLOCKED** instead of COM
 ## File Write Protocol
 
 All file writes (season design docs, analytics plans, communication calendars) are
-delegated to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+delegated to sub-agents spawned with delegate_task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

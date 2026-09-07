@@ -11,7 +11,7 @@ you'll lose validation features.
 | Tool | Purpose | Install |
 | ---- | ---- | ---- |
 | **Git** | Version control, branch management | [git-scm.com](https://git-scm.com/) |
-| **Hermes Agent** | AI agent CLI | `npm install -g @anthropic-ai/claude-code` |
+| **Hermes Agent** | AI agent CLI | Install Hermes, then `hermes profile install /path/to/this-distribution --name gamedev --force --yes` |
 
 ## Recommended
 
@@ -46,7 +46,7 @@ sudo pacman -S jq       # Arch
 
 ### Windows
 - Git for Windows includes **Git Bash**, which provides the `bash` command
-  used by all hooks in `settings.json`
+  used by all hooks in the profile `config.yaml`
 - Ensure Git Bash is on your PATH (default if installed via the Git installer)
 - Hooks use `bash agent-hooks/aesir-gameworks/[name].sh` — this works on Windows because
   Hermes Agent invokes commands through a shell that can find `bash.exe`

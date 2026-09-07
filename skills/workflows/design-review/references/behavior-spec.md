@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /design-review
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/design-review` reads a game design document (GDD) and evaluates it against
@@ -18,10 +20,10 @@ REVISION NEEDED. It is a read-only skill (no file writes) and runs as a
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings or numbered steps
 - [ ] Contains verdict keywords: APPROVED, NEEDS REVISION, MAJOR REVISION NEEDED
-- [ ] Does NOT require "May I write" language (read-only skill — `Hermes tools` excludes Write/Edit)
+- [ ] Does NOT require "May I write" language (read-only skill — `Hermes tools` excludes write_file/patch)
 - [ ] Output format is documented (review template shown in skill body)
 
 ---
@@ -41,7 +43,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 
 **Expected behavior:**
 1. Skill reads the target document in full
-2. Skill reads CLAUDE.md for project context and standards
+2. Skill reads AGENTS.md for project context and standards
 3. Skill evaluates all 8 required sections (present/absent check)
 4. Skill checks internal consistency (formulas match described behavior)
 5. Skill checks implementability (rules are precise enough to code)
@@ -155,7 +157,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 
 ## Protocol Compliance
 
-- [ ] Does NOT use Write or Edit tools (read-only skill)
+- [ ] Does NOT use write_file or patch (read-only skill)
 - [ ] Presents complete findings before any verdict
 - [ ] Does not ask for approval before producing output (no writes to approve)
 - [ ] Ends with recommended next step (e.g., fix issues and re-run, or proceed to `/map-systems`)

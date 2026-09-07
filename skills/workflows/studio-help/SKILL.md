@@ -18,6 +18,8 @@ metadata:
 
 # Studio Help — What Do I Do Next?
 
+**Model tier:** Light
+
 This skill is read-only — it reports findings but writes no files.
 
 This skill figures out exactly where you are in the game development pipeline and
@@ -36,12 +38,12 @@ the artifact globs that indicate completion.
 
 ## Step 1b: Find Skills Not in the Catalog
 
-After reading the catalog, Glob `(game-workspace)/skills/*/SKILL.md` to get the full list
-of installed skills. For each file, extract the `name:` field from its frontmatter.
+Framework skills are not stored in the game workspace. Do not glob
+`(game-workspace)/skills/*/SKILL.md`.
 
-Compare against the `command:` values in the catalog. Any skill whose name does
-not appear as a catalog command is an **uncataloged skill** — still usable but not
-part of the phase-gated workflow.
+If this session can read the installed profile or this distribution, list
+`skills/workflows/*/SKILL.md` names whose `/name` is not a catalog `command:`.
+If those files are not reachable from the game workspace, skip the footer.
 
 Collect these for the output in Step 7 — show them as a footer block:
 
@@ -73,7 +75,7 @@ Check in this order:
 
 2. **If stage.txt is missing**, infer phase from artifacts (most-advanced match wins):
    - `src/` has 10+ source files → `production`
-   - `production/stories/*.md` exists → `pre-production`
+   - `production/epics/` has files (EPIC.md or `story-*.md`) → `pre-production`
    - `docs/architecture/adr-*.md` exists → `technical-setup`
    - `design/gdd/systems-index.md` exists → `systems-design`
    - `design/gdd/game-concept.md` exists → `concept`
@@ -100,9 +102,9 @@ For each step in the current phase (from the catalog):
 ### Artifact-based checks
 
 If the step has `artifact.glob`:
-- Use Glob to check if files matching the pattern exist
+- Use `search_files` with `file_glob` set to the catalog glob (game-workspace relative)
 - If `min_count` is specified, verify at least that many files match
-- If `artifact.pattern` is specified, use Grep to verify the pattern exists in the matched file
+- If `artifact.pattern` is specified, use `search_files` with `query` equal to that pattern on the matched file
 - **Complete** = artifact condition is met
 - **Incomplete** = artifact is missing or pattern not found
 

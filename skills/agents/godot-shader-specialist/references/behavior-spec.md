@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: Godot shading language (GLSL-derivative), visual shaders (VisualShader graph), material setup, particle shaders, and post-processing effects.
 Does NOT own: gameplay code, art style direction.
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references Godot shading language / materials / post-processing)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, search_files
+- [ ] Model tier: Medium
 - [ ] Agent definition references `docs/engine-reference/godot/VERSION.md` as the authoritative source for Godot shader API changes
 
 ---

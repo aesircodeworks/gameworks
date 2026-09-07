@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 If no argument is provided, output usage guidance and exit without spawning any agents:
 > Usage: `/team-audio [feature or area]` — specify the feature or area to design audio for (e.g., `combat`, `main menu`, `forest biome`, `boss encounter`). Do not use `clarify` here; output the guidance directly.
 
@@ -51,11 +53,11 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: audio-director` — Sonic identity, emotional tone, audio palette
-- `subagent_type: sound-designer` — SFX specifications, audio events, mixing groups
-- `subagent_type: technical-artist` — Audio middleware, bus structure, memory budgets
-- `subagent_type: [primary engine specialist]` — Validate audio integration patterns for the engine
-- `subagent_type: gameplay-programmer` — Audio manager, gameplay triggers, adaptive music
+- Spawn `audio-director` with `delegate_task` — Sonic identity, emotional tone, audio palette
+- Spawn `sound-designer` with `delegate_task` — SFX specifications, audio events, mixing groups
+- Spawn `technical-artist` with `delegate_task` — Audio middleware, bus structure, memory budgets
+- Spawn `[primary engine specialist]` with `delegate_task` — Validate audio integration patterns for the engine
+- Spawn `gameplay-programmer` with `delegate_task` — Audio manager, gameplay triggers, adaptive music
 
 Always provide full context in each agent's prompt (feature description, existing audio assets, design doc references).
 
@@ -92,7 +94,7 @@ Spawn the `technical-artist` agent to:
 - Plan streaming vs preloaded asset strategy
 - Design any audio-reactive visual effects
 
-Spawn the **primary engine specialist** in parallel (from `gameworks references/technical-preferences.md` Engine Specialists) to validate the integration approach:
+Spawn the **primary engine specialist** in parallel (from `docs/technical-preferences.md` Engine Specialists) to validate the integration approach:
 - Is the proposed audio middleware integration idiomatic for the engine? (e.g., Godot's built-in AudioStreamPlayer vs FMOD, Unity's Audio Mixer vs Wwise, Unreal's MetaSounds vs FMOD)
 - Any engine-specific audio node/component patterns that should be used?
 - Known audio system changes in the pinned engine version that affect the integration plan?
@@ -126,7 +128,7 @@ Verdict: **BLOCKED** — [reason]
 ## File Write Protocol
 
 All file writes (audio design docs, SFX specs, implementation files) are delegated
-to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+to sub-agents spawned with delegate_task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Next Steps
 
@@ -136,7 +138,7 @@ to sub-agents spawned via Task. The coordinator obtains any missing write approv
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

@@ -18,6 +18,8 @@ metadata:
 
 # Test Flakiness Detection
 
+**Model tier:** Medium
+
 A flaky test is one that sometimes passes and sometimes fails without any code
 change. Flaky tests are worse than no tests in some ways — they train the team
 to ignore red CI runs, masking genuine failures. This skill identifies them,
@@ -62,7 +64,7 @@ Check `test-results/` for `.xml` files.
 For Unity projects: game-ci test runner outputs NUnit XML to `test-results/`
 by default.
 
-For Unreal projects: automation logs go to `Saved/Logs/`. Grep for
+For Unreal projects: automation logs go to `Saved/Logs/`. Use search_files for
 `Result: Success` and `Result: Fail` patterns.
 
 ### Option B — Local log files
@@ -88,12 +90,12 @@ Stop and ask the user which option to pursue.
 For each CI log or result file found, parse:
 
 **JUnit XML format** (GdUnit4 / Unity):
-- Grep for `<testcase name=` to get test names
-- Grep for `<failure` or `<error` to identify failures
+- Use search_files for `<testcase name=` to get test names
+- Use search_files for `<failure` or `<error` to identify failures
 - Parse `classname` and `name` attributes for full test identifiers
 
 **Plain text logs**:
-- Grep for pass/fail patterns:
+- Use search_files for pass/fail patterns:
   - Godot: `PASSED` / `FAILED` adjacent to test names
   - Unreal: `Result: Success` / `Result: Fail`
   - Unity: `Test passed` / `Test failed`
@@ -127,7 +129,7 @@ For each flaky test, classify the likely cause:
 | **Floating point** | Fails on comparisons like `== 0.5` | Use epsilon comparison (`is_equal_approx`, `Assert.AreApproximately`) |
 | **Scene/prefab load race** | Fails when scenes are not yet ready | Await one frame after instantiation; use `await get_tree().process_frame` |
 
-Use Grep to check the test file for timing calls, randf, global state access,
+Use search_files to check the test file for timing calls, randf, global state access,
 or equality comparisons on floats to narrow down the cause.
 
 ---

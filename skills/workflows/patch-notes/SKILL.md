@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Parse Arguments
 
+**Model tier:** Light
+
 - `version`: the release version to generate notes for (e.g., `1.2.0`)
 - `--style`: output style — `brief` (bullet points), `detailed` (with context), `full` (with developer commentary). Default: `detailed`.
 
@@ -48,7 +50,7 @@ Verdict: **BLOCKED** — stop here without generating notes.
 
 **Tone guide detection** — before drafting notes, check for writing style guidance:
 
-1. Check `gameworks references/technical-preferences.md` for any "tone", "voice", or "style"
+1. Check `docs/technical-preferences.md` for any "tone", "voice", or "style"
    fields or sections.
 2. Check `docs/PATCH-NOTES-STYLE.md` if it exists.
 3. Check `design/community/tone-guide.md` if it exists.
@@ -60,7 +62,7 @@ Verdict: **BLOCKED** — stop here without generating notes.
 
 **Template detection** — check whether a patch notes template exists:
 
-1. Glob for `docs/patch-notes-template.md` and `project-templates templates/patch-notes-template.md`.
+1. Use search_files with `file_glob="docs/patch-notes-template.md"` and for `project-templates templates/patch-notes-template.md`.
 2. If found at either location, read it and use it as the output structure for Phase 4
    instead of the built-in style templates (Brief / Detailed / Full). Fill in the
    template's sections with the categorized data.

@@ -18,6 +18,8 @@ metadata:
 
 # Create Epics
 
+**Model tier:** Medium
+
 An epic is a named, bounded body of work that maps to one architectural module.
 It defines **what** needs to be built and **who owns it architecturally**. It
 does not prescribe implementation steps — that is the job of stories.
@@ -58,10 +60,10 @@ See `gameworks references/director-gates.md` for the full check pattern.
 
 ### Step 2a — Summary scan (fast)
 
-Grep all GDDs for their `## Summary` sections before reading anything fully:
+Use search_files on all GDDs for their `## Summary` sections before reading anything fully:
 
 ```
-Grep pattern="## Summary" glob="design/gdd/*.md" output_mode="content" -A 5
+search_files query="## Summary" file_glob="design/gdd/*.md" context=5
 ```
 
 For `layer:` or `[system-name]` modes: filter to only in-scope GDDs based on
@@ -69,7 +71,7 @@ the Summary quick-reference. Skip full-reading anything out of scope.
 
 ### Step 2b — Full document load (in-scope systems only)
 
-Using the Step 2a grep results, identify which systems are in scope. Read full documents **only for in-scope systems** — do not read GDDs or ADRs for out-of-scope systems or layers.
+Using the Step 2a search_files results, identify which systems are in scope. Read full documents **only for in-scope systems** — do not read GDDs or ADRs for out-of-scope systems or layers.
 
 Read for in-scope systems:
 
@@ -140,7 +142,7 @@ Use `clarify`:
 - `lean` → skip (not a PHASE-GATE). Note: "PR-EPIC skipped — Lean mode." Proceed to Step 5 (write epic files).
 - `full` → spawn as normal.
 
-After all epics for the current layer are defined (Step 4 completed for all in-scope systems), and before writing any files, spawn `producer` via Task using gate **PR-EPIC** (`gameworks references/director-gates.md`).
+After all epics for the current layer are defined (Step 4 completed for all in-scope systems), and before writing any files, spawn `producer` with delegate_task using gate **PR-EPIC** (`gameworks references/director-gates.md`).
 
 Pass: the full epic structure summary (all epics, their scope summaries, governing ADR counts), the layer being processed, milestone timeline and team capacity.
 

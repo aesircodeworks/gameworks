@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: Multiplayer networking, state replication, lag compensation, matchmaking protocol design, and network message schemas.
 Does NOT own: gameplay logic (only the networking of it), server infrastructure and deployment (devops-engineer).
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references multiplayer / replication / networking)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, terminal, search_files
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over gameplay logic or server deployment infrastructure
 
 ---

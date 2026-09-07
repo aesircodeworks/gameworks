@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /create-control-manifest
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/create-control-manifest` reads all Accepted ADRs from `docs/architecture/` and
@@ -11,9 +13,11 @@ is the reference document that story authors use when writing story files, ensur
 stories inherit the correct architectural rules without having to read all ADRs
 individually.
 
-The skill only includes Accepted ADRs; Proposed ADRs are excluded and noted. It
-has no director gates. The skill asks "May I write" before writing
-`docs/architecture/control-manifest.md`.
+The skill only includes Accepted ADRs; Proposed ADRs are excluded and noted.
+In `full` review mode, **TD-MANIFEST** (`technical-director`) runs after the
+rules summary and before writing `docs/architecture/control-manifest.md`. Parse
+the first line for `[TD-MANIFEST]: TOKEN`. Lean and solo skip the gate. The skill
+asks "May I write" before writing the manifest.
 
 ---
 
@@ -28,20 +32,26 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: CREATED, BLOCKED
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff at the end (`/create-epics` or `/create-stories`)
 - [ ] Documents that only Accepted ADRs are included (not Proposed)
+- [ ] Documents gate behavior: TD-MANIFEST in full mode; skipped in lean/solo
 
 ---
 
 ## Director Gate Checks
 
-No director gates — this skill spawns no director gate agents. The control
-manifest is a mechanical extraction from Accepted ADRs; no creative or technical
-review gate is needed.
+In `full` mode: spawn `technical-director` with `delegate_task` using gate
+**TD-MANIFEST** after the Control Manifest Preview and before writing the file.
+Parse the first line for `[TD-MANIFEST]: TOKEN`. APPROVE proceeds to write;
+CONCERNS surfaces via `clarify`; REJECT does not write the manifest.
+
+In `lean` mode: skip. Note: "TD-MANIFEST skipped — Lean mode."
+
+In `solo` mode: skip. Note: "TD-MANIFEST skipped — Solo mode."
 
 ---
 
@@ -140,26 +150,27 @@ review gate is needed.
 
 ---
 
-### Case 5: Director Gate — No gate spawned; no review-mode.txt read
+### Case 5: Director Gate — TD-MANIFEST in full mode; skipped in lean/solo
 
 **Fixture:**
 - 4 Accepted ADRs exist
-- `production/session-state/review-mode.txt` exists with `full`
+- `production/review-mode.txt` exists with `full`
 
 **Input:** `/create-control-manifest`
 
 **Expected behavior:**
-1. Skill reads ADRs and drafts manifest
-2. Skill does NOT read `production/session-state/review-mode.txt`
-3. No director gate agents are spawned at any point
-4. Skill proceeds directly to "May I write" after drafting
-5. Review mode setting has no effect on this skill's behavior
+1. Skill reads ADRs and presents the Control Manifest Preview
+2. Skill reads `production/review-mode.txt` — determines `full`
+3. Skill spawns `technical-director` with `delegate_task` using gate **TD-MANIFEST**
+4. Skill parses the first line for `[TD-MANIFEST]: TOKEN`
+5. APPROVE → write the manifest; CONCERNS → `clarify`; REJECT → do not write
+6. In lean/solo: skip with "TD-MANIFEST skipped — Lean/Solo mode" and proceed to write approval
 
 **Assertions:**
-- [ ] No director gate agents are spawned (no CD-, TD-, PR-, AD- prefixed gates)
-- [ ] Skill does NOT read `production/session-state/review-mode.txt`
-- [ ] Output contains no "Gate: [GATE-ID]" or gate-skipped entries
-- [ ] The manifest is generated from ADRs alone, with no external gate review
+- [ ] TD-MANIFEST is spawned in full mode after the preview, before the write
+- [ ] First-line gate token `[TD-MANIFEST]: TOKEN` is parsed
+- [ ] Manifest is not written on REJECT
+- [ ] Lean and solo skip the gate with an explicit skip note
 
 ---
 
@@ -169,7 +180,7 @@ review gate is needed.
 - [ ] Only Accepted ADRs included — Proposed ones noted as excluded
 - [ ] Manifest draft shown to user before "May I write" ask
 - [ ] "May I write `docs/architecture/control-manifest.md`?" asked before writing
-- [ ] No director gates — no review-mode.txt read
+- [ ] TD-MANIFEST runs in full mode; skipped and noted in lean/solo
 - [ ] Ends with next-step handoff: `/create-epics` or `/create-stories`
 
 ---

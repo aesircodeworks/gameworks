@@ -16,8 +16,8 @@ phases:
       command: /setup-engine
       required: true
       artifact:
-        glob: gameworks references/technical-preferences.md
-        pattern: 'Engine: [^[]'
+        glob: docs/technical-preferences.md
+        pattern: 'Engine\*\*: (Godot|Unity|Unreal)'
       description: Configure engine, pin version, set naming conventions and performance
         budgets
     - id: game-concept
@@ -182,7 +182,7 @@ phases:
       command: /prototype
       required: false
       artifact:
-        glob: prototypes/*/README.md
+        glob: prototypes/*-concept/REPORT.md
         min_count: 1
       description: Build a throwaway prototype to validate the core mechanic is fun
         before committing to full production. Recommended for first-time mechanics
@@ -230,7 +230,7 @@ phases:
       command: /vertical-slice
       required: false
       artifact:
-        glob: prototypes/*/REPORT.md
+        glob: prototypes/*-vertical-slice/REPORT.md
         min_count: 1
       description: Build and playtest a vertical slice — a complete end-to-end pass
         through the core loop. Recommended before committing epics and stories to
@@ -349,7 +349,7 @@ phases:
       command: /playtest-report
       required: true
       artifact:
-        glob: production/playtests/*.md
+        glob: production/qa/playtests/*.md
         min_count: 3
       description: 'Cover: new player experience, mid-game systems, difficulty curve'
     - id: team-polish

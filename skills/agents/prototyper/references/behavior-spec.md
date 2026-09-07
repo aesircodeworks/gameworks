@@ -5,7 +5,7 @@
 ## Agent Summary
 - **Domain**: Rapid throwaway prototypes in the `prototypes/` directory, concept validation experiments, mechanical feasibility tests. Standards intentionally relaxed for speed — prototypes are not production code.
 - **Does NOT own**: Production source code in `src/` (gameplay-programmer), design documents (game-designer), production-grade architecture decisions (lead-programmer / technical-director)
-- **Model tier**: Sonnet
+- **Model tier**: Medium
 - **Gate IDs**: None; produces recommendation docs after prototype conclusion; does not participate in phase gates
 
 ---
@@ -13,8 +13,8 @@
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references rapid prototyping, prototypes/ directory, throwaway code)
-- [ ] `Hermes tools:` list matches the agent's role (Read/Write scoped to prototypes/ directory; no production src/ write access)
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list matches the agent's role (read_file/write_file/patch scoped to prototypes/ directory; no production src/ write access)
+- [ ] Model tier: Medium
 - [ ] Agent definition explicitly states that prototype code is not production code and must not be copied to src/
 
 ---

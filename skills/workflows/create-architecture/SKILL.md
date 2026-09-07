@@ -18,6 +18,8 @@ metadata:
 
 # Create Architecture
 
+**Model tier:** Medium
+
 This skill produces `docs/architecture/architecture.md` — the master architecture
 document that translates all approved GDDs into a concrete technical blueprint.
 It sits between design and implementation, and must exist before sprint planning begins.
@@ -70,7 +72,7 @@ Read all approved design documents and extract technical requirements from each:
 
 1. `design/gdd/game-concept.md` — game pillars, genre, core loop
 2. `design/gdd/systems-index.md` — all systems, dependencies, priority tiers
-3. `gameworks references/technical-preferences.md` — naming conventions, performance budgets,
+3. `docs/technical-preferences.md` — naming conventions, performance budgets,
    allowed libraries, forbidden patterns
 4. **Every GDD in `design/gdd/`** — for each, extract technical requirements:
    - Data structures implied by the game rules
@@ -361,7 +363,7 @@ Apply gate **TD-ARCHITECTURE** (`gameworks references/director-gates.md`) as a s
 - `lean` → skip (not a PHASE-GATE). Note: "LP-FEASIBILITY skipped — Lean mode." Proceed to Phase 8 handoff.
 - `full` → spawn as normal.
 
-**Step 2 — Spawn `lead-programmer` via Task using gate LP-FEASIBILITY (`gameworks references/director-gates.md`):**
+**Step 2 — Spawn `lead-programmer` with delegate_task using gate LP-FEASIBILITY (`gameworks references/director-gates.md`):**
 
 Pass: architecture document path, technical requirements baseline summary, ADR list.
 

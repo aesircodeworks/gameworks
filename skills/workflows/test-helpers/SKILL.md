@@ -18,6 +18,8 @@ metadata:
 
 # Test Helpers
 
+**Model tier:** Medium
+
 Writing test cases is faster and more consistent when common setup, teardown,
 and assertion patterns are abstracted into helpers. This skill generates a
 `tests/helpers/` library tailored to the project's actual engine, language,
@@ -46,7 +48,7 @@ and systems — so every developer writes less boilerplate and more assertions.
 
 ## 2. Detect Engine and Language
 
-Read `gameworks references/technical-preferences.md` and extract:
+Read `docs/technical-preferences.md` and extract:
 - `Engine:` value
 - `Language:` value
 - `Framework:` from the Testing section
@@ -60,7 +62,7 @@ If engine is not configured: "Engine not configured. Run `/setup-engine` first."
 Scan the test directory for patterns already in use:
 
 ```
-Glob pattern="tests/**/*_test.*" (all test files)
+search_files file_glob="tests/**/*_test.*" (all test files)
 ```
 
 For a representative sample (up to 5 files), read the test files and extract:

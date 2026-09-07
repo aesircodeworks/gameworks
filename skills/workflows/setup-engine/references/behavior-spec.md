@@ -2,19 +2,27 @@
 
 # Skill Test Spec: /setup-engine
 
+**Model tier:** Medium
+
 ## Skill Summary
 
-`/setup-engine` configures the project's engine, language, rendering backend,
-physics engine, specialist agent assignments, and naming conventions by
-populating `technical-preferences.md`. It accepts an optional engine argument
-(e.g., `/setup-engine godot`) to skip the engine-selection step. For each
-section of `technical-preferences.md`, the skill presents a draft and asks
-"May I write to `technical-preferences.md`?" before updating.
+`/setup-engine` pins the game engine and language by writing two **game-workspace**
+files: `AGENTS.md` (Technology Stack + Engine Version Reference) and
+`docs/technical-preferences.md` (naming, budgets, specialist routing). It never
+writes the installed profile template
+`skills/studio/gameworks/references/technical-preferences.md`.
 
-The skill also populates the specialist routing table (file extension → agent
-mappings) based on the chosen engine. It has no director gates — configuration
-is a technical utility task. The verdict is always COMPLETE when the file is
-fully written.
+Hermes does not expand `@` imports. The Engine Version Reference in `AGENTS.md`
+must be a real paragraph pointing at `docs/engine-reference/<engine>/VERSION.md`,
+not an `@` path.
+
+If `docs/technical-preferences.md` is missing, copy the template via
+`skill_view('gameworks', file_path='references/technical-preferences.md')` into
+the game file, then fill it. If `AGENTS.md` is missing, copy
+`project-bootstrap/templates/AGENTS.md` first, then fill Technology Stack.
+
+An optional engine argument (e.g., `/setup-engine godot`) skips engine selection.
+The skill has no director gates. The verdict is COMPLETE when both files are written.
 
 ---
 
@@ -29,7 +37,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: COMPLETE
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
@@ -48,7 +56,8 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 ### Case 1: Godot 4 + GDScript — Full engine configuration
 
 **Fixture:**
-- `technical-preferences.md` contains only placeholders
+- `AGENTS.md` Technology Stack still has `[CHOOSE]` placeholders
+- `docs/technical-preferences.md` is missing (or contains only placeholders)
 - Engine argument provided: `godot`
 
 **Input:** `/setup-engine godot`
@@ -57,21 +66,24 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 1. Skill skips engine-selection step (argument provided)
 2. Skill presents language options for Godot: GDScript or C#
 3. User selects GDScript
-4. Skill drafts all engine sections: engine/language/rendering/physics fields,
-   naming conventions (snake_case for GDScript), specialist assignments
-   (godot-specialist, gdscript-specialist, godot-shader-specialist, etc.)
-5. Skill populates the routing table: `.gd` → gdscript-specialist, `.gdshader` →
-   godot-shader-specialist, `.tscn` → godot-specialist
-6. Skill asks "May I write to `technical-preferences.md`?"
-7. File is written after approval; verdict is COMPLETE
+4. Skill shows proposed `AGENTS.md` Technology Stack (Engine/Language/Build/Asset Pipeline)
+   and asks before writing `AGENTS.md`
+5. If `docs/technical-preferences.md` is missing, skill copies the profile template
+   into that game path, then drafts naming conventions, specialist routing, and
+   remaining sections
+6. Skill asks before writing `docs/technical-preferences.md`
+7. Engine Version Reference in `AGENTS.md` is a real paragraph (no `@` import)
+8. Both files are written after approval; verdict is COMPLETE
 
 **Assertions:**
-- [ ] Engine field is set to Godot 4 (not a placeholder)
+- [ ] `AGENTS.md` Technology Stack Engine/Language are filled (not `[CHOOSE]`)
 - [ ] Language field is set to GDScript
+- [ ] `AGENTS.md` Engine Version Reference is a real paragraph, not an `@` path
+- [ ] Game file `docs/technical-preferences.md` is created or updated (profile template is not mutated)
 - [ ] Naming conventions are GDScript-appropriate (snake_case)
 - [ ] Routing table includes `.gd`, `.gdshader`, and `.tscn` entries
 - [ ] Specialists are assigned (not placeholders)
-- [ ] "May I write" is asked before writing
+- [ ] "May I write" is asked before writing each of `AGENTS.md` and `docs/technical-preferences.md`
 - [ ] Verdict is COMPLETE
 
 ---
@@ -79,18 +91,17 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 ### Case 2: Unity + C# — Unity-specific configuration
 
 **Fixture:**
-- `technical-preferences.md` contains only placeholders
+- `docs/technical-preferences.md` contains only placeholders (or is missing)
 - Engine argument provided: `unity`
 
 **Input:** `/setup-engine unity`
 
 **Expected behavior:**
-1. Skill sets engine to Unity, language to C#
-2. Naming conventions are C#-appropriate (PascalCase for classes, camelCase for fields)
-3. Specialist assignments reference unity-specialist, csharp-specialist
-4. Routing table: `.cs` → csharp-specialist, `.asmdef` → unity-specialist,
-   `.unity` (scene) → unity-specialist
-5. Skill asks "May I write to `technical-preferences.md`?" and writes on approval
+1. Skill sets `AGENTS.md` Technology Stack to Unity + C#
+2. Naming conventions in `docs/technical-preferences.md` are C#-appropriate (PascalCase for classes, camelCase for fields)
+3. Specialist assignments reference unity-specialist (C# review is covered by primary)
+4. Routing table: `.cs` → unity-specialist, `.unity` (scene) → unity-specialist
+5. Skill asks before writing `AGENTS.md` and `docs/technical-preferences.md` and writes on approval
 
 **Assertions:**
 - [ ] Engine field is set to Unity (not Godot or Unreal)
@@ -104,7 +115,7 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 ### Case 3: Unreal + Blueprint — Unreal-specific configuration
 
 **Fixture:**
-- `technical-preferences.md` contains only placeholders
+- `docs/technical-preferences.md` contains only placeholders (or is missing)
 - Engine argument provided: `unreal`
 
 **Input:** `/setup-engine unreal`
@@ -128,19 +139,20 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 ### Case 4: Engine Already Configured — Offers to reconfigure specific sections
 
 **Fixture:**
-- `technical-preferences.md` has engine set to Godot 4 with all fields populated
+- `docs/technical-preferences.md` has engine set to Godot 4 with all fields populated
+- `AGENTS.md` Technology Stack is already filled (not `[CHOOSE]`)
 - No engine argument provided
 
 **Input:** `/setup-engine`
 
 **Expected behavior:**
-1. Skill reads `technical-preferences.md` and detects fully configured engine (Godot 4)
+1. Skill reads game-workspace `docs/technical-preferences.md` (not the profile template) and detects fully configured engine (Godot 4)
 2. Skill reports: "Engine already configured as Godot 4 + GDScript"
 3. Skill presents options: reconfigure all, reconfigure specific section only
    (Engine/Language, Naming Conventions, Specialists, Performance Budgets)
 4. User selects "Reconfigure Performance Budgets only"
 5. Only the performance budget section is updated; all other fields unchanged
-6. Skill asks "May I write to `technical-preferences.md`?" and writes on approval
+6. Skill asks before writing `docs/technical-preferences.md` and writes on approval
 
 **Assertions:**
 - [ ] Skill does NOT overwrite all fields when only a section update was requested
@@ -172,11 +184,13 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 ## Protocol Compliance
 
 - [ ] Presents draft configuration before asking to write
-- [ ] Asks "May I write to `technical-preferences.md`?" before writing
+- [ ] Asks before writing `AGENTS.md` and `docs/technical-preferences.md`
+- [ ] Does not write `@` imports into `AGENTS.md`
+- [ ] Copies the profile template into `docs/technical-preferences.md` only when that game file is missing
 - [ ] Respects engine argument when provided (skips selection step)
 - [ ] Detects existing config and offers partial reconfigure
 - [ ] Routing table is populated for all key file types for the chosen engine
-- [ ] Verdict is COMPLETE after file is written
+- [ ] Verdict is COMPLETE after both files are written
 
 ---
 

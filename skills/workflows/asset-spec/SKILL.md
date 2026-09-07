@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 If no argument is provided, check whether `design/assets/entity-inventory.md` exists:
 - If it exists: read it, find the first entity or screen with status "Needed" but no spec file yet, and use `clarify`:
   - Prompt: "The next unspecced item is **[name]**. Generate specs for it?"
@@ -133,7 +135,7 @@ Read all source material **before** asking the user anything.
   > "No art bible found. Run `/art-bible` first — asset specs are anchored to the art bible's visual rules and asset standards."
   Extract: Visual Identity Statement, Color System (semantic colors), Shape Language, Asset Standards (Section 8 — dimensions, formats, polycount budgets, texture resolution tiers).
 
-- **Technical preferences**: Read `gameworks references/technical-preferences.md` — extract performance budgets and naming conventions.
+- **Technical preferences**: Read `docs/technical-preferences.md` — extract performance budgets and naming conventions.
 
 ### Source doc reads (by target type):
 - **system**: Read `design/gdd/[target-name].md`. Extract the **Visual/Audio Requirements** section. If it doesn't exist or reads `[To be designed]`:
@@ -148,7 +150,7 @@ Read all source material **before** asking the user anything.
 
 ### Optional reads:
 - **Existing manifest**: Read `design/assets/asset-manifest.md` if it exists — extract already-specced assets for this target to avoid duplicates.
-- **Related specs**: Glob `design/assets/specs/*.md` — scan for assets that could be shared (e.g., a common UI element specced for one system might apply here too).
+- **Related specs**: Use search_files with `file_glob="design/assets/specs/*.md"` — scan for assets that could be shared (e.g., a common UI element specced for one system might apply here too).
 
 ### Present context summary:
 > **Asset Spec: [Target Type] — [Target Name]**
@@ -188,15 +190,15 @@ Do NOT proceed to Phase 3 without user confirmation of the asset list.
 
 ## Phase 3: Spec Generation
 
-Spawn specialist agents based on review mode. **Issue all Task calls simultaneously — do not wait for one before starting the next.**
+Spawn specialist agents based on review mode. **Issue all delegate_task calls simultaneously — do not wait for one before starting the next.**
 
 ### Full mode — spawn in parallel:
 
-**`art-director`** via Task:
+**`art-director`** with delegate_task:
 - Provide: full asset list from Phase 2, art bible Visual Identity Statement, Color System, Shape Language, the source doc's visual requirements, and any reference games/art mentioned in the art bible Section 9
 - Ask: "For each asset in this list, produce: (1) a 2–3 sentence visual description anchored to the art bible's shape language and color system — be specific enough that two different artists would produce consistent results; (2) a generation prompt ready for use with AI image tools (Midjourney/Stable Diffusion style — include style keywords, composition, color palette anchors, negative prompts); (3) which art bible rules directly govern this asset (cite by section). For audio assets, describe the sonic character instead of a generation prompt."
 
-**`technical-artist`** via Task:
+**`technical-artist`** with delegate_task:
 - Provide: full asset list, art bible Asset Standards (Section 8), technical-preferences.md performance budgets, engine name and version
 - Ask: "For each asset in this list, specify: (1) exact dimensions or polycount (match the art bible Asset Standards tiers — do not invent new sizes); (2) file format and export settings; (3) naming convention (from technical-preferences.md); (4) any engine-specific constraints this asset type must respect; (5) LOD requirements if applicable. Flag any asset type where the art bible's preferred standard conflicts with the engine's constraints."
 
@@ -309,7 +311,7 @@ Use `clarify`:
 Asset IDs are assigned sequentially across the entire project — not per-context. Read the manifest before assigning IDs to find the current highest number:
 
 ```
-Grep pattern="ASSET-" path="design/assets/asset-manifest.md"
+search_files query="ASSET-" file_glob="design/assets/asset-manifest.md"
 ```
 
 Start new assets from `ASSET-[highest + 1]`. This ensures IDs are stable and unique across the whole project.

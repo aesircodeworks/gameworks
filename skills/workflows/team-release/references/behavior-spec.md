@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /team-release
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 Orchestrates the release team through a 7-phase pipeline from release candidate to
@@ -23,7 +25,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 ## Static Assertions (Structural)
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
@@ -52,17 +54,17 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 **Input:** `/team-release v1.0.0`
 
 **Expected behavior:**
-1. Phase 1: Spawns `producer` via Task; confirms all milestone acceptance criteria met; identifies any deferred scope; produces release authorization; presents to user; clarify: user approves before Phase 2
-2. Phase 2: Spawns `release-manager` via Task; cuts release branch from agreed commit; bumps version numbers; invokes `/release-checklist`; freezes branch; output: branch name and checklist; clarify: user approves before Phase 3
-3. Phase 3 (parallel): Issues Task calls simultaneously for `qa-lead` (regression suite, critical path sign-off) and `devops-engineer` (build artifacts, CI verification); security-engineer is NOT spawned (no online features); network-programmer is NOT spawned (no multiplayer); both complete successfully
+1. Phase 1: Spawns `producer` with delegate_task; confirms all milestone acceptance criteria met; identifies any deferred scope; produces release authorization; presents to user; clarify: user approves before Phase 2
+2. Phase 2: Spawns `release-manager` with delegate_task; cuts release branch from agreed commit; bumps version numbers; invokes `/release-checklist`; freezes branch; output: branch name and checklist; clarify: user approves before Phase 3
+3. Phase 3 (parallel): Issues delegate_task calls simultaneously for `qa-lead` (regression suite, critical path sign-off) and `devops-engineer` (build artifacts, CI verification); security-engineer is NOT spawned (no online features); network-programmer is NOT spawned (no multiplayer); both complete successfully
 4. Phase 4: Verifies localization strings all translated; `analytics-engineer` verifies telemetry fires correctly on the release build; performance benchmarks pass; sign-off produced
-5. Phase 5: Spawns `producer` via Task; collects sign-offs from qa-lead, release-manager, devops-engineer; no open blocking issues; producer declares GO; clarify: user sees GO decision and confirms deployment
+5. Phase 5: Spawns `producer` with delegate_task; collects sign-offs from qa-lead, release-manager, devops-engineer; no open blocking issues; producer declares GO; clarify: user sees GO decision and confirms deployment
 6. Phase 6: Spawns `release-manager` + `devops-engineer` (parallel); tags release in version control; invokes `/changelog`; deploys to staging; smoke test passes; deploys to production; simultaneously spawns `community-manager` to finalize patch notes via `/patch-notes v1.0.0` and prepare launch announcement
 7. Phase 7: release-manager generates release report; producer updates milestone tracking; qa-lead begins monitoring for regressions; community-manager publishes communication; analytics-engineer confirms live dashboards healthy
 8. Verdict: COMPLETE — release executed and deployed
 
 **Assertions:**
-- [ ] Phase 3 qa-lead and devops-engineer Task calls are issued simultaneously, not sequentially
+- [ ] Phase 3 qa-lead and devops-engineer delegate_task calls are issued simultaneously, not sequentially
 - [ ] security-engineer is NOT spawned when the game has no online features, multiplayer, or player data
 - [ ] Phase 5 producer collects sign-offs from all required parties before declaring GO
 - [ ] Phase 6 deployment only begins after GO decision is confirmed by the user
@@ -89,7 +91,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 2. Phase 3 (parallel): devops-engineer returns clean build sign-off; qa-lead returns with an S1 bug identified and regression suite failing; qa-lead declares quality gate: NOT PASSED
 3. Orchestrator surfaces the qa-lead result immediately: "QA-LEAD: S1 bug found — [crash description]. Quality gate: NOT PASSED."
 4. Phase 4 proceeds cautiously or is paused (clarify: continue to Phase 4 or skip to Phase 5 for go/no-go?)
-5. Phase 5: Spawns `producer` via Task; producer receives qa-lead's NOT PASSED verdict; no S1 sign-off available; producer declares NO-GO with rationale: "S1 bug [ID] is open and unresolved. Releasing is not safe."
+5. Phase 5: Spawns `producer` with delegate_task; producer receives qa-lead's NOT PASSED verdict; no S1 sign-off available; producer declares NO-GO with rationale: "S1 bug [ID] is open and unresolved. Releasing is not safe."
 6. clarify: user is presented with the NO-GO decision and the S1 bug details; options: fix the bug and re-run, defer the release, or override (with documented rationale)
 7. Phase 6 (Deployment) is SKIPPED entirely — no branch tagging, no deploy to staging, no deploy to production
 8. community-manager is NOT spawned in Phase 6 (no deployment to announce)
@@ -120,7 +122,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 **Expected behavior:**
 1. Phases 1–2 complete normally
-2. Phase 3 (parallel): Orchestrator detects that the game has online/multiplayer features and player data; issues Task calls simultaneously for `qa-lead`, `devops-engineer`, AND `security-engineer`; also spawns `network-programmer` for netcode stability sign-off
+2. Phase 3 (parallel): Orchestrator detects that the game has online/multiplayer features and player data; issues delegate_task calls simultaneously for `qa-lead`, `devops-engineer`, AND `security-engineer`; also spawns `network-programmer` for netcode stability sign-off
 3. security-engineer conducts pre-release security audit: reviews authentication flows, anti-cheat presence, data privacy compliance; returns sign-off
 4. network-programmer verifies lag compensation, reconnect handling, and bandwidth under load; returns sign-off
 5. All four Phase 3 agents complete; their results are collected before Phase 4 begins
@@ -130,7 +132,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 **Assertions:**
 - [ ] security-engineer IS spawned in Phase 3 when the game has online features, multiplayer, or player data — this is not skipped
 - [ ] network-programmer IS spawned in Phase 3 when the game has multiplayer
-- [ ] All four Phase 3 Task calls (qa-lead, devops-engineer, security-engineer, network-programmer) are issued simultaneously
+- [ ] All four Phase 3 delegate_task calls (qa-lead, devops-engineer, security-engineer, network-programmer) are issued simultaneously
 - [ ] security-engineer audit covers authentication, anti-cheat, and data privacy compliance
 - [ ] Phase 5 producer sign-off collection includes security-engineer (four parties, not two)
 - [ ] Phase 6 deployment does not begin until security-engineer has signed off
@@ -204,9 +206,9 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 ## Protocol Compliance
 
 - [ ] `clarify` used at each phase transition gate (post-Phase 1, post-Phase 2, post-Phase 3/4 if issues, post-Phase 5 go/no-go)
-- [ ] Phase 3 agents are always issued as parallel Task calls — qa-lead and devops-engineer are never sequential
+- [ ] Phase 3 agents are always issued as parallel delegate_task calls — qa-lead and devops-engineer are never sequential
 - [ ] security-engineer is conditionally spawned based on game features — never silently skipped when features are present
-- [ ] File Write Protocol: orchestrator never calls Write/Edit directly — all writes are delegated to sub-agents or sub-skills
+- [ ] File Write Protocol: orchestrator never calls write_file or patch directly — all writes are delegated to sub-agents or sub-skills
 - [ ] Phase 6 Deployment is strictly conditional on a GO verdict from Phase 5 — never auto-triggered
 - [ ] Error recovery: any BLOCKED agent is surfaced immediately before continuing to dependent phases
 - [ ] Partial reports are always produced if any phase fails or the pipeline is halted (Case 2)

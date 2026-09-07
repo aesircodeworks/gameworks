@@ -18,6 +18,8 @@ metadata:
 
 # Create Control Manifest
 
+**Model tier:** Medium
+
 The Control Manifest is a flat, actionable rules sheet for programmers. It
 answers "what do I do?" and "what must I never do?" — organized by architectural
 layer, extracted from all Accepted ADRs, technical preferences, and engine
@@ -33,13 +35,13 @@ status. Re-run whenever new ADRs are accepted or existing ADRs are revised.
 ## 1. Load All Inputs
 
 ### ADRs
-- Glob `docs/architecture/adr-*.md` and read every file
+- Use search_files with `file_glob="docs/architecture/adr-*.md"` and read every file
 - Filter to only Accepted ADRs (Status: Accepted) — skip Proposed, Deprecated,
   Superseded
 - Note the ADR number and title for every rule sourced
 
 ### Technical Preferences
-- Read `gameworks references/technical-preferences.md`
+- Read `docs/technical-preferences.md`
 - Extract: naming conventions, performance budgets, approved libraries/addons,
   forbidden patterns
 
@@ -138,7 +140,7 @@ Use `clarify`:
 - `lean` → skip. Note: "TD-MANIFEST skipped — Lean mode." Proceed to Phase 5.
 - `full` → spawn as normal.
 
-Spawn `technical-director` via Task using gate **TD-MANIFEST** (`gameworks references/director-gates.md`).
+Spawn `technical-director` with `delegate_task` using gate **TD-MANIFEST** (`gameworks references/director-gates.md`). Parse the first line for `[TD-MANIFEST]: TOKEN`.
 
 Pass: the Control Manifest Preview from Phase 4 (rule counts per layer, full extracted rule list), the list of ADRs covered, engine version, and any rules sourced from technical-preferences.md or engine reference docs.
 

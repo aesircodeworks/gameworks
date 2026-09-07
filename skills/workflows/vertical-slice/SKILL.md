@@ -18,6 +18,8 @@ metadata:
 
 ## Purpose
 
+**Model tier:** Medium
+
 The **vertical slice** answers a different question from the concept prototype:
 *"Can we build this full game loop at production quality, on schedule?"*
 
@@ -51,7 +53,7 @@ Resolve the review mode:
 See `gameworks references/director-gates.md` for the full check pattern.
 
 Read the following files to understand the full design intent:
-- `CLAUDE.md` — tech stack and engine
+- `AGENTS.md` — tech stack and engine
 - `design/gdd/game-concept.md` — core fantasy and game pillars
 - `design/gdd/systems-index.md` — MVP systems and their priorities
 - `docs/architecture/architecture.md` — layer structure
@@ -125,7 +127,7 @@ If yes, create the directory. Every file must begin with:
 
 **Quality standards** — higher than concept prototype, not full production:
 - Follow architecture layers from `docs/architecture/control-manifest.md`
-- Naming conventions from `gameworks references/technical-preferences.md`
+- Naming conventions from `docs/technical-preferences.md`
 - No hardcoded gameplay values — use constants or config files
 - Basic error handling on critical paths
 - Placeholder art acceptable; representative art preferred
@@ -267,7 +269,7 @@ the project — cross-reference it with sprint estimates.
 **Review mode check:**
 - `solo` → skip. Note: "CD-PLAYTEST skipped — Solo mode."
 - `lean` → skip (not a PHASE-GATE). Note: "CD-PLAYTEST skipped — Lean mode."
-- `full` → spawn `creative-director` via Task using gate **CD-PLAYTEST**
+- `full` → spawn `creative-director` with delegate_task using gate **CD-PLAYTEST**
   (`(game-workspace)/docs/director-gates.md`).
 
 Pass: the full REPORT.md content, the validation question, game pillars and core

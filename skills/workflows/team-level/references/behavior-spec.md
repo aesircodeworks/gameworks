@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /team-level
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 Orchestrates the full level design team for a single level or area. Coordinates
@@ -24,7 +26,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 ## Static Assertions (Structural)
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase/step headings (Step 1 through Step 5 are all present)
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits — writes delegated to sub-agents, orchestrator does not write files directly
@@ -191,7 +193,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 ## Protocol Compliance
 
 - [ ] `clarify` used at each step transition — user approves before pipeline advances
-- [ ] All file writes delegated to sub-agents via Task — orchestrator does not call Write or Edit directly
+- [ ] All file writes delegated to sub-agents with delegate_task — orchestrator does not call write_file or patch directly
 - [ ] Error Recovery Protocol followed: surface → assess → offer options → partial report
 - [ ] Step 4 agents (art-director, accessibility-specialist) launched in parallel per skill spec
 - [ ] Partial report always produced even when agents are BLOCKED

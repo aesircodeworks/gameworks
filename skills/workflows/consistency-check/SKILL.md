@@ -18,6 +18,8 @@ metadata:
 
 # Consistency Check
 
+**Model tier:** Medium
+
 Detects cross-document inconsistencies by comparing all GDDs against the
 entity registry (`design/registry/entities.yaml`). Uses a grep-first approach:
 reads the registry once, then targets only the GDD sections that mention
@@ -48,7 +50,7 @@ catches too late.
 **Load the registry:**
 
 ```
-Read path="design/registry/entities.yaml"
+read_file on design/registry/entities.yaml
 ```
 
 If the file does not exist or has no entries:
@@ -74,7 +76,7 @@ Scope: [full | since-last-review | entity:name]
 ## Phase 2: Locate In-Scope GDDs
 
 ```
-Glob pattern="design/gdd/*.md"
+search_files file_glob="design/gdd/*.md"
 ```
 
 Exclude: `game-concept.md`, `systems-index.md`, `game-pillars.md` — these are
@@ -106,7 +108,7 @@ each returning ~10 lines on a hit).
 For each entity in entity_map:
 
 ```
-Grep pattern="[entity_name]" glob="design/gdd/*.md" output_mode="content" -C 3
+search_files query="[entity_name]" file_glob="design/gdd/*.md" context=3
 ```
 
 For each GDD hit, extract the values mentioned near the entity name:
@@ -158,9 +160,9 @@ For each conflict found in Phase 3, do a targeted full-section read of the
 conflicting GDD to get precise context:
 
 ```
-Read path="design/gdd/[conflicting_gdd].md"
+read_file on design/gdd/[conflicting_gdd].md
 ```
-(Or use Grep with wider context if the file is large)
+(Or use search_files with wider context if the file is large)
 
 Confirm the conflict with full context. Determine:
 1. **Which GDD is correct?** Check the `source:` field in the registry — the

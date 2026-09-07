@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 **Argument check:** If no combat feature description is provided, output:
 > "Usage: `/team-combat [combat feature description]` — Provide a description of the combat feature to design and implement (e.g., `melee parry system`, `ranged weapon spread`)."
 Then stop immediately without spawning any subagents or reading any files.
@@ -46,19 +48,19 @@ Store the resolved mode for use in all subsequent phases.
 - **ai-programmer** — Implement NPC/enemy AI behavior for the feature
 - **technical-artist** — Create VFX, shader effects, and visual feedback
 - **sound-designer** — Define audio events, impact sounds, and ambient combat audio
-- **engine specialist** (primary) — Validate architecture and implementation patterns are idiomatic for the engine (read from `gameworks references/technical-preferences.md` Engine Specialists section)
+- **engine specialist** (primary) — Validate architecture and implementation patterns are idiomatic for the engine (read from `docs/technical-preferences.md` Engine Specialists section)
 - **qa-tester** — Write test cases and validate the implementation
 
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: game-designer` — Design the mechanic, define formulas and edge cases
-- `subagent_type: gameplay-programmer` — Implement the core gameplay code
-- `subagent_type: ai-programmer` — Implement NPC/enemy AI behavior
-- `subagent_type: technical-artist` — Create VFX, shader effects, visual feedback
-- `subagent_type: sound-designer` — Define audio events, impact sounds, ambient audio
-- `subagent_type: [primary engine specialist]` — Engine idiom validation for architecture and implementation
-- `subagent_type: qa-tester` — Write test cases and validate implementation
+- Spawn `game-designer` with `delegate_task` — Design the mechanic, define formulas and edge cases
+- Spawn `gameplay-programmer` with `delegate_task` — Implement the core gameplay code
+- Spawn `ai-programmer` with `delegate_task` — Implement NPC/enemy AI behavior
+- Spawn `technical-artist` with `delegate_task` — Create VFX, shader effects, visual feedback
+- Spawn `sound-designer` with `delegate_task` — Define audio events, impact sounds, ambient audio
+- Spawn `[primary engine specialist]` with `delegate_task` — Engine idiom validation for architecture and implementation
+- Spawn `qa-tester` with `delegate_task` — Write test cases and validate implementation
 
 Always provide full context in each agent's prompt (design doc path, relevant code files, constraints). Launch independent agents in parallel where the pipeline allows it (e.g., Phase 3 agents can run simultaneously).
 
@@ -117,7 +119,7 @@ Delegate to **qa-tester**:
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
@@ -136,7 +138,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (design documents, implementation files, test cases) are
-delegated to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+delegated to sub-agents spawned with delegate_task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

@@ -126,7 +126,7 @@ For phase gates, record in `docs/architecture/architecture.md` or
 
 ## Tier 1 — Creative Director Gates
 
-Agent: `creative-director` | Model tier: Opus | Domain: Vision, pillars, player experience
+Agent: `creative-director` | Model tier: Heavy | Domain: Vision, pillars, player experience
 
 ---
 
@@ -268,7 +268,7 @@ any session that produces player feedback
 
 ## Tier 1 — Technical Director Gates
 
-Agent: `technical-director` | Model tier: Opus | Domain: Architecture, engine risk, performance
+Agent: `technical-director` | Model tier: Heavy | Domain: Architecture, engine risk, performance
 
 ---
 
@@ -391,6 +391,48 @@ or before finalizing any engine-specific implementation approach
 
 ---
 
+### TD-CHANGE-IMPACT — Design Change Architecture Impact
+
+**Trigger**: After `/propagate-design-change` produces an impact report, before ADR dispositions are applied (`--review full` only)
+
+**Context to pass**:
+- Changed GDD path
+- Change summary (sections added/removed/modified)
+- Impact report: each affected ADR classified Still Valid / Needs Review / Likely Superseded
+- Recommended actions per ADR
+
+**Prompt**:
+> "Review this design-change impact report. Are any ADRs under-classified (a
+> Likely Superseded treated as Still Valid)? Are the recommended actions
+> architecturally sound? Were cascading effects on other ADRs or systems missed?
+> Return APPROVE, CONCERNS [specific ADRs or recommendations], or REJECT
+> [re-analyze before resolving ADR status]."
+
+**Verdicts**: APPROVE / CONCERNS / REJECT
+
+---
+
+### TD-MANIFEST — Control Manifest Completeness
+
+**Trigger**: After `/create-control-manifest` presents the rules summary, before writing `docs/architecture/control-manifest.md` (`--review full` only)
+
+**Context to pass**:
+- Control Manifest Preview (rule counts per layer, extracted rule list)
+- List of Accepted ADRs covered
+- Engine version
+- Rules sourced from `docs/technical-preferences.md` or engine reference docs
+
+**Prompt**:
+> "Review this control manifest preview. Are all mandatory ADR patterns captured
+> and accurately stated? Are forbidden approaches complete and correctly
+> attributed? Were any rules added that lack a source ADR or preference document?
+> Are performance guardrails consistent with the ADR constraints? Return APPROVE,
+> CONCERNS [specific rules], or REJECT [do not write the manifest until fixed]."
+
+**Verdicts**: APPROVE / CONCERNS / REJECT
+
+---
+
 ### TD-PHASE-GATE — Technical Readiness at Phase Transition
 
 **Trigger**: Always at `/gate-check` — spawn in parallel with CD-PHASE-GATE and PR-PHASE-GATE
@@ -414,7 +456,7 @@ or before finalizing any engine-specific implementation approach
 
 ## Tier 1 — Producer Gates
 
-Agent: `producer` | Model tier: Opus | Domain: Scope, timeline, dependencies, production risk
+Agent: `producer` | Model tier: Heavy | Domain: Scope, timeline, dependencies, production risk
 
 ---
 
@@ -540,7 +582,7 @@ is invoked
 
 ## Tier 1 — Art Director Gates
 
-Agent: `art-director` | Model tier: Sonnet | Domain: Visual identity, art bible, visual production readiness
+Agent: `art-director` | Model tier: Medium | Domain: Visual identity, art bible, visual production readiness
 
 ---
 
@@ -575,7 +617,7 @@ Agent: `art-director` | Model tier: Sonnet | Domain: Visual identity, art bible,
 **Context to pass**:
 - Art bible path (`design/art/art-bible.md`)
 - Game pillars and core fantasy
-- Platform and performance constraints (from `gameworks references/technical-preferences.md` if configured)
+- Platform and performance constraints (from `docs/technical-preferences.md` if configured)
 - Visual identity anchor chosen during brainstorm (from `design/gdd/game-concept.md`)
 
 **Prompt**:
@@ -621,7 +663,7 @@ Agent: `art-director` | Model tier: Sonnet | Domain: Visual identity, art bible,
 ## Tier 2 — Lead Gates
 
 These gates are invoked by orchestration skills and senior skills when a domain
-specialist's feasibility sign-off is needed. Tier 2 leads use Sonnet (default).
+specialist's feasibility sign-off is needed. Tier 2 leads use model tier Medium.
 
 ---
 
@@ -768,7 +810,7 @@ When a workflow requires multiple directors at the same checkpoint (most common
 at `/gate-check`), spawn all agents simultaneously:
 
 ```
-Spawn in parallel (issue all Task calls before waiting for any result):
+Spawn in parallel (issue all delegate_task calls before waiting for any result):
 1. creative-director  → gate CD-PHASE-GATE
 2. technical-director → gate TD-PHASE-GATE
 3. producer           → gate PR-PHASE-GATE

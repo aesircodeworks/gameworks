@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 **Argument check:** If no version number is provided:
 1. Read `production/session-state/active.md` and the most recent file in `production/milestones/` (if they exist) to infer the target version.
 2. If a version is found: report "No version argument provided — inferred [version] from milestone data. Proceeding." Then confirm with `clarify`: "Releasing [version]. Is this correct?"
@@ -53,14 +55,14 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: release-manager` — Release branch, versioning, changelog, deployment
-- `subagent_type: qa-lead` — Test sign-off, regression suite, release quality gate
-- `subagent_type: devops-engineer` — Build pipeline, artifacts, deployment automation
-- `subagent_type: security-engineer` — Security audit for online/multiplayer/data features
-- `subagent_type: analytics-engineer` — Telemetry event verification and dashboard readiness
-- `subagent_type: community-manager` — Patch notes and launch communication
-- `subagent_type: producer` — Go/no-go decision, stakeholder communication
-- `subagent_type: network-programmer` — Netcode stability sign-off (invoke if game has multiplayer)
+- Spawn `release-manager` with `delegate_task` — Release branch, versioning, changelog, deployment
+- Spawn `qa-lead` with `delegate_task` — Test sign-off, regression suite, release quality gate
+- Spawn `devops-engineer` with `delegate_task` — Build pipeline, artifacts, deployment automation
+- Spawn `security-engineer` with `delegate_task` — Security audit for online/multiplayer/data features
+- Spawn `analytics-engineer` with `delegate_task` — Telemetry event verification and dashboard readiness
+- Spawn `community-manager` with `delegate_task` — Patch notes and launch communication
+- Spawn `producer` with `delegate_task` — Go/no-go decision, stakeholder communication
+- Spawn `network-programmer` with `delegate_task` — Netcode stability sign-off (invoke if game has multiplayer)
 
 Always provide full context in each agent's prompt (version number, milestone status, known issues). Launch independent agents in parallel where the pipeline allows it (e.g., Phase 3 agents can run simultaneously).
 
@@ -142,7 +144,7 @@ Delegate to **community-manager** (in parallel with deployment):
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

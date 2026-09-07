@@ -17,140 +17,140 @@ Flow State, Bartle Player Types). Use whichever engine set matches your project.
 
 ### 1. Understand the Hierarchy
 
-There are three tiers of agents:
+There are three tiers of agents (roster labels, not runtime model wiring):
 
-- **Tier 1 (Opus)**: Directors who make high-level decisions
+- **Tier 1 (Heavy)**: Directors who make high-level decisions
   - `creative-director` -- vision and creative conflict resolution
   - `technical-director` -- architecture and technology decisions
   - `producer` -- scheduling, coordination, and risk management
 
-- **Tier 2 (Sonnet)**: Department leads who own their domain
+- **Tier 2 (Medium)**: Department leads who own their domain
   - `game-designer`, `lead-programmer`, `art-director`, `audio-director`,
     `narrative-director`, `qa-lead`, `release-manager`, `localization-lead`
 
-- **Tier 3 (Sonnet/Haiku)**: Specialists who execute within their domain
+- **Tier 3 (Medium/Light)**: Specialists who execute within their domain
   - Designers, programmers, artists, writers, testers, engineers
 
 ### 2. Pick the Right Agent for the Job
 
 Ask yourself: "What department would handle this in a real studio?"
 
-| I need to... | Use this agent |
-|-------------|---------------|
-| Design a new mechanic | `game-designer` |
-| Write combat code | `gameplay-programmer` |
-| Create a shader | `technical-artist` |
-| Write dialogue | `writer` |
-| Plan the next sprint | `producer` |
-| Review code quality | `lead-programmer` |
-| Write test cases | `qa-tester` |
-| Design a level | `level-designer` |
-| Fix a performance problem | `performance-analyst` |
-| Set up CI/CD | `devops-engineer` |
-| Design a loot table | `economy-designer` |
-| Resolve a creative conflict | `creative-director` |
-| Make an architecture decision | `technical-director` |
-| Manage a release | `release-manager` |
-| Prepare strings for translation | `localization-lead` |
-| Test a mechanic idea quickly | `prototyper` |
-| Review code for security issues | `security-engineer` |
-| Check accessibility compliance | `accessibility-specialist` |
-| Get Unreal Engine advice | `unreal-specialist` |
-| Get Unity advice | `unity-specialist` |
-| Get Godot advice | `godot-specialist` |
-| Design GAS abilities/effects | `ue-gas-specialist` |
-| Define BP/C++ boundaries | `ue-blueprint-specialist` |
-| Implement UE replication | `ue-replication-specialist` |
-| Build UMG/CommonUI widgets | `ue-umg-specialist` |
-| Design DOTS/ECS architecture | `unity-dots-specialist` |
-| Write Unity shaders/VFX | `unity-shader-specialist` |
-| Manage Addressable assets | `unity-addressables-specialist` |
-| Build UI Toolkit/UGUI screens | `unity-ui-specialist` |
-| Write idiomatic GDScript | `godot-gdscript-specialist` |
-| Write Godot C# code | `godot-csharp-specialist` |
-| Create Godot shaders | `godot-shader-specialist` |
-| Build GDExtension modules | `godot-gdextension-specialist` |
-| Plan live events and seasons | `live-ops-designer` |
-| Write patch notes for players | `community-manager` |
-| Brainstorm a new game idea | Use `/brainstorm` skill |
+| I need to... | Use this agent | Model |
+| ------------- | --------------- | ------- |
+| Design a new mechanic | `game-designer` | Medium |
+| Write combat code | `gameplay-programmer` | Medium |
+| Create a shader | `technical-artist` | Medium |
+| Write dialogue | `writer` | Medium |
+| Plan the next sprint | `producer` | Heavy |
+| Review code quality | `lead-programmer` | Medium |
+| Write test cases | `qa-tester` | Light |
+| Design a level | `level-designer` | Medium |
+| Fix a performance problem | `performance-analyst` | Medium |
+| Set up CI/CD | `devops-engineer` | Light |
+| Design a loot table | `economy-designer` | Medium |
+| Resolve a creative conflict | `creative-director` | Heavy |
+| Make an architecture decision | `technical-director` | Heavy |
+| Manage a release | `release-manager` | Medium |
+| Prepare strings for translation | `localization-lead` | Medium |
+| Test a mechanic idea quickly | `prototyper` | Medium |
+| Review code for security issues | `security-engineer` | Medium |
+| Check accessibility compliance | `accessibility-specialist` | Light |
+| Get Unreal Engine advice | `unreal-specialist` | Medium |
+| Get Unity advice | `unity-specialist` | Medium |
+| Get Godot advice | `godot-specialist` | Medium |
+| Design GAS abilities/effects | `ue-gas-specialist` | Medium |
+| Define BP/C++ boundaries | `ue-blueprint-specialist` | Medium |
+| Implement UE replication | `ue-replication-specialist` | Medium |
+| Build UMG/CommonUI widgets | `ue-umg-specialist` | Medium |
+| Design DOTS/ECS architecture | `unity-dots-specialist` | Medium |
+| Write Unity shaders/VFX | `unity-shader-specialist` | Medium |
+| Manage Addressable assets | `unity-addressables-specialist` | Medium |
+| Build UI Toolkit/UGUI screens | `unity-ui-specialist` | Medium |
+| Write idiomatic GDScript | `godot-gdscript-specialist` | Medium |
+| Write Godot C# code | `godot-csharp-specialist` | Medium |
+| Create Godot shaders | `godot-shader-specialist` | Medium |
+| Build GDExtension modules | `godot-gdextension-specialist` | Medium |
+| Plan live events and seasons | `live-ops-designer` | Medium |
+| Write patch notes for players | `community-manager` | Light |
+| Brainstorm a new game idea | Use `/brainstorm` skill | Medium |
 
 ### 3. Use Slash Commands for Common Tasks
 
-| Command | What it does |
-|---------|-------------|
-| `/studio-start` | First-time onboarding — asks where you are, guides you to the right workflow |
-| `/studio-help` | Context-aware "what do I do next?" — reads your current phase and artifacts |
-| `/project-stage-detect` | Analyze project state, detect stage, identify gaps |
-| `/setup-engine` | Configure engine + version, populate reference docs |
-| `/adopt` | Brownfield audit and migration plan for existing projects |
-| `/brainstorm` | Guided game concept ideation from scratch |
-| `/map-systems` | Decompose concept into systems, map dependencies, guide per-system GDDs |
-| `/design-system` | Guided, section-by-section GDD authoring for a single game system |
-| `/quick-design` | Lightweight spec for small changes — tuning, tweaks, minor additions |
-| `/review-all-gdds` | Cross-GDD consistency and game design theory review |
-| `/propagate-design-change` | Find ADRs and stories affected by a GDD change |
-| `/art-bible` | Guided, section-by-section Art Bible authoring — creates visual identity spec before asset production |
-| `/asset-spec` | Generate per-asset visual specifications and AI generation prompts from GDDs or character profiles |
-| `/ux-design` | Author UX specs (screen/flow, HUD, interaction patterns) |
-| `/ux-review` | Validate UX specs for accessibility and GDD alignment |
-| `/create-architecture` | Master architecture document for the game |
-| `/architecture-decision` | Creates an ADR |
-| `/architecture-review` | Validate all ADRs, dependency ordering, GDD traceability |
-| `/create-control-manifest` | Flat programmer rules sheet from Accepted ADRs |
-| `/create-epics` | Translate GDDs + ADRs into epics (one per architectural module) |
-| `/create-stories` | Break a single epic into implementable story files |
-| `/dev-story` | Read a story and implement it — routes to the correct programmer agent |
-| `/sprint-plan` | Creates or updates sprint plans |
-| `/sprint-status` | Quick 30-line sprint snapshot |
-| `/story-readiness` | Validate a story is implementation-ready before pickup |
-| `/story-done` | End-of-story completion review — verifies acceptance criteria |
-| `/estimate` | Produces structured effort estimates |
-| `/design-review` | Reviews a design document |
-| `/code-review` | Reviews code for quality and architecture |
-| `/balance-check` | Analyzes game balance data |
-| `/asset-audit` | Audits assets for compliance |
-| `/content-audit` | GDD-specified content vs. implemented — find gaps |
-| `/scope-check` | Detect scope creep against plan |
-| `/perf-profile` | Performance profiling and bottleneck ID |
-| `/tech-debt` | Scan, track, and prioritize tech debt |
-| `/gate-check` | Validate phase readiness (PASS/CONCERNS/FAIL) |
-| `/consistency-check` | Scan all GDDs for cross-document inconsistencies (conflicting stats, names, rules) |
-| `/security-audit` | Audit for security vulnerabilities: save tampering, cheat vectors, network exploits, data exposure |
-| `/reverse-document` | Generate design/architecture docs from existing code |
-| `/milestone-review` | Reviews milestone progress |
-| `/retrospective` | Runs sprint/milestone retrospective |
-| `/bug-report` | Structured bug report creation |
-| `/playtest-report` | Creates or analyzes playtest feedback |
-| `/onboard` | Generates onboarding docs for a role |
-| `/release-checklist` | Validates pre-release checklist |
-| `/launch-checklist` | Complete launch readiness validation |
-| `/changelog` | Generates changelog from git history |
-| `/patch-notes` | Generate player-facing patch notes |
-| `/hotfix` | Emergency fix with audit trail |
-| `/day-one-patch` | Prepare a focused day-one patch for known issues discovered after gold master |
-| `/prototype` | Concept prototype — validate core idea before writing GDDs (Phase 1) |
-| `/vertical-slice` | Production-quality end-to-end build — validate full game loop (Phase 4) |
-| `/localize` | Localization scan, extract, validate |
-| `/team-combat` | Orchestrate full combat team pipeline |
-| `/team-narrative` | Orchestrate full narrative team pipeline |
-| `/team-ui` | Orchestrate full UI team pipeline |
-| `/team-release` | Orchestrate full release team pipeline |
-| `/team-polish` | Orchestrate full polish team pipeline |
-| `/team-audio` | Orchestrate full audio team pipeline |
-| `/team-level` | Orchestrate full level creation pipeline |
-| `/team-live-ops` | Orchestrate live-ops team for seasons, events, and post-launch content |
-| `/team-qa` | Orchestrate full QA team cycle — test plan, test cases, smoke check, sign-off |
-| `/qa-plan` | Generate a QA test plan for a sprint or feature |
-| `/bug-triage` | Re-prioritize open bugs, assign to sprints, surface systemic trends |
-| `/smoke-check` | Run critical path smoke test gate before QA hand-off (PASS/FAIL) |
-| `/soak-test` | Generate a soak test protocol for extended play sessions |
-| `/regression-suite` | Map coverage to GDD critical paths, flag gaps, maintain regression suite |
-| `/test-setup` | Scaffold test framework + CI pipeline for the project's engine (run once) |
-| `/test-helpers` | Generate engine-specific test helper libraries and factory functions |
-| `/test-flakiness` | Detect flaky tests from CI history, flag for quarantine or fix |
-| `/test-evidence-review` | Quality review of test files and manual evidence — ADEQUATE/INCOMPLETE/MISSING |
-| `/skill-test` | Validate skill files for compliance and correctness (static / spec / audit) |
-| `/skill-improve` | Improve a skill using a test-fix-retest loop — diagnose, propose fix, rewrite, verify |
+| Command | Model | What it does |
+| --------- | ------- | ------------- |
+| `/studio-start` | Medium | First-time onboarding — asks where you are, guides you to the right workflow |
+| `/studio-help` | Light | Context-aware "what do I do next?" — reads your current phase and artifacts |
+| `/project-stage-detect` | Light | Analyze project state, detect stage, identify gaps |
+| `/setup-engine` | Medium | Configure engine + version, populate reference docs |
+| `/adopt` | Medium | Brownfield audit and migration plan for existing projects |
+| `/brainstorm` | Medium | Guided game concept ideation from scratch |
+| `/map-systems` | Medium | Decompose concept into systems, map dependencies, guide per-system GDDs |
+| `/design-system` | Medium | Guided, section-by-section GDD authoring for a single game system |
+| `/quick-design` | Medium | Lightweight spec for small changes — tuning, tweaks, minor additions |
+| `/review-all-gdds` | Heavy | Cross-GDD consistency and game design theory review |
+| `/propagate-design-change` | Medium | Find ADRs and stories affected by a GDD change |
+| `/art-bible` | Medium | Guided, section-by-section Art Bible authoring — creates visual identity spec before asset production |
+| `/asset-spec` | Medium | Generate per-asset visual specifications and AI generation prompts from GDDs or character profiles |
+| `/ux-design` | Medium | Author UX specs (screen/flow, HUD, interaction patterns) |
+| `/ux-review` | Medium | Validate UX specs for accessibility and GDD alignment |
+| `/create-architecture` | Medium | Master architecture document for the game |
+| `/architecture-decision` | Medium | Creates an ADR |
+| `/architecture-review` | Heavy | Validate all ADRs, dependency ordering, GDD traceability |
+| `/create-control-manifest` | Medium | Flat programmer rules sheet from Accepted ADRs |
+| `/create-epics` | Medium | Translate GDDs + ADRs into epics (one per architectural module) |
+| `/create-stories` | Medium | Break a single epic into implementable story files |
+| `/dev-story` | Medium | Read a story and implement it — routes to the correct programmer agent |
+| `/sprint-plan` | Medium | Creates or updates sprint plans |
+| `/sprint-status` | Light | Quick 30-line sprint snapshot |
+| `/story-readiness` | Light | Validate a story is implementation-ready before pickup |
+| `/story-done` | Medium | End-of-story completion review — verifies acceptance criteria |
+| `/estimate` | Medium | Produces structured effort estimates |
+| `/design-review` | Medium | Reviews a design document |
+| `/code-review` | Medium | Reviews code for quality and architecture |
+| `/balance-check` | Medium | Analyzes game balance data |
+| `/asset-audit` | Medium | Audits assets for compliance |
+| `/content-audit` | Medium | GDD-specified content vs. implemented — find gaps |
+| `/scope-check` | Light | Detect scope creep against plan |
+| `/perf-profile` | Medium | Performance profiling and bottleneck ID |
+| `/tech-debt` | Medium | Scan, track, and prioritize tech debt |
+| `/gate-check` | Heavy | Validate phase readiness (PASS/CONCERNS/FAIL) |
+| `/consistency-check` | Medium | Scan all GDDs for cross-document inconsistencies (conflicting stats, names, rules) |
+| `/security-audit` | Medium | Audit for security vulnerabilities: save tampering, cheat vectors, network exploits, data exposure |
+| `/reverse-document` | Medium | Generate design/architecture docs from existing code |
+| `/milestone-review` | Medium | Reviews milestone progress |
+| `/retrospective` | Medium | Runs sprint/milestone retrospective |
+| `/bug-report` | Medium | Structured bug report creation |
+| `/playtest-report` | Medium | Creates or analyzes playtest feedback |
+| `/onboard` | Light | Generates onboarding docs for a role |
+| `/release-checklist` | Medium | Validates pre-release checklist |
+| `/launch-checklist` | Medium | Complete launch readiness validation |
+| `/changelog` | Light | Generates changelog from git history |
+| `/patch-notes` | Light | Generate player-facing patch notes |
+| `/hotfix` | Medium | Emergency fix with audit trail |
+| `/day-one-patch` | Medium | Prepare a focused day-one patch for known issues discovered after gold master |
+| `/prototype` | Medium | Concept prototype — validate core idea before writing GDDs (Phase 1) |
+| `/vertical-slice` | Medium | Production-quality end-to-end build — validate full game loop (Phase 4) |
+| `/localize` | Medium | Localization scan, extract, validate |
+| `/team-combat` | Medium | Orchestrate full combat team pipeline |
+| `/team-narrative` | Medium | Orchestrate full narrative team pipeline |
+| `/team-ui` | Medium | Orchestrate full UI team pipeline |
+| `/team-release` | Medium | Orchestrate full release team pipeline |
+| `/team-polish` | Medium | Orchestrate full polish team pipeline |
+| `/team-audio` | Medium | Orchestrate full audio team pipeline |
+| `/team-level` | Medium | Orchestrate full level creation pipeline |
+| `/team-live-ops` | Medium | Orchestrate live-ops team for seasons, events, and post-launch content |
+| `/team-qa` | Medium | Orchestrate full QA team cycle — test plan, test cases, smoke check, sign-off |
+| `/qa-plan` | Medium | Generate a QA test plan for a sprint or feature |
+| `/bug-triage` | Light | Re-prioritize open bugs, assign to sprints, surface systemic trends |
+| `/smoke-check` | Medium | Run critical path smoke test gate before QA hand-off (PASS/FAIL) |
+| `/soak-test` | Medium | Generate a soak test protocol for extended play sessions |
+| `/regression-suite` | Medium | Map coverage to GDD critical paths, flag gaps, maintain regression suite |
+| `/test-setup` | Medium | Scaffold test framework + CI pipeline for the project's engine (run once) |
+| `/test-helpers` | Medium | Generate engine-specific test helper libraries and factory functions |
+| `/test-flakiness` | Medium | Detect flaky tests from CI history, flag for quarantine or fix |
+| `/test-evidence-review` | Medium | Quality review of test files and manual evidence — ADEQUATE/INCOMPLETE/MISSING |
+| `/skill-test` | Medium | Validate skill files for compliance and correctness (static / spec / audit) |
+| `/skill-improve` | Medium | Improve a skill using a test-fix-retest loop — diagnose, propose fix, rewrite, verify |
 
 ### 4. Use Templates for New Documents
 
@@ -219,8 +219,8 @@ If you already know what you need, jump directly to the relevant path:
    - Generates 3 concepts, helps you pick one, defines core loop and pillars
    - Produces a game concept document and recommends an engine
 2. **Set up the engine** — Run `/setup-engine` (uses the brainstorm recommendation)
-   - Configures CLAUDE.md, detects knowledge gaps, populates reference docs
-   - Creates `gameworks references/technical-preferences.md` with naming conventions,
+   - Configures AGENTS.md, detects knowledge gaps, populates reference docs
+   - Creates `docs/technical-preferences.md` with naming conventions,
      performance budgets, and engine-specific defaults
    - If the engine version is newer than the LLM's training data, it fetches
      current docs from the web so agents suggest correct APIs
@@ -238,7 +238,7 @@ If you already know what you need, jump directly to the relevant path:
 If you already have a game concept and engine choice:
 
 1. **Set up the engine** — Run `/setup-engine [engine] [version]`
-   (e.g., `/setup-engine godot 4.6`) — also creates technical preferences
+   (e.g., `/setup-engine godot 4.6`) — also creates `docs/technical-preferences.md`
 2. **Write the Game Pillars** — delegate to `creative-director`
 3. **Decompose into systems** — Run `/map-systems` to enumerate systems and dependencies
 4. **Design each system** — Run `/design-system [system-name]` for GDDs in dependency order
@@ -285,7 +285,8 @@ skills/
   quality/                         -- Framework QA specifications
 
 Game workspace:
-AGENTS.md                          -- Project-specific agent instructions
+AGENTS.md                          -- Hermes workspace context (engine pin; no @ imports)
+docs/technical-preferences.md      -- Live engine, language, naming, budgets, specialist routing
 src/  assets/  design/  docs/      -- Game implementation and documentation
 tests/  prototypes/  production/   -- Validation, experiments, and delivery records
 ```

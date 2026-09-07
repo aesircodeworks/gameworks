@@ -18,6 +18,8 @@ metadata:
 
 # Test Setup
 
+**Model tier:** Medium
+
 This skill scaffolds the automated testing infrastructure for the project.
 It detects the configured engine, generates the appropriate test runner
 configuration, creates the standard directory layout, and wires up CI/CD
@@ -34,16 +36,16 @@ A test framework installed at sprint four costs 3 sprints.
 ## Phase 1: Detect Engine and Existing State
 
 1. **Read engine config**:
-   - Read `gameworks references/technical-preferences.md` and extract the `Engine:` value.
+   - Read `docs/technical-preferences.md` and extract the `Engine:` value.
    - If engine is not configured (`[TO BE CONFIGURED]`), stop:
      "Engine not configured. Run `/setup-engine` first, then re-run `/test-setup`."
 
 2. **Check for existing test infrastructure**:
-   - Glob `tests/` — does the directory exist?
-   - Glob `tests/unit/` and `tests/integration/` — do subdirectories exist?
-   - Glob `.github/workflows/` — does a CI workflow file exist?
-   - Glob `tests/gdunit4_runner.gd` (Godot) or `tests/EditMode/` (Unity) or
-     `Source/Tests/` (Unreal) for engine-specific artifacts.
+   - Use search_files with `file_glob="tests/**"` — does the directory exist?
+   - Use search_files with `file_glob="tests/unit/**"` and `file_glob="tests/integration/**"` — do subdirectories exist?
+   - Use search_files with `file_glob=".github/workflows/**"` — does a CI workflow file exist?
+   - Use search_files with `file_glob="tests/gdunit4_runner.gd"` (Godot) or `file_glob="tests/EditMode/**"` (Unity) or
+     `file_glob="Source/Tests/**"` (Unreal) for engine-specific artifacts.
 
 3. **Report findings**:
    - "Engine: [engine]. Test directory: [found / not found]. CI workflow: [found / not found]."

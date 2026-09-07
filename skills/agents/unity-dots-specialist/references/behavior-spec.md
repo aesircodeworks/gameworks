@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: ECS architecture (IComponentData, ISystem, SystemAPI), Jobs system (IJob, IJobEntity, Burst), Burst compiler constraints, DOTS gameplay systems, and hybrid renderer.
 Does NOT own: MonoBehaviour gameplay code (gameplay-programmer), UI implementation (unity-ui-specialist).
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references ECS / Jobs / Burst / IComponentData)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, terminal, search_files
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over MonoBehaviour gameplay or UI systems
 
 ---

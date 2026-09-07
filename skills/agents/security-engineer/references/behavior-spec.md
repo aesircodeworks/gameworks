@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: Anti-cheat systems, save data security, network security, vulnerability assessment, and data privacy compliance.
 Does NOT own: game logic design (gameplay-programmer), server infrastructure (devops-engineer).
-Model tier: Sonnet (default).
+Model tier: Medium.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references anti-cheat / security / vulnerability assessment)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, terminal, search_files
+- [ ] Model tier: Medium
 - [ ] Agent definition does not claim authority over game logic design or server deployment
 
 ---

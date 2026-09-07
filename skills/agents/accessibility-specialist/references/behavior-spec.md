@@ -5,7 +5,7 @@
 ## Agent Summary
 Domain: Input remapping, text scaling, colorblind modes, screen reader support, and accessibility standards compliance (WCAG, platform certifications).
 Does NOT own: overall UX flow design (ux-designer), visual art style direction (art-director).
-Model tier: Sonnet (default).
+Model tier: Light.
 No gate IDs assigned.
 
 ---
@@ -13,8 +13,8 @@ No gate IDs assigned.
 ## Static Assertions (Structural)
 
 - [ ] `description:` field is present and domain-specific (references accessibility / inclusive design / WCAG)
-- [ ] `Hermes tools:` list includes Read, Write, Edit, Bash, Glob, Grep
-- [ ] Model tier is Sonnet (default for specialists)
+- [ ] `Hermes tools:` list includes read_file, write_file, patch, terminal, search_files
+- [ ] Model tier: Light
 - [ ] Agent definition does not claim authority over UX flow or visual art style
 
 ---

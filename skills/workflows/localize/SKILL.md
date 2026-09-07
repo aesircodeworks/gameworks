@@ -18,6 +18,8 @@ metadata:
 
 # Localization Pipeline
 
+**Model tier:** Medium
+
 Localization is not just translation — it is the full process of making a game
 feel native in every language and region. Poor localization breaks immersion,
 confuses players, and blocks platform certification. This skill covers the
@@ -188,7 +190,7 @@ If writing this target is not already authorized, ask: "May I write this transla
 
 ## Phase 2F: Cultural Review Mode
 
-Spawn `localization-lead` via Task. Ask them to audit the following for cultural sensitivity across the target locales (read from `assets/data/strings/` and `assets/`):
+Spawn `localization-lead` with delegate_task. Ask them to audit the following for cultural sensitivity across the target locales (read from `assets/data/strings/` and `assets/`):
 
 ### Content Areas to Review
 
@@ -269,14 +271,14 @@ If writing this target is not already authorized, ask: "May I write the VO recor
 
 ### VO Pipeline: Validate
 
-Glob `assets/audio/vo/[locale]/` for all `.wav`/`.ogg` files. Cross-reference against the VO manifest. Report:
+Use search_files with `file_glob="assets/audio/vo/[locale]/*.{wav,ogg}"` for all `.wav`/`.ogg` files. Cross-reference against the VO manifest. Report:
 - Missing files (line in script, no audio file)
 - Extra files (audio file exists, no matching string key)
 - Naming convention violations
 
 ### VO Pipeline: Integrate
 
-Grep `src/` for VO audio references. Verify each referenced path exists in `assets/audio/vo/[locale]/`. Report broken references.
+Use search_files (query = VO audio references, `file_glob` under `src/`). Verify each referenced path exists in `assets/audio/vo/[locale]/`. Report broken references.
 
 ---
 
@@ -285,7 +287,7 @@ Grep `src/` for VO audio references. Verify each referenced path exists in `asse
 Right-to-left languages (Arabic, Hebrew, Persian, Urdu) require layout mirroring beyond
 just translating text. This mode validates the implementation.
 
-Read `gameworks references/technical-preferences.md` to determine the engine. Then check:
+Read `docs/technical-preferences.md` to determine the engine. Then check:
 
 **Layout mirroring**
 - Is RTL layout enabled in the engine? (Godot: `Control.layout_direction`, Unity: `RTL Support` package, Unreal: text direction flags)
@@ -305,7 +307,7 @@ Read `gameworks references/technical-preferences.md` to determine the engine. Th
 - Are there UI icons with directional arrows or asymmetric designs that need mirrored variants?
 - Do any text-in-image assets exist that require RTL versions?
 
-Grep patterns to check:
+search_files queries to check:
 - Engine-specific RTL flags in scene/prefab files
 - Any `HBoxContainer`, `LinearLayout`, `HorizontalBox` nodes — verify layout_direction settings
 - String concatenation with `+` near dialogue or UI code
@@ -375,7 +377,7 @@ Localization QA is a dedicated pass that runs after translations are delivered b
 before any locale ships. This is not the same as `/validate` (which checks completeness)
 — this is a structured playthrough-based quality check.
 
-Spawn `localization-lead` via Task with:
+Spawn `localization-lead` with delegate_task with:
 - The target locale(s) to QA
 - The list of all screens/flows in the game (from `design/gdd/` or `/content-audit` output)
 - The current `/localize validate` report

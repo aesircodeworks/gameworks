@@ -25,16 +25,16 @@
 #             /review-all-gdds (Phase 1 — baseline for Phase 2 checks)
 #             /architecture-review (data structure and interface validation)
 #
-# SEARCH PATTERNS (for skills using Grep):
-#   All entity names:        Grep pattern="^  - name:" path="design/registry/entities.yaml"
-#   Specific entity:         Grep pattern="  - name: goblin" path="design/registry/entities.yaml"
-#   All items:               Grep pattern="^  - name:" path="design/registry/entities.yaml" (items section)
-#   What combat.md owns:     Grep pattern="source: design/gdd/combat.md"
-#   What inventory.md uses:  Grep pattern="referenced_by.*inventory"
-#   All gold values:          Grep pattern="value_gold:"
-#   Deprecated entries:      Grep pattern="status: deprecated"
+# SEARCH PATTERNS (for skills using search_files):
+#   All entity names:        search_files query="^  - name:" file_glob="design/registry/entities.yaml"
+#   Specific entity:         search_files query="  - name: goblin" file_glob="design/registry/entities.yaml"
+#   All items:               search_files query="^  - name:" file_glob="design/registry/entities.yaml" (items section)
+#   What combat.md owns:     search_files query="source: design/gdd/combat.md"
+#   What inventory.md uses:  search_files query="referenced_by.*inventory"
+#   All gold values:          search_files query="value_gold:"
+#   Deprecated entries:      search_files query="status: deprecated"
 #
-# FORMAT: YAML. Consistent indentation is critical for grep reliability.
+# FORMAT: YAML. Consistent indentation is critical for search_files reliability.
 #   Sections: entities | items | formulas | constants
 #   Each entry: name, status, source, referenced_by[], attributes{}, added, revised
 

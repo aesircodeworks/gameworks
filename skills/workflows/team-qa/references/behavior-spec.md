@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /team-qa
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 Orchestrates the QA team through a 7-phase structured testing cycle. Coordinates
@@ -23,7 +25,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 ## Static Assertions (Structural)
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains verdict keywords for sign-off report: APPROVED, APPROVED WITH CONDITIONS, NOT APPROVED
@@ -52,12 +54,12 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 **Expected behavior:**
 1. Phase 1: Reads all story files in `production/sprints/sprint-03/`; reads `production/stage.txt`; reports "Found 4 stories. Current stage: [stage]. Ready to begin QA strategy?"
-2. Phase 2: Spawns `qa-lead` via Task; produces strategy table classifying all 4 stories; no blockers flagged; presents to user; clarify: user selects "Looks good — proceed to test plan"
+2. Phase 2: Spawns `qa-lead` with delegate_task; produces strategy table classifying all 4 stories; no blockers flagged; presents to user; clarify: user selects "Looks good — proceed to test plan"
 3. Phase 3: Produces QA plan document; asks "May I write the QA plan to `production/qa/qa-plan-sprint-03-[date].md`?"; writes after approval
-4. Phase 4: Spawns `qa-lead` via Task; reviews `tests/smoke/`; returns PASS; reports "Smoke check passed. Proceeding to test case writing."
-5. Phase 5: Spawns `qa-tester` via Task for each Visual/Feel and Integration story (2–3 stories); run in parallel; presents test cases grouped by story; clarify per group; user approves
+4. Phase 4: Spawns `qa-lead` with delegate_task; reviews `tests/smoke/`; returns PASS; reports "Smoke check passed. Proceeding to test case writing."
+5. Phase 5: Spawns `qa-tester` with delegate_task for each Visual/Feel and Integration story (2–3 stories); run in parallel; presents test cases grouped by story; clarify per group; user approves
 6. Phase 6: Walks through each approved story; user marks all as PASS; result summary: "Stories PASS: 4, FAIL: 0, BLOCKED: 0"
-7. Phase 7: Spawns `qa-lead` via Task to produce sign-off report; report shows all stories PASS; no bugs filed; Verdict: APPROVED; asks "May I write this QA sign-off report to `production/qa/qa-signoff-sprint-03-[date].md`?"; writes after approval
+7. Phase 7: Spawns `qa-lead` with delegate_task to produce sign-off report; report shows all stories PASS; no bugs filed; Verdict: APPROVED; asks "May I write this QA sign-off report to `production/qa/qa-signoff-sprint-03-[date].md`?"; writes after approval
 8. Verdict: COMPLETE — QA cycle finished
 
 **Assertions:**
@@ -83,7 +85,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 **Expected behavior:**
 1. Phases 1–3 complete normally; QA plan is written
-2. Phase 4: Spawns `qa-lead` via Task; smoke check returns FAIL; two specific failures are identified
+2. Phase 4: Spawns `qa-lead` with delegate_task; smoke check returns FAIL; two specific failures are identified
 3. Skill reports: "Smoke check failed. QA cannot begin until these issues are resolved: [list of 2 failures]. Fix them and re-run `/smoke-check`, or re-run `/team-qa` once resolved."
 4. Skill stops immediately after Phase 4 — no Phase 5, 6, or 7 is executed
 5. No sign-off report is produced; no "May I write?" for a sign-off is issued
@@ -111,7 +113,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 **Expected behavior:**
 1. Phases 1–5 complete normally; test cases are written for the Visual/Feel story
 2. Phase 6: User marks Visual/Feel story as FAIL; clarify collects failure description: "Animation plays at 2x speed — jitter visible on every loop"
-3. Phase 6: Spawns `qa-tester` via Task to write a formal bug report; bug report written to `production/qa/bugs/BUG-001-animation-speed-jitter.md` (or next increment if bugs exist); report includes severity field
+3. Phase 6: Spawns `qa-tester` with delegate_task to write a formal bug report; bug report written to `production/qa/bugs/BUG-001-animation-speed-jitter.md` (or next increment if bugs exist); report includes severity field
 4. Result summary: "Stories PASS: 1, FAIL: 1 — bugs filed: BUG-001"
 5. Phase 7: Spawns `qa-lead` to produce sign-off report; Bugs Found table lists BUG-001 with severity and status Open; Verdict: NOT APPROVED (S1/S2 bug open, or FAIL without documented workaround)
 6. Sign-off report write is offered; writes after approval
@@ -119,7 +121,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 **Assertions:**
 - [ ] FAIL result in Phase 6 triggers clarify to collect the failure description before the bug report is written
-- [ ] `qa-tester` is spawned via Task to write the bug report — orchestrator does not write it directly
+- [ ] `qa-tester` is spawned with delegate_task to write the bug report — orchestrator does not write it directly
 - [ ] Bug report follows naming convention: `BUG-[NNN]-[short-slug].md` in `production/qa/bugs/`
 - [ ] Bug report NNN is incremented correctly from existing bugs in the directory
 - [ ] Phase 7 sign-off report Bugs Found table includes the bug ID, story name, severity, and status
@@ -196,7 +198,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 - [ ] `clarify` used at Phase 2 (strategy review), Phase 5 (test case approval per group), and Phase 6 (per-story manual QA result)
 - [ ] Phase 4 smoke check is a hard gate: FAIL halts the pipeline at Phase 4 with no exceptions
 - [ ] Checks write scope for the QA plan (Phase 3) and sign-off report (Phase 7) without duplicate file permission; plan approval does not satisfy the later sign-off decision
-- [ ] Bug reports are always written by `qa-tester` via Task — orchestrator does not write directly
+- [ ] Bug reports are always written by `qa-tester` with delegate_task — orchestrator does not write directly
 - [ ] Phase 5 qa-tester tasks for independent stories are issued in parallel where possible
 - [ ] Error recovery: any BLOCKED agent is surfaced immediately with clarify options
 - [ ] Partial report always produced — no work is discarded because one story failed or blocked

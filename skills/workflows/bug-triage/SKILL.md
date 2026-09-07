@@ -18,6 +18,8 @@ metadata:
 
 # Bug Triage
 
+**Model tier:** Light
+
 This skill processes the open bug backlog into a prioritised, sprint-assigned
 action list. It distinguishes between **severity** (how bad is the impact?) and
 **priority** (how urgently must we fix it?), detects systemic trends, and
@@ -47,14 +49,14 @@ ensures no critical bug is lost between sprints.
 
 ### Step 2a — Discover bug files
 
-Glob for bug reports in priority order:
+Use search_files for bug reports in priority order:
 1. `production/qa/bugs/*.md` — individual bug report files (preferred format)
 2. `production/qa/bugs.md` — single consolidated bug log (fallback)
 3. Any `production/qa/qa-plan-*.md` "Bugs Found" table (last resort)
 
 If no bug files found:
 > "No bug files found in `production/qa/bugs/`. If bugs are tracked in a
-> different location, adjust the glob pattern. If no bugs exist yet, there is
+> different location, adjust the `file_glob`. If no bugs exist yet, there is
 > nothing to triage."
 
 Stop and report. Do not proceed if no bugs exist.

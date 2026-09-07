@@ -2,14 +2,19 @@
 
 # Skill Test Spec: /studio-start
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/studio-start` is the first-time onboarding skill for new projects. It guides the
 user through naming the project, choosing a game engine, and setting up the
-initial directory structure. It creates stub configuration files (CLAUDE.md,
-technical-preferences.md) and then routes to `/setup-engine` with the chosen
-engine as an argument. Each file or directory created is gated behind a
-"May I write" ask, following the collaborative protocol.
+initial directory structure. It creates stub configuration files (`AGENTS.md`,
+never `CLAUDE.md`; `docs/technical-preferences.md`) and then routes to
+`/setup-engine` with the chosen engine as an argument. Each file or directory
+created is gated behind a "May I write" ask, following the collaborative protocol.
+
+Engine detection reads the game-workspace file `docs/technical-preferences.md`
+(not the profile template). If that file is missing, the engine is unset.
 
 The skill detects whether a project is already configured and whether a
 partial setup exists, offering to resume or restart as appropriate. It has
@@ -29,7 +34,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
@@ -49,8 +54,8 @@ point this skill runs.
 ### Case 1: Happy Path — Fresh repo, no engine, full onboarding flow
 
 **Fixture:**
-- Empty repository: no CLAUDE.md overrides, no `production/stage.txt`, no
-  `technical-preferences.md` content beyond placeholders
+- Empty repository: no `AGENTS.md` overrides, no `production/stage.txt`, no
+  `docs/technical-preferences.md` (or only placeholders)
 - No existing design docs or source code
 
 **Input:** `/studio-start`
@@ -62,7 +67,7 @@ point this skill runs.
 4. User selects an engine
 5. Skill asks "May I write the initial directory structure?"
 6. Skill creates all directories defined in `directory-structure.md`
-7. Skill asks "May I write CLAUDE.md stub?" and writes it on approval
+7. Skill asks "May I write `AGENTS.md` stub?" and writes it on approval (never `CLAUDE.md`)
 8. Skill routes to `/setup-engine [chosen-engine]` to complete technical config
 
 **Assertions:**
@@ -78,13 +83,13 @@ point this skill runs.
 ### Case 2: Already Configured — Detects existing config, offers to skip or reconfigure
 
 **Fixture:**
-- `technical-preferences.md` has engine already set (not placeholder)
+- Game-workspace `docs/technical-preferences.md` has engine already set (not placeholder)
 - `production/stage.txt` exists with `Concept`
 
 **Input:** `/studio-start`
 
 **Expected behavior:**
-1. Skill reads `technical-preferences.md` and detects configured engine
+1. Skill reads `docs/technical-preferences.md` and detects configured engine
 2. Skill reports: "This project is already configured with [engine]"
 3. Skill presents options: skip (exit), reconfigure engine, or reconfigure specific sections
 4. If user selects skip: skill exits cleanly with a summary of current config
@@ -107,7 +112,7 @@ point this skill runs.
 
 **Expected behavior:**
 1. Skill presents engine options and user selects Godot 4
-2. Skill writes initial stubs (directory structure, CLAUDE.md) after approval
+2. Skill writes initial stubs (directory structure, `AGENTS.md` — not `CLAUDE.md`) after approval
 3. Skill explicitly routes to `/setup-engine godot` as the next step
 4. Handoff message clearly names the engine and the next skill invocation
 
@@ -121,14 +126,14 @@ point this skill runs.
 ### Case 4: Interrupted Setup — Partial config detected, offers resume or restart
 
 **Fixture:**
-- Directory structure exists (was created) but `technical-preferences.md` is
-  still all placeholders (engine was never chosen — setup was interrupted)
+- Directory structure exists (was created) but `docs/technical-preferences.md` is
+  missing or still all placeholders (engine was never chosen — setup was interrupted)
 - No `production/stage.txt`
 
 **Input:** `/studio-start`
 
 **Expected behavior:**
-1. Skill detects partial state: directories exist but engine is unconfigured
+1. Skill detects partial state: directories exist but engine is unconfigured (missing `docs/technical-preferences.md` counts as unset)
 2. Skill reports: "A partial setup was detected — directories exist but engine is not configured"
 3. Skill offers: resume from engine selection, or restart from scratch
 4. If resume: skill skips directory creation, proceeds to engine choice
@@ -165,7 +170,7 @@ point this skill runs.
 
 - [ ] Asks for project name before any file is written
 - [ ] Presents engine options as a structured choice (not free text)
-- [ ] Checks scope for the directory structure and CLAUDE.md stub; accepts one authorization covering both
+- [ ] Checks scope for the directory structure and `AGENTS.md` stub (never `CLAUDE.md`); accepts one authorization covering both
 - [ ] Ends with a handoff to `/setup-engine` with the engine name as argument
 - [ ] Verdict is clearly stated (COMPLETE or BLOCKED) at end of output
 

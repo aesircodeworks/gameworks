@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked, orchestrate the UI team through a structured pipeline.
 
 **Decision Points:** At each phase transition, use `clarify` to present
@@ -42,7 +44,7 @@ Store the resolved mode for use in all subsequent phases.
 - **ux-designer** — User flows, wireframes, accessibility, input handling
 - **ui-programmer** — UI framework, screens, widgets, data binding, implementation
 - **art-director** — Visual style, layout polish, consistency with art bible
-- **engine UI specialist** — Validates UI implementation patterns against engine-specific best practices (read from `gameworks references/technical-preferences.md` Engine Specialists → UI Specialist)
+- **engine UI specialist** — Validates UI implementation patterns against engine-specific best practices (read from `docs/technical-preferences.md` Engine Specialists → UI Specialist)
 - **accessibility-specialist** — Audits accessibility compliance at Phase 4
 
 **Templates used by this pipeline:**
@@ -54,11 +56,11 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: ux-designer` — User flows, wireframes, accessibility, input handling
-- `subagent_type: ui-programmer` — UI framework, screens, widgets, data binding
-- `subagent_type: art-director` — Visual style, layout polish, art bible consistency
-- `subagent_type: [UI engine specialist]` — Engine-specific UI pattern validation (e.g., unity-ui-specialist, ue-umg-specialist, godot-specialist)
-- `subagent_type: accessibility-specialist` — Accessibility compliance audit
+- Spawn `ux-designer` with `delegate_task` — User flows, wireframes, accessibility, input handling
+- Spawn `ui-programmer` with `delegate_task` — UI framework, screens, widgets, data binding
+- Spawn `art-director` with `delegate_task` — Visual style, layout polish, art bible consistency
+- Spawn `[UI engine specialist]` with `delegate_task` — Engine-specific UI pattern validation (e.g., unity-ui-specialist, ue-umg-specialist, godot-specialist)
+- Spawn `accessibility-specialist` with `delegate_task` — Accessibility compliance audit
 
 Always provide full context in each agent's prompt (feature requirements, existing UI patterns, platform targets). Launch independent agents in parallel where the pipeline allows it (e.g., Phase 4 review agents can run simultaneously).
 
@@ -114,7 +116,7 @@ Delegate to **art-director**:
 
 ### Phase 3: Implementation
 
-Before implementation begins, spawn the **engine UI specialist** (from `gameworks references/technical-preferences.md` Engine Specialists → UI Specialist) to review the UX spec and visual design spec for engine-specific implementation guidance:
+Before implementation begins, spawn the **engine UI specialist** (from `docs/technical-preferences.md` Engine Specialists → UI Specialist) to review the UX spec and visual design spec for engine-specific implementation guidance:
 - Which engine UI framework should be used for this screen? (e.g., UI Toolkit vs UGUI in Unity, Control nodes vs CanvasLayer in Godot, UMG vs CommonUI in Unreal)
 - Any engine-specific gotchas for the proposed layout or interaction patterns?
 - Recommended widget/node structure for the engine?
@@ -160,7 +162,7 @@ All three review streams must report before proceeding to Phase 5.
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.

@@ -2,9 +2,11 @@
 
 # Skill Test Spec: /sprint-status
 
+**Model tier:** Light
+
 ## Skill Summary
 
-`/sprint-status` is a Haiku-tier read-only skill that reads the current active
+`/sprint-status` is a Light-tier read-only skill that reads the current active
 sprint file and the session state to produce a concise sprint health summary.
 It reports story counts by status (Complete / In Progress / Blocked / Not Started)
 and emits one of three sprint-health verdicts: ON TRACK, AT RISK, or BLOCKED.
@@ -17,7 +19,7 @@ fast, low-cost status checks during a session.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings or numbered check sections
 - [ ] Contains verdict keywords: ON TRACK, AT RISK, BLOCKED
 - [ ] Does NOT require "May I write" language (read-only skill)
@@ -151,11 +153,11 @@ None. `/sprint-status` is a read-only reporting skill; no gates are invoked.
 
 ## Protocol Compliance
 
-- [ ] Does NOT use Write or Edit tools (read-only skill)
+- [ ] Does NOT use write_file or patch (read-only skill)
 - [ ] Presents story count breakdown before emitting verdict
 - [ ] Does not ask for approval
 - [ ] Ends with a recommended next step based on verdict
-- [ ] Runs on Haiku model tier (fast, low-cost)
+- [ ] Runs on model tier Light (fast, low-cost)
 
 ---
 

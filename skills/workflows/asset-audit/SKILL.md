@@ -18,19 +18,21 @@ metadata:
 
 ## Phase 1: Read Standards
 
-Read the art bible or asset standards from the relevant design docs and the CLAUDE.md naming conventions.
+**Model tier:** Medium
+
+Read the art bible or asset standards from the relevant design docs and the AGENTS.md naming conventions.
 
 ---
 
 ## Phase 2: Scan Asset Directories
 
-Scan the target asset directory using Glob:
+Scan the target asset directory using search_files:
 
-- `assets/art/**/*` for art assets
-- `assets/audio/**/*` for audio assets
-- `assets/vfx/**/*` for VFX assets
-- `assets/shaders/**/*` for shaders
-- `assets/data/**/*` for data files
+- `file_glob="assets/art/**/*"` for art assets
+- `file_glob="assets/audio/**/*"` for audio assets
+- `file_glob="assets/vfx/**/*"` for VFX assets
+- `file_glob="assets/shaders/**/*"` for shaders
+- `file_glob="assets/data/**/*"` for data files
 
 ---
 
@@ -98,6 +100,6 @@ This skill is read-only — it produces a report but does not write files.
 
 ## Phase 5: Next Steps
 
-- Fix naming violations using the patterns defined in CLAUDE.md.
+- Fix naming violations using the patterns defined in AGENTS.md.
 - Delete confirmed orphaned assets after manual review.
 - Run `/content-audit` to cross-check asset counts against GDD-specified requirements.

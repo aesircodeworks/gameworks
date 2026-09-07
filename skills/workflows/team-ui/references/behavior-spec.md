@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /team-ui
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 Orchestrates the UI team through the full UX pipeline for a single UI feature.
@@ -25,7 +27,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 ## Static Assertions (Structural)
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings (Phase 1a through Phase 5 are all present)
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Documents scoped write authorization; children inherit approved scope and return new decisions to the coordinator — writes delegated to sub-agents and sub-skills, orchestrator does not write files directly
@@ -49,7 +51,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 - `design/player-journey.md` exists
 - `design/ux/interaction-patterns.md` exists with relevant patterns
 - `design/accessibility-requirements.md` exists with committed tier (e.g., Enhanced)
-- Engine UI specialist configured in `gameworks references/technical-preferences.md`
+- Engine UI specialist configured in `docs/technical-preferences.md`
 
 **Input:** `/team-ui inventory screen`
 
@@ -138,7 +140,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 **Expected behavior:**
 1. Phase 4 begins after implementation is confirmed complete
-2. Three Task calls issued simultaneously: ux-designer, art-director, accessibility-specialist
+2. Three delegate_task calls issued simultaneously: ux-designer, art-director, accessibility-specialist
 3. Each stream operates independently:
    - ux-designer: verifies implementation matches wireframes, tests keyboard-only and gamepad-only navigation, checks accessibility features function
    - art-director: verifies visual consistency with art bible at minimum and maximum supported resolutions
@@ -147,7 +149,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 5. `clarify` presents all three review results before Phase 5 begins
 
 **Assertions:**
-- [ ] All three Task calls issued before any result is awaited (parallel, not sequential)
+- [ ] All three delegate_task calls issued before any result is awaited (parallel, not sequential)
 - [ ] Phase 5 does NOT begin until all three Phase 4 agents have returned
 - [ ] Accessibility-specialist explicitly reads `design/accessibility-requirements.md` for the committed tier
 - [ ] Accessibility violations flagged as BLOCKING (not merely advisory)
@@ -188,7 +190,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 - [ ] `clarify` used at each phase transition — user approves before pipeline advances
 - [ ] UX Review Gate (Phase 1c) is blocking — Phase 2 cannot begin without APPROVED or explicit user override
-- [ ] All file writes delegated to sub-agents and sub-skills — orchestrator does not call Write or Edit directly
+- [ ] All file writes delegated to sub-agents and sub-skills — orchestrator does not call write_file or patch directly
 - [ ] Phase 4 agents launched in parallel per skill spec
 - [ ] Error Recovery Protocol followed: surface → assess → offer options → partial report
 - [ ] Partial report always produced even when agents are BLOCKED

@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 If no argument is provided, output usage guidance and exit without spawning any agents:
 > Usage: `/team-narrative [narrative content description]` — describe the story content, scene, or narrative area to work on (e.g., `boss encounter cutscene`, `faction intro dialogue`, `tutorial narrative`). Do not use `clarify` here; output the guidance directly.
 
@@ -50,12 +52,12 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: narrative-director` — Story arcs, character design, narrative vision
-- `subagent_type: writer` — Dialogue writing, lore entries, in-game text
-- `subagent_type: world-builder` — World rules, faction design, history, geography
-- `subagent_type: art-director` — Character visual profiles, environmental visual storytelling, cinematic tone
-- `subagent_type: level-designer` — Level layouts that serve the narrative, pacing
-- `subagent_type: localization-lead` — Localization readiness — flags non-localizable strings, cultural assumptions, and i18n gaps
+- Spawn `narrative-director` with `delegate_task` — Story arcs, character design, narrative vision
+- Spawn `writer` with `delegate_task` — Dialogue writing, lore entries, in-game text
+- Spawn `world-builder` with `delegate_task` — World rules, faction design, history, geography
+- Spawn `art-director` with `delegate_task` — Character visual profiles, environmental visual storytelling, cinematic tone
+- Spawn `level-designer` with `delegate_task` — Level layouts that serve the narrative, pacing
+- Spawn `localization-lead` with `delegate_task` — Localization readiness — flags non-localizable strings, cultural assumptions, and i18n gaps
 
 Always provide full context in each agent's prompt (narrative brief, lore dependencies, character profiles). Launch independent agents in parallel where the pipeline allows it (e.g., Phase 2 agents can run simultaneously).
 
@@ -70,7 +72,7 @@ Delegate to **narrative-director**:
 - Output: narrative brief with story requirements
 
 ### Phase 2: World Foundation (parallel)
-Delegate in parallel — issue all three Task calls simultaneously before waiting for any result:
+Delegate in parallel — issue all three delegate_task calls simultaneously before waiting for any result:
 - **world-builder**: Create or update lore entries for factions, locations, and history relevant to this content. Cross-reference against existing lore for contradictions. Set canon level for new entries.
 - **writer**: Draft character dialogue using voice profiles. Ensure all lines are under 120 characters, use named placeholders for variables, and are localization-ready.
 - **art-director**: Define character visual design direction for key characters appearing in this content (silhouette, visual archetype, distinguishing features). Specify environmental visual storytelling elements for each key space (prop composition, lighting notes, spatial arrangement). Define tone palette and cinematic direction for any cutscenes or scripted sequences.
@@ -97,7 +99,7 @@ Delegate in parallel:
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
@@ -116,7 +118,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (narrative docs, dialogue files, lore entries) are delegated to
-sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+sub-agents spawned with delegate_task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

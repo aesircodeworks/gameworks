@@ -18,6 +18,8 @@ metadata:
 
 # Review All GDDs
 
+**Model tier:** Heavy
+
 This skill reads every system GDD simultaneously and performs two complementary
 reviews that cannot be done per-GDD in isolation:
 
@@ -51,11 +53,11 @@ completeness. This skill reviews the *relationships* between all GDDs.
 
 ### Phase 1a — L0: Summary Scan (fast, low tokens)
 
-Before reading any full document, use Grep to extract `## Summary` sections
+Before reading any full document, use search_files to extract `## Summary` sections
 from all GDD files:
 
 ```
-Grep pattern="## Summary" glob="design/gdd/*.md" output_mode="content" -A 5
+search_files query="## Summary" file_glob="design/gdd/*.md" context=5
 ```
 
 Display a manifest to the user:
@@ -76,12 +78,12 @@ proceed to L1 for those GDDs plus any GDDs listed in their "Key deps".
 Before full-reading any GDD, check for the entity registry:
 
 ```
-Read path="design/registry/entities.yaml"
+read_file on design/registry/entities.yaml
 ```
 
 If the registry exists and has entries, use it as a **pre-built conflict
 baseline**: known entities, items, formulas, and constants with their
-authoritative values and source GDDs. In Phase 2, grep GDDs for registered
+authoritative values and source GDDs. In Phase 2, use search_files on GDDs for registered
 names first — this is faster than reading all GDDs in full before knowing
 what to look for.
 
@@ -110,17 +112,17 @@ If fewer than 2 system GDDs exist, stop:
 ### Parallel Execution
 
 Phase 2 (Consistency) and Phase 3 (Design Theory) are independent — they read
-the same GDD inputs but produce separate reports. Spawn both as parallel Task
-agents simultaneously rather than waiting for Phase 2 to complete before
+the same GDD inputs but produce separate reports. Spawn both as parallel
+delegate_task agents simultaneously rather than waiting for Phase 2 to complete before
 starting Phase 3. Collect both results before writing the combined report.
 
-**When spawning parallel Task agents for Phase 2 and Phase 3, always pass:**
+**When spawning parallel delegate_task agents for Phase 2 and Phase 3, always pass:**
 - The complete list of GDD file paths loaded in Phase 1 (explicit paths, not just counts)
 - The full TR registry contents if loaded in Phase 1b (paste the registry text, not just a file path)
 - The specific checklist items assigned to that agent's phase (Phase 2 gets 2a–2f; Phase 3 gets 3a–3g)
-- The engine name and version from `gameworks references/technical-preferences.md` and `docs/engine-reference/[engine]/VERSION.md`
+- The engine name and version from `docs/technical-preferences.md` and `docs/engine-reference/[engine]/VERSION.md`
 
-Do not rely on the subagent to re-read these files — it has its own context window and cannot access Phase 1 results unless they are explicitly passed in the Task prompt.
+Do not rely on the subagent to re-read these files — it has its own context window and cannot access Phase 1 results unless they are explicitly passed in the delegate_task prompt.
 
 ---
 

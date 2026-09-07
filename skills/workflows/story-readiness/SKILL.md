@@ -18,6 +18,8 @@ metadata:
 
 # Story Readiness
 
+**Model tier:** Light
+
 This skill validates that a story file contains everything a developer needs
 to begin implementation — no mid-sprint design interruptions, no guessing,
 no ambiguous acceptance criteria. Run it before assigning a story.
@@ -50,7 +52,7 @@ See `gameworks references/director-gates.md` for the full check pattern and mode
   validate that single story file.
 - **`sprint`**: read the current sprint plan from `production/sprints/` (most
   recent file), extract every story path it references, validate each one.
-- **`all`**: glob `production/epics/**/*.md`, exclude `EPIC.md` index files,
+- **`all`**: use search_files with `file_glob="production/epics/**/*.md"`, exclude `EPIC.md` index files,
   validate every story file found.
 - **No argument**: ask the user which scope to validate.
 
@@ -176,7 +178,7 @@ items pass or are explicitly marked N/A with a stated reason.
 - [ ] **Referenced assets exist**: Scan the story text for asset path patterns
   (paths containing `assets/`, or file extensions `.png`, `.jpg`, `.svg`,
   `.wav`, `.ogg`, `.mp3`, `.glb`, `.gltf`, `.tres`, `.tscn`, `.res`).
-  - For each asset path found: use Glob to check whether the file exists.
+  - For each asset path found: use search_files to check whether the file exists.
   - If any referenced asset does not exist: **NEEDS WORK** — note the missing
     path(s). (The story references assets that have not been created yet.
     Either remove the reference, create a placeholder, or mark it as an
@@ -291,7 +293,7 @@ After reporting findings, offer:
 draft the missing sections for your approval."
 
 If the user says yes for a specific story, draft only the missing sections
-in conversation. Do not use Write or Edit tools — the user (or
+in conversation. Do not use write_file or patch — the user (or
 `/create-stories`) handles writing.
 
 **Redirect rules:**
@@ -341,7 +343,7 @@ Apply the review mode resolved in Phase 0 before spawning QL-STORY-READY:
 - `lean` → skip. Note: "QL-STORY-READY skipped — Lean mode." Proceed to close.
 - `full` → spawn as normal.
 
-Spawn `qa-lead` via Task using gate **QL-STORY-READY** (`gameworks references/director-gates.md`).
+Spawn `qa-lead` with delegate_task using gate **QL-STORY-READY** (`gameworks references/director-gates.md`).
 
 Pass the following context:
 - Story title

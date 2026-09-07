@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 If no argument is provided, output usage guidance and exit without spawning any agents:
 > Usage: `/team-polish [feature or area]` — specify the feature or area to polish (e.g., `combat`, `main menu`, `inventory system`, `level-1`). Do not use `clarify` here; output the guidance directly.
 
@@ -52,12 +54,12 @@ Store the resolved mode for use in all subsequent phases.
 ## How to Delegate
 
 Use the delegate_task tool to spawn each team member as a subagent:
-- `subagent_type: performance-analyst` — Profiling, optimization, memory analysis
-- `subagent_type: engine-programmer` — Engine-level fixes for rendering, memory, resource loading
-- `subagent_type: technical-artist` — VFX polish, shader optimization, visual quality
-- `subagent_type: sound-designer` — Audio polish, mixing, ambient layers
-- `subagent_type: tools-programmer` — Content pipeline and editor tool verification
-- `subagent_type: qa-tester` — Edge case testing, regression testing, soak testing
+- Spawn `performance-analyst` with `delegate_task` — Profiling, optimization, memory analysis
+- Spawn `engine-programmer` with `delegate_task` — Engine-level fixes for rendering, memory, resource loading
+- Spawn `technical-artist` with `delegate_task` — VFX polish, shader optimization, visual quality
+- Spawn `sound-designer` with `delegate_task` — Audio polish, mixing, ambient layers
+- Spawn `tools-programmer` with `delegate_task` — Content pipeline and editor tool verification
+- Spawn `qa-tester` with `delegate_task` — Edge case testing, regression testing, soak testing
 
 Always provide full context in each agent's prompt (target feature/area, performance budgets, known issues). Launch independent agents in parallel where the pipeline allows it (e.g., Phases 3 and 4 can run simultaneously).
 
@@ -117,7 +119,7 @@ Delegate to **qa-tester**:
 
 ## Error Recovery Protocol
 
-If any spawned agent (via Task) returns BLOCKED, errors, or cannot complete:
+If any spawned agent (with delegate_task) returns BLOCKED, errors, or cannot complete:
 
 1. **Surface immediately**: Report "[AgentName]: BLOCKED — [reason]" to the user before continuing to dependent phases
 2. **Assess dependencies**: Check whether the blocked agent's output is required by subsequent phases. If yes, do not proceed past that dependency point without user input.
@@ -136,7 +138,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (performance reports, test results, evidence docs) are delegated to
-sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+sub-agents spawned with delegate_task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

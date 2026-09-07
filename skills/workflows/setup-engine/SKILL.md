@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 When this skill is invoked:
 
 ## 1. Parse Arguments
@@ -134,7 +136,7 @@ Once the engine is chosen:
 
 ---
 
-## 4. Update CLAUDE.md Technology Stack
+## 4. Update AGENTS.md Technology Stack
 
 ### Language Selection (Godot only)
 
@@ -148,12 +150,12 @@ If Godot was chosen, ask the user which language to use **before** showing the p
 >
 > Which will this project primarily use?"
 
-Record the choice. It determines the CLAUDE.md template, naming conventions, specialist routing, and which agent is spawned for code files throughout the project.
+Record the choice. It determines the AGENTS.md template, naming conventions, specialist routing, and which agent is spawned for code files throughout the project.
 
 ---
 
-Read `CLAUDE.md` and show the user the proposed Technology Stack changes.
-If writing this target is not already authorized, ask: "May I write these engine settings to `CLAUDE.md`?"
+Read `AGENTS.md` and show the user the proposed Technology Stack changes.
+If writing this target is not already authorized, ask: "May I write these engine settings to `AGENTS.md`?"
 
 Wait for confirmation before making any edits.
 
@@ -181,8 +183,16 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 
 ## 5. Populate Technical Preferences
 
-After updating CLAUDE.md, create or update `gameworks references/technical-preferences.md` with
-engine-appropriate defaults. Read the existing template first, then fill in:
+After updating AGENTS.md, create or update the **game workspace** file
+`docs/technical-preferences.md` with engine-appropriate defaults. Never write
+engine values into the installed profile template.
+
+If `docs/technical-preferences.md` does not exist, copy the template from
+`skill_view('gameworks', file_path='references/technical-preferences.md')` into
+`docs/technical-preferences.md`, then fill it. If the game file already exists,
+read it and update in place.
+
+Fill in:
 
 ### Engine & Language Section
 - Fill from the engine choice made in step 4
@@ -396,37 +406,36 @@ Wait for confirmation before writing any files.
 
 ---
 
-## 8. Update CLAUDE.md Import
+## 8. Update AGENTS.md Engine Version Reference
 
-Ask: "May I update the `@` import in `CLAUDE.md` to point to the new engine reference?"
+Hermes does not expand `@` imports. Write a real paragraph, not an `@` path.
 
-Wait for confirmation, then update the `@` import under "Engine Version Reference" to point to the
-correct engine:
+Ask: "May I update the Engine Version Reference in `AGENTS.md` to point at the new engine reference file?"
+
+Wait for confirmation, then set:
 
 ```markdown
 ## Engine Version Reference
 
-@docs/engine-reference/<engine>/VERSION.md
+Before suggesting engine APIs, read `docs/engine-reference/<engine>/VERSION.md`.
+Do not invent post-cutoff APIs.
 ```
 
-If the previous import pointed to a different engine (e.g., switching from
-Godot to Unity), update it.
+If the previous paragraph pointed at a different engine (e.g., switching from
+Godot to Unity), update it. If `AGENTS.md` is missing, copy
+`project-bootstrap/templates/AGENTS.md` into the game workspace first, then fill
+the Technology Stack and this section.
 
 ---
 
-## 9. Update Agent Instructions
+## 9. Version Awareness (do not patch profile skills)
 
-Ask: "May I add a Version Awareness section to the engine specialist agent files?" before making any edits.
+Do not write into installed profile role skills. Those files are distribution-owned.
 
-For the chosen engine's specialist agents, verify they have a
-"Version Awareness" section. If not, add one following the pattern in
-the existing Godot specialist agents.
-
-The section should instruct the agent to:
-1. Read `docs/engine-reference/<engine>/VERSION.md`
-2. Check deprecated APIs before suggesting code
-3. Check breaking changes for relevant version transitions
-4. Use web_search to verify uncertain APIs
+Confirm the game-workspace `docs/engine-reference/<engine>/VERSION.md` exists
+(from section 7). Engine specialist skills already instruct reading that file.
+If a specialist is missing Version Awareness, file it as framework work; do not
+mutate `$HERMES_HOME` or this distribution during `/setup-engine`.
 
 ---
 
@@ -475,7 +484,8 @@ any "must migrate" items.
 Scan `src/` for code that uses APIs known to be deprecated or changed in the
 target version:
 
-- Use Grep to search for deprecated API names extracted from the migration
+- Use `search_files` (query = deprecated API name, `file_glob` under `src/`) to
+  search for deprecated API names extracted from the migration
   guide (e.g., old function names, removed node types, changed property names)
 - List each file that matches, with the specific API reference found
 
@@ -562,7 +572,7 @@ Engine:          [name] [version]
 Language:        [GDScript | C# | GDScript + C# | C# | C++ + Blueprint]
 Knowledge Risk:  [LOW/MEDIUM/HIGH]
 Reference Docs:  [created/skipped]
-CLAUDE.md:       [updated]
+AGENTS.md:       [updated]
 Tech Prefs:      [created/updated]
 Agent Config:    [verified]
 
@@ -584,9 +594,9 @@ Verdict: **COMPLETE** — engine configured and reference docs populated.
 - NEVER guess an engine version — always verify via web_search or user confirmation
 - NEVER overwrite existing reference docs without asking — append or update
 - If reference docs already exist for a different engine, ask before replacing
-- Always show the user what you're about to change before making CLAUDE.md edits
+- Always show the user what you're about to change before making AGENTS.md edits
 - If web_search returns ambiguous results, show the user and let them decide
-- When the user chose **GDScript**: copy the GDScript CLAUDE.md template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
+- When the user chose **GDScript**: copy the GDScript AGENTS.md template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
 
 ---
 
@@ -596,7 +606,7 @@ All Godot-specific variants for language-dependent configuration. Referenced fro
 
 ---
 
-### A1. CLAUDE.md Technology Stack Templates
+### A1. AGENTS.md Technology Stack Templates
 
 **GDScript:**
 ```markdown

@@ -2,22 +2,23 @@
 
 # Active Hooks
 
-Hooks are configured in `(game-workspace)/settings.json` and fire automatically:
+Hooks are registered in the **installed profile** `config.yaml`, not in a game-workspace `settings.json`. Scripts live under `"$HERMES_HOME"/agent-hooks/aesir-gameworks/` and speak the Hermes JSON wire protocol (`context`, `action: block`, or `{}`).
 
-| Hook | Event | Trigger | Action |
+Hermes has no PreCompact / PostCompact / Notification events. Session continuity uses `pre_verify` checkpointing and first-turn `pre_llm_call` restore. `notify-session.sh` is invoked from `session-end.sh` as a local toast (osascript on macOS); it is not a Hermes hook event.
+
+| Script | Hermes event | Matcher | Action |
 | ---- | ----- | ------- | ------ |
-| `validate-commit.sh` | PreToolUse (Bash) | `git commit` commands | Validates design doc sections, JSON data files, hardcoded values, TODO format |
-| `validate-push.sh` | PreToolUse (Bash) | `git push` commands | Warns on pushes to protected branches (develop/main) |
-| `validate-assets.sh` | PostToolUse (Write/Edit) | Asset file changes | Checks naming conventions and JSON validity for files in `assets/` |
-| `session-start.sh` | SessionStart | Session begins | Loads sprint context, milestone, git activity; detects and previews active session state file for recovery |
-| `detect-gaps.sh` | SessionStart | Session begins | Detects fresh projects (suggests /studio-start) and missing documentation when code/prototypes exist, suggests /reverse-document or /project-stage-detect |
-| `pre-compact.sh` | PreCompact | Context compression | Dumps session state (active.md, modified files, WIP design docs) into conversation before compaction so it survives summarization |
-| `post-compact.sh` | PostCompact | After compaction | Reminds Claude to restore session state from `active.md` checkpoint |
-| `notify.sh` | Notification | Notification event | Shows Windows toast notification via PowerShell |
-| `session-stop.sh` | Stop | Session ends | Summarizes accomplishments and updates session log |
-| `log-agent.sh` | SubagentStart | Agent spawned | Audit trail start — logs subagent invocation with timestamp |
-| `log-agent-stop.sh` | SubagentStop | Agent stops | Audit trail stop — completes subagent record |
-| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Skill file changes | Advises running `/skill-test` after any `(game-workspace)/skills/` file is written or edited |
+| `validate-commit.sh` | `pre_tool_call` | `terminal` (`git commit`) | Blocks invalid `assets/data/*.json` and unowned TODO/FIXME in `src/` |
+| `validate-push.sh` | `pre_tool_call` | `terminal` (`git push`) | Warns on pushes to protected branches |
+| `validate-project-assets.sh` | `post_tool_call` | `write_file\|patch` | On `assets/**`: rejects filenames with spaces; validates JSON |
+| `validate-aesir-skill-change.sh` | `post_tool_call` | `write_file\|patch\|skill_manage` | Advises `/skill-test` after framework skill edits |
+| `session-start.sh` | `pre_llm_call` (once per session) | — | Injects branch, recent commits, stage, sprint, `active.md` presence |
+| `detect-project-gaps.sh` | `pre_llm_call` (once per session) | — | Notes missing `design/gdd/game-concept.md` |
+| `restore-session-context.sh` | `pre_llm_call` (once per session) | — | If `production/session-state/active.md` exists, reminds the model to restore it |
+| `checkpoint-session-state.sh` | `pre_verify` | — | Date-stamps `production/session-state/.aesir-checkpoint` |
+| `session-end.sh` | `on_session_finalize` | — | Appends `production/session-logs/sessions.jsonl`; runs `notify-session.sh` |
+| `notify-session.sh` | (not registered) | called by `session-end.sh` | Optional local session-end toast |
+| `log-subagent-start.sh` | `subagent_start` | — | Appends `production/session-logs/subagents.jsonl` |
+| `log-subagent-stop.sh` | `subagent_stop` | — | Completes the subagent audit trail |
 
-Hook reference documentation: `gameworks references/hooks/`
-Hook input schema documentation: `gameworks references/hooks/hook-input-schemas.md`
+Game-workspace hooks never run against this distribution repository (`distribution.yaml` or `skills/studio` present).
