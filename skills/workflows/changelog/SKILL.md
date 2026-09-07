@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Parse Arguments
 
+**Model tier:** Light
+
 Read the argument for the target version or sprint number. If a version is given, use the corresponding git tag. If a sprint number is given, use the sprint date range.
 
 Verify the repository is initialized: run `git rev-parse --is-inside-work-tree` to confirm git is available. If not a git repo, inform the user and abort gracefully.

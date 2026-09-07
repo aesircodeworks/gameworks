@@ -5,7 +5,7 @@
 ## Agent Summary
 **Domain owned:** Scope management, sprint planning validation, milestone tracking, epic prioritization, production phase gate.
 **Does NOT own:** Game design decisions (creative-director / game-designer), technical architecture (technical-director), creative direction.
-**Model tier:** Opus (multi-document synthesis, high-stakes phase gate verdicts).
+**Model tier:** Heavy (multi-document synthesis, high-stakes phase gate verdicts).
 **Gate IDs handled:** PR-SCOPE, PR-SPRINT, PR-MILESTONE, PR-EPIC, PR-PHASE-GATE.
 
 ---
@@ -15,8 +15,8 @@
 Verified by reading the agent's `skill_view('producer')` frontmatter:
 
 - [ ] `description:` field is present and domain-specific (references scope, sprint, milestone, production — not generic)
-- [ ] `Hermes tools:` list is primarily read-focused; Bash only if sprint/milestone files require parsing
-- [ ] Model tier is `claude-opus-4-6` per coordination-rules.md (directors with gate synthesis = Opus)
+- [ ] `Hermes tools:` list is primarily read-focused; terminal only if sprint/milestone files require parsing
+- [ ] Model tier is Heavy (directors with gate synthesis = Heavy)
 - [ ] Agent definition does not claim authority over design decisions or technical architecture
 
 ---

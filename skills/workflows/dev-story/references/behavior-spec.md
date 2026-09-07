@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /dev-story
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/dev-story` reads a story file, loads all required context (referenced ADR,
@@ -28,7 +30,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED, IN PROGRESS, NEEDS CHANGES
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
@@ -62,7 +64,7 @@ In `solo` mode: LP-CODE-REVIEW is skipped with equivalent notes.
   - A test evidence path
 - Referenced ADR has `Status: Accepted`
 - `docs/architecture/control-manifest.md` exists
-- `gameworks references/technical-preferences.md` has engine and language configured
+- `docs/technical-preferences.md` has engine and language configured
 - `production/session-state/review-mode.txt` contains `full`
 
 **Input:** `/dev-story production/epics/[layer]/story-[name].md`

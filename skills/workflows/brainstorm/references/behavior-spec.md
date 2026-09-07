@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /brainstorm
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/brainstorm` facilitates guided game concept ideation. It presents 2-4 concept
@@ -30,7 +32,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: APPROVED, REJECTED, CONCERNS
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits

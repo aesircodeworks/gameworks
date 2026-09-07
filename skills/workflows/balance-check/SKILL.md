@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Identify Balance Domain
 
+**Model tier:** Medium
+
 Determine the balance domain from `$ARGUMENTS[0]`:
 
 - **Combat** → weapon/ability DPS, time-to-kill, damage type interactions

@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /consistency-check
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/consistency-check` scans all GDDs in `design/gdd/` and checks for internal
@@ -27,7 +29,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: CONSISTENT, CONFLICTS FOUND, DEPENDENCY GAP
 - [ ] Does NOT require "May I write" language during analysis (read-only scan)

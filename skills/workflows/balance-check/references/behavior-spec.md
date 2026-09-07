@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /balance-check
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/balance-check` reads balance data files (JSON or YAML in `assets/data/`) and
@@ -24,7 +26,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: BALANCED, CONCERNS, OUT OF BALANCE
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits

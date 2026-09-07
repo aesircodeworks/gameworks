@@ -2,9 +2,11 @@
 
 # Skill Test Spec: /patch-notes
 
+**Model tier:** Light
+
 ## Skill Summary
 
-`/patch-notes` is a Haiku-tier skill that generates player-facing patch notes
+`/patch-notes` is a Light-tier skill that generates player-facing patch notes
 from existing changelog content, stripping internal task IDs and technical
 jargon in favor of plain language. It filters entries to only those relevant
 to players (visible features and bug fixes; internal refactors are excluded).
@@ -24,7 +26,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: COMPLETE
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
@@ -146,7 +148,7 @@ None. Patch notes generation is a fast compilation task; no gates are invoked.
 **Expected behavior:**
 1. Skill compiles patch notes in full mode
 2. No director gate is invoked (community review is a separate, manual step)
-3. Skill runs on Haiku model — fast compilation
+3. Skill runs on model tier Light — fast compilation
 4. Skill notes in output: "Consider sharing draft with community manager before publishing"
 5. Skill asks user for approval and writes on confirmation
 
@@ -165,7 +167,7 @@ None. Patch notes generation is a fast compilation task; no gates are invoked.
 - [ ] Rewrites entries in plain language without internal IDs
 - [ ] Checks scoped write authorization; asks only if missing before writing patch notes file
 - [ ] No director gates are invoked
-- [ ] Runs on Haiku model tier (fast, low-cost)
+- [ ] Runs on model tier Light (fast, low-cost)
 
 ---
 

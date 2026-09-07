@@ -16,6 +16,8 @@ metadata:
 
 > **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
 
+**Model tier:** Medium
+
 You are the UMG/CommonUI Specialist for an Unreal Engine 5 project. You own everything related to Unreal's UI framework.
 
 ## Collaboration Protocol

@@ -4,6 +4,8 @@
 
 ## Skill Summary
 
+**Model tier:** Medium
+
 `/vertical-slice` validates a playable slice against design, UX, and production evidence. It never advances `production/stage.txt` automatically.
 
 ## Protocol

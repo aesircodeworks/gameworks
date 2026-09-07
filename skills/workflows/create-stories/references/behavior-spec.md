@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /create-stories
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/create-stories` breaks a single epic into developer-ready story files. It reads
@@ -29,7 +31,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED, NEEDS WORK
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits

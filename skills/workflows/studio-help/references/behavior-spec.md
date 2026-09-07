@@ -2,10 +2,12 @@
 
 # Skill Test Spec: /studio-help
 
+**Model tier:** Light
+
 ## Skill Summary
 
 `/studio-help` analyzes what has been done and what comes next in the project workflow.
-It runs on the Haiku model (read-only, formatting task) and reads `production/stage.txt`,
+It runs on model tier Light (read-only, formatting task) and reads `production/stage.txt`,
 the active sprint file, and recent session state to produce a concise situational
 guidance summary. The skill optionally accepts a context query (e.g., `/studio-help testing`)
 to surface relevant skills for a specific topic.
@@ -20,7 +22,7 @@ navigator, suggesting 2-3 next skills based on the current project state.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: HELP COMPLETE
 - [ ] Does NOT contain "May I write" language (skill is read-only)

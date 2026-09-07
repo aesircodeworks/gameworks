@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /estimate
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/estimate` estimates task or story effort using a relative-size scale (S / M /
@@ -16,7 +18,7 @@ not pass/fail — every run produces an estimate.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains size labels: S, M, L, XL (the "verdict" equivalents for this skill)
 - [ ] Does NOT require "May I write" language (advisory output only)

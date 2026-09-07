@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /day-one-patch
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/day-one-patch` prepares a day-one patch plan for issues that are known at
@@ -28,7 +30,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: COMPLETE
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits

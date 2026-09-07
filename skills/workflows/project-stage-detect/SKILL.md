@@ -18,6 +18,8 @@ metadata:
 
 # Project Stage Detection
 
+**Model tier:** Light
+
 This skill scans your project to determine its current development stage, completeness
 of artifacts, and gaps that need attention. It's especially useful when:
 - Starting with an existing project

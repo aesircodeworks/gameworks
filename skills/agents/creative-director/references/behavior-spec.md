@@ -5,7 +5,7 @@
 ## Agent Summary
 **Domain owned:** Creative vision, game pillars, GDD alignment, systems decomposition feedback, narrative direction, playtest feedback interpretation, phase gate (creative aspect).
 **Does NOT own:** Technical architecture or implementation details (delegates to technical-director), production scheduling (producer), visual art style execution (delegates to art-director).
-**Model tier:** Opus (multi-document synthesis, high-stakes phase gate verdicts).
+**Model tier:** Heavy (multi-document synthesis, high-stakes phase gate verdicts).
 **Gate IDs handled:** CD-PILLARS, CD-GDD-ALIGN, CD-SYSTEMS, CD-NARRATIVE, CD-PLAYTEST, CD-PHASE-GATE.
 
 ---
@@ -15,8 +15,8 @@
 Verified by reading the agent's `skill_view('creative-director')` frontmatter:
 
 - [ ] `description:` field is present and domain-specific (references creative vision, pillars, GDD alignment — not generic)
-- [ ] `Hermes tools:` list is read-heavy; should not include Bash unless justified by a creative workflow need
-- [ ] Model tier is `claude-opus-4-6` per coordination-rules.md (directors with gate synthesis = Opus)
+- [ ] `Hermes tools:` list is read-heavy; should not include terminal unless justified by a creative workflow need
+- [ ] Model tier is Heavy (directors with gate synthesis = Heavy)
 - [ ] Agent definition does not claim authority over technical architecture or production scheduling
 
 ---

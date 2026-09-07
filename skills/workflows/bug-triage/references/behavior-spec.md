@@ -2,11 +2,13 @@
 
 # Skill Test Spec: /bug-triage
 
+**Model tier:** Light
+
 ## Skill Summary
 
 `/bug-triage` reads all open bug reports in `production/bugs/` and produces a
 prioritized triage table sorted by severity (CRITICAL → HIGH → MEDIUM → LOW).
-It runs on the Haiku model (read-only, formatting/sorting task) and produces no
+It runs on model tier Light (read-only, formatting/sorting task) and produces no
 file writes — the triage output is conversational. The skill flags bugs missing
 reproduction steps and identifies possible duplicates by comparing titles and
 affected systems.
@@ -21,7 +23,7 @@ prioritize which bugs to address next.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: TRIAGED
 - [ ] Does NOT contain "May I write" language (skill is read-only)

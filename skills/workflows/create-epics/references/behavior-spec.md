@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /create-epics
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/create-epics` reads all approved GDDs and translates them into EPIC.md files,
@@ -27,7 +29,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: CREATED, BLOCKED
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits

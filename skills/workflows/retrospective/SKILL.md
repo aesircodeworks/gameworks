@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Parse Arguments
 
+**Model tier:** Medium
+
 Determine whether this is a sprint retrospective (`sprint-N`) or a milestone retrospective (`milestone-name`).
 
 ---

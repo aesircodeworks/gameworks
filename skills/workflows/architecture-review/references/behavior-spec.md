@@ -2,9 +2,11 @@
 
 # Skill Test Spec: /architecture-review
 
+**Model tier:** Heavy
+
 ## Skill Summary
 
-`/architecture-review` is an Opus-tier skill that validates a technical architecture
+`/architecture-review` is a Heavy-tier skill that validates a technical architecture
 document against the project's 8 required architecture sections and checks that it
 is internally consistent, non-contradictory with existing ADRs, and correctly
 targeting the pinned engine version. It produces a verdict of APPROVED /
@@ -21,7 +23,7 @@ no files are written.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: APPROVED, NEEDS REVISION, MAJOR REVISION NEEDED
 - [ ] Does NOT require "May I write" language (read-only skill)

@@ -18,6 +18,8 @@ metadata:
 
 # Scope Check
 
+**Model tier:** Light
+
 This skill is read-only — it reports findings but writes no files.
 
 Compares original planned scope against current state to detect, quantify, and triage

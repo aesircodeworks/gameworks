@@ -18,6 +18,8 @@ metadata:
 
 # Quick Design
 
+**Model tier:** Medium
+
 This is the **lightweight design path** for changes that don't need a full GDD.
 Full GDD authoring via `/design-system` is the heavyweight path. Use this skill
 for work under approximately 4 hours of implementation — tuning adjustments,

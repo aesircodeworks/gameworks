@@ -18,6 +18,8 @@ metadata:
 
 # Reverse Documentation
 
+**Model tier:** Medium
+
 This skill analyzes existing implementation (code, prototypes, systems) and generates
 appropriate design or architecture documentation. Use this when:
 - You built a feature without writing a design doc first

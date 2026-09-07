@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /hotfix
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/hotfix` manages an emergency fix workflow: it creates a hotfix branch from
@@ -28,7 +30,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: HOTFIX COMPLETE, HOTFIX BLOCKED
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits

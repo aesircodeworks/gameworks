@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /ux-review
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/ux-review` validates an existing UX spec or HUD design document against
@@ -23,7 +25,7 @@ NEEDED (structural or accessibility failures). No director gates apply —
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: APPROVED, NEEDS REVISION, MAJOR REVISION NEEDED
 - [ ] Does NOT contain "May I write" language (skill is read-only)

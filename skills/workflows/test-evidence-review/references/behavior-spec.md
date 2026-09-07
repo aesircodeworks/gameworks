@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /test-evidence-review
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/test-evidence-review` performs a quality review of test files in `tests/`,
@@ -24,7 +26,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: PASS, WARNINGS, FAIL
 - [ ] Does NOT require "May I write" language (read-only; write is optional flagging report)

@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /test-flakiness
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/test-flakiness` detects non-deterministic tests by analyzing test history logs
@@ -23,7 +25,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: NO FLAKINESS, SUSPECT TESTS FOUND, CONFIRMED FLAKY
 - [ ] Does NOT require "May I write" language (read-only; optional report requires approval)

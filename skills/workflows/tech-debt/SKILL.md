@@ -18,6 +18,8 @@ metadata:
 
 ## Phase 1: Parse Subcommand
 
+**Model tier:** Medium
+
 Determine the mode from the argument:
 
 - `scan` — Scan the codebase for tech debt indicators

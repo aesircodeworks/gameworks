@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /regression-suite
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/regression-suite` maps test coverage to GDD requirements: it reads the
@@ -29,7 +31,7 @@ Apply [scoped authorization](../../../studio/gameworks/references/collaborative-
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: FULL COVERAGE, GAPS FOUND, CRITICAL GAPS
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits

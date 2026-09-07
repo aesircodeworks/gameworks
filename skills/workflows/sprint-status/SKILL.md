@@ -18,6 +18,8 @@ metadata:
 
 # Sprint Status
 
+**Model tier:** Light
+
 This is a fast situational awareness check, not a sprint review. It reads the
 current sprint plan and story files, scans for status markers, and produces a
 concise snapshot in under 30 lines. For detailed sprint management, use

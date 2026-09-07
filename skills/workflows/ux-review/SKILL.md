@@ -18,6 +18,8 @@ metadata:
 
 ## Overview
 
+**Model tier:** Medium
+
 Validates UX design documents before they enter the implementation pipeline.
 Acts as the quality gate between UX Design and Visual Design/Implementation in
 the `/team-ui` pipeline.
@@ -55,7 +57,7 @@ full detail for each.
 
 Before validating any spec, load:
 
-1. **Input & Platform config**: Read `gameworks references/technical-preferences.md` and
+1. **Input & Platform config**: Read `docs/technical-preferences.md` and
    extract `## Input & Platform`. This is the authoritative source for which input
    methods the game supports — use it to drive the Input Method Coverage checks in
    Phase 3A, not the spec's own header. If unconfigured, fall back to the spec header.

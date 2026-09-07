@@ -2,9 +2,11 @@
 
 # Skill Test Spec: /review-all-gdds
 
+**Model tier:** Heavy
+
 ## Skill Summary
 
-`/review-all-gdds` is an Opus-tier skill that performs a holistic cross-GDD review
+`/review-all-gdds` is a Heavy-tier skill that performs a holistic cross-GDD review
 across all files in `design/gdd/`. It runs two complementary review phases in
 parallel: Phase 1 checks for consistency (contradictions, formula mismatches,
 stale references, competing ownership), and Phase 2 checks design theory (dominant
@@ -23,7 +25,7 @@ any director gate agents (it IS the director-level review).
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥5 phase headings (complex multi-phase skill)
 - [ ] Contains verdict keywords: CONSISTENT, MINOR ISSUES, MAJOR ISSUES
 - [ ] Does NOT require "May I write" language (read-only skill)

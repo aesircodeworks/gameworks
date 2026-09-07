@@ -2,6 +2,8 @@
 
 # Skill Test Spec: /content-audit
 
+**Model tier:** Medium
+
 ## Skill Summary
 
 `/content-audit` reads GDDs in `design/gdd/` and checks whether all content
@@ -16,7 +18,7 @@ user approval. Verdicts: COMPLETE, GAPS FOUND, or MISSING CRITICAL CONTENT.
 
 Verified automatically by `/skill-test static` — no fixture needed.
 
-- [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
+- [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, GAPS FOUND, MISSING CRITICAL CONTENT
 - [ ] Does NOT require "May I write" language (read-only output; write is optional report)
