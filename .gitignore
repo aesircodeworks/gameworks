@@ -21,9 +21,6 @@ active_profile
 .update_check
 
 # User data — NEVER commit
-memories/
-sessions/
-logs/
 plans/
 workspace/
 home/
