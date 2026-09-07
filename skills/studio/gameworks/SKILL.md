@@ -1,6 +1,6 @@
 ---
 name: gameworks
-description: Use when routing Aesir studio workflows, roles, and collaboration rules.
+description: Use when choosing Aesir workflows or approval scope.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -27,7 +27,23 @@ Load this skill for studio operating context. Use workflows only in the selected
 
 ## Collaboration
 
-Question → Options → Decision → Draft → Approval → Write. Do not write without the user's approval of the stated path or changeset.
+An explicit request to implement a stated changeset authorizes its edits and verification; do not repeat per-file approval. Read-only requests do not authorize writes. Ask at new scope or unresolved decision boundaries, and preserve substantive workflow gates.
+
+Load `references/collaborative-design-principle.md` when determining approval scope, planning design decisions, or coordinating delegated writes. It defines the canonical policy, including Question → Options → Decision → Draft → Approval → Write for unresolved design choices.
+
+## Task routing
+
+Start with the matching task workflow or path rule; load additional relevant skills as required. Consultation does not require delegation.
+
+| Task | Start here | Specialist when needed |
+|---|---|---|
+| Game code review | `code-review`; matching path rule | `lead-programmer` for cross-system findings |
+| UI/input | `ux-review` or `team-ui`; `ui-code` | `ui-programmer` for implementation; matching engine UI specialist |
+| Simulation/timing | `code-review`; `gameplay-code` | `gameplay-programmer`; `performance-analyst` for measured timing issues |
+| Audio | `team-audio` or `asset-spec` | `audio-director` for direction; `sound-designer` for assets |
+| Game design | `quick-design` or `design-system` | `game-designer`; `systems-designer` for interacting mechanics |
+| Framework/Hermes | `framework-qa`; installed `hermes-agent` for runtime questions | `tools-programmer` for framework tooling; keep game workspaces separate |
+| Engine APIs | `engine-reference` | Existing Godot, Unity, or Unreal specialist matching the requested API |
 
 ## Linked references
 
@@ -55,4 +71,4 @@ Load with `skill_view('gameworks', file_path='...')` when needed:
 
 ## Delegation
 
-Batch independent `delegate_task` calls. Pass role text in `delegate_task.context`. Blocked child results halt dependent phases.
+Batch independent `delegate_task` calls. Pass role text, approved scope, and decisions in `delegate_task.context`. Children return new decisions or blockers to the coordinator, not directly to the user. Blocked child results halt dependent phases.

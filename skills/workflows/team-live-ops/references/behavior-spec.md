@@ -12,12 +12,19 @@ season plan requiring user approval before handoff to production.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
-- [ ] Contains "May I write" language in the File Write Protocol section (delegated to sub-agents)
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a File Write Protocol section stating that the orchestrator does not write files directly
 - [ ] Has a next-step handoff at the end referencing `/design-review`, `/sprint-plan`, and `/team-release`
 - [ ] Uses `clarify` at phase transitions to capture user approval before proceeding
@@ -48,7 +55,7 @@ season plan requiring user approval before handoff to production.
 6. Phase 6: Spawns `community-manager` via Task; reads season brief, economy design, and narrative framing; produces communication calendar with draft copy
 7. Phase 7: Collects all phase outputs; presents consolidated season plan summary including economy health check, analytics readiness, ethics review, and open questions
 8. clarify: user approves the full season plan
-9. Sub-agents ask "May I write to `design/live-ops/seasons/S2_The_Frozen_Wastes.md`?", `...analytics.md`, and `...comms.md` before writing
+9. Sub-agents write `design/live-ops/seasons/S2_The_Frozen_Wastes.md`, `...analytics.md`, and `...comms.md` only within the coordinator-supplied approval; return missing target authorization to the coordinator without asking the user directly
 10. Verdict: COMPLETE — season plan produced and handed off for production
 
 **Assertions:**
@@ -163,7 +170,7 @@ season plan requiring user approval before handoff to production.
 - [ ] `clarify` used at every phase transition — user approves before the next phase begins
 - [ ] Phases 3 and 4 are always spawned in parallel, not sequentially
 - [ ] File Write Protocol: orchestrator never calls Write/Edit directly — all writes are delegated to sub-agents
-- [ ] Each output document gets its own "May I write to [path]?" ask from the relevant sub-agent
+- [ ] Each output is within coordinator-supplied write scope; children return new targets or decisions to the coordinator without per-document reapproval
 - [ ] Ethics review in Phase 7 always references the ethics policy file path explicitly
 - [ ] Error recovery: any BLOCKED agent is surfaced immediately with clarify options (skip / retry / stop)
 - [ ] Partial reports are produced if any phase blocks — work is never discarded

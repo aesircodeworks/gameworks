@@ -1,10 +1,6 @@
 ---
 name: team-qa
-description: 'Use when running the Aesir team-qa workflow. Orchestrate the QA team
-  through a full testing cycle. Coordinates qa-lead (strategy + test plan) and qa-tester
-  (test case writing + bug reporting) to produce a complete QA package for a sprint
-  or feature. Covers: test plan generation, test case writing, smoke check gate, manual
-  QA execution, and sign-off report.'
+description: Use when coordinating a full sprint or feature QA cycle.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -119,7 +115,7 @@ The test plan should cover:
 - **Entry Criteria**: what must be true before QA can begin. Always include: (1) Smoke check PASS or PASS WITH WARNINGS report exists at `production/qa/smoke-*.md`, (2) build is stable (no crashes on launch), (3) all Must Have stories have Status: in-progress or done in `production/sprint-status.yaml`. Add any sprint-specific criteria beyond these.
 - **Exit Criteria**: what constitutes a completed QA cycle (all stories PASS or FAIL with bugs filed)
 
-Ask: "May I write the QA plan to `production/qa/qa-plan-[sprint]-[date].md`?"
+If writing this target is not already authorized, ask: "May I write the QA plan to `production/qa/qa-plan-[sprint]-[date].md`?"
 
 Write only after receiving approval.
 
@@ -218,7 +214,7 @@ Next step guidance by verdict:
 - APPROVED WITH CONDITIONS: "Resolve conditions before advancing. S3/S4 bugs may be deferred to polish."
 - NOT APPROVED: "Resolve S1/S2 bugs and re-run `/team-qa` or targeted manual QA before advancing."
 
-Ask: "May I write this QA sign-off report to `production/qa/qa-signoff-[sprint]-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this QA sign-off report to `production/qa/qa-signoff-[sprint]-[date].md`?"
 
 Write only after receiving approval.
 

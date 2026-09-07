@@ -1,10 +1,6 @@
 ---
 name: test-evidence-review
-description: Use when running the Aesir test-evidence-review workflow. Quality review
-  of test files and manual evidence documents. Goes beyond existence checks — evaluates
-  assertion coverage, edge case handling, naming conventions, and evidence completeness.
-  Produces ADEQUATE/INCOMPLETE/MISSING verdict per story. Run before QA sign-off or
-  on demand.
+description: Use when reviewing story tests and manual QA evidence.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -234,7 +230,7 @@ The overall sprint/system verdict is the worst story verdict present.
 
 Present the report in conversation.
 
-Ask: "May I write this test evidence review to
+If writing this target is not already authorized, ask: "May I write this test evidence review to
 `production/qa/evidence-review-[date].md`?"
 
 This is optional — the report is useful standalone. Write only if the user
@@ -261,4 +257,4 @@ Verdict: **COMPLETE** — evidence review finished. Use CONCERNS if BLOCKING ite
   tests that are functioning and comprehensive enough to give confidence
 - **BLOCKING vs. ADVISORY distinction is important** — only flag BLOCKING when
   the gap leaves a story criterion genuinely unverified
-- **Ask before writing** — the report file is optional; always confirm before writing
+- **Confirm write scope** — the report file is optional; write it only with authorization for that target

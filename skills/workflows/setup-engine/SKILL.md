@@ -1,9 +1,6 @@
 ---
 name: setup-engine
-description: Use when running the Aesir setup-engine workflow. Configure the project's
-  game engine and version. Pins the engine in CLAUDE.md, detects knowledge gaps, and
-  populates engine reference docs via WebSearch when the version is beyond the LLM's
-  training data.
+description: Use when pinning or upgrading a game engine version.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -156,7 +153,7 @@ Record the choice. It determines the CLAUDE.md template, naming conventions, spe
 ---
 
 Read `CLAUDE.md` and show the user the proposed Technology Stack changes.
-Ask: "May I write these engine settings to `CLAUDE.md`?"
+If writing this target is not already authorized, ask: "May I write these engine settings to `CLAUDE.md`?"
 
 Wait for confirmation before making any edits.
 

@@ -1,9 +1,6 @@
 ---
 name: test-helpers
-description: Use when running the Aesir test-helpers workflow. Generate engine-specific
-  test helper libraries for the project's test suite. Reads existing test patterns
-  and produces tests/helpers/ with assertion utilities, factory functions, and mock
-  objects tailored to the project's systems. Reduces boilerplate in new test files.
+description: Use when generating engine-specific test helpers.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -374,7 +371,7 @@ System helpers ([mode]):
 - tests/helpers/[system]_factory.[ext]  ← from [system] GDD
 ```
 
-Ask: "May I write these helper files to `tests/helpers/`?"
+If writing this target is not already authorized, ask: "May I write these helper files to `tests/helpers/`?"
 
 **Never overwrite existing files.** If a file already exists, report:
 "Skipping `[path]` — already exists. Remove the file manually if you want it
@@ -398,7 +395,7 @@ After writing: Verdict: **COMPLETE** — helper files created.
   the code exists
 - **Helpers should reflect the GDD** — bounds and constants in helpers should
   trace to GDD Formulas sections, not invented values
-- **Ask before writing** — always confirm before creating files in `tests/`
+- **Confirm write scope** — confirm authorization for this target or changeset if not already supplied. Preserve required content decisions and later workflow gates.
 
 ## Next Steps
 

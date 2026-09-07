@@ -1,6 +1,6 @@
 ---
 name: memory-policy
-description: Use when writing Hermes memory or converting CCGS agent memory.
+description: Use when classifying durable Aesir memory or lessons.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

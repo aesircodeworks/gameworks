@@ -1,9 +1,6 @@
 ---
 name: team-live-ops
-description: 'Use when running the Aesir team-live-ops workflow. Orchestrate the live-ops
-  team for post-launch content planning: coordinates live-ops-designer, economy-designer,
-  analytics-engineer, community-manager, writer, and narrative-director to design
-  and plan a season, event, or live content update.'
+description: Use when coordinating live seasons and event planning.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -156,8 +153,7 @@ If a BLOCKED state is unresolvable, end with Verdict: **BLOCKED** instead of COM
 ## File Write Protocol
 
 All file writes (season design docs, analytics plans, communication calendars) are
-delegated to sub-agents spawned via Task. Each sub-agent enforces the
-"May I write to [path]?" protocol. This orchestrator does not write files directly.
+delegated to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

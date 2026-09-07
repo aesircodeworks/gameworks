@@ -1,10 +1,6 @@
 ---
 name: qa-plan
-description: Use when running the Aesir qa-plan workflow. Generate a QA test plan
-  for a sprint or feature. Reads GDDs and story files, classifies stories by test
-  type (Logic/Integration/Visual/UI), and produces a structured test plan covering
-  automated tests required, manual test cases, smoke test scope, and playtest sign-off
-  requirements. Run before sprint begins or when starting a major feature.
+description: Use when planning QA for a sprint, feature, or story.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -267,7 +263,7 @@ Next steps:
 - For Logic/Integration stories, create the test files at the listed paths
   before marking stories done — `/story-done` checks for them"
 
-Silently append to `production/session-state/active.md` (create the file if it does not exist):
+Record this block only in an already-authorized task checkpoint; otherwise report it in the response. Do not create `production/session-state/active.md` for read-only work or introduce a second progress system. If an authorized checkpoint exists, append:
 
 ```
 <!-- QA-PLAN: [date] | System: [system/sprint identifier] | Plan written: production/qa/qa-plan-[identifier]-[date].md -->

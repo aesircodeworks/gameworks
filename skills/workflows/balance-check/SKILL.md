@@ -1,10 +1,6 @@
 ---
 name: balance-check
-description: Use when running the Aesir balance-check workflow. Analyzes game balance
-  data files, formulas, and configuration to identify outliers, broken progressions,
-  degenerate strategies, and economy imbalances. Use after modifying any balance-related
-  data or design. Use when user says 'balance report', 'check game balance', 'run
-  a balance check'.
+description: Use when checking game balance data and formulas.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

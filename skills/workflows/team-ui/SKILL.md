@@ -1,9 +1,6 @@
 ---
 name: team-ui
-description: 'Use when running the Aesir team-ui workflow. Orchestrate the UI team
-  through the full UX pipeline: from UX spec authoring through visual design, implementation,
-  review, and polish. Integrates with /ux-design, /ux-review, and studio
-  UX templates.'
+description: Use when coordinating UI from UX specs through polish.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -182,8 +179,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (UX specs, interaction pattern library updates, implementation files) are
-delegated to sub-agents and sub-skills (`/ux-design`, `ui-programmer`). Each enforces the
-"May I write to [path]?" protocol. This orchestrator does not write files directly.
+delegated to sub-agents and sub-skills (`/ux-design`, `ui-programmer`). The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

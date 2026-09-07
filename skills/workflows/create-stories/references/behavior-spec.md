@@ -18,6 +18,13 @@ before writing each story file. Stories are written to
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 Verified automatically by `/skill-test static` — no fixture needed.
@@ -25,7 +32,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED, NEEDS WORK
-- [ ] Contains "May I write" collaborative protocol language (per-story approval)
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff at the end (`/story-readiness`, `/dev-story`)
 - [ ] Documents story Status: Blocked when governing ADR is Proposed
 - [ ] Documents QL-STORY-READY gate: active in full mode, skipped in lean/solo
@@ -69,7 +76,7 @@ In `solo` mode: QL-STORY-READY is skipped with equivalent notes.
 **Assertions:**
 - [ ] Each story's frontmatter contains: Title, Epic, Layer, Priority, Status, TR-ID, ADR reference, Acceptance Criteria, DoD
 - [ ] Story types are correctly classified (at least one Logic type in fixture)
-- [ ] "May I write" is asked per story (not once for the entire batch)
+- [ ] Authorization covers every selected story; an approved batch needs no per-story reapproval
 - [ ] QL-STORY-READY skip is noted in output
 - [ ] All 3 story files are written with correct naming: `story-[name].md`
 - [ ] Skill does NOT start implementation
@@ -175,7 +182,7 @@ In `solo` mode: QL-STORY-READY is skipped with equivalent notes.
 
 - [ ] All context (EPIC, GDD, ADRs, manifest, TR registry) loaded before drafting stories
 - [ ] Story drafts shown in full before any "May I write" ask
-- [ ] "May I write" asked per story (not once for the entire batch)
+- [ ] Checks authorization for the selected story changeset; batch approval is valid
 - [ ] Blocked stories flagged before write approval — not discovered after writing
 - [ ] TR-IDs reference the registry — requirement text is not embedded inline in story files
 - [ ] Control manifest rules quoted per-story from the manifest, not invented

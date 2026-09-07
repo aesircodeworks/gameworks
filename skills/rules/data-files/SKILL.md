@@ -1,6 +1,6 @@
 ---
 name: data-files
-description: Use when changing files governed by data-files rules.
+description: Use when editing game assets/data/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: gameplay-code
-description: Use when changing files governed by gameplay-code rules.
+description: Use when editing game src/gameplay/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

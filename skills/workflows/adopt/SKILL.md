@@ -1,11 +1,6 @@
 ---
 name: adopt
-description: Use when running the Aesir adopt workflow. Brownfield onboarding — audits
-  existing project artifacts for template format compliance (not just existence),
-  classifies gaps by impact, and produces a numbered migration plan. Run this when
-  joining an in-progress project or upgrading from an older template version. Distinct
-  from /project-stage-detect (which checks what exists) — this checks whether
-  what exists will actually work with the template's skills.
+description: Use when auditing existing project template compliance.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -448,7 +443,7 @@ Use `clarify`:
 
 1. **Read silently** — complete the full audit before presenting anything
 2. **Show the summary first** — let the user see scope before asking to write
-3. **Ask before writing** — always confirm before creating the adoption plan file
+3. **Confirm write scope** — confirm authorization for this target or changeset if not already supplied. Preserve required content decisions and later workflow gates.
 4. **Offer, don't force** — the plan is advisory; the user decides what to fix and when
 5. **One action at a time** — after handing off the plan, offer one specific next step,
    not a list of six things to do simultaneously

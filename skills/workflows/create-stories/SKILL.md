@@ -1,10 +1,6 @@
 ---
 name: create-stories
-description: Use when running the Aesir create-stories workflow. Break a single epic
-  into implementable story files. Reads the epic, its GDD, governing ADRs, and control
-  manifest. Each story embeds its GDD requirement TR-ID, ADR guidance, acceptance
-  criteria, story type, and test evidence path. Run after /create-epics for
-  each epic.
+description: Use when breaking an epic into implementable stories.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -184,7 +180,7 @@ Story 003: [title] — Visual/Feel — ADR-NNNN
 ```
 
 Use `clarify`:
-- Prompt: "May I write these [N] stories to `production/epics/[epic-slug]/`?"
+If writing this target is not already authorized, ask: "May I write these [N] stories to `production/epics/[epic-slug]/`?"
 - Options: `[A] Yes — write all [N] stories` / `[B] Not yet — I want to review or adjust first`
 
 ---

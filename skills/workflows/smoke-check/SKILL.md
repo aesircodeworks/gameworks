@@ -1,10 +1,6 @@
 ---
 name: smoke-check
-description: Use when running the Aesir smoke-check workflow. Run the critical path
-  smoke test gate before QA hand-off. Executes the automated test suite, verifies
-  core functionality, and produces a PASS/FAIL report. Run after a sprint's stories
-  are implemented and before manual QA begins. A failed smoke check means the build
-  is not ready for QA.
+description: Use when smoke-testing critical paths before QA handoff.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

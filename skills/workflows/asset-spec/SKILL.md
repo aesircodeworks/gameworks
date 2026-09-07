@@ -1,9 +1,6 @@
 ---
 name: asset-spec
-description: Use when running the Aesir asset-spec workflow. Generate per-asset visual
-  specifications and AI generation prompts from GDDs, level docs, or character profiles.
-  Produces structured spec files and updates the master asset manifest. Run after
-  art bible and GDD/level design are approved, before production begins.
+description: Use when specifying game assets and generation prompts.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -72,7 +69,7 @@ If [B] or [D]: ask the user to describe additional items. Accept brief descripti
 If [C] or [D]: ask which items to remove and why. Remove them from the list.
 
 ### Step 4 — Write inventory
-After user approval, ask: "May I write the entity inventory to `design/assets/entity-inventory.md`?"
+If writing this target is not already authorized, ask: "May I write the entity inventory to `design/assets/entity-inventory.md`?"
 
 Write the file:
 
@@ -252,7 +249,7 @@ If [C]: ask what direction to change. Re-spawn the relevant agent with the updat
 
 ## Phase 5: Write Spec File
 
-After approval, ask: "May I write the spec to `design/assets/specs/[target-name]-assets.md`?"
+If writing this target is not already authorized, ask: "May I write the spec to `design/assets/specs/[target-name]-assets.md`?"
 
 Write the file with:
 

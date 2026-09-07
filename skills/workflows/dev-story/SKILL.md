@@ -1,10 +1,6 @@
 ---
 name: dev-story
-description: Use when running the Aesir dev-story workflow. Read a story file and
-  implement it. Loads the full context (story, GDD requirement, ADR guidelines, control
-  manifest), routes to the right programmer agent for the system and engine, implements
-  the code and test, and confirms each acceptance criterion. The core implementation
-  skill — run after /story-readiness, before /code-review and /story-done.
+description: Use when implementing a story with code and tests.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -274,7 +270,7 @@ Ready for: `/code-review [file1] [file2]` then `/story-done [story-path]`
 
 ## Phase 7: Update Session State
 
-Silently append to `production/session-state/active.md`:
+Record this block only in an already-authorized task checkpoint; otherwise report it in the response. Do not create `production/session-state/active.md` for read-only work or introduce a second progress system. If an authorized checkpoint exists, append:
 
 ```
 ## Session Extract — /dev-story [date]
@@ -285,7 +281,7 @@ Silently append to `production/session-state/active.md`:
 - Next: /code-review [files] then /story-done [story-path]
 ```
 
-Create `active.md` if it does not exist. Confirm: "Session state updated."
+Do not create `production/session-state/active.md` unless that path is already authorized.
 
 ---
 
@@ -310,7 +306,7 @@ Common blockers:
 
 ## Collaborative Protocol
 
-- **File writes are delegated** — all source code, test files, and evidence docs are written by sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?" protocol individually. This orchestrator does not write files directly.
+- **File writes are delegated** — all source code, test files, and evidence docs are written by sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 - **Load before implementing** — do not start coding until all context is loaded
   (story, TR-ID, ADR, manifest, engine prefs). Incomplete context produces code
   that drifts from design.

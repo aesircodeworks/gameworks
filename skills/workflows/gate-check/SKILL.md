@@ -1,10 +1,6 @@
 ---
 name: gate-check
-description: Use when running the Aesir gate-check workflow. Validate readiness to
-  advance between development phases. Produces a PASS/CONCERNS/FAIL verdict with specific
-  blockers and required artifacts. Use when user says 'are we ready to move to X',
-  'can we advance to production', 'check if we can start the next phase', 'pass the
-  gate'.
+description: Use when checking readiness for the next project phase.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -545,7 +541,7 @@ This skill follows the collaborative design principle:
 2. **Ask about unknowns**: Don't assume PASS for things you can't verify
 3. **Present findings**: Show the full checklist with status
 4. **User decides**: The verdict is a recommendation — the user makes the final call
-5. **Get approval**: "May I write this gate check report to production/gate-checks/?"
+If writing this target is not already authorized, ask: "May I write this gate check report to production/gate-checks/?"
 6. **Never auto-fix**: If required artifacts are missing, report the FAIL verdict and
    name the skill to run (e.g. "run `/test-setup`"). Do NOT create missing files or
    re-run the gate automatically. Creating files to manufacture a PASS defeats the

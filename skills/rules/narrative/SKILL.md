@@ -1,6 +1,6 @@
 ---
 name: narrative
-description: Use when changing files governed by narrative rules.
+description: Use when editing game design/narrative/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

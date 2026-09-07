@@ -1,9 +1,6 @@
 ---
 name: architecture-decision
-description: Use when running the Aesir architecture-decision workflow. Creates an
-  Architecture Decision Record (ADR) documenting a significant technical decision,
-  its context, alternatives considered, and consequences. Every major technical choice
-  should have an ADR.
+description: Use when writing or retrofitting game architecture ADRs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

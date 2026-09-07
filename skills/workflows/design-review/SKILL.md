@@ -1,8 +1,6 @@
 ---
 name: design-review
-description: Use when running the Aesir design-review workflow. Reviews a game design
-  document for completeness, internal consistency, implementability, and adherence
-  to project design standards. Run this before handing a design document to programmers.
+description: Use when reviewing a game design document for handoff.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

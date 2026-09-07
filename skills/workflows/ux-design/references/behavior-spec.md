@@ -18,6 +18,13 @@ rather than replace. Verdict is COMPLETE when all sections are written.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 Verified automatically by `/skill-test static` — no fixture needed.
@@ -25,7 +32,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: COMPLETE
-- [ ] Contains "May I write" language per section
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff (e.g., `/ux-review` to validate the completed spec)
 
 ---
@@ -51,8 +58,7 @@ review skill invoked after this skill completes.
 1. Skill creates a skeleton file `design/ux/hud.md` with all section headers
 2. Skill discusses and drafts each section: User Flows, Interaction States
    (normal/hover/focus/disabled), Wireframe Description, Accessibility Notes
-3. After each section is drafted and user confirms, skill asks "May I write
-   section [N] to `design/ux/hud.md`?"
+3. After each section is drafted and its design approved, persist it when writing that section to `design/ux/hud.md` is authorized; otherwise ask for the missing write scope
 4. Each section is written in sequence after approval
 5. After all sections are written, verdict is COMPLETE
 6. Skill suggests running `/ux-review` as the next step
@@ -161,7 +167,7 @@ review skill invoked after this skill completes.
 
 - [ ] Creates skeleton file with all section headers before discussing content
 - [ ] Discusses and drafts one section at a time
-- [ ] Asks "May I write section [N]" after each section is approved
+- [ ] Preserves each section-design approval; persists an approved section without a duplicate write question when its target is authorized
 - [ ] Detects existing spec and offers retrofit path
 - [ ] Ends with handoff to `/ux-review`
 - [ ] Verdict is COMPLETE when all sections are written

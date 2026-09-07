@@ -14,12 +14,19 @@ NO-GO. Closes with a post-release monitoring plan.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
-- [ ] Contains "May I write" language in the File Write Protocol section (delegated to sub-agents)
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a File Write Protocol section stating that the orchestrator does not write files directly
 - [ ] Has an Error Recovery Protocol section with four recovery options (surface / assess / offer options / partial report)
 - [ ] Has a next-step handoff referencing post-release monitoring, `/retrospective`, and `production/stage.txt`

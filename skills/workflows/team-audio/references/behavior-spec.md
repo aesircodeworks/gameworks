@@ -17,6 +17,13 @@ engine is configured.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
@@ -24,7 +31,7 @@ engine is configured.
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "File Write Protocol" section
 - [ ] File writes are delegated to sub-agents — orchestrator does not write files directly
-- [ ] Sub-agents enforce "May I write to [path]?" before any write
+- [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] Has a next-step handoff at the end (references `/dev-story`, `/asset-audit`)
 - [ ] Error Recovery Protocol section is present
 - [ ] `clarify` is used at step transitions before proceeding
@@ -58,7 +65,7 @@ engine is configured.
 7. `clarify` presents technical plan; user approves before Step 4 begins
 8. Step 4: gameplay-programmer is spawned; wires up audio events to gameplay triggers, implements adaptive music, sets up occlusion zones, writes unit tests for audio event triggers
 9. Orchestrator compiles all outputs into a single audio design document
-10. Subagent asks "May I write the audio design document to `design/gdd/audio-combat.md`?" before writing
+10. Subagent writes `design/gdd/audio-combat.md` within supplied authorization, or returns missing write scope to the coordinator before writing
 11. Summary output lists: audio event count, estimated asset count, implementation tasks, and any open questions
 12. Verdict: COMPLETE
 
@@ -188,7 +195,7 @@ engine is configured.
 - [ ] `clarify` is used after every step output before the next step launches
 - [ ] Parallel spawning: Step 2 (sound-designer + accessibility-specialist) and Step 3 (technical-artist + engine specialist) issue all Task calls before waiting for results
 - [ ] No files are written by the orchestrator directly — all writes are delegated to sub-agents
-- [ ] Each sub-agent enforces the "May I write to [path]?" protocol before any write
+- [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] BLOCKED status from any agent is surfaced immediately — not silently skipped
 - [ ] A partial report is always produced when some agents complete and others block
 - [ ] Audio design document path follows the pattern `design/gdd/audio-[feature].md`

@@ -1,9 +1,6 @@
 ---
 name: project-stage-detect
-description: Use when running the Aesir project-stage-detect workflow. Automatically
-  analyze project state, detect stage, identify gaps, and recommend next steps based
-  on existing artifacts. Use when user asks 'where are we in development', 'what stage
-  are we in', 'full project audit'.
+description: Use when detecting project stage and artifact gaps.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -201,6 +198,6 @@ This skill follows the collaborative design principle:
 2. **Present Options**: "Should I create X, or is it tracked elsewhere?"
 3. **User Decides**: Wait for direction
 4. **Show Draft**: Display report summary
-5. **Get Approval**: "May I write to production/project-stage-report.md?"
+If writing this target is not already authorized, ask: "May I write to production/project-stage-report.md?"
 
 **Never** silently write files. **Always** show findings and ask before creating artifacts.

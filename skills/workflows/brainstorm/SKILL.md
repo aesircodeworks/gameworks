@@ -1,8 +1,6 @@
 ---
 name: brainstorm
-description: Use when running the Aesir brainstorm workflow. Guided game concept ideation
-  — from zero idea to a structured game concept document. Uses professional studio
-  ideation techniques, player psychology frameworks, and structured creative exploration.
+description: Use when exploring ideas and shaping a game concept.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

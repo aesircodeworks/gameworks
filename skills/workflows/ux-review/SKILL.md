@@ -1,9 +1,6 @@
 ---
 name: ux-review
-description: Use when running the Aesir ux-review workflow. Validates a UX spec, HUD
-  design, or interaction pattern library for completeness, accessibility compliance,
-  GDD alignment, and implementation readiness. Produces APPROVED / NEEDS REVISION
-  / MAJOR REVISION NEEDED verdict with specific gaps.
+description: Use when reviewing game UX specs for handoff readiness.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

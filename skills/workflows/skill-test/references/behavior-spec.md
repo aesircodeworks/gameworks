@@ -8,7 +8,7 @@
 compliance, and category-rubric scoring. It operates in three modes:
 
 - **static**: Checks a single skill file for structural requirements
-  (frontmatter fields, phase headings, verdict keywords, "May I write" language,
+  (frontmatter fields, phase headings, verdict keywords, scoped authorization rules,
   next-step handoff) without needing a fixture. Produces a per-check PASS/FAIL
   table.
 - **spec**: Reads a test spec file from `tests/skills/` and evaluates the skill
@@ -49,7 +49,7 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
   - Has all required frontmatter fields
   - Has ≥2 phase headings
   - Has verdict keywords
-  - Has "May I write" language
+  - Has scoped write-authorization rules (existing approval accepted; new scope requires approval)
   - Has a next-step handoff
   - Documents director gates
   - Documents gate mode behavior (lean/solo skips)
@@ -71,25 +71,26 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
 
 ---
 
-### Case 2: Static Mode — Skill Missing "May I Write" Despite Write Tool in Hermes tools
+### Case 2: Static Mode — Write-Capable Skill Missing Scoped Authorization Rules
 
 **Fixture:**
 - `skill_view('aesir-some-skill')/SKILL.md` has `write_file` in `Hermes tools` frontmatter
-- The skill body has no "May I write" or "May I update" language
+- The skill body has no policy checking existing approval or requiring approval for new write scope
 
 **Input:** `/skill-test static some-skill`
 
 **Expected behavior:**
 1. Skill reads `some-skill/SKILL.md`
 2. Check 4 (collaborative write protocol) fails: `write_file` in Hermes tools but no
-   "May I write" language found
+   scoped write-authorization policy found
 3. All other checks may pass
 4. Verdict is NON-COMPLIANT with Check 4 as the failing assertion
 5. Output lists Check 4 as FAIL with explanation
 
 **Assertions:**
 - [ ] Check 4 is marked FAIL
-- [ ] Explanation identifies the specific mismatch (Write tool without "May I write" language)
+- [ ] Explanation identifies the specific mismatch (Write tool without scoped write-authorization rules)
+- [ ] A variant with existing-approval and new-scope rules passes Check 4 even without the literal "May I write" phrase; this is a structural check, not proof of live compliance
 - [ ] Verdict is NON-COMPLIANT
 - [ ] Other passing checks are shown (not only the failure)
 
@@ -185,6 +186,6 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
   mode case for skill-test's own SKILL.md is not separately fixture-tested to
   avoid infinite recursion in test design.
 - The specific 7 structural checks are defined in the skill body; only Check 4
-  (May I write) is individually tested here because it has the most nuanced logic.
+  (scoped write authorization) is individually tested here because it has the most nuanced logic.
 - Audit mode counts are approximate — the exact number of skills and agents will
   change as the system grows; assertions use "all" rather than fixed counts.

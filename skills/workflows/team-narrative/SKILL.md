@@ -1,8 +1,6 @@
 ---
 name: team-narrative
-description: 'Use when running the Aesir team-narrative workflow. Orchestrate the
-  narrative team: coordinates narrative-director, writer, world-builder, and level-designer
-  to create cohesive story content, world lore, and narrative-driven level design.'
+description: Use when coordinating story, lore, and narrative content.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -118,8 +116,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (narrative docs, dialogue files, lore entries) are delegated to
-sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

@@ -17,6 +17,13 @@ tracing, not a creative review.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 Verified automatically by `/skill-test static` — no fixture needed.
@@ -24,7 +31,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED, NO IMPACT
-- [ ] Contains "May I write" collaborative protocol language (per-artifact approval)
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff at the end
 - [ ] Documents that changes are proposed, not applied automatically
 
@@ -55,14 +62,14 @@ director review is required at the analysis stage.
 2. Skill scans ADRs, TR-registry, epics, and stories for references to this GDD
 3. Skill produces an impact report: 1 epic affected, 2 stories affected
 4. Skill shows the proposed change for each artifact
-5. For each artifact: asks "May I update [filepath]?" separately
-6. Applies changes only after per-artifact approval
+5. If the listed downstream edits are not authorized, asks for that changeset; accepts batch approval or individual selections
+6. Applies only the individually or batch-approved changes
 
 **Assertions:**
 - [ ] Impact report identifies all 3 affected artifacts (1 epic + 2 stories)
 - [ ] Each affected artifact's proposed change is shown before asking to write
-- [ ] "May I write" is asked per artifact (not once for all artifacts)
-- [ ] Skill does NOT apply any changes without per-artifact approval
+- [ ] Authorization covers every selected artifact; an approved batch needs no per-artifact reapproval
+- [ ] Skill does NOT apply changes outside the individually or batch-approved scope
 - [ ] Verdict is COMPLETE after all approved changes are applied
 
 ---
@@ -159,7 +166,7 @@ director review is required at the analysis stage.
 
 - [ ] Reads revised GDD and all potentially affected artifacts before producing impact report
 - [ ] Impact report shown in full before any "May I write" ask
-- [ ] "May I write" asked per artifact — never for the entire set at once
+- [ ] Accepts authorization for the stated downstream changeset without repeated per-artifact questions
 - [ ] In Progress stories flagged with elevated warning before their approval ask
 - [ ] No director gates — no review-mode.txt read
 - [ ] Ends with next-step handoff appropriate to verdict (COMPLETE or NO IMPACT)

@@ -1,9 +1,6 @@
 ---
 name: prototype
-description: Use when running the Aesir prototype workflow. Concept prototype — validate
-  the core idea is worth designing before writing GDDs. Run right after /brainstorm
-  and /setup-engine. Routes to HTML, Engine, or Paper path based on game type.
-  Produces a throwaway build and a PROCEED/PIVOT/KILL verdict.
+description: Use when testing a game concept or mechanic in a spike.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -410,7 +407,7 @@ Read `project-templates templates/prototype-report.md` to get the report structu
 Fill in every section based on what was observed during this session. Replace all
 placeholder text with real observations — no generic filler.
 
-Ask: "May I write this report to `prototypes/[concept-name]-concept/REPORT.md`?"
+If writing this target is not already authorized, ask: "May I write this report to `prototypes/[concept-name]-concept/REPORT.md`?"
 
 If yes, write the file. Then update `prototypes/index.md` (create if it does not
 exist) — append one row to the concept prototype table: concept name, date, path
@@ -468,7 +465,7 @@ two questions (plain text, one at a time):
 1. "What specifically worked in this prototype that we should preserve in the next version?"
 2. "What is the single most important thing to change?"
 
-Ask: "May I write this to `prototypes/[concept-name]-concept/PIVOT-NOTE.md`?"
+If writing this target is not already authorized, ask: "May I write this to `prototypes/[concept-name]-concept/PIVOT-NOTE.md`?"
 
 If yes, write the file with: original hypothesis, what to keep, what to change, and
 the revised hypothesis for the next prototype. When `/prototype` is next run, check

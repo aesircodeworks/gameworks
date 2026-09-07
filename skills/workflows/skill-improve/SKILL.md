@@ -1,8 +1,6 @@
 ---
 name: skill-improve
-description: Use when running the Aesir skill-improve workflow. Improve a skill using
-  a test-fix-retest loop. Runs static checks, proposes targeted fixes, rewrites the
-  skill, re-tests, and keeps or reverts based on score change.
+description: Use when improving a studio skill through test-fix loops.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -109,7 +107,7 @@ Write a targeted fix for each failure and warning. Show the proposed changes
 as clearly marked before/after blocks. Only change what is failing — do not
 rewrite sections that are passing.
 
-Ask: "May I write this improved version to `(game-workspace)/skills/[name]/SKILL.md`?"
+If writing this target is not already authorized, ask: "May I write this improved version to `(game-workspace)/skills/[name]/SKILL.md`?"
 
 If the user says no, stop here.
 

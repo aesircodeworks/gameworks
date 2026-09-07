@@ -1,8 +1,6 @@
 ---
 name: retrospective
-description: Use when running the Aesir retrospective workflow. Generates a sprint
-  or milestone retrospective by analyzing completed work, velocity, blockers, and
-  patterns. Produces actionable insights for the next iteration.
+description: Use when producing a sprint or milestone retrospective.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -202,7 +200,7 @@ the single most important thing to change going forward?]
 
 Present the retrospective and top findings to the user (completion rate, velocity trend, top blocker, most important action item).
 
-Ask: "May I write this to `production/retrospectives/retro-sprint-[N]-[date].md`?" (or `production/retrospectives/retro-[milestone-name]-[date].md` for milestone retrospectives)
+If writing this target is not already authorized, ask: "May I write this to `production/retrospectives/retro-sprint-[N]-[date].md`?" (or `production/retrospectives/retro-[milestone-name]-[date].md` for milestone retrospectives)
 
 If yes, write the file, creating the `production/retrospectives/` directory if needed. Verdict: **COMPLETE** — retrospective saved.
 

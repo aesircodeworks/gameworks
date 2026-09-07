@@ -19,6 +19,13 @@ before writing `design/gdd/game-concept.md`.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 Verified automatically by `/skill-test static` — no fixture needed.
@@ -26,7 +33,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: APPROVED, REJECTED, CONCERNS
-- [ ] Contains "May I write" collaborative protocol language (for game-concept.md)
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff at the end (`/map-systems`)
 - [ ] Documents 4 director gates in full mode: CD-PILLARS, AD-CONCEPT-VISUAL, TD-FEASIBILITY, PR-SCOPE
 - [ ] Documents that all 4 gates are skipped in lean and solo modes
@@ -112,7 +119,7 @@ In `solo` mode: all 4 gates are skipped. Output notes all 4 as: "[GATE-ID] skipp
 2. Concept is elaborated into a structured draft
 3. All 4 director gates are skipped — each noted: "[GATE-ID] skipped — lean mode"
 4. Skill asks user to confirm the concept is ready to write
-5. "May I write `design/gdd/game-concept.md`?" asked after confirmation
+5. If step 4 authorized writing `design/gdd/game-concept.md`, persist without another write question; otherwise ask for the missing target authorization
 6. Concept written after approval
 
 **Assertions:**

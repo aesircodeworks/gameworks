@@ -34,8 +34,6 @@ audio_cache/
 document_cache/
 browser_screenshots/
 cache/
-.hermes/
-.migration-staging/
 
 # Infrastructure
 hermes-agent/

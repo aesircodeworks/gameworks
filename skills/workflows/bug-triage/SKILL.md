@@ -1,9 +1,6 @@
 ---
 name: bug-triage
-description: Use when running the Aesir bug-triage workflow. Read all open bugs in
-  production/qa/bugs/, re-evaluate priority vs. severity, assign to sprints, surface
-  systemic trends, and produce a triage report. Run at sprint start or when the bug
-  count grows enough to need re-prioritization.
+description: Use when prioritizing bugs and assigning sprint fixes.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

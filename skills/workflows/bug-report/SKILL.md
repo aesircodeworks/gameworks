@@ -1,8 +1,6 @@
 ---
 name: bug-report
-description: Use when running the Aesir bug-report workflow. Creates a structured
-  bug report from a description, or analyzes code to identify potential bugs. Ensures
-  every bug report has full reproduction steps, severity assessment, and context.
+description: Use when creating or verifying structured bug reports.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -150,7 +148,7 @@ After closing, check `production/qa/bug-triage-*.md` — if the bug appears in a
 
 Present the completed bug report(s) to the user.
 
-Ask: "May I write this to `production/qa/bugs/BUG-[NNNN].md`?"
+If writing this target is not already authorized, ask: "May I write this to `production/qa/bugs/BUG-[NNNN].md`?"
 
 If yes, write the file, creating the directory if needed. Verdict: **COMPLETE** — bug report filed.
 

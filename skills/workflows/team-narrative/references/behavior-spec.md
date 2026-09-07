@@ -16,6 +16,13 @@ is unresolved.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
@@ -23,7 +30,7 @@ is unresolved.
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains "File Write Protocol" section
 - [ ] File writes are delegated to sub-agents — orchestrator does not write files directly
-- [ ] Sub-agents enforce "May I write to [path]?" before any write
+- [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] Has a next-step handoff at the end (references `/design-review`, `/localize extract`, `/dev-story`)
 - [ ] Error Recovery Protocol section is present
 - [ ] `clarify` is used at phase transitions before proceeding
@@ -54,7 +61,7 @@ is unresolved.
 7. Phase 4: narrative-director reviews all dialogue against voice profiles, verifies lore consistency, confirms pacing; approves or flags issues
 8. `clarify` presents review results; user approves before Phase 5 begins
 9. Phase 5: writer, localization-lead, and world-builder are spawned in parallel; writer performs final self-review; localization-lead validates i18n compliance; world-builder finalizes canon levels
-10. Final summary report is presented; subagent asks "May I write the narrative document to [path]?" before writing
+10. Final summary report is presented; subagent writes the narrative document only within supplied authorization, or returns missing target scope to the coordinator
 11. Verdict: COMPLETE
 
 **Assertions:**
@@ -188,7 +195,7 @@ is unresolved.
 - [ ] `clarify` is used after every phase output before the next phase launches
 - [ ] Parallel spawning: Phase 2 (world-builder + writer) and Phase 5 (writer + localization-lead + world-builder) issue all Task calls before waiting for results
 - [ ] No files are written by the orchestrator directly — all writes are delegated to sub-agents
-- [ ] Each sub-agent enforces the "May I write to [path]?" protocol before any write
+- [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] BLOCKED status from any agent is surfaced immediately — not silently skipped
 - [ ] A partial report is always produced when some agents complete and others block
 - [ ] Verdict is exactly COMPLETE or BLOCKED — no other verdict values used

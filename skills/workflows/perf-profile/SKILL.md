@@ -1,8 +1,6 @@
 ---
 name: perf-profile
-description: Use when running the Aesir perf-profile workflow. Structured performance
-  profiling workflow. Identifies bottlenecks, measures against budgets, and generates
-  optimization recommendations with priority rankings.
+description: Use when profiling game performance against budgets.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

@@ -1,9 +1,6 @@
 ---
 name: security-audit
-description: 'Use when running the Aesir security-audit workflow. Audit the game for
-  security vulnerabilities: save tampering, cheat vectors, network exploits, data
-  exposure, and input validation gaps. Produces a prioritised security report with
-  remediation guidance. Run before any public release or multiplayer launch.'
+description: Use when auditing game security and cheat risks.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -228,7 +225,7 @@ The Polish → Release gate requires this report with no open CRITICAL or HIGH i
 
 Present the report summary (executive summary + CRITICAL/HIGH findings only) in conversation.
 
-Ask: "May I write the full security audit report to `production/security/security-audit-[date].md`?"
+If writing this target is not already authorized, ask: "May I write the full security audit report to `production/security/security-audit-[date].md`?"
 
 Write only after approval.
 

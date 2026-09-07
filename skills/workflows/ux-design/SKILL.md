@@ -1,9 +1,6 @@
 ---
 name: ux-design
-description: Use when running the Aesir ux-design workflow. Guided, section-by-section
-  UX spec authoring for a screen, flow, or HUD. Reads game concept, player journey,
-  and relevant GDDs to provide context-aware design guidance. Produces ux-spec.md
-  (per screen/flow) or hud-design.md using the studio templates.
+description: Use when authoring game UX, HUD, or interaction specs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

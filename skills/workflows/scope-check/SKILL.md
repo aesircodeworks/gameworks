@@ -1,9 +1,6 @@
 ---
 name: scope-check
-description: Use when running the Aesir scope-check workflow. Analyze a feature or
-  sprint for scope creep by comparing current scope against the original plan. Flags
-  additions, quantifies bloat, and recommends cuts. Use when user says 'any scope
-  creep', 'scope review', 'are we staying in scope'.
+description: Use when detecting scope creep against original plans.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

@@ -1,8 +1,6 @@
 ---
 name: changelog
-description: Use when running the Aesir changelog workflow. Auto-generates a changelog
-  from git commits, sprint data, and design documents. Produces both internal and
-  player-facing versions.
+description: Use when generating changelogs from commits and sprints.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

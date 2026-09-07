@@ -1,11 +1,6 @@
 ---
 name: architecture-review
-description: Use when running the Aesir architecture-review workflow. Validates completeness
-  and consistency of the project architecture against all GDDs. Builds a traceability
-  matrix mapping every GDD technical requirement to ADRs, identifies coverage gaps,
-  detects cross-ADR conflicts, verifies engine compatibility consistency across all
-  decisions, and produces a PASS/CONCERNS/FAIL verdict. The architecture equivalent
-  of /design-review.
+description: Use when checking ADR coverage and conflicts versus GDDs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -586,8 +581,7 @@ After writing all approved files, silently append to
     - Top ADR gaps: [top 3 gap titles from the report, or "None"]
     - Report: docs/architecture/architecture-review-[date].md
 
-If `active.md` does not exist, create it with this block as the initial content.
-Confirm in conversation: "Session state updated."
+Do not create `production/session-state/active.md` unless that path is already authorized.
 
 The traceability index format:
 

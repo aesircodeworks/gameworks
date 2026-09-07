@@ -1,8 +1,6 @@
 ---
 name: team-release
-description: 'Use when running the Aesir team-release workflow. Orchestrate the release
-  team: coordinates release-manager, qa-lead, devops-engineer, and producer to execute
-  a release from candidate to deployment.'
+description: Use when coordinating release candidates to deployment.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -163,8 +161,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (release checklists, changelogs, patch notes, deployment scripts) are
-delegated to sub-agents and sub-skills. Each enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+delegated to sub-agents and sub-skills. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

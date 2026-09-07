@@ -789,9 +789,8 @@ scope clarity. Verdict: READY / NEEDS WORK / BLOCKED.
 - `ui-programmer` for UI code
 - `tools-programmer` for dev tools
 
-All agents follow the collaborative protocol: they read the design doc, ask
-clarifying questions, present architectural options, get your approval, then
-implement.
+All agents follow the collaborative protocol: they read the design doc, resolve
+missing material choices, then implement within approved scope.
 
 **3. Story Completion:** When a story is done:
 
@@ -1184,26 +1183,21 @@ Full gate definitions and check pattern: `gameworks references/director-gates.md
 
 This system is **user-driven collaborative**, not autonomous.
 
-**Pattern:** Question > Options > Decision > Draft > Approval
+For unresolved design choices: Question → Options → Decision → Draft → Approval → Write.
+Read-only discovery does not require another permission round. An explicit request
+to implement a stated changeset covers its scoped edits and verification, without
+repeating per-file approval. Ask when decisions or write scope expand; preserve
+separate design, stage, and release gates.
 
-Every agent interaction follows this pattern:
-1. Agent asks clarifying questions
-2. Agent presents 2-4 options with trade-offs and reasoning
-3. You decide
-4. Agent drafts based on your decision
-5. You review and refine
-6. Agent asks "May I write this to [filepath]?" before writing
-
-See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for the full protocol with
-examples.
+Load `collaborative-design-principle.md` when determining authorization or
+coordinating delegated writes; it is the canonical policy with examples.
 
 ### The clarify Tool
 
 Agents use the `clarify` tool for structured option presentation.
-The pattern is Explain then Capture: full analysis in conversation text first,
-then a clean UI picker for the decision. Use it for design choices,
-architecture decisions, and strategic questions. Do not use it for open-ended
-discovery questions or simple yes/no confirmations.
+Present only the reasoning needed for the decision, then use the current tool
+schema to capture missing design, architecture, or strategic choices. Batch
+independent questions. Do not repeat decisions or approvals already supplied.
 
 ### Agent Coordination (3-Tier Hierarchy)
 
@@ -1262,9 +1256,10 @@ The system has 12 hooks that run automatically:
 
 ### Context Resilience
 
-**Session state file:** `production/session-state/active.md` is a living
-checkpoint. Update it after each significant milestone. After any disruption
-(compaction, crash, `/clear`), read this file first.
+**Session state file:** checkpoint milestones only in already-approved task
+artifacts. Use `production/session-state/active.md` only when that path is
+authorized; do not create it for read-only work or introduce a second progress
+system. After disruption, read an existing authorized checkpoint first.
 
 **Incremental writing:** When creating multi-section documents, write each
 section to file immediately after approval. This means completed sections

@@ -1,10 +1,6 @@
 ---
 name: day-one-patch
-description: Use when running the Aesir day-one-patch workflow. Prepare a day-one
-  patch for a game launch. Scopes, prioritises, implements, and QA-gates a focused
-  patch addressing known issues discovered after gold master but before or immediately
-  after public launch. Treats the patch as a mini-sprint with its own QA gate and
-  rollback plan.
+description: Use when preparing a QA-gated day-one game patch.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -103,7 +99,7 @@ Spawn `release-manager` via Task. Ask them to produce a rollback plan covering:
 - Who is responsible for triggering the rollback
 - What player communication is required if a rollback occurs
 
-Present the rollback plan. Ask: "May I write this rollback plan to `production/releases/rollback-plan-[version].md`?"
+If writing this target is not already authorized, ask: "May I write this rollback plan to `production/releases/rollback-plan-[version].md`?"
 
 Do not proceed to Phase 4 until the rollback plan is written.
 
@@ -206,7 +202,7 @@ See: `production/releases/rollback-plan-[version].md`
 [list player-facing changes in plain language]
 ```
 
-Ask: "May I write this patch record to `production/releases/day-one-patch-[version].md`?"
+If writing this target is not already authorized, ask: "May I write this patch record to `production/releases/day-one-patch-[version].md`?"
 
 ---
 

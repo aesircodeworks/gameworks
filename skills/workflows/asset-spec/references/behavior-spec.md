@@ -17,6 +17,13 @@ director gates apply. The verdict is COMPLETE when all requested specs are writt
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 Verified automatically by `/skill-test static` — no fixture needed.
@@ -24,7 +31,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keyword: COMPLETE
-- [ ] Contains "May I write" collaborative protocol language (per asset)
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff (e.g., assign to an artist, or `/asset-audit` later)
 
 ---
@@ -118,7 +125,7 @@ review specs separately but this is not a gate within this skill.
 
 ---
 
-### Case 4: Multiple Assets Requested — May-I-Write Per Asset
+### Case 4: Multiple Assets Requested — Scoped Batch or Individual Approval
 
 **Fixture:**
 - GDD and art bible exist
@@ -134,7 +141,7 @@ review specs separately but this is not a gate within this skill.
 4. All approved specs are written; verdict is COMPLETE
 
 **Assertions:**
-- [ ] "May I write" is asked 3 times (once per asset), not once for all
+- [ ] Authorization covers each selected asset; one explicitly approved three-asset changeset needs no per-asset reapproval
 - [ ] User can decline one asset without blocking the others
 - [ ] All 3 spec files are written for approved assets
 - [ ] Verdict is COMPLETE when all approved specs are written
@@ -166,7 +173,7 @@ review specs separately but this is not a gate within this skill.
 - [ ] Includes all 6 spec components (dimensions, animations, palette, style, tech, checklist)
 - [ ] Flags missing dependencies (art bible, GDD) with DEPENDENCY GAP notes
 - [ ] Asks "May I write" (or "May I update") per asset
-- [ ] Handles multiple assets with individual write confirmations
+- [ ] Handles batch approval or individual selections without writing declined assets
 - [ ] Verdict is COMPLETE when all approved specs are written
 
 ---

@@ -1,9 +1,6 @@
 ---
 name: milestone-review
-description: Use when running the Aesir milestone-review workflow. Generates a comprehensive
-  milestone progress review including feature completeness, quality metrics, risk
-  assessment, and go/no-go recommendation. Use at milestone checkpoints or when evaluating
-  readiness for a milestone deadline.
+description: Use when reviewing milestone progress and readiness.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -154,7 +151,7 @@ Do not issue a GO against an OFF TRACK verdict unless the user explicitly select
 
 Present the review to the user.
 
-Ask: "May I write this to `production/milestones/[milestone-name]-review.md`?"
+If writing this target is not already authorized, ask: "May I write this to `production/milestones/[milestone-name]-review.md`?"
 
 If yes, write the file, creating the directory if needed. Verdict: **COMPLETE** — milestone review saved.
 

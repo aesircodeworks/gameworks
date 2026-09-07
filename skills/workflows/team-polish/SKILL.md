@@ -1,8 +1,6 @@
 ---
 name: team-polish
-description: 'Use when running the Aesir team-polish workflow. Orchestrate the polish
-  team: coordinates performance-analyst, technical-artist, sound-designer, and qa-tester
-  to optimize, polish, and harden a feature or area for release quality.'
+description: Use when coordinating feature polish for release.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -138,8 +136,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (performance reports, test results, evidence docs) are delegated to
-sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

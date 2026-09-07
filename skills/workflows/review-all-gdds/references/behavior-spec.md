@@ -163,7 +163,7 @@ review; delegating to a director gate would create a circular dependency.
 ## Protocol Compliance
 
 - [ ] Phase 1 (consistency) and Phase 2 (design theory) spawned in parallel — not sequentially
-- [ ] Does NOT write any files without "May I write" approval
+- [ ] Remains read-only; any proposed artifact edits require a separately authorized write workflow, not a generic permission loop
 - [ ] Findings table shown before any write ask
 - [ ] Verdict is one of exactly: CONSISTENT, MINOR ISSUES, MAJOR ISSUES
 - [ ] Ends with appropriate handoff: MAJOR ISSUES → fix and re-run; MINOR ISSUES → may proceed with awareness; CONSISTENT → `/create-architecture`

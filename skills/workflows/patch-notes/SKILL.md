@@ -1,8 +1,6 @@
 ---
 name: patch-notes
-description: Use when running the Aesir patch-notes workflow. Generate player-facing
-  patch notes from git history, sprint data, and internal changelogs. Translates developer
-  language into clear, engaging player communication.
+description: Use when writing player-facing patch notes.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -180,7 +178,7 @@ Check the generated notes for:
 
 Present the completed patch notes to the user along with: a count of changes by category, and any internal changes that were excluded (for review).
 
-Ask: "May I write these patch notes to `docs/patch-notes/[version].md`?"
+If writing this target is not already authorized, ask: "May I write these patch notes to `docs/patch-notes/[version].md`?"
 
 If yes, write the file to `docs/patch-notes/[version].md`, creating the directory
 if needed. Also write to `production/releases/[version]/patch-notes.md` as the

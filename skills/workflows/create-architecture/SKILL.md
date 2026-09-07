@@ -1,10 +1,6 @@
 ---
 name: create-architecture
-description: 'Use when running the Aesir create-architecture workflow. Guided, section-by-section
-  authoring of the master architecture document for the game. Reads all GDDs, the
-  systems index, existing ADRs, and the engine reference library to produce a complete
-  architecture blueprint before any code is written. Engine-version-aware: flags knowledge
-  gaps and validates decisions against the pinned engine version.'
+description: Use when authoring the master game architecture.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -303,7 +299,7 @@ but don't yet. Group by priority:
 Once all sections are approved, write the complete document to
 `docs/architecture/architecture.md`.
 
-Display a one-paragraph summary of what the document will contain (layers, modules, data flows, ADR gaps). Then use `clarify`:
+Display a one-paragraph summary of what the document will contain (layers, modules, data flows, ADR gaps). If writing this target is not already authorized, use `clarify`; otherwise perform the approved write without another permission round:
 - "All sections approved. May I write the master architecture document?"
   - [A] Yes — write to `docs/architecture/architecture.md` now
   - [B] Show me the full draft inline first, then ask again
@@ -384,7 +380,7 @@ Update the Document Status section:
 - Lead Programmer Feasibility: FEASIBLE / CONCERNS ACCEPTED / REVISED
 ```
 
-Show the proposed Document Status block inline, then use `clarify`:
+Show the proposed Document Status block inline. If this status update is outside the approved write scope, use `clarify`; otherwise apply it. This does not bypass TD/LP sign-off:
 - "May I update the Document Status section with the sign-off results?"
   - [A] Yes — apply to `docs/architecture/architecture.md`
   - [B] Not yet — I want to revisit the concerns first
@@ -393,7 +389,7 @@ Show the proposed Document Status block inline, then use `clarify`:
 
 ## Phase 8: Handoff
 
-**Step 1 — Update session state**: Write a summary to `production/session-state/active.md` covering: artifact written, TD/LP sign-off verdicts, any blockers, required ADRs remaining, and next step.
+**Step 1 — Record approved progress**: In an already-approved task artifact, record the artifact written, TD/LP sign-off verdicts, blockers, required ADRs remaining, and next step. Use `production/session-state/active.md` only if that path is authorized; do not create another checkpoint system.
 
 **Step 2 — Output the handoff** using exactly this template (no freeform prose, no rephrasing of section titles):
 

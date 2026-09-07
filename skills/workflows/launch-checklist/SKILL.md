@@ -1,8 +1,6 @@
 ---
 name: launch-checklist
-description: 'Use when running the Aesir launch-checklist workflow. Complete launch
-  readiness validation covering every department: code, content, store, marketing,
-  community, infrastructure, legal, and go/no-go sign-offs.'
+description: Use when explicitly requesting a launch readiness check.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -239,7 +237,7 @@ Generated: [Date]
 
 Present the completed checklist and summary to the user (total items, blocking items count, conditional items count, departments with incomplete sections).
 
-If not in dry-run mode, ask: "May I write this to `production/releases/launch-checklist-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this to `production/releases/launch-checklist-[date].md`?"
 
 If yes, write the file, creating directories as needed.
 

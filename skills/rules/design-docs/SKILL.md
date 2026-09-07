@@ -1,6 +1,6 @@
 ---
 name: design-docs
-description: Use when changing files governed by design-docs rules.
+description: Use when editing game design/gdd/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

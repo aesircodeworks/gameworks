@@ -1,6 +1,6 @@
 ---
 name: project-bootstrap
-description: Use when creating a new game workspace for Aesir workflows.
+description: Use when creating an Aesir game workspace.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -19,7 +19,7 @@ metadata:
 
 # Project bootstrap
 
-Create project-local artifacts only after the user chooses a workspace path and approves each file.
+Create project-local artifacts only within the user's approved workspace and changeset. An explicit request naming the targets supplies approval; do not ask again per file. Load `gameworks` `references/collaborative-design-principle.md` when scope is unclear.
 
 This distribution repository and `$HERMES_HOME` are not game projects.
 
@@ -30,6 +30,6 @@ This distribution repository and `$HERMES_HOME` are not game projects.
 ## Required behavior
 
 1. Ask for the target game workspace with `clarify` if it is not already chosen.
-2. Show the exact paths to create.
-3. Wait for approval.
+2. Identify the exact paths to create.
+3. Obtain approval if the request has not already supplied it; ask about expanded scope.
 4. Write only approved paths, using `project-templates` for document scaffolds.

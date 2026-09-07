@@ -1,8 +1,6 @@
 ---
 name: reverse-document
-description: Use when running the Aesir reverse-document workflow. Generate design
-  or architecture documents from existing implementation. Works backwards from code/prototypes
-  to create missing planning docs.
+description: Use when deriving design or architecture docs from code.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -133,9 +131,9 @@ Based on type, use appropriate template:
 
 | Type | Template | Output Path |
 |------|----------|-------------|
-| `design` | `templates/design-doc-from-implementation.md` | `design/gdd/[system-name].md` |
-| `architecture` | `templates/architecture-doc-from-code.md` | `docs/architecture/[decision-name].md` |
-| `concept` | `templates/concept-doc-from-prototype.md` | `prototypes/[name]/CONCEPT.md` or `design/concepts/[name].md` |
+| `design` | `project-templates` `templates/design-doc-from-implementation.md` | `design/gdd/[system-name].md` |
+| `architecture` | `project-templates` `templates/architecture-doc-from-code.md` | `docs/architecture/[decision-name].md` |
+| `concept` | `project-templates` `templates/concept-doc-from-prototype.md` | `prototypes/[name]/CONCEPT.md` or `design/concepts/[name].md` |
 
 **Draft structure**:
 - Capture **what exists** (mechanics, patterns, implementation)
@@ -267,7 +265,7 @@ This skill follows the collaborative design principle:
 4. **User Clarifies**: Separate intent from accidents
 5. **Draft Document**: Create doc based on reality + intent
 6. **Show Draft**: Display key sections, explain additions
-7. **Get Approval**: "May I write to [filepath]?" On approval: Verdict: **COMPLETE** — document generated. On decline: Verdict: **BLOCKED** — user declined write.
+If writing this target is not already authorized, ask: "May I write to [filepath]?" On approval: Verdict: **COMPLETE** — document generated. On decline: Verdict: **BLOCKED** — user declined write.
 8. **Flag Follow-Up**: Suggest related work, don't auto-execute
 
 **Never assume intent. Always ask before documenting "why".**

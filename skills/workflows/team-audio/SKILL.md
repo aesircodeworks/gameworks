@@ -1,8 +1,6 @@
 ---
 name: team-audio
-description: 'Use when running the Aesir team-audio workflow. Orchestrate audio team:
-  audio-director + sound-designer + technical-artist + gameplay-programmer for full
-  audio pipeline from direction to implementation.'
+description: Use when coordinating end-to-end game audio work.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -128,8 +126,7 @@ Verdict: **BLOCKED** — [reason]
 ## File Write Protocol
 
 All file writes (audio design docs, SFX specs, implementation files) are delegated
-to sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Next Steps
 

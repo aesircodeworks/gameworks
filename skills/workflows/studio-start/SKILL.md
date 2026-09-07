@@ -1,7 +1,6 @@
 ---
 name: studio-start
-description: Use when running the Aesir start workflow. First-time onboarding — asks
-  where you are, then guides you to the right workflow. No assumptions.
+description: Use when starting guided Aesir studio onboarding.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

@@ -2,6 +2,12 @@
 
 # Agent Coordination Rules
 
+When assigning write scope or handling a new decision, load
+`collaborative-design-principle.md`. Delegated children inherit only the user's
+approved scope and supplied decisions; they return new decisions or blockers to
+the coordinator instead of asking the user directly. Consultation and delegation
+do not grant new authority or bypass later design, stage, or release gates.
+
 1. **Vertical Delegation**: Leadership agents delegate to department leads, who
    delegate to specialists. Never skip a tier for complex decisions.
 2. **Horizontal Consultation**: Agents at the same tier may consult each other

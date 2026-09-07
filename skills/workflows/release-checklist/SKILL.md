@@ -1,8 +1,6 @@
 ---
 name: release-checklist
-description: Use when running the Aesir release-checklist workflow. Generates a comprehensive
-  pre-release validation checklist covering build verification, certification requirements,
-  store metadata, and launch readiness.
+description: Use when explicitly requesting a release checklist.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -181,7 +179,7 @@ resolution and estimated time to address them.]
 
 Present the checklist to the user with: total checklist items, number of known blockers (FIXME/HACK counts, known bugs).
 
-Ask: "May I write this to `production/releases/release-checklist-[version].md`?"
+If writing this target is not already authorized, ask: "May I write this to `production/releases/release-checklist-[version].md`?"
 
 If yes, write the file, creating the directory if needed.
 

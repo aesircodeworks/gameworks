@@ -1,6 +1,6 @@
 ---
 name: shader-code
-description: Use when changing files governed by shader-code rules.
+description: Use when editing game assets/shaders/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

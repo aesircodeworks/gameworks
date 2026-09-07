@@ -16,12 +16,19 @@ with verdict COMPLETE / BLOCKED and handoffs to `/ux-review`, `/code-review`,
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings (Phase 1a through Phase 5 are all present)
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
-- [ ] Contains "May I write" or "File Write Protocol" — writes delegated to sub-agents and sub-skills, orchestrator does not write files directly
+- [ ] Documents scoped write authorization; children inherit approved scope and return new decisions to the coordinator — writes delegated to sub-agents and sub-skills, orchestrator does not write files directly
 - [ ] Has a next-step handoff at the end (references `/ux-review`, `/code-review`, `/team-polish`)
 - [ ] Error Recovery Protocol section is present with all four recovery steps
 - [ ] Uses `clarify` at phase transitions for user approval before proceeding

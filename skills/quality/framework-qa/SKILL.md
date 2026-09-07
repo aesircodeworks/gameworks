@@ -1,6 +1,6 @@
 ---
 name: framework-qa
-description: Use when testing Aesir workflow or agent behavior specs.
+description: Use when testing Aesir workflow or role behavior.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

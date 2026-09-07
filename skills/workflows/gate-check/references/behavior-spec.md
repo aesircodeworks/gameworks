@@ -20,7 +20,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings (numbered Phase N or ## sections)
 - [ ] Contains verdict keywords: PASS, CONCERNS, FAIL
-- [ ] Contains "May I write" collaborative protocol language
+- [ ] Documents explicit stage-transition authorization, separate from approval of earlier work; no exact write-question wording is required
 - [ ] Has a next-step handoff at the end (Follow-Up Actions section)
 
 ---
@@ -50,7 +50,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Output includes a "Quality Checks" section with check status per item
 - [ ] Output includes a "Verdict" line with one of PASS / CONCERNS / FAIL
 - [ ] Skill asks about unverifiable quality items (e.g., "Has this been reviewed?") rather than assuming PASS
-- [ ] Skill asks "May I write" before updating `production/stage.txt`
+- [ ] Skill obtains the user's stage-transition decision before updating `production/stage.txt`; persisting that confirmed decision needs no duplicate write question
 - [ ] Skill does NOT write `production/stage.txt` without explicit user confirmation
 
 ---
@@ -182,7 +182,7 @@ treat this confirmation as a failure.
 
 ## Protocol Compliance
 
-- [ ] Uses "May I write" before updating `production/stage.txt`
+- [ ] Updates `production/stage.txt` only for the explicitly confirmed stage transition; approval of earlier edits does not authorize advancement
 - [ ] Presents the full checklist report before asking for write approval
 - [ ] Ends with a "Follow-Up Actions" section listing next steps per verdict
 - [ ] Never advances the stage without explicit user confirmation

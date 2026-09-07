@@ -1,8 +1,6 @@
 ---
 name: estimate
-description: Use when running the Aesir estimate workflow. Estimates task effort by
-  analyzing complexity, dependencies, historical velocity, and risk factors. Produces
-  a structured estimate with confidence levels.
+description: Use when estimating task effort, complexity, and risk.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

@@ -1,9 +1,6 @@
 ---
 name: propagate-design-change
-description: Use when running the Aesir propagate-design-change workflow. When a GDD
-  is revised, scans all ADRs and the traceability index to identify which architectural
-  decisions are now potentially stale. Produces a change impact report and guides
-  the user through resolution.
+description: Use when tracing GDD changes to affected ADRs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -194,7 +191,7 @@ Ask for each ADR in turn:
 
 For ADRs marked **Superseded**:
 - Update the ADR's Status field: `Superseded by ADR-[next number] (pending — see change-impact-[date]-[system].md)`
-- Ask: "May I update the status in [ADR filename]?"
+- If the approved changeset does not yet cover that ADR status update, ask: "May I update the status in [ADR filename]?" Otherwise apply the approved disposition without asking again.
 
 ---
 
@@ -210,13 +207,13 @@ If `docs/architecture/architecture-traceability.md` exists:
 | [date] | [gdd] | [old requirement text] | [new requirement text] | ADR-NNNN | [Superseded/Updated/Valid] |
 ```
 
-Ask: "May I update the traceability index?"
+If the traceability index is outside the approved write scope, ask: "May I update the traceability index?" Otherwise perform the scoped update.
 
 ---
 
 ## 9. Output Change Impact Document
 
-Ask: "May I write the change impact report to `docs/architecture/change-impact-[date]-[system-slug].md`?"
+Obtain write approval for `docs/architecture/change-impact-[date]-[system-slug].md` if it was not already included in the approved changeset. Existing approval covers the write; it does not bypass the preceding ADR disposition decisions or director gate.
 
 The document contains:
 - The change summary from step 3
@@ -246,5 +243,5 @@ Based on the resolution decisions, suggest:
 1. **Read silently** — compute the full impact before presenting anything
 2. **Show the full report first** — let the user see the scope before asking for action
 3. **Ask per-ADR** — don't batch decisions; each affected ADR may need different treatment
-4. **Ask before writing** — always confirm before modifying any file
+4. **Confirm write scope** — confirm authorization for this target or changeset if not already supplied. Preserve required content decisions and later workflow gates.
 5. **Non-destructive** — never delete ADR content; only add "Superseded by" notes

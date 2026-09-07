@@ -26,7 +26,7 @@ The original MIT license and copyright notice are preserved in `LICENSE`. Aesir 
 hermes profile install /path/to/aesir-gameworks --name gamedev --force --yes
 ```
 
-Existing credentials, memories, sessions, and unrelated skills are not part of `distribution_owned` and must be preserved. Do not use `--force-config` against a configured profile; merge policy keys with `scripts/apply_profile_config.py`.
+Existing credentials, memories, sessions, and unrelated skills are not part of `distribution_owned` and must be preserved. Do not use `--force-config` against a configured profile.
 
 ## Use
 

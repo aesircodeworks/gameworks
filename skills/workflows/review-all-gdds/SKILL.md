@@ -1,11 +1,6 @@
 ---
 name: review-all-gdds
-description: Use when running the Aesir review-all-gdds workflow. Holistic cross-GDD
-  consistency and game design review. Reads all system GDDs simultaneously and checks
-  for contradictions between them, stale references, ownership conflicts, formula
-  incompatibilities, and game design theory violations (dominant strategies, economic
-  imbalance, cognitive overload, pillar drift). Run after all MVP GDDs are written,
-  before architecture begins.
+description: Use when reviewing cross-GDD consistency and design.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -567,7 +562,7 @@ FAIL: One or more blocking issues must be resolved before architecture begins.
 ## Phase 6: Write Report and Flag GDDs
 
 Use `clarify` for write permission:
-- Prompt: "May I write this review to `design/gdd/gdd-cross-review-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this review to `design/gdd/gdd-cross-review-[date].md`?"
 - Options: `[A] Yes — write the report` / `[B] No — skip`
 
 If any GDDs are flagged for revision, use a second `clarify`:
@@ -579,8 +574,7 @@ If any GDDs are flagged for revision, use a second `clarify`:
 
 ### Session State Update
 
-After writing the report (and updating systems index if approved), silently
-append to `production/session-state/active.md`:
+After writing the report (and updating systems index if approved), Record this block only in an already-authorized task checkpoint; otherwise report it in the response. Do not create `production/session-state/active.md` for read-only work or introduce a second progress system. If an authorized checkpoint exists, append:
 
     ## Session Extract — /review-all-gdds [date]
     - Verdict: [PASS / CONCERNS / FAIL]
@@ -593,8 +587,7 @@ append to `production/session-state/active.md`:
 
 Use the appropriate line based on the user's response to the write-permission widget in Phase 6.
 
-If `active.md` does not exist, create it with this block as the initial content.
-Confirm in conversation: "Session state updated."
+Do not create `production/session-state/active.md` unless that path is already authorized.
 
 ---
 

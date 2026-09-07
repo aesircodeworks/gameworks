@@ -1,8 +1,6 @@
 ---
 name: sprint-plan
-description: Use when running the Aesir sprint-plan workflow. Generates a new sprint
-  plan or updates an existing one based on the current milestone, completed work,
-  and available capacity. Pulls context from production documents and design backlogs.
+description: Use when creating or updating a capacity-based sprint.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

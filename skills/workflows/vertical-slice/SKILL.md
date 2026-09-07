@@ -1,10 +1,6 @@
 ---
 name: vertical-slice
-description: Use when running the Aesir vertical-slice workflow. Pre-Production validation
-  — build a production-quality end-to-end build to confirm the full game loop is achievable
-  before committing to Production. Run after GDDs, architecture, and UX specs are
-  complete. Produces a PROCEED/PIVOT/KILL verdict that gates the Pre-Production →
-  Production transition.
+description: Use when validating a production-quality full game loop.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -255,7 +251,7 @@ text with real observations.
 - What would we change about the slice scope if we ran this again?
 ```
 
-Ask: "May I write this report to
+If writing this target is not already authorized, ask: "May I write this report to
 `prototypes/[concept-name]-vertical-slice/REPORT.md`?"
 
 If yes, write the file. Then update `prototypes/index.md` (create if it does not
@@ -312,7 +308,7 @@ two questions (plain text, one at a time):
 1. "What systems or mechanics worked at this quality level and should be preserved in the revised design?"
 2. "What specifically failed — the core loop, the architecture, the pipeline, or the fun?"
 
-Ask: "May I write this to `prototypes/[concept-name]-vertical-slice/PIVOT-NOTE.md`?"
+If writing this target is not already authorized, ask: "May I write this to `prototypes/[concept-name]-vertical-slice/PIVOT-NOTE.md`?"
 
 If yes, write the file with: what worked, what failed, the specific systems or
 architecture decisions that need revision, and what the next slice should prove

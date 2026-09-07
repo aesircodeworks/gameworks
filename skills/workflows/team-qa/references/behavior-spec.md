@@ -14,13 +14,20 @@ independent stories.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
 - [ ] Contains verdict keywords for sign-off report: APPROVED, APPROVED WITH CONDITIONS, NOT APPROVED
-- [ ] Contains "May I write" language for both the QA plan and the sign-off report
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has an Error Recovery Protocol section
 - [ ] Uses `clarify` at phase transitions to capture user approval before proceeding
 - [ ] Phase 4 (smoke check) is a hard gate: FAIL stops the cycle
@@ -188,7 +195,7 @@ independent stories.
 
 - [ ] `clarify` used at Phase 2 (strategy review), Phase 5 (test case approval per group), and Phase 6 (per-story manual QA result)
 - [ ] Phase 4 smoke check is a hard gate: FAIL halts the pipeline at Phase 4 with no exceptions
-- [ ] "May I write?" asked separately for QA plan (Phase 3) and sign-off report (Phase 7)
+- [ ] Checks write scope for the QA plan (Phase 3) and sign-off report (Phase 7) without duplicate file permission; plan approval does not satisfy the later sign-off decision
 - [ ] Bug reports are always written by `qa-tester` via Task — orchestrator does not write directly
 - [ ] Phase 5 qa-tester tasks for independent stories are issued in parallel where possible
 - [ ] Error recovery: any BLOCKED agent is surfaced immediately with clarify options

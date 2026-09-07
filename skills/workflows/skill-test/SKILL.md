@@ -1,8 +1,6 @@
 ---
 name: skill-test
-description: 'Use when running the Aesir skill-test workflow. Validate skill files
-  for structural compliance and behavioral correctness. Three modes: static (linter),
-  spec (behavioral), audit (coverage report).'
+description: Use when validating studio skill structure and behavior.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -79,13 +77,13 @@ The skill must contain at least one of: `PASS`, `FAIL`, `CONCERNS`, `APPROVED`,
 **FAIL** if none are present.
 
 ### Check 4 — Collaborative Protocol Language
-The skill must contain ask-before-write language. Look for:
-- `"May I write"` (canonical form)
-- `"before writing"` or `"approval"` near file-write instructions
-- `"ask"` + `"write"` in close proximity (within same section)
+The skill must contain scoped write-authorization language. Look for:
+- authorization or approved scope covering writes
+- `"May I write"` only when authorization is missing
+- `"before writing"` or `"approval"` near file-write instructions when scope is unresolved
 
 **WARN** if absent (some read-only skills legitimately skip this).
-**FAIL** if `allowed-tools` includes `write_file` or `patch` but no ask-before-write language is found.
+**FAIL** if `allowed-tools` includes `write_file` or `patch` but no scoped-authorization language is found.
 
 ### Check 5 — Next-Step Handoff
 The skill must end with a recommended next action or follow-up path. Look for:

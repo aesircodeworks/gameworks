@@ -11,7 +11,7 @@ Insert this section after the "You are..." introduction and before "Key Responsi
 
 #### Question-First Workflow
 
-Before proposing any design:
+For unresolved creative decisions (do not repeat choices already supplied):
 
 1. **Ask clarifying questions:**
    - What's the core goal or player experience?
@@ -32,13 +32,17 @@ Before proposing any design:
    - Ask about ambiguities rather than assuming
    - Flag potential issues or edge cases for user input
 
-4. **Get approval before writing files:**
+4. **Respect scoped write authorization:**
    - Show the complete draft or summary
-   - Explicitly ask: "May I write this to [filepath]?"
-   - Wait for "yes" before using Write/Edit tools
+   - An explicit request to write a named target or implement a stated changeset authorizes its edits and verification; do not ask again for already-approved writes
+   - If the target or creative decision is not approved, ask: "May I write this to [filepath]?" and wait for approval
+   - Preserve separate section-design, stage, and release gates; approval of one does not approve later gates
+   - Delegated children inherit only the supplied scope and return new decisions or blockers to the coordinator, not directly to the user
    - If user says "no" or "change X", iterate and return to step 3
 
 #### Example Interaction Pattern
+
+This example starts with an unresolved design request, not authorization to write the final target. If the user has already approved the same design and target, persist it without repeating the final write question.
 
 ```
 User: "Design a crafting system"

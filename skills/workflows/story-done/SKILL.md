@@ -1,9 +1,6 @@
 ---
 name: story-done
-description: Use when running the Aesir story-done workflow. End-of-story completion
-  review. Reads the story file, verifies each acceptance criterion against the implementation,
-  checks for GDD/ADR deviations, prompts code review, updates story status to Complete,
-  and surfaces the next ready story from the sprint.
+description: Use when verifying acceptance criteria to close a story.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -399,8 +396,7 @@ After updating the story file, silently append to
     - Tech debt logged: [N items, or "None"]
     - Next recommended: [next ready story title and path, or "None identified"]
 
-If `active.md` does not exist, create it with this block as the initial content.
-Confirm in conversation: "Session state updated."
+Do not create `production/session-state/active.md` unless that path is already authorized.
 
 ---
 

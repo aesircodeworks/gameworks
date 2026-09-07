@@ -1,10 +1,6 @@
 ---
 name: consistency-check
-description: 'Use when running the Aesir consistency-check workflow. Scan all GDDs
-  against the entity registry to detect cross-document inconsistencies: same entity
-  with different stats, same item with different values, same formula with different
-  variables. Grep-first approach — reads registry then targets only conflicting GDD
-  sections rather than full document reads.'
+description: Use when checking GDDs against the entity registry.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -291,7 +287,7 @@ Then append the new conflict entries. Never skip logging — a missing file is n
 
 ## Phase 7: Session State and Closing
 
-Silently append to `production/session-state/active.md` (create the file if it does not exist):
+Record this block only in an already-authorized task checkpoint; otherwise report it in the response. Do not create `production/session-state/active.md` for read-only work or introduce a second progress system. If an authorized checkpoint exists, append:
 
 ```
 <!-- CONSISTENCY-CHECK: [date] | GDDs checked: [N] | Conflicts found: [N] | Report: docs/consistency-report-[date].md -->

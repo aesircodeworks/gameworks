@@ -1,8 +1,6 @@
 ---
 name: studio-help
-description: Use when running the Aesir help workflow. Analyzes what is done and the
-  users query and offers advice on what to do next. Use if user says what should I
-  do next or what do I do now or I'm stuck or I don't know what to do
+description: Use when choosing the next game development step.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

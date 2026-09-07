@@ -1,8 +1,6 @@
 ---
 name: map-systems
-description: Use when running the Aesir map-systems workflow. Decompose a game concept
-  into individual systems, map dependencies, prioritize design order, and create the
-  systems index.
+description: Use when mapping game systems and design dependencies.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -244,7 +242,7 @@ Present a summary of the document:
 - First 3 systems in the design order
 - Any high-risk items
 
-Ask: "May I write the systems index to `design/gdd/systems-index.md`?"
+If writing this target is not already authorized, ask: "May I write the systems index to `design/gdd/systems-index.md`?"
 
 Wait for approval. Write the file only after "yes."
 

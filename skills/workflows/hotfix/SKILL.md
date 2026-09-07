@@ -1,8 +1,6 @@
 ---
 name: hotfix
-description: Use when running the Aesir hotfix workflow. Emergency fix workflow that
-  bypasses normal sprint processes with a full audit trail. Creates hotfix branch,
-  tracks approvals, and ensures the fix is backported correctly.
+description: Use when explicitly requesting an emergency hotfix.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -71,7 +69,7 @@ Status: IN PROGRESS
 [How to revert if the fix causes new issues]
 ```
 
-Ask: "May I write this to `production/hotfixes/hotfix-[date]-[short-name].md`?"
+If writing this target is not already authorized, ask: "May I write this to `production/hotfixes/hotfix-[date]-[short-name].md`?"
 
 If yes, write the file, creating the directory if needed.
 

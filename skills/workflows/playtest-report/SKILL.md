@@ -1,8 +1,6 @@
 ---
 name: playtest-report
-description: Use when running the Aesir playtest-report workflow. Generates a structured
-  playtest report template or analyzes existing playtest notes into a structured format.
-  Use this to standardize playtest feedback collection and analysis.
+description: Use when structuring playtest notes or report templates.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -143,7 +141,7 @@ Present the creative director's assessment before saving the report. If CONCERNS
 
 ## Phase 4: Save Report
 
-Ask: "May I write this playtest report to `production/qa/playtests/playtest-[date]-[tester].md`?"
+If writing this target is not already authorized, ask: "May I write this playtest report to `production/qa/playtests/playtest-[date]-[tester].md`?"
 
 If yes, write the file, creating the directory if needed.
 

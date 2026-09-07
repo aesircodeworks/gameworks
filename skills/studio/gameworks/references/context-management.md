@@ -4,6 +4,9 @@
 
 Context is the most critical resource in a Hermes Agent session. Manage it actively.
 
+When deciding whether a checkpoint or document write is authorized, load
+`collaborative-design-principle.md`. Context management does not expand write scope.
+
 ## File-Backed State (Primary Strategy)
 
 **The file is the memory, not the conversation.** Conversations are ephemeral and
@@ -11,8 +14,10 @@ will be compacted or lost. Files on disk persist across compactions and session 
 
 ### Session State File
 
-Maintain `production/session-state/active.md` as a living checkpoint. Update it
-after each significant milestone:
+Keep progress in an already-approved task artifact. Use
+`production/session-state/active.md` only when that game-workspace path is approved;
+do not create it for every task or read-only review. Update the approved artifact
+after significant milestones within scope:
 
 - Design section approved and written to file
 - Architecture decision made
@@ -24,8 +29,8 @@ made, files being worked on, and open questions.
 
 ### Status Line Block (Production+ only)
 
-When the project is in Production, Polish, or Release stage, include a structured
-status block in `active.md` that the status line script can parse:
+When an approved game-workspace `active.md` is used in Production, Polish, or
+Release, include a structured status block that the status line script can parse:
 
 ```markdown
 <!-- STATUS -->
@@ -40,16 +45,17 @@ Task: Implement hitbox detection
 - The status line displays it as a breadcrumb: `Combat System > Melee Combat > Hitboxes`
 - Remove or empty the block when no active work focus exists
 
-After any disruption (compaction, crash, `/clear`), read the state file first.
+After any disruption (compaction, crash, `/clear`), read the existing approved
+task artifact first; a missing checkpoint does not authorize creating one.
 
 ### Incremental File Writing
 
 When creating multi-section documents (design docs, architecture docs, lore entries):
 
-1. Create the file immediately with a skeleton (all section headers, empty bodies)
+1. Create a skeleton only after its target and creation are approved
 2. Discuss and draft one section at a time in conversation
 3. Write each section to the file as soon as it's approved
-4. Update the session state file after each section
+4. Record progress in the already-approved task artifact, without adding another file
 5. After writing a section, previous discussion about that section can be safely
    compacted — the decisions are in the file
 
@@ -85,7 +91,7 @@ Subagents run in their own context window and return only summaries:
 
 When context is compacted, preserve the following in the summary:
 
-- Reference to `production/session-state/active.md` (read it to recover state)
+- Reference to the approved task artifact, if any (read it to recover state)
 - List of files modified in this session and their purpose
 - Any architectural decisions made and their rationale
 - Active sprint tasks and their current status
@@ -95,7 +101,7 @@ When context is compacted, preserve the following in the summary:
 - The current task and what step we are on
 - Which sections of the current document are written to file vs. still in progress
 
-**After compaction:** Read `production/session-state/active.md` and any files being
+**After compaction:** Read the existing approved task artifact and any files being
 actively worked on to recover full context. The files contain the decisions; the
 conversation history is secondary.
 
@@ -103,7 +109,7 @@ conversation history is secondary.
 
 If a session dies ("prompt too long") or you start a new session to continue work:
 
-1. The `session-start.sh` hook will detect and preview `active.md` automatically
-2. Read the full state file for context
+1. If hooks preview an existing `active.md`, check that it belongs to this task
+2. Read the approved task artifact, if present, for context
 3. Read the partially-completed file(s) listed in the state
 4. Continue from the next incomplete section or task

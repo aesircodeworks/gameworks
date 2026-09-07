@@ -15,12 +15,19 @@ with verdict COMPLETE / BLOCKED and handoffs to `/design-review`, `/dev-story`,
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase/step headings (Step 1 through Step 5 are all present)
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
-- [ ] Contains "May I write" or "File Write Protocol" — writes delegated to sub-agents, orchestrator does not write files directly
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits — writes delegated to sub-agents, orchestrator does not write files directly
 - [ ] Has a next-step handoff at the end (references `/design-review`, `/dev-story`, `/qa-plan`)
 - [ ] Error Recovery Protocol section is present with all four recovery steps
 - [ ] Uses `clarify` at step transitions for user approval before proceeding
@@ -51,7 +58,7 @@ with verdict COMPLETE / BLOCKED and handoffs to `/design-review`, `/dev-story`,
 4. Step 3 — systems-designer spawned: specifies enemy compositions, loot tables, difficulty balance, area-specific mechanics, resource distribution; `clarify` confirms systems before Step 4
 5. Step 4 — art-director and accessibility-specialist spawned in parallel; art-director: visual theme, color palette, lighting, asset list, VFX needs; accessibility-specialist: navigation clarity, colorblind safety, cognitive load check — each concern rated BLOCKING / RECOMMENDED / NICE TO HAVE; `clarify` presents both outputs before Step 5
 6. Step 5 — qa-tester spawned: test cases for critical path, boundary/edge cases (sequence breaks, softlocks), playtest checklist, acceptance criteria
-7. Orchestrator compiles all team outputs into level design document format; sub-agent asked "May I write to `design/levels/forest-dungeon.md`?"; file saved
+7. Orchestrator compiles all team outputs into level design document format; sub-agent saves `design/levels/forest-dungeon.md` within supplied authorization, or returns missing target scope to the coordinator
 8. Summary report: area overview, encounter count, estimated asset list, narrative beats, cross-team dependencies, verdict: COMPLETE
 9. Next steps listed: `/design-review design/levels/forest-dungeon.md`, `/dev-story`, `/qa-plan`
 

@@ -1,9 +1,6 @@
 ---
 name: team-combat
-description: 'Use when running the Aesir team-combat workflow. Orchestrate the combat
-  team: coordinates game-designer, gameplay-programmer, ai-programmer, technical-artist,
-  sound-designer, and qa-tester to design, implement, and validate a combat feature
-  end-to-end.'
+description: Use when coordinating combat design, code, and QA.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -139,8 +136,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (design documents, implementation files, test cases) are
-delegated to sub-agents spawned via Task. Each sub-agent enforces the
-"May I write to [path]?" protocol. This orchestrator does not write files directly.
+delegated to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

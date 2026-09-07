@@ -1,10 +1,6 @@
 ---
 name: create-control-manifest
-description: Use when running the Aesir create-control-manifest workflow. After architecture
-  is complete, produces a flat actionable rules sheet for programmers — what you must
-  do, what you must never do, per system and per layer. Extracted from all Accepted
-  ADRs, technical preferences, and engine reference docs. More immediately actionable
-  than ADRs (which explain why).
+description: Use when extracting coding rules from accepted ADRs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -162,7 +158,7 @@ Apply the verdict:
 ## 5. Write the Control Manifest
 
 Use `clarify`:
-- Prompt: "May I write the Control Manifest?"
+If writing this target is not already authorized, ask: "May I write the Control Manifest?"
 - Options:
   - `[A] Yes — write to docs/architecture/control-manifest.md`
   - `[B] Show me the full draft first, then ask again`
@@ -293,7 +289,7 @@ After writing the manifest:
 
 1. **Load silently** — read all inputs before presenting anything
 2. **Show the summary first** — let the user see the scope before writing
-3. **Ask before writing** — always confirm before creating or overwriting the manifest. On write: Verdict: **COMPLETE** — control manifest written. On decline: Verdict: **BLOCKED** — user declined write.
+3. **Confirm write scope** — confirm authorization for this target or changeset if not already supplied. Preserve required content decisions and later workflow gates.
 4. **Source every rule** — never add a rule that doesn't trace to an ADR, a
    technical preference, or an engine reference doc
 5. **No interpretation** — extract rules as stated in ADRs; do not paraphrase

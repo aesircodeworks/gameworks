@@ -1,6 +1,6 @@
 ---
 name: engine-reference
-description: Use when looking up Godot, Unity, or Unreal API guidance.
+description: Use when checking Godot, Unity, or Unreal APIs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

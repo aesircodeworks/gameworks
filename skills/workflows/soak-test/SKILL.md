@@ -1,9 +1,6 @@
 ---
 name: soak-test
-description: Use when running the Aesir soak-test workflow. Generate a soak test protocol
-  for extended play sessions. Defines what to observe, measure, and log during long
-  play sessions to surface slow leaks, fatigue effects, and edge cases that only appear
-  after sustained play. Primarily used in Polish and Release phases.
+description: Use when planning extended-play soak test protocols.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -293,4 +290,4 @@ If the verdict is FAIL, run `/smoke-check` again after fixing the issues."
   doesn't need a 4h soak; a city-builder might. Use judgment and ask if unclear.
 - **First soak should be `all` focus** — narrow focus (memory-only) is for
   regression soaks after a specific fix, not the first pass
-- **Ask before writing** — always confirm before creating the protocol file
+- **Confirm write scope** — confirm authorization for this target or changeset if not already supplied. Preserve required content decisions and later workflow gates.

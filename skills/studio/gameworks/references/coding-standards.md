@@ -2,6 +2,11 @@
 
 # Coding Standards
 
+These standards govern a target game workspace, not Aesir framework files.
+For authorization decisions, load `collaborative-design-principle.md`: perform
+approved implementation and verification without repeated per-edit permission;
+ask before expanding scope. Standards do not authorize creating additional artifacts.
+
 - All game code must include doc comments on public APIs
 - Every system must have a corresponding architecture decision record in `docs/architecture/`
 - Gameplay values must be data-driven (external config), never hardcoded
@@ -16,7 +21,8 @@
 
 - All design docs use Markdown
 - Each mechanic has a dedicated document in `design/gdd/`
-- Documents must include these 8 required sections:
+- Game mechanic documents in `design/gdd/**` must include these 8 required sections
+  (not engineering plans, framework documentation, or arbitrary Markdown):
   1. **Overview** -- one-paragraph summary
   2. **Player Fantasy** -- intended feeling and experience
   3. **Detailed Rules** -- unambiguous mechanics

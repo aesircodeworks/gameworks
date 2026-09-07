@@ -1,9 +1,6 @@
 ---
 name: code-review
-description: Use when running the Aesir code-review workflow. Performs an architectural
-  and quality code review on a specified file or set of files. Checks for coding standard
-  compliance, architectural pattern adherence, SOLID principles, testability, and
-  performance concerns.
+description: Use when reviewing code quality and ADR compliance.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

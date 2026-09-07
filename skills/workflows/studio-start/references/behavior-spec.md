@@ -18,6 +18,13 @@ hierarchy exists.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 Verified automatically by `/skill-test static` — no fixture needed.
@@ -25,7 +32,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: COMPLETE, BLOCKED
-- [ ] Contains "May I write" collaborative protocol language for each config file
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff at the end (routes to `/setup-engine`)
 
 ---
@@ -61,7 +68,7 @@ point this skill runs.
 **Assertions:**
 - [ ] Project name is captured before any file is written
 - [ ] Exactly 3 engine options are presented
-- [ ] "May I write" is asked for each config file individually
+- [ ] Authorization covers each config target; an explicitly approved bootstrap changeset needs no per-file reapproval
 - [ ] No file is written without explicit user approval
 - [ ] Handoff to `/setup-engine` occurs at the end with the chosen engine argument
 - [ ] Verdict is COMPLETE after all files are written and handoff is issued
@@ -158,7 +165,7 @@ point this skill runs.
 
 - [ ] Asks for project name before any file is written
 - [ ] Presents engine options as a structured choice (not free text)
-- [ ] Asks "May I write" separately for directory structure and for CLAUDE.md stub
+- [ ] Checks scope for the directory structure and CLAUDE.md stub; accepts one authorization covering both
 - [ ] Ends with a handoff to `/setup-engine` with the engine name as argument
 - [ ] Verdict is clearly stated (COMPLETE or BLOCKED) at end of output
 

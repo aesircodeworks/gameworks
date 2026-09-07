@@ -1,9 +1,6 @@
 ---
 name: create-epics
-description: Use when running the Aesir create-epics workflow. Translate approved
-  GDDs + architecture into epics — one epic per architectural module. Defines scope,
-  governing ADRs, engine risk, and untraced requirements. Does NOT break into stories
-  — run /create-stories [epic-slug] after each epic is created.
+description: Use when turning GDDs and architecture into epics.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -168,7 +165,7 @@ Do not write epic files until the producer gate resolves.
 
 ## 5. Write Epic Files
 
-After approval, ask: "May I write the epic file to `production/epics/[epic-slug]/EPIC.md`?"
+If writing this target is not already authorized, ask: "May I write the epic file to `production/epics/[epic-slug]/EPIC.md`?"
 
 After user confirms, write:
 

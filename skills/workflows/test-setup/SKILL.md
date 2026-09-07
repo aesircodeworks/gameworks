@@ -1,9 +1,6 @@
 ---
 name: test-setup
-description: Use when running the Aesir test-setup workflow. Scaffold the test framework
-  and CI/CD pipeline for the project's engine. Creates the tests/ directory structure,
-  engine-specific test runner configuration, and GitHub Actions workflow. Run once
-  during Technical Setup phase before the first sprint begins.
+description: Use when scaffolding engine-specific tests and CI.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

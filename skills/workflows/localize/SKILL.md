@@ -1,9 +1,6 @@
 ---
 name: localize
-description: 'Use when running the Aesir localize workflow. Full localization pipeline:
-  scan for hardcoded strings, extract and manage string tables, validate translations,
-  generate translator briefings, run cultural/sensitivity review, manage VO localization,
-  test RTL/platform requirements, enforce string freeze, and report coverage.'
+description: Use when localizing game strings, voice, and layouts.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -80,7 +77,7 @@ Report all findings with file paths and line numbers. This mode is read-only —
 
 Output a diff of new strings to add to the string table.
 
-Present the diff to the user. Ask: "May I write these new entries to `assets/data/strings/strings-en.json`?"
+If writing this target is not already authorized, ask: "May I write these new entries to `assets/data/strings/strings-en.json`?"
 
 If yes, write only the diff (new entries), not a full replacement. Verdict: **COMPLETE** — strings extracted and written.
 
@@ -185,7 +182,7 @@ Direct questions to: [placeholder for user/team contact]
 Delivery format: JSON, same schema as strings-en.json
 ```
 
-Ask: "May I write this translator brief to `production/localization/translator-brief-[locale]-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this translator brief to `production/localization/translator-brief-[locale]-[date].md`?"
 
 ---
 
@@ -228,7 +225,7 @@ Present findings as a table:
 
 BLOCKING = must fix before shipping that locale. ADVISORY = recommend change. NOTE = informational only.
 
-Ask: "May I write this cultural review report to `production/localization/cultural-review-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this cultural review report to `production/localization/cultural-review-[date].md`?"
 
 ---
 
@@ -268,7 +265,7 @@ Generate a recording script document for each character, grouped by scene. Inclu
 - Emotion/direction note for each line (`[Warm, welcoming]`, `[Annoyed, clipped]`)
 - Any lines that are responses in a conversation (provide context: "Player just said X")
 
-Ask: "May I write the VO recording scripts to `production/localization/vo-scripts-[locale]-[date].md`?"
+If writing this target is not already authorized, ask: "May I write the VO recording scripts to `production/localization/vo-scripts-[locale]-[date].md`?"
 
 ### VO Pipeline: Validate
 
@@ -315,7 +312,7 @@ Grep patterns to check:
 
 Report findings. Flag BLOCKING issues (content unreadable without fix) vs ADVISORY (cosmetic improvements).
 
-Ask: "May I write this RTL check report to `production/localization/rtl-check-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this RTL check report to `production/localization/rtl-check-[date].md`?"
 
 ---
 
@@ -416,7 +413,7 @@ Output a QA verdict per locale:
 [ ] Producer approves shipping [Locale]
 ```
 
-Ask: "May I write this localization QA report to `production/localization/loc-qa-[locale]-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this localization QA report to `production/localization/loc-qa-[locale]-[date].md`?"
 
 **Gate integration**: The Polish → Release gate requires a PASS or PASS WITH CONDITIONS verdict for every locale being shipped. A FAIL blocks release for that locale only — other locales may still proceed if their QA passes.
 

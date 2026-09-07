@@ -1,9 +1,6 @@
 ---
 name: onboard
-description: Use when running the Aesir onboard workflow. Generates a contextual onboarding
-  document for a new contributor or agent joining the project. Summarizes project
-  state, architecture, conventions, and current priorities relevant to the specified
-  role or area.
+description: Use when onboarding a contributor to a project role.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -93,7 +90,7 @@ Read recent changes (git log if available) to understand current momentum.
 
 Present the onboarding document to the user.
 
-Ask: "May I write this to `production/onboarding/onboard-[role]-[date].md`?"
+If writing this target is not already authorized, ask: "May I write this to `production/onboarding/onboard-[role]-[date].md`?"
 
 If yes, write the file, creating the directory if needed.
 

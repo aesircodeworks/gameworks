@@ -1,9 +1,6 @@
 ---
 name: design-system
-description: Use when running the Aesir design-system workflow. Guided, section-by-section
-  GDD authoring for a single game system. Gathers context from existing docs, walks
-  through each required section collaboratively, cross-references dependencies, and
-  writes incrementally to file.
+description: Use when authoring a GDD for one game system.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

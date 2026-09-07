@@ -1,9 +1,6 @@
 ---
 name: quick-design
-description: Use when running the Aesir quick-design workflow. Lightweight design
-  spec for small changes — tuning adjustments, minor mechanics, balance tweaks. Skips
-  full GDD authoring when a system GDD already exists or the change is too small to
-  warrant one. Produces a Quick Design Spec that embeds directly into story files.
+description: Use when specifying small game design changes.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -244,7 +241,7 @@ Present the draft to the user in full. Then use `clarify`:
 If [B]: collect the requested changes, revise the draft, and re-present this widget.
 If [C]: stop. Verdict: **REDIRECTED** — use `/design-system` for this change.
 
-If [A]: ask "May I write this Quick Design Spec to
+If writing this target is not already authorized, ask: "May I write this Quick Design Spec to
 `design/quick-specs/[kebab-case-title]-[YYYY-MM-DD].md`?"
 
 Use today's date in the filename. The title should be a kebab-case description

@@ -1,8 +1,6 @@
 ---
 name: team-level
-description: 'Use when running the Aesir team-level workflow. Orchestrate level design
-  team: level-designer + narrative-director + world-builder + art-director + systems-designer
-  + qa-tester for complete area/level creation.'
+description: Use when coordinating complete level or area creation.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -161,7 +159,7 @@ Spawn the `qa-tester` agent to:
 
 After all subagent outputs are collected, spawn `level-designer` via Task to compile and write the final document:
 - Pass: all subagent outputs (verbatim), the level brief, game pillars, relevant GDD sections
-- Ask level-designer to: compile into the level design document format, then request user approval before writing ("May I write the compiled level design to design/levels/[level-name].md?")
+- Ask level-designer to compile a draft into the level design document format. The coordinator obtains any missing approval for `design/levels/[level-name].md`, then delegates the approved write; the child returns blockers instead of asking the user directly.
 - The orchestrator does NOT call Write directly for the final document.
 
 5. **Save to** `design/levels/[level-name].md` (handled by the level-designer subagent after user approval — see above).
@@ -174,8 +172,7 @@ After all subagent outputs are collected, spawn `level-designer` via Task to com
 ## File Write Protocol
 
 All file writes (level design docs, narrative docs, test checklists) are delegated
-to sub-agents spawned via Task. Each sub-agent enforces the "May I write to [path]?"
-protocol. This orchestrator does not write files directly.
+to sub-agents spawned via Task. The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
 
 Verdict: **COMPLETE** — level design document produced and all team outputs compiled.
 Verdict: **BLOCKED** — one or more agents blocked; partial report produced with unresolved items listed.

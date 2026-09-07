@@ -1,6 +1,6 @@
 ---
 name: engine-code
-description: Use when changing files governed by engine-code rules.
+description: Use when editing game src/core/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

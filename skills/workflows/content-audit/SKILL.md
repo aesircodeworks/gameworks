@@ -1,7 +1,6 @@
 ---
 name: content-audit
-description: Use when running the Aesir content-audit workflow. Audit GDD-specified
-  content counts against implemented content. Identifies what's planned vs built.
+description: Use when auditing planned versus built game content.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -140,7 +139,7 @@ Flag a system as `HIGH PRIORITY` in the report if:
 
 ### Full audit and single-system modes
 
-Present the gap table and summary to the user. Ask: "May I write the full report to `docs/content-audit-[YYYY-MM-DD].md`?"
+If writing this target is not already authorized, ask: "May I write the full report to `docs/content-audit-[YYYY-MM-DD].md`?"
 
 If yes, write the file:
 

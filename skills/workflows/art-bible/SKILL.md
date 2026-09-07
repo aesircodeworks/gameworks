@@ -1,9 +1,6 @@
 ---
 name: art-bible
-description: Use when running the Aesir art-bible workflow. Guided, section-by-section
-  Art Bible authoring. Creates the visual identity specification that gates all asset
-  production. Run after /brainstorm is approved and before /map-systems
-  or any GDD authoring begins.
+description: Use when authoring a game art bible and visual identity.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

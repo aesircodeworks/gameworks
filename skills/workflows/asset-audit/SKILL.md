@@ -1,8 +1,6 @@
 ---
 name: asset-audit
-description: Use when running the Aesir asset-audit workflow. Audits game assets for
-  compliance with naming conventions, file size budgets, format standards, and pipeline
-  requirements. Identifies orphaned assets, missing references, and standard violations.
+description: Use when auditing game asset standards and references.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

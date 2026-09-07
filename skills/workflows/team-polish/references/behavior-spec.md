@@ -15,6 +15,13 @@ identifies engine-level root causes. Verdict is READY FOR RELEASE or NEEDS MORE 
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
@@ -22,7 +29,7 @@ identifies engine-level root causes. Verdict is READY FOR RELEASE or NEEDS MORE 
 - [ ] Contains verdict keywords: READY FOR RELEASE, NEEDS MORE WORK
 - [ ] Contains "File Write Protocol" section
 - [ ] File writes are delegated to sub-agents — orchestrator does not write files directly
-- [ ] Sub-agents enforce "May I write to [path]?" before any write
+- [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] Has a next-step handoff at the end (references `/release-checklist`, `/sprint-plan update`, `/gate-check`)
 - [ ] Error Recovery Protocol section is present
 - [ ] `clarify` is used at phase transitions before proceeding
@@ -56,7 +63,7 @@ identifies engine-level root causes. Verdict is READY FOR RELEASE or NEEDS MORE 
 6. Phase 5: qa-tester runs edge case tests, soak tests, stress tests, and regression tests; all pass
 7. `clarify` presents test results; user approves before Phase 6
 8. Phase 6: orchestrator collects all results; compares before/after performance metrics against budgets; all metrics pass
-9. Subagent asks "May I write the polish report to `production/qa/evidence/polish-combat-[date].md`?" before writing
+9. Subagent writes `production/qa/evidence/polish-combat-[date].md` within supplied authorization, or returns missing target scope to the coordinator
 10. Verdict: READY FOR RELEASE
 
 **Assertions:**
@@ -168,7 +175,7 @@ identifies engine-level root causes. Verdict is READY FOR RELEASE or NEEDS MORE 
 2. Phase 5: qa-tester runs regression tests and detects "Item highlight glow on hover no longer renders — regression introduced by shader optimization in Phase 3"
 3. qa-tester returns test results with the regression noted
 4. Orchestrator surfaces the regression immediately: "qa-tester: REGRESSION FOUND — `item-highlight-hover` glow broken by Phase 3 shader optimization"
-5. Subagent files a bug report asking "May I write the bug report to `production/qa/evidence/bug-polish-inventory-ui-[date].md`?" before writing
+5. Subagent files `production/qa/evidence/bug-polish-inventory-ui-[date].md` only within supplied authorization; a new report target requires approval through the coordinator
 6. Bug report is written after approval; it includes: the broken behavior, the polish change that caused it, reproduction steps, and severity
 7. `clarify` presents the regression with options:
    - Revert the shader optimization and find an alternative approach
@@ -179,7 +186,7 @@ identifies engine-level root causes. Verdict is READY FOR RELEASE or NEEDS MORE 
 **Assertions:**
 - [ ] Regression is surfaced before Phase 6 sign-off
 - [ ] The specific broken behavior and the responsible change are both named in the report
-- [ ] Subagent asks "May I write the bug report to [path]?" before filing
+- [ ] Subagent checks supplied authorization before filing the bug report; missing scope goes to the coordinator, not directly to the user
 - [ ] Bug report includes: broken behavior, causal change, reproduction steps, severity
 - [ ] `clarify` offers options including revert, fix in place, and schedule later
 - [ ] Verdict is NEEDS MORE WORK when a regression is present and unresolved
@@ -194,7 +201,7 @@ identifies engine-level root causes. Verdict is READY FOR RELEASE or NEEDS MORE 
 - [ ] Phases 3 and 4 are always launched in parallel with Phase 2 (not deferred)
 - [ ] engine-programmer is only spawned when Phase 1 explicitly identifies engine-level root causes
 - [ ] No files are written by the orchestrator directly — all writes are delegated to sub-agents
-- [ ] Each sub-agent enforces the "May I write to [path]?" protocol before any write
+- [ ] Sub-agents execute only coordinator-supplied approved writes; return new decisions or missing scope to the coordinator without asking the user directly
 - [ ] BLOCKED status from any agent is surfaced immediately — not silently skipped
 - [ ] A partial report is always produced when some agents complete and others block
 - [ ] Verdict is exactly READY FOR RELEASE or NEEDS MORE WORK — no other verdict values used

@@ -1,10 +1,6 @@
 ---
 name: sprint-status
-description: Use when running the Aesir sprint-status workflow. Fast sprint status
-  check. Reads the current sprint plan, scans story files for status, and produces
-  a concise progress snapshot with burndown assessment and emerging risks. Run at
-  any time during a sprint for quick situational awareness. Use when user asks 'how
-  is the sprint going', 'sprint update', 'show sprint progress'.
+description: Use when checking sprint progress, burndown, and risks.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

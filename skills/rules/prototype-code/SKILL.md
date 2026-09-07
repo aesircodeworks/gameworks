@@ -1,6 +1,6 @@
 ---
 name: prototype-code
-description: Use when changing files governed by prototype-code rules.
+description: Use when editing game prototypes/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT

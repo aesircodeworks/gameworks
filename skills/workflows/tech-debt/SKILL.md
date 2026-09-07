@@ -1,8 +1,6 @@
 ---
 name: tech-debt
-description: Use when running the Aesir tech-debt workflow. Track, categorize, and
-  prioritize technical debt across the codebase. Scans for debt indicators, maintains
-  a debt register, and recommends repayment scheduling.
+description: Use when tracking and prioritizing technical debt.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -54,7 +52,7 @@ Categorize each finding:
 
 Present the findings to the user.
 
-Ask: "May I write these findings to `docs/tech-debt-register.md`?"
+If writing this target is not already authorized, ask: "May I write these findings to `docs/tech-debt-register.md`?"
 
 If yes, update the register (append new entries, do not overwrite existing ones). Verdict: **COMPLETE** — scan findings written to register.
 
@@ -104,7 +102,7 @@ Re-sort the register by priority score and recommend which items to include in t
 
 Present the re-prioritized register to the user.
 
-Ask: "May I write the re-prioritized register back to `docs/tech-debt-register.md`?"
+If writing this target is not already authorized, ask: "May I write the re-prioritized register back to `docs/tech-debt-register.md`?"
 
 If yes, write the updated file. Verdict: **COMPLETE** — register re-prioritized and saved.
 

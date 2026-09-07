@@ -1,9 +1,6 @@
 ---
 name: regression-suite
-description: Use when running the Aesir regression-suite workflow. Map test coverage
-  to GDD critical paths, identify fixed bugs without regression tests, flag coverage
-  drift from new features, and maintain tests/regression-suite.md. Run after implementing
-  a bug fix or before a release gate.
+description: Use when auditing and maintaining regression coverage.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -234,7 +231,7 @@ Tests that are flaky or disabled (do not run in CI):
 
 ## 7. Write Output
 
-Ask: "May I write/update `tests/regression-suite.md` with the current
+If writing this target is not already authorized, ask: "May I write/update `tests/regression-suite.md` with the current
 regression suite manifest?"
 
 For `update` mode: append new entries; never remove existing entries
@@ -265,4 +262,4 @@ Verdict: **COMPLETE** — regression suite updated. (If user declined write: Ver
 - **Quarantine is not deletion** — tests with intermittent failures should be
   quarantined (noted in manifest) but not removed; they should be fixed by
   `/test-flakiness`
-- **Ask before writing** — always confirm before creating or updating the manifest
+- **Confirm write scope** — confirm authorization for this target or changeset if not already supplied. Preserve required content decisions and later workflow gates.

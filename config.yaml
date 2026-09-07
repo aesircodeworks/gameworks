@@ -1,25 +1,25 @@
 approvals:
   mode: smart
   deny:
-    - "rm -rf *"
-    - "git push --force*"
-    - "git push -f *"
-    - "git reset --hard*"
-    - "git clean -f*"
-    - "sudo *"
-    - "chmod 777*"
-    - "*>.env*"
-    - "cat *.env*"
-    - "type *.env*"
+    - rm -rf *
+    - git push --force*
+    - git push -f *
+    - git reset --hard*
+    - git clean -f*
+    - sudo *
+    - chmod 777*
+    - '*>.env*'
+    - cat *.env*
+    - type *.env*
 command_allowlist:
-  - "git status*"
-  - "git diff*"
-  - "git log*"
-  - "git branch*"
-  - "git rev-parse*"
-  - "python -m json.tool*"
-  - "python -m pytest*"
-  - "py -m pytest*"
+  - git status*
+  - git diff*
+  - git log*
+  - git branch*
+  - git rev-parse*
+  - python -m json.tool*
+  - python -m pytest*
+  - py -m pytest*
 memory:
   write_approval: true
 skills:
@@ -28,6 +28,8 @@ delegation:
   max_concurrent_children: 4
 checkpoints:
   enabled: true
+display:
+  personality: concise
 agent:
   verify_on_stop: true
 hooks_auto_accept: false
@@ -57,9 +59,6 @@ hooks:
       timeout: 10
   pre_verify:
     - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/checkpoint-session-state.sh'
-      timeout: 10
-  on_session_end:
-    - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/notify-session.sh'
       timeout: 10
   on_session_finalize:
     - command: bash -lc '"$HERMES_HOME"/agent-hooks/aesir-gameworks/session-end.sh'

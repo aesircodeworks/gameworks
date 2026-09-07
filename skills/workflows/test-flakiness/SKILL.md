@@ -1,9 +1,6 @@
 ---
 name: test-flakiness
-description: Use when running the Aesir test-flakiness workflow. Detect non-deterministic
-  (flaky) tests by reading CI run logs or test result history. Aggregates pass rates
-  per test, identifies intermittent failures, recommends quarantine or fix, and maintains
-  a flaky test registry. Best run during Polish phase or after multiple CI runs.
+description: Use when detecting flaky tests from CI result history.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Gameworks
 license: MIT
@@ -193,7 +190,7 @@ with the flaky tests found?"
 If yes: use `patch` to append entries to the Quarantined Tests table.
 Never remove existing quarantine entries — only add new ones.
 
-Ask (separately): "May I write a full flakiness report to
+If writing this target is not already authorized, ask: "May I write a full flakiness report to
 `production/qa/flakiness-report-[date].md`?"
 
 The full report includes per-test analysis with cause details and

@@ -39,7 +39,7 @@ read-only and must not trigger director gates during the analysis phase.
 
 | Metric | PASS criteria |
 |---|---|
-| **R1 — Read-only enforcement** | Skill does not modify the reviewed document without explicit user approval; any write operations (review logs, index updates) are gated behind "May I write" |
+| **R1 — Read-only enforcement** | Skill does not modify the reviewed document without explicit target or changeset authorization; extra per-file confirmation is not required once that scope is approved |
 | **R2 — 8-section check** | Skill evaluates all 8 required GDD sections (or equivalent architectural sections) explicitly |
 | **R3 — Correct verdict vocabulary** | Verdict is exactly one of: APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED (design) or PASS / CONCERNS / FAIL (architecture) |
 | **R4 — No director gates during analysis** | Skill does not spawn director gates during its analysis phases; post-analysis director review (as in architecture-review) is acceptable when the skill's scope and stakes warrant it |
@@ -101,7 +101,7 @@ with correct schema, respect layer/priority ordering, and gate before writing.
 |---|---|
 | **P1 — Correct output schema** | Each produced file follows the project template (EPIC.md, story frontmatter, etc.); skill references the template path |
 | **P2 — Layer/priority ordering** | Skills that produce epics or stories respect layer ordering (core → extended → meta) and priority fields |
-| **P3 — May-I-write before each artifact** | Skill asks "May I write [artifact]?" before creating each output file, not batch-approving all files at once |
+| **P3 — Scoped write authorization** | Every output is covered by explicit target or changeset authorization; no redundant per-artifact confirmation is required. Expanded scope and substantive gates still require approval. |
 | **P4 — Director gate at correct tier** | In-scope gates (PR-EPIC, QL-STORY-READY, LP-CODE-REVIEW, etc.) run in `full`, skip in `lean`/`solo` with noted skip |
 | **P5 — Reads before writes** | Skill reads the relevant GDD/ADR/manifest before producing artifacts to ensure alignment |
 

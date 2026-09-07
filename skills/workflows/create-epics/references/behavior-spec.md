@@ -16,6 +16,13 @@ Epics are written to `production/epics/[layer]/EPIC-[name].md`.
 
 ---
 
+## Scoped Authorization Checks
+
+Apply [scoped authorization](../../../studio/gameworks/references/collaborative-design-principle.md) to the write examples below: ask only for missing target/changeset authorization or unresolved decisions, not for permission already supplied. Quoted write questions illustrate the missing-authorization branch, not mandatory wording or per-file prompt counts. An approved batch may cover multiple targets. Section-design approvals and later stage/release gates remain separate; a write request does not satisfy them. Children return missing decisions to the coordinator.
+
+- [ ] With the same case's edits and targets explicitly approved, performs scoped writes and verification without another generic write question; retains required substantive gates.
+- [ ] With only review requested, performs read-only discovery; asks before new targets, scope expansion, or unresolved material choices. Skeletons and checkpoints also require approved scope.
+
 ## Static Assertions (Structural)
 
 Verified automatically by `/skill-test static` — no fixture needed.
@@ -23,7 +30,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `invocation arguments`, `user-invocable (Hermes skill)`, `Hermes tools`
 - [ ] Has ≥2 phase headings
 - [ ] Contains verdict keywords: CREATED, BLOCKED
-- [ ] Contains "May I write" collaborative protocol language (per-epic approval)
+- [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
 - [ ] Has a next-step handoff at the end (`/create-stories`)
 - [ ] Documents PR-EPIC gate behavior: runs in full mode; skipped in lean/solo
 
@@ -64,11 +71,11 @@ In `solo` mode: PR-EPIC is skipped. Output notes: "PR-EPIC skipped — solo mode
 
 **Assertions:**
 - [ ] Epic summary is shown before any write ask
-- [ ] "May I write" is asked per-epic (not once for all epics together)
+- [ ] Authorization covers every selected epic; an approved batch needs no per-epic reapproval
 - [ ] Each EPIC.md contains: layer, GDD path, governing ADRs, requirements table, Definition of Done
 - [ ] PR-EPIC skip is noted in output
 - [ ] `production/epics/index.md` is updated after writing
-- [ ] Skill does NOT write EPIC files without per-epic approval
+- [ ] Skill does NOT write EPIC files outside the individually or batch-approved scope
 
 ---
 
@@ -174,7 +181,7 @@ In `solo` mode: PR-EPIC is skipped. Output notes: "PR-EPIC skipped — solo mode
 ## Protocol Compliance
 
 - [ ] Epic drafts shown to user before any "May I write" ask
-- [ ] "May I write" asked per-epic, not once for the entire batch
+- [ ] Checks authorization for the selected epic changeset; batch approval is valid
 - [ ] PR-EPIC gate (if active) runs before write asks — not after
 - [ ] Skipped gates noted by name and mode in output
 - [ ] EPIC.md content sourced only from GDDs, ADRs, and architecture docs — nothing invented
