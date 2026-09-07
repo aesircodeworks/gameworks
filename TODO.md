@@ -6,14 +6,26 @@ Until the framework has a name, say **the framework**. Do not use a brand name i
 
 ---
 
+## Closed (this pass)
+
+- Deleted `skills/studio/gameworks/references/profile-settings-template.md` and `original-studio-architecture.md`.
+- Deleted `skills/studio/gameworks/references/upstream/` (`UPGRADING-CCGS.md`, `claude-settings.json`) and unlinked it.
+- Removed Agent Teams (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` and related copy). `team-*` skills stay; they are department orchestration, not Agent Teams.
+- Replaced Claude model IDs (Opus / Sonnet / Haiku) with **Model tier: Light / Medium / Heavy**. Kept the Model field/column; never Default. Medium is the fallback.
+- Removed “inherited from parent unless profile `delegation.model` is set”. Children still inherit approved write scope only.
+- Role skills, workflow skills, specs, roster, and command tables now state **Model tier: Light / Medium / Heavy**.
+
+Left on purpose: NOTICE / LICENSE CCGS attribution; `lead-programmer/references/upstream-memory.md` (role memory notes, not the deleted folder).
+
+---
+
 ## Role and tier → model mapping
 
-Hermes can run on any model. The framework still talks in Claude Code tiers (Opus / Sonnet / Haiku) and Claude model IDs. None of that is wired.
+Hermes can run on any model. Roles and skills now *label* model tier **Light** / **Medium** / **Heavy**. That is a complexity label, not a provider or model ID. The labels are written into skills and docs; they are not wired to a runtime model.
 
-- Role skills and workflow skills have no `model:` field.
+- Role skills and workflow skills have no `model:` frontmatter field.
 - `config.yaml` `delegation:` only sets `max_concurrent_children`.
-- Team skills tell the parent to pass `subagent_type: <role>`. That is the Claude Code `Task` API. Hermes `delegate_task` takes `goal` + `context`; children inherit the parent model unless the profile sets `delegation.model`.
-- Need a user-configurable map (role, tier, or both → provider/model) that works for whatever the profile actually runs.
+- Need a user-configurable map (Light / Medium / Heavy → provider/model, or role → provider/model) that works for whatever the profile actually runs.
 
 ## Path mapping
 
@@ -21,28 +33,16 @@ Path-rule skills and most workflows assume a fixed game-workspace layout (`src/g
 
 - Path rules are Hermes skills with “use when editing \<glob\>” descriptions. They are not auto-injected on file match.
 - `/adopt`, `/studio-help`, `/gate-check`, and hooks look in the same hardcoded paths. `/adopt` does not remap; “non-standard location” stops.
-- `technical-preferences.md` has no directory remap table.
+- `docs/technical-preferences.md` has no directory remap table.
 - Need a global, per-game map from framework path roles (gameplay code, GDDs, ADRs, stories, assets, tests, …) to the workspace’s real paths, and every rule / workflow / hook / catalog glob must read that map.
 
-## Strip Claude Code-only behavior
-
-Everything has to work as Hermes. Leftovers found so far:
-
-- Claude model IDs and Haiku/Sonnet/Opus assignments in roster, director gates, coordination rules, and workflow behavior specs.
-- `subagent_type:` / `Task` spawn language in team skills and engine specialists.
-- `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` in coordination rules.
-- `rules-reference.md` still describes Claude Code path-rule auto-injection from `(game-workspace)/rules/`.
-- Settings / bootstrap templates still talk `settings.local.json`, `CLAUDE.local.md`, Claude permission modes.
-- Hook docs still describe PreCompact / PostCompact / PreToolUse Bash-Write payloads. Hermes has no compact hooks; the port already uses `pre_verify` + first-turn `pre_llm_call` restore.
-- Workflow guide still lists `pre-compact.sh` / `post-compact.sh` as if they exist.
-
-Audit and replace or delete. Do not leave dual-runtime instructions.
+Layout until a remap exists: engine pin in `AGENTS.md`; engine prefs in `docs/technical-preferences.md`; stories under `production/epics/`; playtests under `production/qa/playtests/`; concept reports at `prototypes/*-concept/REPORT.md`; vertical-slice reports at `prototypes/*-vertical-slice/REPORT.md`.
 
 ## How to use the framework
 
 Need real Hermes-facing teaching material: what the framework is, how to install the profile, how to run it against a game workspace, how the seven phases and slash commands fit, how roles are delegated, how gates and review modes work, and how brownfield adoption is supposed to go.
 
-Existing `SKILL.md` files, `workflow-guide.md`, `workflow-catalog.yaml`, and `examples/` are a start. They still mix Claude Code vocabulary and assume the hardcoded layout. Rewrite for Hermes users, with howtos that someone can follow without reading seventy-three skills first.
+Existing `SKILL.md` files, `workflow-guide.md`, `workflow-catalog.yaml`, and `examples/` are a start. They still assume the hardcoded layout. Rewrite for Hermes users, with howtos that someone can follow without reading seventy-three skills first.
 
 ## Name
 
