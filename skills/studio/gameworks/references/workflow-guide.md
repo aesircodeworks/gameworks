@@ -5,7 +5,7 @@
 > **How to go from zero to a shipped game using the Agent Architecture.**
 >
 > This guide walks you through every phase of game development using the
-> 49-agent system, 73 slash commands, and 12 automated hooks. It assumes you
+> 49-agent system, 73 slash commands, and 11 automated hooks. It assumes you
 > have Hermes Agent installed and are working from the project root.
 >
 > The pipeline has 7 phases. Each phase has a formal gate (`/gate-check`)
@@ -1244,7 +1244,7 @@ The profile registers these Hermes hooks (see `hooks-reference.md`):
 | `validate-aesir-skill-change.sh` | `post_tool_call` | Advises `/skill-test` after framework skill edits |
 | `log-subagent-start.sh` | `subagent_start` | Subagent audit trail start |
 | `log-subagent-stop.sh` | `subagent_stop` | Subagent audit trail stop |
-| `session-end.sh` | `on_session_finalize` | Session log + optional local toast |
+| `session-end.sh` | `on_session_finalize` | Session log |
 
 ### Context Resilience
 

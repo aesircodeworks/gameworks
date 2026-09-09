@@ -20,7 +20,7 @@ The original MIT license and copyright notice are preserved in `LICENSE`. Aesir 
 | Role skills | 49 | Director, lead, and specialist roles for `delegate_task` |
 | Rule skills | 11 | Path-aware practices for a target game workspace |
 | Support/core skills | 7 | Routing, templates, bootstrap, engine reference, QA, status, memory policy |
-| Shell hooks | 12 | Hermes wire-protocol lifecycle hooks |
+| Shell hooks | 11 | Hermes wire-protocol lifecycle hooks |
 
 ## Install
 

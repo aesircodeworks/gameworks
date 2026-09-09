@@ -4,7 +4,7 @@
 
 Hooks are registered in the **installed profile** `config.yaml`, not in a game-workspace `settings.json`. Scripts live under `"$HERMES_HOME"/agent-hooks/aesir-gameworks/` and speak the Hermes JSON wire protocol (`context`, `action: block`, or `{}`).
 
-Hermes has no PreCompact / PostCompact / Notification events. Session continuity uses `pre_verify` checkpointing and first-turn `pre_llm_call` restore. `notify-session.sh` is invoked from `session-end.sh` as a local toast (osascript on macOS); it is not a Hermes hook event.
+Hermes has no PreCompact / PostCompact / Notification events. Session continuity uses `pre_verify` checkpointing and first-turn `pre_llm_call` restore.
 
 | Script | Hermes event | Matcher | Action |
 | ---- | ----- | ------- | ------ |
@@ -16,8 +16,7 @@ Hermes has no PreCompact / PostCompact / Notification events. Session continuity
 | `detect-project-gaps.sh` | `pre_llm_call` (once per session) | — | Notes missing `design/gdd/game-concept.md` |
 | `restore-session-context.sh` | `pre_llm_call` (once per session) | — | If `production/session-state/active.md` exists, reminds the model to restore it |
 | `checkpoint-session-state.sh` | `pre_verify` | — | Date-stamps `production/session-state/.aesir-checkpoint` |
-| `session-end.sh` | `on_session_finalize` | — | Appends `production/session-logs/sessions.jsonl`; runs `notify-session.sh` |
-| `notify-session.sh` | (not registered) | called by `session-end.sh` | Optional local session-end toast |
+| `session-end.sh` | `on_session_finalize` | — | Appends `production/session-logs/sessions.jsonl` |
 | `log-subagent-start.sh` | `subagent_start` | — | Appends `production/session-logs/subagents.jsonl` |
 | `log-subagent-stop.sh` | `subagent_stop` | — | Completes the subagent audit trail |
 
