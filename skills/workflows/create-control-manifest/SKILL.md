@@ -140,7 +140,7 @@ Use `clarify`:
 - `lean` → skip. Note: "TD-MANIFEST skipped — Lean mode." Proceed to Phase 5.
 - `full` → spawn as normal.
 
-Spawn `technical-director` with `delegate_task` using gate **TD-MANIFEST** (`gameworks references/director-gates.md`). Parse the first line for `[TD-MANIFEST]: TOKEN`.
+Spawn `technical-director` with `delegate_task` using gate **TD-MANIFEST** (`skill_view('gameworks', file_path='references/director-gates.md')`). Parse the first line for `[TD-MANIFEST]: TOKEN`.
 
 Pass: the Control Manifest Preview from Phase 4 (rule counts per layer, full extracted rule list), the list of ADRs covered, engine version, and any rules sourced from technical-preferences.md or engine reference docs.
 

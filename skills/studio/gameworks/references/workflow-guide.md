@@ -10,7 +10,7 @@
 >
 > The pipeline has 7 phases. Each phase has a formal gate (`/gate-check`)
 > that must pass before you advance. The authoritative phase sequence is
-> defined in `gameworks references/workflow-catalog.yaml` and read by `/studio-help`.
+> defined in `skill_view('gameworks', file_path='references/workflow-catalog.yaml')` and read by `/studio-help`.
 
 ---
 
@@ -1168,7 +1168,7 @@ By default they run at every checkpoint. You can control how much review you get
 The `--review` flag works on all gate-using skills. Change the global mode at any
 time by editing `production/review-mode.txt` directly or re-running `/studio-start`.
 
-Full gate definitions and check pattern: `gameworks references/director-gates.md`
+Full gate definitions and check pattern: `skill_view('gameworks', file_path='references/director-gates.md')`
 
 ---
 

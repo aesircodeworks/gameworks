@@ -30,7 +30,7 @@ gap analysis, use `/project-stage-detect`.
 
 ## Step 1: Read the Catalog
 
-Read `gameworks references/workflow-catalog.yaml`. This is the authoritative list of all
+Read `skill_view('gameworks', file_path='references/workflow-catalog.yaml')`. This is the authoritative list of all
 phases, their steps (in order), whether each step is required or optional, and
 the artifact globs that indicate completion.
 

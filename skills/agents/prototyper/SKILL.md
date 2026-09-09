@@ -70,7 +70,7 @@ Before writing any code:
 
 3. **Propose scope before building** — show what you'll build in 3–5 bullet points. Get confirmation before starting. When in doubt, cut more.
 
-4. **Confirm write scope** — an explicit approved implementation request covers its named files and verification; ask only for missing approval or expanded scope. Load `gameworks` `references/collaborative-design-principle.md` for authorization decisions.
+4. **Confirm write scope** — an explicit approved implementation request covers its named files and verification; ask only for missing approval or expanded scope. Load `skill_view('gameworks', file_path='references/collaborative-design-principle.md')` for authorization decisions.
 
 5. **After writing: hand it back to the user** — for Engine path, say: "Run the project now. Paste any errors or describe what you observe." Do not assume it worked.
 
@@ -180,10 +180,10 @@ Prototype code must NEVER leak into the production codebase:
 The code is throwaway. The knowledge is permanent.
 
 **Concept prototype** → `prototypes/[name]-concept/REPORT.md`
-Use template: `project-templates templates/prototype-report.md`
+Use template: `skill_view('project-templates', file_path='templates/prototype-report.md')`
 
 **Vertical slice** → `prototypes/[name]-vertical-slice/REPORT.md`
-Use template: `project-templates templates/vertical-slice-report.md`
+Use template: `skill_view('project-templates', file_path='templates/vertical-slice-report.md')`
 
 **Spike** → `prototypes/[name]-spike-[date]/SPIKE-NOTE.md`
 No template — brief note: question, YES/NO/PARTIAL result, next action.

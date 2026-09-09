@@ -43,7 +43,7 @@ Resolve the review mode (once, store for all gate spawns this run):
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `gameworks references/director-gates.md` for the full check pattern.
+See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern.
 
 **Modes:**
 - `/create-epics all` — process all systems in layer order
@@ -142,7 +142,7 @@ Use `clarify`:
 - `lean` → skip (not a PHASE-GATE). Note: "PR-EPIC skipped — Lean mode." Proceed to Step 5 (write epic files).
 - `full` → spawn as normal.
 
-After all epics for the current layer are defined (Step 4 completed for all in-scope systems), and before writing any files, spawn `producer` with delegate_task using gate **PR-EPIC** (`gameworks references/director-gates.md`).
+After all epics for the current layer are defined (Step 4 completed for all in-scope systems), and before writing any files, spawn `producer` with delegate_task using gate **PR-EPIC** (`skill_view('gameworks', file_path='references/director-gates.md')`).
 
 Pass: the full epic structure summary (all epics, their scope summaries, governing ADR counts), the layer being processed, milestone timeline and team capacity.
 

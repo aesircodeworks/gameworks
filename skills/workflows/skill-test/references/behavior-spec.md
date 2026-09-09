@@ -20,11 +20,11 @@ It operates in four modes:
   Produces a per-check PASS/FAIL table. Writes nothing.
 - **spec**: Reads the behavior spec at the catalog `spec:` path and evaluates
   the skill against each test case assertion (reasoning check, not code
-  execution). May `write_file`/`patch` results under `framework-qa references/results/`
+  execution). May `write_file`/`patch` results under `skill_view('framework-qa', file_path='references/results/')`
   after scoped authorization.
-- **category**: Scores the skill against `framework-qa references/quality-rubric.md`.
+- **category**: Scores the skill against `skill_view('framework-qa', file_path='references/quality-rubric.md')`.
 - **audit**: Coverage table of **73 workflow skills** + **49 role skills** from
-  `framework-qa references/catalog.yaml`. Specs live at catalog `spec:` paths
+  `skill_view('framework-qa', file_path='references/catalog.yaml')`. Specs live at catalog `spec:` paths
   (`skills/<category>/<name>/references/behavior-spec.md`). Does not enumerate
   `(game-workspace)/skills/` or `(game-workspace)/agents/`.
 
@@ -127,7 +127,7 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
 3. For each case: PASS if skill behavior matches spec assertions, FAIL if not
 4. Skill produces a case-by-case result table
 5. Overall verdict: PASS (all 5), PARTIAL (some), or FAIL (majority failing)
-6. Offers to write results to `framework-qa references/results/` after scoped authorization (does not write until authorized)
+6. Offers to write results to `skill_view('framework-qa', file_path='references/results/')` after scoped authorization (does not write until authorized)
 
 **Assertions:**
 - [ ] Spec path comes from catalog.yaml `spec:` (not `tests/skills/` and not a nested `skills/gate/` tree)
@@ -142,7 +142,7 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
 
 **Fixture:**
 - Cwd is the distribution or installed profile (`skills/studio` exists)
-- `framework-qa references/catalog.yaml` lists **73** workflow skills and **49** role skills
+- `skill_view('framework-qa', file_path='references/catalog.yaml')` lists **73** workflow skills and **49** role skills
 - Each entry has a `spec:` path under `skills/<category>/<name>/references/behavior-spec.md`
 - `search_files` `file_glob: skills/*/*/SKILL.md` can confirm those files
 - There is **no** `(game-workspace)/skills/` tree and **no** `(game-workspace)/agents/` tree — fixtures must not require them
@@ -170,14 +170,14 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
 ### Case 5: Category Mode — Gate Skill Evaluated Against Quality Rubric
 
 **Fixture:**
-- `framework-qa references/quality-rubric.md` has a `### gate` section with metrics G1–G5
+- `skill_view('framework-qa', file_path='references/quality-rubric.md')` has a `### gate` section with metrics G1–G5
 - Catalog assigns `gate-check` `category: gate`
 - `skills/workflows/gate-check/SKILL.md` exists
 
 **Input:** `/skill-test category gate-check`
 
 **Expected behavior:**
-1. Skill reads `framework-qa references/quality-rubric.md` and identifies the gate section
+1. Skill reads `skill_view('framework-qa', file_path='references/quality-rubric.md')` and identifies the gate section
 2. Skill evaluates `skills/workflows/gate-check/SKILL.md` against criteria G1–G5
 3. Each criterion is scored: PASS, PARTIAL, or FAIL
 4. Overall category score is computed
@@ -187,7 +187,7 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
 - [ ] All gate criteria (G1–G5) from quality-rubric.md are evaluated
 - [ ] Each criterion has an individual score
 - [ ] Overall verdict reflects the score distribution
-- [ ] Rubric is read from `framework-qa references/quality-rubric.md`, not `tests/skills/`
+- [ ] Rubric is read from `skill_view('framework-qa', file_path='references/quality-rubric.md')`, not `tests/skills/`
 - [ ] No files are written until catalog-update authorization is granted
 
 ---
@@ -198,7 +198,7 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
 - [ ] Spec mode evaluates each test case from the spec file individually (reasoning check)
 - [ ] Audit mode covers 73 workflow skills AND 49 role skills from the catalog
 - [ ] Category mode reads quality-rubric.md to get criteria (not hardcoded)
-- [ ] Static and audit write no files; spec/category write only after scoped authorization to `framework-qa references/results/` and/or `catalog.yaml`
+- [ ] Static and audit write no files; spec/category write only after scoped authorization to `skill_view('framework-qa', file_path='references/results/')` and/or `catalog.yaml`
 - [ ] Suggests `/skill-improve` as the next step when issues are found
 - [ ] Refuses to run against a game workspace that has no `skills/studio`
 

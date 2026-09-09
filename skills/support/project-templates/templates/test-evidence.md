@@ -87,6 +87,6 @@ past the sprint review.
 
 ---
 
-*Template: `project-templates templates/test-evidence.md`*
+*Template: `skill_view('project-templates', file_path='templates/test-evidence.md')`*
 *Used for: Visual/Feel and UI story type evidence records*
 *Location: `production/qa/evidence/[story-slug]-evidence.md`*

@@ -116,7 +116,7 @@ a game workspace. Game workspaces have no `skills/` tree.
 - `/skill-test category [name]` will offer to update `last_category` and `last_category_result`
 - `last_static` and `last_static_result` are updated manually or via `/skill-improve`
 
-Results are written to `framework-qa references/results/` (skill_view path).
+Results are written to `skill_view('framework-qa', file_path='references/results/')` (skill_view path).
 
 ---
 

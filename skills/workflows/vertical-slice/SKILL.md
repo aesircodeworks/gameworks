@@ -50,7 +50,7 @@ Resolve the review mode:
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `gameworks references/director-gates.md` for the full check pattern.
+See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern.
 
 Read the following files to understand the full design intent:
 - `AGENTS.md` — tech stack and engine
@@ -232,7 +232,7 @@ Track velocity throughout the build. Log:
 This is the most honest data you will ever have about your production rate. Do not
 skip it. It feeds directly into sprint planning.
 
-Read `project-templates templates/vertical-slice-report.md` to get the report structure.
+Read `skill_view('project-templates', file_path='templates/vertical-slice-report.md')` to get the report structure.
 If the template file is not found, use this fallback structure:
 - `## Vertical Slice Report — [Game Title] — [Date]`
 - `### Executive Summary` (PROCEED / PIVOT / STOP verdict + 2-sentence rationale)

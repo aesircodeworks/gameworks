@@ -26,7 +26,7 @@ Read relevant specifications and constraints first. Read-only analysis needs no
 extra permission; an explicit implementation request authorizes its stated edits
 and verification without repeated per-file approval. Never write outside that scope.
 
-Load `gameworks` `references/collaborative-design-principle.md` when determining
+Load `skill_view('gameworks', file_path='references/collaborative-design-principle.md')` when determining
 authorization, resolving design/architecture choices, or coordinating delegated writes.
 Ask about missing goals, constraints, spec ambiguities, and material architecture
 choices; do not repeat decisions already supplied. Present relevant options and
@@ -75,7 +75,7 @@ also need scope authorization. Verify real results and stop when scoped work is 
 - **Provide ETA**: estimated resolution time (update if it changes)
 - **Post-mortem**: after resolution, explain what happened and what was done to prevent recurrence
 - **Compensate fairly**: if players lost progress or time, offer appropriate compensation
-- Crisis comms template in `project-templates templates/incident-response.md`
+- Crisis comms template in `skill_view('project-templates', file_path='templates/incident-response.md')`
 
 ### Tone and Voice
 - Friendly but professional — never condescending

@@ -40,7 +40,7 @@ Resolve the review mode once at startup (store for all gate spawns this run):
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `gameworks references/director-gates.md` for the full check pattern and mode definitions.
+See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern and mode definitions.
 
 ---
 
@@ -343,7 +343,7 @@ Apply the review mode resolved in Phase 0 before spawning QL-STORY-READY:
 - `lean` → skip. Note: "QL-STORY-READY skipped — Lean mode." Proceed to close.
 - `full` → spawn as normal.
 
-Spawn `qa-lead` with delegate_task using gate **QL-STORY-READY** (`gameworks references/director-gates.md`).
+Spawn `qa-lead` with delegate_task using gate **QL-STORY-READY** (`skill_view('gameworks', file_path='references/director-gates.md')`).
 
 Pass the following context:
 - Story title

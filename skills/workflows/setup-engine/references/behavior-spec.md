@@ -10,7 +10,8 @@
 files: `AGENTS.md` (Technology Stack + Engine Version Reference) and
 `docs/technical-preferences.md` (naming, budgets, specialist routing). It never
 writes the installed profile template
-`skills/studio/gameworks/references/technical-preferences.md`.
+`skills/studio/gameworks/references/technical-preferences.md`. It never writes
+`gameworksreferences/` or any concatenated skill-folder path.
 
 Hermes does not expand `@` imports. The Engine Version Reference in `AGENTS.md`
 must be a real paragraph pointing at `docs/engine-reference/<engine>/VERSION.md`,
@@ -19,7 +20,7 @@ not an `@` path.
 If `docs/technical-preferences.md` is missing, copy the template via
 `skill_view('gameworks', file_path='references/technical-preferences.md')` into
 the game file, then fill it. If `AGENTS.md` is missing, copy
-`project-bootstrap/templates/AGENTS.md` first, then fill Technology Stack.
+`skill_view('project-bootstrap', file_path='templates/AGENTS.md')` first, then fill Technology Stack.
 
 An optional engine argument (e.g., `/setup-engine godot`) skips engine selection.
 The skill has no director gates. The verdict is COMPLETE when both files are written.
@@ -79,7 +80,7 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 - [ ] `AGENTS.md` Technology Stack Engine/Language are filled (not `[CHOOSE]`)
 - [ ] Language field is set to GDScript
 - [ ] `AGENTS.md` Engine Version Reference is a real paragraph, not an `@` path
-- [ ] Game file `docs/technical-preferences.md` is created or updated (profile template is not mutated)
+- [ ] Game file `docs/technical-preferences.md` is created or updated (profile template is not mutated; no `gameworksreferences/` path)
 - [ ] Naming conventions are GDScript-appropriate (snake_case)
 - [ ] Routing table includes `.gd`, `.gdshader`, and `.tscn` entries
 - [ ] Specialists are assigned (not placeholders)

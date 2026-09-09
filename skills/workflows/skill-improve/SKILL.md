@@ -76,7 +76,7 @@ If baseline is 0 FAILs and 0 WARNs, note it and proceed to Phase 2b.
 
 ### Phase 2b: Category Baseline
 
-Look up the skill's `category:` field in `framework-qa references/catalog.yaml`.
+Look up the skill's `category:` field in `skill_view('framework-qa', file_path='references/catalog.yaml')`.
 
 If no `category:` field is found, display:
 "Category: not yet assigned — skipping category checks."

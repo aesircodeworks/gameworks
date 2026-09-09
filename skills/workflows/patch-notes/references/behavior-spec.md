@@ -118,7 +118,7 @@ None. Patch notes generation is a fast compilation task; no gates are invoked.
 ### Case 4: Patch Note Template Exists — Used instead of generated structure
 
 **Fixture:**
-- `project-templates templates/patch-notes-template.md` exists with a structured header format
+- `skill_view('project-templates', file_path='templates/patch-notes-template.md')` exists with a structured header format
 - `docs/CHANGELOG.md` exists with player-facing entries
 
 **Input:** `/patch-notes v0.4.0`

@@ -27,7 +27,7 @@ When this skill is invoked:
    2. Else read `production/review-mode.txt` → use that value
    3. Else → default to `lean`
 
-   See `gameworks references/director-gates.md` for the full check pattern.
+   See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern.
 
 2. **Check for existing concept work**:
    - Read `design/gdd/game-concept.md` if it exists (resume, don't restart)
@@ -215,10 +215,10 @@ Repeat until the user selects [A] Lock these in.
 
 **After pillars and anti-pillars are agreed, spawn BOTH `creative-director` AND `art-director` with delegate_task in parallel before moving to Phase 5. Issue both delegate_task calls simultaneously — do not wait for one before starting the other.**
 
-- **`creative-director`** — gate **CD-PILLARS** (`gameworks references/director-gates.md`)
+- **`creative-director`** — gate **CD-PILLARS** (`skill_view('gameworks', file_path='references/director-gates.md')`)
   Pass: full pillar set with design tests, anti-pillars, core fantasy, unique hook.
 
-- **`art-director`** — gate **AD-CONCEPT-VISUAL** (`gameworks references/director-gates.md`)
+- **`art-director`** — gate **AD-CONCEPT-VISUAL** (`skill_view('gameworks', file_path='references/director-gates.md')`)
   Pass: game concept elevator pitch, full pillar set with design tests, target platform (if known), any reference games or visual touchstones the user mentioned.
 
 Collect both verdicts, then present them together using a two-tab `clarify`:
@@ -271,7 +271,7 @@ Ground the concept in reality:
 - `lean` → skip (not a PHASE-GATE). Note: "TD-FEASIBILITY skipped — Lean mode." Proceed directly to scope tier definition.
 - `full` → spawn as normal.
 
-**After identifying biggest technical risks, spawn `technical-director` with delegate_task using gate TD-FEASIBILITY (`gameworks references/director-gates.md`) before scope tiers are defined.**
+**After identifying biggest technical risks, spawn `technical-director` with delegate_task using gate TD-FEASIBILITY (`skill_view('gameworks', file_path='references/director-gates.md')`) before scope tiers are defined.**
 
 Pass: core loop description, platform target, engine choice (or "undecided"), list of identified technical risks.
 
@@ -282,7 +282,7 @@ Present the assessment to the user. If HIGH RISK, offer to revisit scope before 
 - `lean` → skip (not a PHASE-GATE). Note: "PR-SCOPE skipped — Lean mode." Proceed to document generation.
 - `full` → spawn as normal.
 
-**After scope tiers are defined, spawn `producer` with delegate_task using gate PR-SCOPE (`gameworks references/director-gates.md`).**
+**After scope tiers are defined, spawn `producer` with delegate_task using gate PR-SCOPE (`skill_view('gameworks', file_path='references/director-gates.md')`).**
 
 Pass: full vision scope, MVP definition, timeline estimate, team size.
 
@@ -291,7 +291,7 @@ Present the assessment to the user. If UNREALISTIC, offer to adjust the MVP defi
 ---
 
 4. **Generate the game concept document** using the template at
-   `project-templates templates/game-concept.md`. Fill in ALL sections from the
+   `skill_view('project-templates', file_path='templates/game-concept.md')`. Fill in ALL sections from the
    brainstorm conversation, including the MDA analysis, player motivation
    profile, and flow state design sections.
 
@@ -314,7 +314,7 @@ After revising, show the updated section as a diff or clear before/after, then u
 Options: `[A] Yes — write it` / `[B] Revise another section`
 Repeat until the user selects [A].
 
-If yes, generate the document using the template at `project-templates templates/game-concept.md`, fill in ALL sections from the brainstorm conversation, and write the file, creating directories as needed.
+If yes, generate the document using the template at `skill_view('project-templates', file_path='templates/game-concept.md')`, fill in ALL sections from the brainstorm conversation, and write the file, creating directories as needed.
 
 **Scope consistency rule**: The "Estimated Scope" field in the Core Identity table must match the full-vision timeline from the Scope Tiers section — not just say "Large (9+ months)". Write it as "Large (X–Y months, solo)" or "Large (X–Y months, team of N)" so the summary table is accurate.
 

@@ -95,7 +95,7 @@ auto-detect using these heuristics (check from most-advanced backward):
 
 ### 4. Generate Stage Report
 
-Use template: `project-templates templates/project-stage-report.md`
+Use template: `skill_view('project-templates', file_path='templates/project-stage-report.md')`
 
 **Report structure**:
 ```markdown

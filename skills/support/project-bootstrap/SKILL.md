@@ -19,14 +19,14 @@ metadata:
 
 # Project bootstrap
 
-Create project-local artifacts only within the user's approved workspace and changeset. An explicit request naming the targets supplies approval; do not ask again per file. Load `gameworks` `references/collaborative-design-principle.md` when scope is unclear.
+Create project-local artifacts only within the user's approved workspace and changeset. An explicit request naming the targets supplies approval; do not ask again per file. Load `skill_view('gameworks', file_path='references/collaborative-design-principle.md')` when scope is unclear.
 
 This distribution repository and `$HERMES_HOME` are not game projects.
 
 ## Linked files
 
 - `templates/AGENTS.md` — game-workspace Hermes context (Technology Stack placeholders). Copy to the game root as `AGENTS.md`.
-- `gameworks` `references/technical-preferences.md` — template only. Copy to the game workspace as `docs/technical-preferences.md` (leave placeholders until `/setup-engine`).
+- `skill_view('gameworks', file_path='references/technical-preferences.md')` — template only. Copy to the game workspace as `docs/technical-preferences.md` (leave placeholders until `/setup-engine`).
 
 ## Required behavior
 

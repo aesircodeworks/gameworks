@@ -181,7 +181,7 @@ Common blockers:
 ## File Write Protocol
 
 All file writes (UX specs, interaction pattern library updates, implementation files) are
-delegated to sub-agents and sub-skills (`/ux-design`, `ui-programmer`). The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `gameworks` `references/collaborative-design-principle.md` when resolving authorization. This orchestrator does not write files directly.
+delegated to sub-agents and sub-skills (`/ux-design`, `ui-programmer`). The coordinator obtains any missing write approval and passes the approved scope to each child. Children return new scope decisions to the coordinator; they do not ask the user directly or repeat approval already supplied. Load `skill_view('gameworks', file_path='references/collaborative-design-principle.md')` when resolving authorization. This orchestrator does not write files directly.
 
 ## Output
 

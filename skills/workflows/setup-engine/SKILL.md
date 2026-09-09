@@ -185,7 +185,9 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 
 After updating AGENTS.md, create or update the **game workspace** file
 `docs/technical-preferences.md` with engine-appropriate defaults. Never write
-engine values into the installed profile template.
+engine values into the installed profile template. Never write a path named
+`gameworksreferences/` or `gameworks references/`. Those are not files. The
+live file is always `docs/technical-preferences.md` in the game workspace.
 
 If `docs/technical-preferences.md` does not exist, copy the template from
 `skill_view('gameworks', file_path='references/technical-preferences.md')` into
@@ -423,8 +425,8 @@ Do not invent post-cutoff APIs.
 
 If the previous paragraph pointed at a different engine (e.g., switching from
 Godot to Unity), update it. If `AGENTS.md` is missing, copy
-`project-bootstrap/templates/AGENTS.md` into the game workspace first, then fill
-the Technology Stack and this section.
+`skill_view('project-bootstrap', file_path='templates/AGENTS.md')` into the game
+workspace as `AGENTS.md` first, then fill the Technology Stack and this section.
 
 ---
 
@@ -595,6 +597,7 @@ Verdict: **COMPLETE** — engine configured and reference docs populated.
 - NEVER overwrite existing reference docs without asking — append or update
 - If reference docs already exist for a different engine, ask before replacing
 - Always show the user what you're about to change before making AGENTS.md edits
+- Never write technical preferences anywhere except `docs/technical-preferences.md` in the game workspace
 - If web_search returns ambiguous results, show the user and let them decide
 - When the user chose **GDScript**: copy the GDScript AGENTS.md template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
 

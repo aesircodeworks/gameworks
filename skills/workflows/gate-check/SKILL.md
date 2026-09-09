@@ -324,14 +324,14 @@ For items that can't be automatically verified, **ask the user**:
 
 (Review mode was resolved in Phase 1. Use that stored value here.)
 
-Before generating the final verdict, spawn all four directors as **parallel subagents** with `delegate_task` using the parallel gate protocol from `gameworks references/director-gates.md`. Issue all four `delegate_task` calls simultaneously — do not wait for one before starting the next.
+Before generating the final verdict, spawn all four directors as **parallel subagents** with `delegate_task` using the parallel gate protocol from `skill_view('gameworks', file_path='references/director-gates.md')`. Issue all four `delegate_task` calls simultaneously — do not wait for one before starting the next.
 
 **Spawn in parallel:**
 
-1. **`creative-director`** — gate **CD-PHASE-GATE** (`gameworks references/director-gates.md`)
-2. **`technical-director`** — gate **TD-PHASE-GATE** (`gameworks references/director-gates.md`)
-3. **`producer`** — gate **PR-PHASE-GATE** (`gameworks references/director-gates.md`)
-4. **`art-director`** — gate **AD-PHASE-GATE** (`gameworks references/director-gates.md`)
+1. **`creative-director`** — gate **CD-PHASE-GATE** (`skill_view('gameworks', file_path='references/director-gates.md')`)
+2. **`technical-director`** — gate **TD-PHASE-GATE** (`skill_view('gameworks', file_path='references/director-gates.md')`)
+3. **`producer`** — gate **PR-PHASE-GATE** (`skill_view('gameworks', file_path='references/director-gates.md')`)
+4. **`art-director`** — gate **AD-PHASE-GATE** (`skill_view('gameworks', file_path='references/director-gates.md')`)
 
 Pass to each: target phase name, list of artifacts present, and the context fields listed in that gate's definition.
 
@@ -526,8 +526,8 @@ Based on the verdict, suggest specific next steps:
 - **Tests failing?** → delegate to `lead-programmer` or `qa-tester`
 - **No playtest data?** → `/playtest-report`
 - **No playtest sessions beyond the minimum?** → Additional sessions give more reliable signal. 3+ total is recommended before committing the full team. Use `/playtest-report` to structure findings.
-- **No Difficulty Curve doc?** → Create `design/difficulty-curve.md` from the template at `project-templates templates/difficulty-curve.md` — or use `/quick-design "difficulty curve"` for a guided session.
-- **No player journey map?** → Create `design/player-journey.md` from the template at `project-templates templates/player-journey.md` — or author it collaboratively using `/ux-design` Phase 2b.
+- **No Difficulty Curve doc?** → Create `design/difficulty-curve.md` from the template at `skill_view('project-templates', file_path='templates/difficulty-curve.md')` — or use `/quick-design "difficulty curve"` for a guided session.
+- **No player journey map?** → Create `design/player-journey.md` from the template at `skill_view('project-templates', file_path='templates/player-journey.md')` — or author it collaboratively using `/ux-design` Phase 2b.
 - **Need a quick sprint check?** → `/sprint-status` for current sprint progress snapshot
 - **Performance unknown?** → `/perf-profile`
 - **Not localized?** → `/localize`

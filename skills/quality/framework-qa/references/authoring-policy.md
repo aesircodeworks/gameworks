@@ -14,15 +14,15 @@ and separate from any game project.
 | `skills/<category>/<name>/references/behavior-spec.md` | Behavioral spec for a skill or role — 5 test cases + protocol compliance assertions. Lives next to the skill, not in this folder. |
 | `templates/skill-test-spec.md` | Template for writing new skill spec files. |
 | `templates/agent-test-spec.md` | Template for writing new role-skill spec files. |
-| `results/` | Written by `/skill-test spec` when results are saved (`framework-qa references/results/`). Gitignored. |
+| `results/` | Written by `/skill-test spec` when results are saved (`skill_view('framework-qa', file_path='references/results/')`). Gitignored. |
 
 ## Path conventions
 
 - Skills: `skills/<category>/<name>/SKILL.md`
 - Role skills: `skills/agents/<name>/SKILL.md`
 - Specs: `skills/<category>/<name>/references/behavior-spec.md`
-- Catalog: `framework-qa references/catalog.yaml`
-- Rubric: `framework-qa references/quality-rubric.md`
+- Catalog: `skill_view('framework-qa', file_path='references/catalog.yaml')`
+- Rubric: `skill_view('framework-qa', file_path='references/quality-rubric.md')`
 
 The `spec:` field in `catalog.yaml` is the authoritative path for each skill/role spec.
 Always read it rather than guessing the path. Do not look under a nested
@@ -93,7 +93,7 @@ not a game workspace. Run them from a root that contains `skills/studio`.
 2. Read the skill at `skills/<category>/<name>/SKILL.md`
 3. Read the spec at the `spec:` path
 4. Evaluate assertions case by case (reasoning check)
-5. Offer to write results to `framework-qa references/results/` and update `catalog.yaml`
+5. Offer to write results to `skill_view('framework-qa', file_path='references/results/')` and update `catalog.yaml`
 
 ## Workflow for improving a skill
 

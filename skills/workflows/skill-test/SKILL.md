@@ -48,7 +48,7 @@ Determine mode from the first argument:
 - `static [name]` → run 7 structural checks on one skill
 - `static all` → run 7 structural checks on every live skill
 - `spec [name]` → read skill + test spec, evaluate assertions
-- `category [name]` → run category-specific rubric from `framework-qa references/quality-rubric.md`
+- `category [name]` → run category-specific rubric from `skill_view('framework-qa', file_path='references/quality-rubric.md')`
 - `category all` → run category rubric for every catalog entry that has a `category:`
 - `audit` (or no argument) → read catalog, list workflow skills and role skills, show coverage
 
@@ -77,8 +77,8 @@ This skill lints **this** distribution or installed profile. It does not lint a 
    `skills/agents/<name>/SKILL.md`.
 
 4. Read catalog and rubric via skill_view paths:
-   - `framework-qa references/catalog.yaml`
-   - `framework-qa references/quality-rubric.md`
+   - `skill_view('framework-qa', file_path='references/catalog.yaml')`
+   - `skill_view('framework-qa', file_path='references/quality-rubric.md')`
 
    On disk that is `skills/quality/framework-qa/references/`.
 
@@ -207,7 +207,7 @@ Static mode writes no files.
 Find the skill at `skills/<category>/<name>/SKILL.md` using the Phase 1
 `search_files` glob.
 
-Look up the spec path from `framework-qa references/catalog.yaml` — use the
+Look up the spec path from `skill_view('framework-qa', file_path='references/catalog.yaml')` — use the
 `spec:` field for the matching entry under `skills:` or `agents:`. Catalog paths
 look like `skills/workflows/<name>/references/behavior-spec.md` or
 `skills/agents/<name>/references/behavior-spec.md`.
@@ -280,13 +280,13 @@ Overall Verdict: FAIL (1 case failed, 1 warning)
 
 If writing these targets is not already authorized, ask:
 
-"May I write these results to `framework-qa references/results/skill-test-spec-[name]-[date].md`
-and update `framework-qa references/catalog.yaml`?"
+"May I write these results to `skill_view('framework-qa', file_path='references/results/skill-test-spec-[name]-[date].md')`
+and update `skill_view('framework-qa', file_path='references/catalog.yaml')`?"
 
 If yes:
 - `write_file` or `patch` the results file at that skill_view path
   (`skills/quality/framework-qa/references/results/` on disk)
-- `patch` the matching entry in `framework-qa references/catalog.yaml`:
+- `patch` the matching entry in `skill_view('framework-qa', file_path='references/catalog.yaml')`:
   - `last_spec: [date]`
   - `last_spec_result: PASS|PARTIAL|FAIL`
 
@@ -299,7 +299,7 @@ Do not write into a game workspace.
 ### Step 1 — Locate Skill and Category
 
 Find the skill at `skills/<category>/<name>/SKILL.md` (Phase 1 glob).
-Look up `category:` in `framework-qa references/catalog.yaml` (`skills:` or
+Look up `category:` in `skill_view('framework-qa', file_path='references/catalog.yaml')` (`skills:` or
 `agents:`).
 
 If skill not found: "Skill '[name]' not found in this distribution/profile."
@@ -312,7 +312,7 @@ pass) and U2 (gate mode correct if applicable) only — run static mode for U1.
 
 ### Step 2 — Read Rubric Section
 
-`read_file` `framework-qa references/quality-rubric.md`.
+`read_file` `skill_view('framework-qa', file_path='references/quality-rubric.md')`.
 Extract the section matching the catalog category (e.g., `### gate`, `### team`,
 `### director`).
 
@@ -357,7 +357,7 @@ Fix: Add TD-PHASE-GATE, PR-PHASE-GATE, and AD-PHASE-GATE to the full-mode direct
 
 If writing is not already authorized, ask:
 
-"May I update `framework-qa references/catalog.yaml` to record this category check
+"May I update `skill_view('framework-qa', file_path='references/catalog.yaml')` to record this category check
 (`last_category`, `last_category_result`) for [name]?"
 
 If yes, `patch` that file. Do not write into a game workspace.
@@ -368,7 +368,7 @@ If yes, `patch` that file. Do not write into a game workspace.
 
 ### Step 1 — Read Catalog
 
-`read_file` `framework-qa references/catalog.yaml`. If missing, note that the
+`read_file` `skill_view('framework-qa', file_path='references/catalog.yaml')`. If missing, note that the
 catalog doesn't exist yet (first-run state).
 
 ### Step 2 — Enumerate Workflow Skills and Role Skills
@@ -449,10 +449,10 @@ After any mode completes, offer contextual follow-up:
 - After `static all` with failures: "Address NON-COMPLIANT skills first. Run
   `/skill-test static [name]` individually for detailed remediation guidance.
   Then `/skill-improve [name]`."
-- After `spec [name]` PASS: "Update `framework-qa references/catalog.yaml` to record this
+- After `spec [name]` PASS: "Update `skill_view('framework-qa', file_path='references/catalog.yaml')` to record this
   pass date. Consider running `/skill-test audit` to find the next spec gap."
 - After `spec [name]` FAIL: "Review the failing assertions and update the skill
   or the test spec to resolve the mismatch."
 - After `audit`: "Start with the critical-priority gaps. Use the spec template
-  at `framework-qa templates/skill-test-spec.md` to create new specs next to the
+  at `skill_view('framework-qa', file_path='templates/skill-test-spec.md')` to create new specs next to the
   skill (`skills/<category>/<name>/references/behavior-spec.md`)."

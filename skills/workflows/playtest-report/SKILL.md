@@ -25,7 +25,7 @@ Resolve the review mode (once, store for all gate spawns this run):
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `gameworks references/director-gates.md` for the full check pattern.
+See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern.
 
 Determine the mode:
 
@@ -133,7 +133,7 @@ Present the categorized list, then route:
 - `lean` → skip (not a PHASE-GATE). Note: "CD-PLAYTEST skipped — Lean mode." Proceed to Phase 4 (save the report).
 - `full` → spawn as normal.
 
-After categorising findings, spawn `creative-director` with delegate_task using gate **CD-PLAYTEST** (`gameworks references/director-gates.md`).
+After categorising findings, spawn `creative-director` with delegate_task using gate **CD-PLAYTEST** (`skill_view('gameworks', file_path='references/director-gates.md')`).
 
 Pass: the structured report content, game pillars and core fantasy (from `design/gdd/game-concept.md`), the specific hypothesis being tested.
 

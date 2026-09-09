@@ -17,7 +17,7 @@ In any skill, replace an inline director prompt with a reference:
 
 ```
 Spawn `creative-director` with `delegate_task` using gate **CD-PILLARS** from
-`gameworks references/director-gates.md`.
+`skill_view('gameworks', file_path='references/director-gates.md')`.
 ```
 
 Pass the context listed under that gate's **Context to pass** field, then handle
@@ -81,7 +81,7 @@ Apply the resolved mode:
 ```
 # Apply mode check, then:
 Spawn `[agent-name]` with `delegate_task`:
-- Gate: [GATE-ID] (see `gameworks references/director-gates.md`)
+- Gate: [GATE-ID] (see `skill_view('gameworks', file_path='references/director-gates.md')`)
 - Context: [fields listed under that gate]
 - Await the verdict before proceeding.
 ```

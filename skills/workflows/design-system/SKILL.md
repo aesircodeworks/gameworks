@@ -27,7 +27,7 @@ Resolve the review mode (once, store for all gate spawns this run):
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `gameworks references/director-gates.md` for the full check pattern.
+See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern.
 
 A system name or retrofit path is **required**. If missing:
 
@@ -226,7 +226,7 @@ Use `clarify`:
 Once the user confirms, **immediately** create the GDD file with empty section
 headers. This ensures incremental writes have a target.
 
-Use the template structure from `project-templates templates/game-design-document.md`:
+Use the template structure from `skill_view('project-templates', file_path='templates/game-design-document.md')`:
 
 ```markdown
 # [System Name]
@@ -700,7 +700,7 @@ the source of truth). Verify:
 - `lean` → skip (not a PHASE-GATE). Note: "CD-GDD-ALIGN skipped — Lean mode." Proceed to Step 5b.
 - `full` → spawn as normal.
 
-Before finalizing the GDD, spawn `creative-director` with delegate_task using gate **CD-GDD-ALIGN** (`gameworks references/director-gates.md`).
+Before finalizing the GDD, spawn `creative-director` with delegate_task using gate **CD-GDD-ALIGN** (`skill_view('gameworks', file_path='references/director-gates.md')`).
 
 Pass: completed GDD file path, game pillars (from `design/gdd/game-concept.md` or `design/gdd/game-pillars.md`), MDA aesthetics target.
 

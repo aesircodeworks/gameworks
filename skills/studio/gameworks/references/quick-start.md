@@ -154,7 +154,7 @@ Ask yourself: "What department would handle this in a real studio?"
 
 ### 4. Use Templates for New Documents
 
-Templates are in `project-templates templates/`:
+Templates are in `skill_view('project-templates', file_path='templates/')`:
 
 - `game-design-document.md` -- for new mechanics and systems
 - `architecture-decision-record.md` -- for technical decisions
@@ -191,7 +191,7 @@ Templates are in `project-templates templates/`:
 - `difficulty-curve.md` -- for difficulty axes, onboarding ramp, and cross-system interactions
 - `test-evidence.md` -- template for recording manual test evidence (screenshots, walkthrough notes)
 
-Also in `project-templates templates/collaborative-protocols/` (used by agents, not typically edited directly):
+Also in `skill_view('project-templates', file_path='templates/collaborative-protocols/')` (used by agents, not typically edited directly):
 
 - `design-agent-protocol.md` -- question-options-draft-approval cycle for design agents
 - `implementation-agent-protocol.md` -- story pickup through /story-done cycle for programming agents

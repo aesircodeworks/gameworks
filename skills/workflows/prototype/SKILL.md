@@ -405,7 +405,7 @@ Vague ones make it useless.
 
 ## Phase 7: Generate Prototype Report
 
-Read `project-templates templates/prototype-report.md` to get the report structure.
+Read `skill_view('project-templates', file_path='templates/prototype-report.md')` to get the report structure.
 Fill in every section based on what was observed during this session. Replace all
 placeholder text with real observations — no generic filler.
 

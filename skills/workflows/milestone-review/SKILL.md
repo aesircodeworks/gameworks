@@ -25,7 +25,7 @@ Extract the milestone name (`current` or a specific name) and resolve the review
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `gameworks references/director-gates.md` for the full check pattern.
+See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern.
 
 ---
 
@@ -125,7 +125,7 @@ Read all sprint reports for sprints within this milestone from `production/sprin
 - `lean` → skip (not a PHASE-GATE). Note: "PR-MILESTONE skipped — Lean mode." Present the Go/No-Go section without a producer verdict.
 - `full` → spawn as normal.
 
-Before generating the Go/No-Go recommendation, spawn `producer` with delegate_task using gate **PR-MILESTONE** (`gameworks references/director-gates.md`).
+Before generating the Go/No-Go recommendation, spawn `producer` with delegate_task using gate **PR-MILESTONE** (`skill_view('gameworks', file_path='references/director-gates.md')`).
 
 Pass: milestone name and target date, current completion percentage, blocked story count, velocity data from sprint reports (if available), list of cut candidates.
 

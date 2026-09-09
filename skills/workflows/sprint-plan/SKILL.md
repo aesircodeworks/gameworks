@@ -25,7 +25,7 @@ Extract the mode argument (`new`, `update`, or `status`) and resolve the review 
 2. Else read `production/review-mode.txt` → use that value
 3. Else → default to `lean`
 
-See `gameworks references/director-gates.md` for the full check pattern.
+See `skill_view('gameworks', file_path='references/director-gates.md')` for the full check pattern.
 
 **Review mode check** (before gates run):
 - Read `production/review-mode.txt` if it exists. Use that mode.
@@ -216,7 +216,7 @@ stories that haven't changed, add new stories, remove dropped ones.
 - `lean` → skip (not a PHASE-GATE). Note: "PR-SPRINT skipped — Lean mode." Proceed to Phase 5 (QA plan gate).
 - `full` → spawn as normal.
 
-Before finalising the sprint plan, spawn `producer` with `delegate_task` using gate **PR-SPRINT** (`gameworks references/director-gates.md`). Parse the first line for `[PR-SPRINT]: TOKEN`.
+Before finalising the sprint plan, spawn `producer` with `delegate_task` using gate **PR-SPRINT** (`skill_view('gameworks', file_path='references/director-gates.md')`). Parse the first line for `[PR-SPRINT]: TOKEN`.
 
 Pass: proposed story list (titles, estimates, dependencies), total team capacity in hours/days, any carryover from the previous sprint, milestone constraints and deadline.
 

@@ -28,7 +28,7 @@ Read relevant specifications and constraints first. Read-only analysis needs no
 extra permission; an explicit implementation request authorizes its stated edits
 and verification without repeated per-file approval. Never write outside that scope.
 
-Load `gameworks` `references/collaborative-design-principle.md` when determining
+Load `skill_view('gameworks', file_path='references/collaborative-design-principle.md')` when determining
 authorization, resolving design/architecture choices, or coordinating delegated writes.
 Ask about missing goals, constraints, spec ambiguities, and material architecture
 choices; do not repeat decisions already supplied. Present relevant options and
