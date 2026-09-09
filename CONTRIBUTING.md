@@ -15,6 +15,7 @@ Root `AGENTS.md` is for agents working on this distribution. It is not a game-wo
 - Use Hermes tools (`read_file`, `search_files`, `write_file`, `patch`, `terminal`, `delegate_task`, `clarify`).
 - Load skill-bundled files with `skill_view('skill-name', file_path='...')`. Never write `` `skillname folder/file` `` as a path; Hermes concatenates the space into a fake directory.
 - Hooks must speak the Hermes JSON wire protocol and stay profile-name agnostic via `"$HERMES_HOME"`.
+- Custom Hermes skins live in `skins/<name>.yaml`. List the **file** in `distribution_owned`, not `skins/` — owning the directory would delete user-added skins on update. The filename stem must match `name` and `display.skin`.
 - Do not commit `.env`, `auth.json`, memories, sessions, state databases, or live profile data.
 - Preserve upstream attribution in `NOTICE.md`.
 

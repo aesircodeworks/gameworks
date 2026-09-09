@@ -21,6 +21,7 @@ The original MIT license and copyright notice are preserved in `LICENSE`. Aesir 
 | Rule skills | 11 | Path-aware practices for a target game workspace |
 | Support/core skills | 7 | Routing, templates, bootstrap, engine reference, QA, status, memory policy |
 | Shell hooks | 11 | Hermes wire-protocol lifecycle hooks |
+| Skin | 1 | `gameworks` CLI/TUI theme (`skins/gameworks.yaml`) |
 
 ## Install
 
@@ -29,6 +30,8 @@ hermes profile install /path/to/aesir-gameworks --name gamedev --force --yes
 ```
 
 Existing credentials, memories, sessions, and unrelated skills are not part of `distribution_owned` and must be preserved. Do not use `--force-config` against a configured profile.
+
+Fresh installs activate the `gameworks` skin via `config.yaml` (`display.skin`). Updates copy the skin YAML but leave local `config.yaml` alone, so an already-configured profile keeps its current skin unless you pass `--force-config` or run `/skin gameworks`.
 
 ## Update
 

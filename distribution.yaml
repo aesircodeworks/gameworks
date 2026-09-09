@@ -16,3 +16,4 @@ distribution_owned:
   - skills/support/
   - agent-hooks/aesir-gameworks/
   - skill-bundles/aesir-gameworks.yaml
+  - skins/gameworks.yaml

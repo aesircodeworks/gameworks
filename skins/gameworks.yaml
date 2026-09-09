@@ -1,0 +1,299 @@
+# Aesir Gameworks custom skin for Hermes Agent.
+#
+# Design direction:
+#   - Single dark theme authored for near-black terminals.
+#   - Retro + minimalist visual language.
+#   - Mostly grayscale, with restrained indigo reserved for interaction/focus.
+#   - Clear but muted semantic colors for success, warning, and error states.
+#   - Unicode symbols are allowed, but colorful emoji are intentionally avoided.
+#
+# Hermes behavior:
+#   - Missing skin keys inherit from the built-in `default` skin.
+#   - This file explicitly sets the full current cross-surface color token set so
+#     the appearance does not accidentally inherit gold/default colors.
+#   - `light_colors` / `dark_colors` are intentionally omitted because this skin
+#     is designed as one authoritative dark palette.
+#   - `load_skin()` resolves `$HERMES_HOME/skins/<name>.yaml`. The filename stem
+#     must match `name` / `display.skin` or Hermes silently falls back to default.
+
+# Unique skin identifier used by `/skin gameworks` and `display.skin: gameworks`.
+name: gameworks
+
+# Shown in Hermes skin listings.
+description: "Retro-minimal dark terminal skin for Aesir Gameworks with restrained indigo accents and clear semantic states."
+
+colors:
+  # ---------------------------------------------------------------------------
+  # Base surface
+  # ---------------------------------------------------------------------------
+
+  # Main app/terminal surface. Near-black rather than pure black to reduce glare.
+  background: "#0A0A0A"
+
+  # ---------------------------------------------------------------------------
+  # Brand and interactive accents
+  # ---------------------------------------------------------------------------
+
+  # General active/focus accent. Indigo is intentionally used sparingly.
+  ui_accent: "#527A9E"
+
+  # Primary interactive color used by cross-surface GUI/TUI consumers.
+  ui_primary: "#6E94B4"
+
+  # Banner section accent. Kept neutral so the banner stays mostly monochrome.
+  banner_accent: "#B0B0B0"
+
+  # Main banner title / strongest banner text.
+  banner_title: "#EDEDED"
+
+  # ---------------------------------------------------------------------------
+  # Text hierarchy
+  # ---------------------------------------------------------------------------
+
+  # Primary UI foreground.
+  ui_text: "#EDEDED"
+
+  # Normal banner/body foreground.
+  banner_text: "#D6D6D6"
+
+  # Muted banner text, separators, and secondary labels.
+  banner_dim: "#707070"
+
+  # ---------------------------------------------------------------------------
+  # Structure and borders
+  # ---------------------------------------------------------------------------
+
+  # General UI border. Medium gray by design: visible, but not bright.
+  ui_border: "#5E5E5E"
+
+  # Startup banner border.
+  banner_border: "#5E5E5E"
+
+  # ---------------------------------------------------------------------------
+  # Semantic status colors
+  # ---------------------------------------------------------------------------
+
+  # Success. Muted green so status remains obvious without dominating the UI.
+  ui_ok: "#6FA879"
+
+  # Warning. Muted amber.
+  ui_warn: "#C2A15A"
+
+  # Error/failure. Muted red.
+  ui_error: "#C86F72"
+
+  # Neutral labels/tags.
+  ui_label: "#8A8A8A"
+
+  # ---------------------------------------------------------------------------
+  # Tool / reasoning activity
+  # ---------------------------------------------------------------------------
+
+  # Tool-call markers and activity indicators.
+  ui_tool: "#B8B8B8"
+
+  # Thinking/reasoning text.
+  ui_thinking: "#7A7A7A"
+
+  # ---------------------------------------------------------------------------
+  # Diffs
+  # ---------------------------------------------------------------------------
+
+  # Added-line background: very dark green tint.
+  diff_added: "#142019"
+
+  # Removed-line background: very dark red tint.
+  diff_removed: "#241617"
+
+  # Added word-level foreground.
+  diff_added_word: "#86C48F"
+
+  # Removed word-level foreground.
+  diff_removed_word: "#D88A8D"
+
+  # ---------------------------------------------------------------------------
+  # Syntax highlighting
+  # ---------------------------------------------------------------------------
+
+  # Intentionally near-monochrome. Syntax should remain readable without turning
+  # code blocks into a multicolor theme.
+  syntax_string: "#BEBEBE"
+  syntax_number: "#D2D2D2"
+  syntax_keyword: "#E6E6E6"
+  syntax_comment: "#696969"
+
+  # ---------------------------------------------------------------------------
+  # Prompt and response chrome
+  # ---------------------------------------------------------------------------
+
+  # User prompt text.
+  prompt: "#EDEDED"
+
+  # Input-area horizontal rule. One of the few deliberate indigo focus cues.
+  input_rule: "#527A9E"
+
+  # Agent response box border.
+  response_border: "#5E5E5E"
+
+  # Shell prompt dollar/signifier where Hermes renders one.
+  shell_dollar: "#A0A0A0"
+
+  # ---------------------------------------------------------------------------
+  # Selection / completion UI
+  # ---------------------------------------------------------------------------
+
+  # Mouse/text selection background. Indigo fill strong enough to read against
+  # the near-black surface while keeping light text above WCAG AA.
+  selection_bg: "#3C5872"
+
+  # Completion menu base surface.
+  completion_menu_bg: "#0D0D0D"
+
+  # Active completion row. Subtle indigo focus state.
+  completion_menu_current_bg: "#182128"
+
+  # Completion metadata column base surface.
+  completion_menu_meta_bg: "#0D0D0D"
+
+  # Metadata column for the active completion row.
+  completion_menu_meta_current_bg: "#182128"
+
+  # ---------------------------------------------------------------------------
+  # Session chrome
+  # ---------------------------------------------------------------------------
+
+  # Session label foreground.
+  session_label: "#A0A0A0"
+
+  # Session ID / secondary session border.
+  session_border: "#5E5E5E"
+
+  # ---------------------------------------------------------------------------
+  # Status bar
+  # ---------------------------------------------------------------------------
+
+  # Same surface as the main background for a flat, minimal status bar.
+  status_bar_bg: "#0A0A0A"
+
+  # Normal status text.
+  status_bar_text: "#B8B8B8"
+
+  # Strong/highlighted status text.
+  status_bar_strong: "#EDEDED"
+
+  # Muted status text and separators.
+  status_bar_dim: "#666666"
+
+  # Healthy state.
+  status_bar_good: "#6FA879"
+
+  # Warning state.
+  status_bar_warn: "#C2A15A"
+
+  # High-risk state, warmer than warning but not yet critical.
+  status_bar_bad: "#C9835B"
+
+  # Critical state.
+  status_bar_critical: "#C86F72"
+
+  # Voice-mode status surface, kept flat with the rest of the UI.
+  voice_status_bg: "#0A0A0A"
+
+# -----------------------------------------------------------------------------
+# Spinner
+# -----------------------------------------------------------------------------
+spinner:
+  # Retro terminal throbber used while waiting for API/tool activity.
+  waiting_faces:
+    - "[|]"
+    - "[/]"
+    - "[-]"
+    - "[\\]"
+
+  # Reasoning animation. Kept simple and text-only.
+  thinking_faces:
+    - "[.]"
+    - "[:]"
+    - "[*]"
+    - "[:]"
+
+  # Technical, neutral reasoning verbs.
+  thinking_verbs:
+    - "analyzing"
+    - "computing"
+    - "resolving"
+    - "evaluating"
+
+  # No decorative spinner wings. Empty by design.
+  wings: []
+
+# -----------------------------------------------------------------------------
+# Branding
+# -----------------------------------------------------------------------------
+branding:
+  # Name shown in banner/title/status contexts.
+  agent_name: "Aesir Gameworks"
+
+  # Startup message. Terse and terminal-like.
+  welcome: "AESIR GAMEWORKS // READY. Type a message or /help."
+
+  # Exit message.
+  goodbye: "AESIR GAMEWORKS // OFFLINE."
+
+  # Response-box header label.
+  response_label: " AESIR "
+
+  # Input prompt glyph.
+  prompt_symbol: "❯"
+
+  # Help heading.
+  help_header: "[AESIR] COMMANDS"
+
+# -----------------------------------------------------------------------------
+# Tool presentation
+# -----------------------------------------------------------------------------
+
+# Prefix placed before tool-output lines.
+tool_prefix: "·"
+
+# Monochrome symbol overrides for common built-in tools.
+# Tools not listed here continue using their registry defaults.
+tool_emojis:
+  terminal: "›"
+  web_search: "⌕"
+  web_extract: "≡"
+  read_file: "□"
+  write_file: "✎"
+  patch: "∆"
+  search_files: "⌕"
+  browser_navigate: "→"
+  browser_click: "·"
+  browser_type: "T"
+  image_generate: "◇"
+  vision_analyze: "◉"
+
+# -----------------------------------------------------------------------------
+# Startup banner art
+# -----------------------------------------------------------------------------
+
+banner_logo: |
+  █████╗ ███████╗███████╗██╗██████╗
+  ██╔══██╗██╔════╝██╔════╝██║██╔══██╗
+  ███████║█████╗  ███████╗██║██████╔╝
+  ██╔══██║██╔══╝  ╚════██║██║██╔══██╗
+  ██║  ██║███████╗███████║██║██║  ██║
+  ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝
+
+# Monochrome retro CRT with a clear, empty screen.
+banner_hero: |
+  ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  █▓┌────────────────────────┐▓█
+  █▓│                        │▓█
+  █▓│                        │▓█
+  █▓│                        │▓█
+  █▓│                        │▓█
+  █▓│                        │▓█
+  █▓└────────────────────────┘▓█
+  ▀▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▀
+  ⠀⠀⠀⠀⠀▀▄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀▄▀⠀⠀⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀▀██████████████▀⠀⠀⠀⠀⠀⠀⠀

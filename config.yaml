@@ -30,6 +30,7 @@ checkpoints:
   enabled: true
 display:
   personality: concise
+  skin: gameworks
 agent:
   verify_on_stop: true
 hooks_auto_accept: false

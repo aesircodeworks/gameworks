@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Removed the session-end macOS toast (`notify-session.sh`). `session-end.sh` still appends `production/session-logs/sessions.jsonl`.
+- Ship the `gameworks` Hermes CLI/TUI skin (`skins/gameworks.yaml`) as distribution-owned. Fresh installs set `display.skin: gameworks`. The owned path is the skin file, not `skins/`, so user-added skins in that directory survive updates.
 - Game-workspace `AGENTS.md` is the workspace context file the profile writes. The bootstrap template no longer documents a compatibility load chain.
 - Skills no longer use spaced skill-folder path shorthands (`` `gameworks references/` ``, `` `project-templates templates/` ``, `` `framework-qa references/` ``). Hermes treated those as a write path (`gameworksreferences/`). Bundled files load via `skill_view('skill-name', file_path='...')`.
 - `/setup-engine` writes engine prefs only to the game-workspace file `docs/technical-preferences.md`. It copies the profile template through `skill_view`; it does not write into the installed profile.
