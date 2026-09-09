@@ -9,7 +9,7 @@
 `/studio-start` is the first-time onboarding skill for new projects. It guides the
 user through naming the project, choosing a game engine, and setting up the
 initial directory structure. It creates stub configuration files (`AGENTS.md`,
-never `CLAUDE.md`; `docs/technical-preferences.md`) and then routes to
+`docs/technical-preferences.md`) and then routes to
 `/setup-engine` with the chosen engine as an argument. Each file or directory
 created is gated behind a "May I write" ask, following the collaborative protocol.
 
@@ -67,7 +67,7 @@ point this skill runs.
 4. User selects an engine
 5. Skill asks "May I write the initial directory structure?"
 6. Skill creates all directories defined in `directory-structure.md`
-7. Skill asks "May I write `AGENTS.md` stub?" and writes it on approval (never `CLAUDE.md`)
+7. Skill asks "May I write `AGENTS.md` stub?" and writes it on approval
 8. Skill routes to `/setup-engine [chosen-engine]` to complete technical config
 
 **Assertions:**
@@ -112,7 +112,7 @@ point this skill runs.
 
 **Expected behavior:**
 1. Skill presents engine options and user selects Godot 4
-2. Skill writes initial stubs (directory structure, `AGENTS.md` — not `CLAUDE.md`) after approval
+2. Skill writes initial stubs (directory structure, `AGENTS.md`) after approval
 3. Skill explicitly routes to `/setup-engine godot` as the next step
 4. Handoff message clearly names the engine and the next skill invocation
 
@@ -170,7 +170,7 @@ point this skill runs.
 
 - [ ] Asks for project name before any file is written
 - [ ] Presents engine options as a structured choice (not free text)
-- [ ] Checks scope for the directory structure and `AGENTS.md` stub (never `CLAUDE.md`); accepts one authorization covering both
+- [ ] Checks scope for the directory structure and `AGENTS.md` stub; accepts one authorization covering both
 - [ ] Ends with a handoff to `/setup-engine` with the engine name as argument
 - [ ] Verdict is clearly stated (COMPLETE or BLOCKED) at end of output
 

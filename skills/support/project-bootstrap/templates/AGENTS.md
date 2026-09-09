@@ -2,7 +2,7 @@
 
 # Game workspace instructions
 
-Hermes loads this file as workspace context (`.hermes.md` → `AGENTS.md` → `CLAUDE.md`). It is read as raw UTF-8. Do not use `@` imports; they are not expanded.
+Hermes loads this `AGENTS.md` as game-workspace context. It is read as raw UTF-8. Do not use `@` imports; they are not expanded.
 
 `/setup-engine` fills the Technology Stack. Keep `docs/technical-preferences.md` in sync with it.
 
