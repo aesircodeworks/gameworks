@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Game-workspace `AGENTS.md` is the workspace context file the profile writes. The bootstrap template no longer documents a compatibility load chain.
+- Skills no longer use spaced skill-folder path shorthands (`` `gameworks references/` ``, `` `project-templates templates/` ``, `` `framework-qa references/` ``). Hermes treated those as a write path (`gameworksreferences/`). Bundled files load via `skill_view('skill-name', file_path='...')`.
+- `/setup-engine` writes engine prefs only to the game-workspace file `docs/technical-preferences.md`. It copies the profile template through `skill_view`; it does not write into the installed profile.
+- Root `AGENTS.md` and `CONTRIBUTING.md` now state profile-development rules, including changelog + `distribution.yaml` version bumps. The root file is not `distribution_owned`.
+- Release is a documented procedure (`CONTRIBUTING.md` ## Release): bump `distribution.yaml`, fold Unreleased, commit, `hermes profile update gamedev`. No GitHub release or tag unless asked.
+- README covers install, update, game-workspace use, and profile-development / release pointers.
+
 ## 1.1.0 — Hermes runtime alignment
 
 - Dropped `aesir-` prefixes from skill names and folders. Commands are `/brainstorm`, roles are `game-designer`. Hermes collisions: `/studio-help`, `/studio-start`. Brand remains on the profile, hooks, and distribution name.
