@@ -32,7 +32,7 @@ display:
   personality: concise
   skin: gameworks
 agent:
-  verify_on_stop: true
+  verify_on_stop: false
 hooks_auto_accept: false
 hooks:
   pre_tool_call:
