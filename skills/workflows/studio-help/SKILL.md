@@ -2,7 +2,7 @@
 name: studio-help
 description: Use when choosing the next game development step.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

@@ -2,7 +2,7 @@
 name: game-designer
 description: Use when designing game mechanics and core loops.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

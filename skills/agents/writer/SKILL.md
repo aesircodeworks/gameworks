@@ -2,7 +2,7 @@
 name: writer
 description: Use when writing dialogue and player-facing game text.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

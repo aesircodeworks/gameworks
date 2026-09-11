@@ -2,7 +2,7 @@
 name: project-bootstrap
 description: Use when creating an Aesir game workspace.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

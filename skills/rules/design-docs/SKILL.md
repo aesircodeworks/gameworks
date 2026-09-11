@@ -2,7 +2,7 @@
 name: design-docs
 description: Use when editing game design/gdd/** files.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

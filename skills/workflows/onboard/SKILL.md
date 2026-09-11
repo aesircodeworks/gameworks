@@ -2,7 +2,7 @@
 name: onboard
 description: Use when onboarding a contributor to a project role.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

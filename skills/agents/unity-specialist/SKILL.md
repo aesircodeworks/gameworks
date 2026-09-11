@@ -2,7 +2,7 @@
 name: unity-specialist
 description: Use when choosing Unity architecture and engine patterns.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

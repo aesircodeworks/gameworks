@@ -2,7 +2,7 @@
 name: godot-shader-specialist
 description: Use when building Godot shaders, materials and VFX.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

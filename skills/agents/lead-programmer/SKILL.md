@@ -2,7 +2,7 @@
 name: lead-programmer
 description: Use when reviewing code architecture, APIs and refactors.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

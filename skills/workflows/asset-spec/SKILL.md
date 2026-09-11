@@ -2,7 +2,7 @@
 name: asset-spec
 description: Use when specifying game assets and generation prompts.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

@@ -2,7 +2,7 @@
 name: gate-check
 description: Use when checking readiness for the next project phase.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

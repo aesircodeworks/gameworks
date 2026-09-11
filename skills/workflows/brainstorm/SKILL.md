@@ -2,7 +2,7 @@
 name: brainstorm
 description: Use when exploring ideas and shaping a game concept.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

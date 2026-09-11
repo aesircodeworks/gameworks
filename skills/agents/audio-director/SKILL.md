@@ -2,7 +2,7 @@
 name: audio-director
 description: Use when defining game audio direction and mix strategy.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

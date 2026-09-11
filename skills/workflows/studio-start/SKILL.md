@@ -2,7 +2,7 @@
 name: studio-start
 description: Use when starting guided Aesir studio onboarding.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

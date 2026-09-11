@@ -2,7 +2,7 @@
 name: changelog
 description: Use when generating changelogs from commits and sprints.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

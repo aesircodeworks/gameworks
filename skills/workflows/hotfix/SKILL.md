@@ -2,7 +2,7 @@
 name: hotfix
 description: Use when explicitly requesting an emergency hotfix.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

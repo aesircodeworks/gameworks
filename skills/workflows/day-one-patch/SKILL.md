@@ -2,7 +2,7 @@
 name: day-one-patch
 description: Use when preparing a QA-gated day-one game patch.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

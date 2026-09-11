@@ -2,7 +2,7 @@
 name: security-audit
 description: Use when auditing game security and cheat risks.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

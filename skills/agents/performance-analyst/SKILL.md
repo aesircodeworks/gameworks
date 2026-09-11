@@ -2,7 +2,7 @@
 name: performance-analyst
 description: Use when profiling game performance and memory usage.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

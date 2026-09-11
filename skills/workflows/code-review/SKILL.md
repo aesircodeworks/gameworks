@@ -2,7 +2,7 @@
 name: code-review
 description: Use when reviewing code quality and ADR compliance.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

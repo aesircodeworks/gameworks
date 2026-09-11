@@ -2,7 +2,7 @@
 name: community-manager
 description: Use when drafting player communications and feedback.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

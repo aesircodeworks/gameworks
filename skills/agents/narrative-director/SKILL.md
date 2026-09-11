@@ -2,7 +2,7 @@
 name: narrative-director
 description: Use when directing story arcs, characters and lore.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

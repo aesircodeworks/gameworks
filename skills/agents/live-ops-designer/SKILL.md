@@ -2,7 +2,7 @@
 name: live-ops-designer
 description: Use when planning live game events and retention systems.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

@@ -2,7 +2,7 @@
 name: art-bible
 description: Use when authoring a game art bible and visual identity.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

@@ -2,7 +2,7 @@
 name: soak-test
 description: Use when planning extended-play soak test protocols.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

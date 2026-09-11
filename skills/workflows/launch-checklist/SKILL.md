@@ -2,7 +2,7 @@
 name: launch-checklist
 description: Use when explicitly requesting a launch readiness check.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

@@ -2,7 +2,7 @@
 name: world-builder
 description: Use when designing world lore, factions and histories.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

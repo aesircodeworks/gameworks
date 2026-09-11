@@ -2,7 +2,7 @@
 name: studio-status
 description: Use when reporting a game workspace's studio status.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

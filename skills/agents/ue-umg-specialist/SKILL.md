@@ -2,7 +2,7 @@
 name: ue-umg-specialist
 description: Use when implementing Unreal UMG and CommonUI.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

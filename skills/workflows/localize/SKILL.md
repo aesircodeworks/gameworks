@@ -2,7 +2,7 @@
 name: localize
 description: Use when localizing game strings, voice, and layouts.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

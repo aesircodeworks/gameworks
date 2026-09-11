@@ -2,7 +2,7 @@
 name: unity-shader-specialist
 description: Use when building Unity shaders, VFX and render passes.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

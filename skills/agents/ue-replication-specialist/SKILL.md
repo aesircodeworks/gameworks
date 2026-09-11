@@ -2,7 +2,7 @@
 name: ue-replication-specialist
 description: Use when implementing Unreal replication and RPCs.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

@@ -2,7 +2,7 @@
 name: localization-lead
 description: Use when designing game i18n and translation pipelines.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

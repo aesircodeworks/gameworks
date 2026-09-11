@@ -2,7 +2,7 @@
 name: asset-audit
 description: Use when auditing game asset standards and references.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

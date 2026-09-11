@@ -2,7 +2,7 @@
 name: patch-notes
 description: Use when writing player-facing patch notes.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

@@ -2,7 +2,7 @@
 name: narrative
 description: Use when editing game design/narrative/** files.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

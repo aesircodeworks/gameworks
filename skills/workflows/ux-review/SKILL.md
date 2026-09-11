@@ -2,7 +2,7 @@
 name: ux-review
 description: Use when reviewing game UX specs for handoff readiness.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

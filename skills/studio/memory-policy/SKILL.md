@@ -2,7 +2,7 @@
 name: memory-policy
 description: Use when classifying durable Aesir memory or lessons.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

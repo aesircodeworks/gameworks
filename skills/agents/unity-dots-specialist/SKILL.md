@@ -2,7 +2,7 @@
 name: unity-dots-specialist
 description: Use when implementing Unity DOTS, ECS, Jobs and Burst.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

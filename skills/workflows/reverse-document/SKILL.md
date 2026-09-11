@@ -2,7 +2,7 @@
 name: reverse-document
 description: Use when deriving design or architecture docs from code.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

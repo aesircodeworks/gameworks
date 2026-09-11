@@ -2,7 +2,7 @@
 name: architecture-decision
 description: Use when writing or retrofitting game architecture ADRs.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

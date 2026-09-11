@@ -2,7 +2,7 @@
 name: systems-designer
 description: Use when specifying game formulas and rule interactions.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

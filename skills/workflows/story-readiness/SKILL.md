@@ -2,7 +2,7 @@
 name: story-readiness
 description: Use when checking if a story is implementation-ready.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

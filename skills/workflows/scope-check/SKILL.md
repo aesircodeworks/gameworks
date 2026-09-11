@@ -2,7 +2,7 @@
 name: scope-check
 description: Use when detecting scope creep against original plans.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

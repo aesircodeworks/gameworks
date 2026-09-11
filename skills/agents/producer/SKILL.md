@@ -2,7 +2,7 @@
 name: producer
 description: Use when planning sprints, scope and cross-team delivery.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:

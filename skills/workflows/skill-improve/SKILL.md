@@ -2,7 +2,7 @@
 name: skill-improve
 description: Use when improving a studio skill through test-fix loops.
 version: 1.0.0
-author: Donchitos; Hermes adaptation by Aesir Gameworks
+author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
   hermes:
