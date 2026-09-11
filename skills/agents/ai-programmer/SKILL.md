@@ -1,6 +1,6 @@
 ---
 name: ai-programmer
-description: Use when implementing NPC AI and pathfinding.
+description: Implement NPC AI and pathfinding.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

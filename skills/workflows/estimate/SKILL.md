@@ -1,6 +1,6 @@
 ---
 name: estimate
-description: Use when estimating task effort, complexity, and risk.
+description: Estimate task effort, complexity, and risk.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

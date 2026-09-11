@@ -1,6 +1,6 @@
 ---
 name: design-review
-description: Use when reviewing a game design document for handoff.
+description: Review a game design document for handoff.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

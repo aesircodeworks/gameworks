@@ -1,6 +1,6 @@
 ---
 name: sound-designer
-description: Use when specifying game SFX, audio events and mixing.
+description: Specify game SFX, audio events and mixing.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

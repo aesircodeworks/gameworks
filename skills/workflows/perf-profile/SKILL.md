@@ -1,6 +1,6 @@
 ---
 name: perf-profile
-description: Use when profiling game performance against budgets.
+description: Profile game performance against budgets.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

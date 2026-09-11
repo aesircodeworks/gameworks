@@ -1,6 +1,6 @@
 ---
 name: tech-debt
-description: Use when tracking and prioritizing technical debt.
+description: Track and prioritize technical debt.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

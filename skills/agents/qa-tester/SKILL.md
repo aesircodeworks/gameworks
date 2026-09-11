@@ -1,6 +1,6 @@
 ---
 name: qa-tester
-description: Use when writing game tests, bug reports and QA evidence.
+description: Write game tests, bug reports and QA evidence.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

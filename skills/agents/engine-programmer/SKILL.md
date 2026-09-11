@@ -1,6 +1,6 @@
 ---
 name: engine-programmer
-description: Use when implementing core engine systems.
+description: Implement core engine systems.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

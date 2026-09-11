@@ -1,6 +1,6 @@
 ---
 name: unity-ui-specialist
-description: Use when implementing Unity UI Toolkit and UGUI.
+description: Implement Unity UI Toolkit and UGUI.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

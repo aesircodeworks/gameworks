@@ -20,7 +20,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] If the body instructs `write_file` or `patch`: scoped write-authorization language is present
 - [ ] Has a next-step handoff at the end
 - [ ] `metadata.hermes.tags` includes a framework tag (e.g. `aesir-gameworks`) or `related_skills` is a list
-- [ ] `description` is non-empty and states when to use; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
+- [ ] `description` is a specific capability sentence; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
 
 ---
 

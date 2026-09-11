@@ -1,6 +1,6 @@
 ---
 name: story-done
-description: Use when verifying acceptance criteria to close a story.
+description: Verify acceptance criteria to close a story.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: create-epics
-description: Use when turning GDDs and architecture into epics.
+description: Turn GDDs and architecture into epics.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

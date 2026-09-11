@@ -1,6 +1,6 @@
 ---
 name: security-engineer
-description: Use when securing games against exploits and data leaks.
+description: Secure games against exploits and data leaks.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

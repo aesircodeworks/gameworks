@@ -1,6 +1,6 @@
 ---
 name: network-programmer
-description: Use when implementing multiplayer netcode.
+description: Implement multiplayer netcode.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

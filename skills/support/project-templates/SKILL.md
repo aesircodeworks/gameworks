@@ -1,6 +1,6 @@
 ---
 name: project-templates
-description: Use when scaffolding game documents from templates.
+description: Scaffold game documents from templates.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

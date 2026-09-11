@@ -1,6 +1,6 @@
 ---
 name: technical-artist
-description: Use when building shaders, VFX and art pipelines.
+description: Build shaders, VFX and art pipelines.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

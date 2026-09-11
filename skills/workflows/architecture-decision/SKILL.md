@@ -1,6 +1,6 @@
 ---
 name: architecture-decision
-description: Use when writing or retrofitting game architecture ADRs.
+description: Write or retrofit game architecture ADRs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

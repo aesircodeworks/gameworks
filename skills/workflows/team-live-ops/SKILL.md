@@ -1,6 +1,6 @@
 ---
 name: team-live-ops
-description: Use when coordinating live seasons and event planning.
+description: Coordinate live seasons and event planning.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

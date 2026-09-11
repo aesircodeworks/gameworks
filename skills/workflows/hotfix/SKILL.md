@@ -1,6 +1,6 @@
 ---
 name: hotfix
-description: Use when explicitly requesting an emergency hotfix.
+description: Ship an emergency hotfix on explicit request.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

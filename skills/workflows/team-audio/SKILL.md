@@ -1,6 +1,6 @@
 ---
 name: team-audio
-description: Use when coordinating end-to-end game audio work.
+description: Coordinate end-to-end game audio work.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

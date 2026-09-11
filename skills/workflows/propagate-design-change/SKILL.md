@@ -1,6 +1,6 @@
 ---
 name: propagate-design-change
-description: Use when tracing GDD changes to affected ADRs.
+description: Trace GDD changes to affected ADRs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

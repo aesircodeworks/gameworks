@@ -1,6 +1,6 @@
 ---
 name: playtest-report
-description: Use when structuring playtest notes or report templates.
+description: Structure playtest notes or report templates.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

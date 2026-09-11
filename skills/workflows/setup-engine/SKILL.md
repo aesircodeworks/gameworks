@@ -1,6 +1,6 @@
 ---
 name: setup-engine
-description: Use when pinning or upgrading a game engine version.
+description: Pin or upgrade a game engine version.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

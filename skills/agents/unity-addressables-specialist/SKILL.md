@@ -1,6 +1,6 @@
 ---
 name: unity-addressables-specialist
-description: Use when managing Unity Addressables and asset loading.
+description: Manage Unity Addressables and asset loading.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

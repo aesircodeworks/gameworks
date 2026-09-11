@@ -1,6 +1,6 @@
 ---
 name: map-systems
-description: Use when mapping game systems and design dependencies.
+description: Map game systems and design dependencies.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

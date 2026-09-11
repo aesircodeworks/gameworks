@@ -1,6 +1,6 @@
 ---
 name: create-stories
-description: Use when breaking an epic into implementable stories.
+description: Break an epic into implementable stories.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

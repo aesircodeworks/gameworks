@@ -1,6 +1,6 @@
 ---
 name: bug-triage
-description: Use when prioritizing bugs and assigning sprint fixes.
+description: Prioritize bugs and assign sprint fixes.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

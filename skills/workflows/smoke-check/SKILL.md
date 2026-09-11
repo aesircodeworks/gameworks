@@ -1,6 +1,6 @@
 ---
 name: smoke-check
-description: Use when smoke-testing critical paths before QA handoff.
+description: Smoke-test critical paths before QA handoff.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

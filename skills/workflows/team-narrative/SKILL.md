@@ -1,6 +1,6 @@
 ---
 name: team-narrative
-description: Use when coordinating story, lore, and narrative content.
+description: Coordinate story, lore, and narrative content.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

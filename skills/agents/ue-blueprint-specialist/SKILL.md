@@ -1,6 +1,6 @@
 ---
 name: ue-blueprint-specialist
-description: Use when designing Unreal Blueprint architecture.
+description: Design Unreal Blueprint architecture.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

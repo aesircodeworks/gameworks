@@ -1,6 +1,6 @@
 ---
 name: skill-test
-description: Use when validating studio skill structure and behavior.
+description: Validate studio skill structure and behavior.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
@@ -147,12 +147,12 @@ Inspect `metadata.hermes`:
 Do not inspect `context: fork`. Do not FAIL for missing fork context.
 
 ### Check 7 — Description and Invocable Tools
-`description` must be non-empty and state when to use the skill (typically
-`Use when ...`).
+`description` must be a non-empty capability sentence (imperative, ends with a
+period, ≤57 characters). Do not start with `Use when`.
 
 **FAIL** if `description` is empty.
-**WARN** if `description` is generic (no when-to-use: just the skill name, or
-"A helper skill").
+**WARN** if `description` starts with `Use when`, exceeds 57 characters, or is
+generic (just the skill name, or "A helper skill").
 **FAIL** if the skill copy-pastes Claude tools as invocables: `Glob`, `Grep`,
 `Read`, `Write`, `Edit`, `Task`. Hermes invocables are `read_file`,
 `search_files`, `write_file`, `patch`, `terminal`, `delegate_task`, `clarify`.

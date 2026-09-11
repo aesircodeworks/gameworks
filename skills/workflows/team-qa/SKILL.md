@@ -1,6 +1,6 @@
 ---
 name: team-qa
-description: Use when coordinating a full sprint or feature QA cycle.
+description: Coordinate a full sprint or feature QA cycle.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

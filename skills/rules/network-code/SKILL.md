@@ -1,6 +1,6 @@
 ---
 name: network-code
-description: Use when editing game src/networking/** files.
+description: Edit game src/networking/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

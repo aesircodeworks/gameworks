@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: Use when producing a sprint or milestone retrospective.
+description: Produce a sprint or milestone retrospective.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: art-director
-description: Use when defining game visual style and art standards.
+description: Define game visual style and art standards.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

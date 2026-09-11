@@ -1,6 +1,6 @@
 ---
 name: milestone-review
-description: Use when reviewing milestone progress and readiness.
+description: Review milestone progress and readiness.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

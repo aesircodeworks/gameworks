@@ -16,7 +16,7 @@ It operates in four modes:
 - **static**: Checks a skill file for 7 structural requirements (Hermes
   frontmatter, phase headings, verdict keywords, scoped authorization when the
   body instructs `write_file`/`patch`, next-step handoff, Hermes tags /
-  related_skills, description when-to-use and no Claude tool invocables).
+  related_skills, capability-sentence description and no Claude tool invocables).
   Produces a per-check PASS/FAIL table. Writes nothing.
 - **spec**: Reads the behavior spec at the catalog `spec:` path and evaluates
   the skill against each test case assertion (reasoning check, not code
@@ -40,7 +40,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Body instructs `write_file` or `patch` for optional result/catalog writes and includes scoped write-authorization language
 - [ ] Has a next-step handoff (e.g., `/skill-improve` to fix issues found)
 - [ ] `metadata.hermes.tags` includes a framework tag (e.g. `aesir-gameworks`) or `related_skills` is a list
-- [ ] `description` is non-empty and states when to use; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
+- [ ] `description` is a specific capability sentence; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
 
 ---
 
@@ -64,7 +64,7 @@ None. `/skill-test` is a meta-utility skill. No director gates apply.
   - Has scoped write-authorization rules (existing approval accepted; new scope requires approval)
   - Has a next-step handoff
   - `tags` includes `aesir-gameworks` or `related_skills` is a list
-  - `description` states when to use; no Claude tool invocables
+  - `description` is a specific capability sentence; no Claude tool invocables
   - Documents director gates and gate mode behavior (lean/solo skips)
 
 **Input:** `/skill-test static brainstorm`

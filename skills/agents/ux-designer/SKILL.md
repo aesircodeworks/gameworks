@@ -1,6 +1,6 @@
 ---
 name: ux-designer
-description: Use when designing player flows, inputs and onboarding.
+description: Design player flows, inputs and onboarding.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

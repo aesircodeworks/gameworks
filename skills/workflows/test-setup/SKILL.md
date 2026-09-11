@@ -1,6 +1,6 @@
 ---
 name: test-setup
-description: Use when scaffolding engine-specific tests and CI.
+description: Scaffold engine-specific tests and CI.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

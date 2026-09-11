@@ -1,6 +1,6 @@
 ---
 name: dev-story
-description: Use when implementing a story with code and tests.
+description: Implement a story with code and tests.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

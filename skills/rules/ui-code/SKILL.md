@@ -1,6 +1,6 @@
 ---
 name: ui-code
-description: Use when editing game src/ui/** files.
+description: Edit game src/ui/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

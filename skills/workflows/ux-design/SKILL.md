@@ -1,6 +1,6 @@
 ---
 name: ux-design
-description: Use when authoring game UX, HUD, or interaction specs.
+description: Author game UX, HUD, or interaction specs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

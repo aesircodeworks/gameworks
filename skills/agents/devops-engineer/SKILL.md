@@ -1,6 +1,6 @@
 ---
 name: devops-engineer
-description: Use when maintaining game builds and CI/CD pipelines.
+description: Maintain game builds and CI/CD pipelines.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

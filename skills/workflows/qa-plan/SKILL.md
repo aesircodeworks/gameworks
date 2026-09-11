@@ -1,6 +1,6 @@
 ---
 name: qa-plan
-description: Use when planning QA for a sprint, feature, or story.
+description: Plan QA for a sprint, feature, or story.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

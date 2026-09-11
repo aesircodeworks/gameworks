@@ -1,6 +1,6 @@
 ---
 name: create-control-manifest
-description: Use when extracting coding rules from accepted ADRs.
+description: Extract coding rules from accepted ADRs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: level-designer
-description: Use when designing level layouts, encounters and pacing.
+description: Design level layouts, encounters and pacing.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: sprint-status
-description: Use when checking sprint progress, burndown, and risks.
+description: Check sprint progress, burndown, and risks.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

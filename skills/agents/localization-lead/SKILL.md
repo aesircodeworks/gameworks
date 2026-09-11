@@ -1,6 +1,6 @@
 ---
 name: localization-lead
-description: Use when designing game i18n and translation pipelines.
+description: Design game i18n and translation pipelines.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

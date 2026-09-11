@@ -1,6 +1,6 @@
 ---
 name: project-stage-detect
-description: Use when detecting project stage and artifact gaps.
+description: Detect project stage and artifact gaps.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

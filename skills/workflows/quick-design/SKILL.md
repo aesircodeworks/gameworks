@@ -1,6 +1,6 @@
 ---
 name: quick-design
-description: Use when specifying small game design changes.
+description: Specify small game design changes.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

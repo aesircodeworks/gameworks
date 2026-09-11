@@ -1,6 +1,6 @@
 ---
 name: tools-programmer
-description: Use when building game editor tools and asset pipelines.
+description: Build game editor tools and asset pipelines.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

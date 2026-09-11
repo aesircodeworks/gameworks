@@ -24,7 +24,7 @@ These should pass before any behavioral testing (`/skill-test static` — 7 chec
 - [ ] If the body instructs `write_file` or `patch`: scoped write-authorization language is present
 - [ ] Next-step handoff section present at end
 - [ ] `metadata.hermes.tags` includes a framework tag (e.g. `aesir-gameworks`) or `related_skills` is a list
-- [ ] `description` is non-empty and states when to use; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
+- [ ] `description` is a specific capability sentence; body does not invoke `Glob`, `Grep`, `Read`, `Write`, `Edit`, or `Task`
 - [ ] **Model tier: Light**, **Medium**, or **Heavy** is stated (see `coordination-rules.md`)
 
 ---

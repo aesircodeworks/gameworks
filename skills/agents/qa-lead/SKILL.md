@@ -1,6 +1,6 @@
 ---
 name: qa-lead
-description: Use when planning QA, bug triage and quality gates.
+description: Plan QA, bug triage and quality gates.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

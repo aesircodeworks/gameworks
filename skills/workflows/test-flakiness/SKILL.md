@@ -1,6 +1,6 @@
 ---
 name: test-flakiness
-description: Use when detecting flaky tests from CI result history.
+description: Detect flaky tests from CI result history.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

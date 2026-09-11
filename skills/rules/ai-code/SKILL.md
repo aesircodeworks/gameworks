@@ -1,6 +1,6 @@
 ---
 name: ai-code
-description: Use when editing game src/ai/** files.
+description: Edit game src/ai/** files.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

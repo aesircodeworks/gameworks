@@ -1,6 +1,6 @@
 ---
 name: launch-checklist
-description: Use when explicitly requesting a launch readiness check.
+description: Run a launch readiness check on explicit request.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

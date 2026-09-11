@@ -1,6 +1,6 @@
 ---
 name: test-helpers
-description: Use when generating engine-specific test helpers.
+description: Generate engine-specific test helpers.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

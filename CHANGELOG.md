@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Skill frontmatter `description` is a capability sentence (imperative, ≤57 characters), not a `Use when` trigger. `/skill-test` Check 7 warns on `Use when`, over-length, or generic copy.
 - Hermes profile name in docs is `gameworks`. `SOUL.md` identity is a studio-lead role, not the product name. Skill frontmatter author is `Hermes adaptation by Aesir Codeworks`; tags stay `aesir-gameworks`. Hook session strings use `Gameworks session:` / `Gameworks gap check`.
 - Default `agent.verify_on_stop` to `false` so stop does not run the upstream verify pass.
 - Removed the session-end macOS toast (`notify-session.sh`). `session-end.sh` still appends `production/session-logs/sessions.jsonl`.

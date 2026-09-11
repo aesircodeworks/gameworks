@@ -1,6 +1,6 @@
 ---
 name: team-release
-description: Use when coordinating release candidates to deployment.
+description: Coordinate release candidates to deployment.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

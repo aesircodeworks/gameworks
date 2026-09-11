@@ -1,6 +1,6 @@
 ---
 name: accessibility-specialist
-description: Use when auditing game accessibility.
+description: Audit game accessibility.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

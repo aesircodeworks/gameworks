@@ -1,6 +1,6 @@
 ---
 name: analytics-engineer
-description: Use when designing player telemetry and A/B tests.
+description: Design player telemetry and A/B tests.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

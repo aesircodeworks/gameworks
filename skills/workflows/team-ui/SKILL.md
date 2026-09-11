@@ -1,6 +1,6 @@
 ---
 name: team-ui
-description: Use when coordinating UI from UX specs through polish.
+description: Coordinate UI from UX specs through polish.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

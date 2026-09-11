@@ -1,6 +1,6 @@
 ---
 name: gameplay-programmer
-description: Use when implementing gameplay mechanics from specs.
+description: Implement gameplay mechanics from specs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

@@ -1,6 +1,6 @@
 ---
 name: economy-designer
-description: Use when balancing game economies, loot and progression.
+description: Balance game economies, loot and progression.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

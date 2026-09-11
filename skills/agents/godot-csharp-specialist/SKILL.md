@@ -1,6 +1,6 @@
 ---
 name: godot-csharp-specialist
-description: Use when writing or reviewing Godot 4 C# code.
+description: Write or review Godot 4 C# code.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

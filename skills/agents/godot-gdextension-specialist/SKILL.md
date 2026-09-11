@@ -1,6 +1,6 @@
 ---
 name: godot-gdextension-specialist
-description: Use when integrating native code via Godot GDExtension.
+description: Integrate native code via Godot GDExtension.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

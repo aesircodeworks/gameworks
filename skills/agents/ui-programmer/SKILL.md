@@ -1,6 +1,6 @@
 ---
 name: ui-programmer
-description: Use when implementing game menus, HUDs and UI systems.
+description: Implement game menus, HUDs and UI systems.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

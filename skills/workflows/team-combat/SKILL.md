@@ -1,6 +1,6 @@
 ---
 name: team-combat
-description: Use when coordinating combat design, code, and QA.
+description: Coordinate combat design, code, and QA.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

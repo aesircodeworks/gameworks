@@ -1,6 +1,6 @@
 ---
 name: test-evidence-review
-description: Use when reviewing story tests and manual QA evidence.
+description: Review story tests and manual QA evidence.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

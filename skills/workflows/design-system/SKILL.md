@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: Use when authoring a GDD for one game system.
+description: Author a GDD for one game system.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

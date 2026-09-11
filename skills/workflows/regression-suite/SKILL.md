@@ -1,6 +1,6 @@
 ---
 name: regression-suite
-description: Use when auditing and maintaining regression coverage.
+description: Audit and maintain regression coverage.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

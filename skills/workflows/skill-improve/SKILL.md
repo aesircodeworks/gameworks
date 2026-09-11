@@ -1,6 +1,6 @@
 ---
 name: skill-improve
-description: Use when improving a studio skill through test-fix loops.
+description: Improve a studio skill through test-fix loops.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
@@ -113,7 +113,8 @@ For each failing or warning **static** check, identify the exact gap:
 - **Check 5 warn** → no follow-up or next-step section at the end
 - **Check 6 warn** → `metadata.hermes.tags` missing or empty (no framework tag
   such as `aesir-gameworks`); `related_skills` is not a list
-- **Check 7 warn** → `description` is generic and does not state when to use
+- **Check 7 warn** → `description` starts with `Use when`, exceeds 57
+  characters, or is generic (repeats the skill name, or "A helper skill")
 - **Check 7 fail** → `description` is empty, or the skill copy-pastes Claude
   tools (`Glob`, `Grep`, `Read`, `Write`, `Edit`, `Task`) as invocables.
   Replace those with Hermes tools.
