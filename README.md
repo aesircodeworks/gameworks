@@ -26,7 +26,7 @@ The original MIT license and copyright notice are preserved in `LICENSE`. Aesir 
 ## Install
 
 ```bash
-hermes profile install /path/to/aesir-gameworks --name gamedev --force --yes
+hermes profile install /path/to/aesir-gameworks --name gameworks --force --yes
 ```
 
 Existing credentials, memories, sessions, and unrelated skills are not part of `distribution_owned` and must be preserved. Do not use `--force-config` against a configured profile.
@@ -35,20 +35,20 @@ Fresh installs activate the `gameworks` skin via `config.yaml` (`display.skin`).
 
 ## Update
 
-If `gamedev` was installed from this directory:
+If `gameworks` was installed from this directory:
 
 ```bash
-hermes profile update gamedev --yes
+hermes profile update gameworks --yes
 ```
 
-Confirm the recorded source with `hermes profile info gamedev`. If there is no source, use `install --force` again. Do not pass `--force-config` unless you want to reset local `config.yaml`.
+Confirm the recorded source with `hermes profile info gameworks`. If there is no source, use `install --force` again. Do not pass `--force-config` unless you want to reset local `config.yaml`.
 
 ## Use
 
 Work in a **game workspace**, not this repository.
 
 1. Create or open the game project directory.
-2. Run Hermes as `gamedev`.
+2. Run Hermes as `gameworks`.
 3. Load `/gameworks` or start with `/studio-start`.
 
 Design work follows Question → Options → Decision → Draft → Approval → Write.
@@ -61,9 +61,9 @@ Load skill-bundled files with `skill_view('skill-name', file_path='...')`. Never
 
 ## Develop this profile
 
-Root `AGENTS.md` is for agents working **on this distribution**. It is not installed into `gamedev`. Read `CONTRIBUTING.md` before editing skills or hooks.
+Root `AGENTS.md` is for agents working **on this distribution**. It is not installed into `gameworks`. Read `CONTRIBUTING.md` before editing skills or hooks.
 
-On behavior, skill, hook, or packaging changes, note them under `CHANGELOG.md` **Unreleased**. To ship, say **release** and follow `CONTRIBUTING.md` ## Release (bump `distribution.yaml`, fold Unreleased, commit, `hermes profile update gamedev`).
+On behavior, skill, hook, or packaging changes, note them under `CHANGELOG.md` **Unreleased**. To ship, say **release** and follow `CONTRIBUTING.md` ## Release (bump `distribution.yaml`, fold Unreleased, commit, `hermes profile update gameworks`).
 
 ## Session continuity
 

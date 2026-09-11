@@ -31,7 +31,7 @@ Do not bump every skill's frontmatter `version` unless that skill's contract cha
 
 Run this when the user says release, ship, create a release, or bump the version. This is a distribution ship, not a game `/team-release`.
 
-**Shipped** = named `distribution.yaml` version + folded changelog + commit + `gamedev` profile updated from this tree.
+**Shipped** = named `distribution.yaml` version + folded changelog + commit + `gameworks` profile updated from this tree.
 
 1. Confirm this repo is the distribution (`distribution.yaml` at the root, `skills/studio/` present). If this is a game workspace, stop.
 2. Read `distribution.yaml` (`version`, `hermes_requires`), `CHANGELOG.md` **Unreleased**, and `git status` / `git diff`.
@@ -44,11 +44,11 @@ Run this when the user says release, ship, create a release, or bump the version
 6. Set `distribution.yaml` `version:` to the new number.
 7. Move Unreleased bullets under `## X.Y.Z — <short title>`. Leave an empty `## Unreleased` heading above it.
 8. Commit `distribution.yaml`, `CHANGELOG.md`, and the files that belong to this version. Do not commit `.grok/`, `.env`, `auth.json`, memories, or sessions.
-9. Point `gamedev` at this tree:
-   - `hermes profile info gamedev` — if the recorded source is this directory, run `hermes profile update gamedev --yes`
-   - otherwise `hermes profile install <this-repo-path> --name gamedev --force --yes`
+9. Point `gameworks` at this tree:
+   - `hermes profile info gameworks` — if the recorded source is this directory, run `hermes profile update gameworks --yes`
+   - otherwise `hermes profile install <this-repo-path> --name gameworks --force --yes`
    - Do not pass `--force-config` unless the user asked to reset `config.yaml`
-10. Report: new version, changelog heading, commit, whether `gamedev` was updated.
+10. Report: new version, changelog heading, commit, whether `gameworks` was updated.
 
 Do not create a GitHub Release, git tag, or CI job unless the user asked for one.
 

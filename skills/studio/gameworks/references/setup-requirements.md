@@ -11,7 +11,7 @@ you'll lose validation features.
 | Tool | Purpose | Install |
 | ---- | ---- | ---- |
 | **Git** | Version control, branch management | [git-scm.com](https://git-scm.com/) |
-| **Hermes Agent** | AI agent CLI | Install Hermes, then `hermes profile install /path/to/this-distribution --name gamedev --force --yes` |
+| **Hermes Agent** | AI agent CLI | Install Hermes, then `hermes profile install /path/to/this-distribution --name gameworks --force --yes` |
 
 ## Recommended
 

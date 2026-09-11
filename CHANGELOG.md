@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Hermes profile name in docs is `gameworks`. `SOUL.md` identity is a studio-lead role, not the product name. Skill frontmatter author is `Hermes adaptation by Aesir Codeworks`; tags stay `aesir-gameworks`. Hook session strings use `Gameworks session:` / `Gameworks gap check`.
 - Default `agent.verify_on_stop` to `false` so stop does not run the upstream verify pass.
 - Removed the session-end macOS toast (`notify-session.sh`). `session-end.sh` still appends `production/session-logs/sessions.jsonl`.
 - Ship the `gameworks` Hermes CLI/TUI skin (`skins/gameworks.yaml`) as distribution-owned. Fresh installs set `display.skin: gameworks`. The owned path is the skin file, not `skins/`, so user-added skins in that directory survive updates.
@@ -9,7 +10,7 @@
 - Skills no longer use spaced skill-folder path shorthands (`` `gameworks references/` ``, `` `project-templates templates/` ``, `` `framework-qa references/` ``). Hermes treated those as a write path (`gameworksreferences/`). Bundled files load via `skill_view('skill-name', file_path='...')`.
 - `/setup-engine` writes engine prefs only to the game-workspace file `docs/technical-preferences.md`. It copies the profile template through `skill_view`; it does not write into the installed profile.
 - Root `AGENTS.md` and `CONTRIBUTING.md` now state profile-development rules, including changelog + `distribution.yaml` version bumps. The root file is not `distribution_owned`.
-- Release is a documented procedure (`CONTRIBUTING.md` ## Release): bump `distribution.yaml`, fold Unreleased, commit, `hermes profile update gamedev`. No GitHub release or tag unless asked.
+- Release is a documented procedure (`CONTRIBUTING.md` ## Release): bump `distribution.yaml`, fold Unreleased, commit, `hermes profile update gameworks`. No GitHub release or tag unless asked.
 - README covers install, update, game-workspace use, and profile-development / release pointers.
 
 ## 1.1.0 — Hermes runtime alignment

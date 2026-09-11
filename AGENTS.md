@@ -11,4 +11,4 @@ On any behavior, skill, hook, or packaging change, note it under `CHANGELOG.md` 
 
 When the user says **release**, **ship**, **create a release**, or **bump the version**: follow `CONTRIBUTING.md` ## Release. Do not invent a GitHub release, git tag, or CI job. Do not wait for a second design discussion if Unreleased has items.
 
-Shipped means: `distribution.yaml` version bumped, Unreleased folded into that heading, commit on `main`, `gamedev` updated from this tree.
+Shipped means: `distribution.yaml` version bumped, Unreleased folded into that heading, commit on `main`, `gameworks` updated from this tree.
