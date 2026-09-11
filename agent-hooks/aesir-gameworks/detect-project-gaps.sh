@@ -16,5 +16,5 @@ cwd=$(aesir_json_get cwd)
 [ -z "$cwd" ] && cwd="."
 gaps=""
 [ -f "$cwd/design/gdd/game-concept.md" ] || gaps="${gaps}missing game-concept; "
-aesir_context "Aesir gap check (once): ${gaps:-no structural gaps detected}."
+aesir_context "Gameworks gap check (once): ${gaps:-no structural gaps detected}."
 exit 0

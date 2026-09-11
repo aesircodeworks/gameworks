@@ -26,7 +26,7 @@ if [ -f "$cwd/production/session-state/active.md" ]; then
 fi
 stage=""
 [ -f "$cwd/production/stage.txt" ] && stage=$(head -1 "$cwd/production/stage.txt" | tr -d '\r\n')
-msg="Aesir session: workspace=$cwd branch=$branch"
+msg="Gameworks session: workspace=$cwd branch=$branch"
 [ -n "$stage" ] && msg="$msg stage=$stage"
 [ -n "$sprint" ] && msg="$msg sprint=$sprint"
 msg="$msg active.md=$active"
