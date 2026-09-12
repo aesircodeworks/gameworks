@@ -1,7 +1,7 @@
 ---
 name: studio-help
 description: Choose the next game development step.
-version: 1.0.0
+version: 1.1.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT
 metadata:
@@ -20,42 +20,15 @@ metadata:
 
 **Model tier:** Light
 
-This skill is read-only — it reports findings but writes no files.
-
-This skill figures out exactly where you are in the game development pipeline and
-tells you what comes next. It is **lightweight** — not a full audit. For a full
-gap analysis, use `/project-stage-detect`.
+Read-only. Lightweight orientation, not a full audit. For a gap analysis, `/project-stage-detect`. Structural keyword COMPLETE is internal — do not print it. The printed done line is `studio-help done.`
 
 ---
 
 ## Step 1: Read the Catalog
 
-Read `skill_view('gameworks', file_path='references/workflow-catalog.yaml')`. This is the authoritative list of all
-phases, their steps (in order), whether each step is required or optional, and
-the artifact globs that indicate completion.
+Read `skill_view('gameworks', file_path='references/workflow-catalog.yaml')`. That list is authoritative for phases, step order, required vs optional, and artifact globs.
 
----
-
-## Step 1b: Find Skills Not in the Catalog
-
-Framework skills are not stored in the game workspace. Do not glob
-`(game-workspace)/skills/*/SKILL.md`.
-
-If this session can read the installed profile or this distribution, list
-`skills/workflows/*/SKILL.md` names whose `/name` is not a catalog `command:`.
-If those files are not reachable from the game workspace, skip the footer.
-
-Collect these for the output in Step 7 — show them as a footer block:
-
-```
-### Also installed (not in workflow)
-- `/skill-name` — [description from SKILL.md frontmatter]
-- `/skill-name` — [description]
-```
-
-Only show this block if at least one uncataloged skill exists. Limit to the 10
-most relevant based on the user's current phase (QA skills in production, team
-skills in production/polish, etc.).
+Do not glob `(game-workspace)/skills/*/SKILL.md`. Do not collect uncataloged skills. There is no "Also installed" footer.
 
 ---
 
@@ -63,8 +36,7 @@ skills in production/polish, etc.).
 
 Check in this order:
 
-1. **Read `production/stage.txt`** — if it exists and has content, this is the
-   authoritative phase name. Map it to a catalog phase key:
+1. **Read `production/stage.txt`** — if it has content, that is the phase. Map it:
    - "Concept" → `concept`
    - "Systems Design" → `systems-design`
    - "Technical Setup" → `technical-setup`
@@ -73,7 +45,7 @@ Check in this order:
    - "Polish" → `polish`
    - "Release" → `release`
 
-2. **If stage.txt is missing**, infer phase from artifacts (most-advanced match wins):
+2. **If stage.txt is missing**, infer from artifacts (most-advanced match wins):
    - `src/` has 10+ source files → `production`
    - `production/epics/` has files (EPIC.md or `story-*.md`) → `pre-production`
    - `docs/architecture/adr-*.md` exists → `technical-setup`
@@ -85,13 +57,7 @@ Check in this order:
 
 ## Step 3: Read Session Context
 
-Read `production/session-state/active.md` if it exists. Extract:
-- What was most recently worked on
-- Any in-progress tasks or open questions
-- Current epic/feature/task from STATUS block (if present)
-
-This tells you what the user just finished or is stuck on — use it to personalize
-the output.
+Read `production/session-state/active.md` if it exists. Extract the current artifact, in-progress task, and STATUS block. Use this for the Focus row and to name the Next target. Do not quote it as a paragraph.
 
 ---
 
@@ -104,134 +70,79 @@ For each step in the current phase (from the catalog):
 If the step has `artifact.glob`:
 - Use `search_files` with `file_glob` set to the catalog glob (game-workspace relative)
 - If `min_count` is specified, verify at least that many files match
-- If `artifact.pattern` is specified, use `search_files` with `query` equal to that pattern on the matched file
+- If `artifact.pattern` is specified, search that pattern on the matched file
 - **Complete** = artifact condition is met
 - **Incomplete** = artifact is missing or pattern not found
 
-If the step has `artifact.note` (no glob):
-- Mark as **MANUAL** — cannot auto-detect, will ask user
+If the step has `artifact.note` (no glob): read the file the note names when it is a path. Count statuses. Do not mark MANUAL if that file yields counts.
 
-If the step has no `artifact` field:
-- Mark as **UNKNOWN** — completion not trackable (e.g. repeatable implementation work)
+If the step has no `artifact` field: infer from the same counts when a later/earlier step in this phase already produced them (e.g. Designed vs Approved GDDs). Otherwise mark **UNKNOWN**.
 
-### Special case: production phase — read `sprint-status.yaml`
+Mark **MANUAL** only when there is no file or count to read.
 
-When the current phase is `production`, check for `production/sprint-status.yaml`
-before doing any glob-based story checks. If it exists, read it directly:
+### Production: `sprint-status.yaml`
 
-- Stories with `status: in-progress` → surface as "currently active"
-- Stories with `status: ready-for-dev` → surface as "next up"
-- Stories with `status: done` → count as complete
-- Stories with `status: blocked` → surface as blocker with the `blocker` field
+When the phase is `production` and `production/sprint-status.yaml` exists, read it before globbing stories.
 
-This gives precise per-story status without markdown scanning. Skip the glob
-artifact check for the `implement` and `story-done` steps — the YAML is authoritative.
+- `in-progress` → active work (Focus / Next target)
+- `ready-for-dev` → Next if nothing is in-progress
+- `done` → complete
+- `blocked` → include the `blocker` field in the fact line
 
-### Special case: `repeatable: true` (non-production)
+Skip glob checks for `implement` and `story-done` when the YAML exists.
 
-For repeatable steps outside production (e.g. "System GDDs"), the artifact
-check tells you whether *any* work has been done, not whether it's finished.
-Label these differently — show what's been detected, then note it may be ongoing.
+### Repeatable required steps
+
+Counts go on the fact line. Next is this step only while it still has a named item to *create*. Items that exist and wait on a later required step (review, approve) do not keep this step as Next.
+
+Systems Design: read `design/gdd/systems-index.md` and the GDD files. Missing GDD → `Next: /design-system  [system]`. GDD exists but not Approved → `Next: /design-review  [path]`. All MVP Approved → advance to `/review-all-gdds`.
 
 ---
 
-## Step 5: Find Position and Identify Next Steps
+## Step 5: Pick Next and Optional
 
-From the completion data, determine:
+From the completion data:
 
-1. **Last confirmed complete step** — the furthest completed required step
-2. **Current blocker** — the first incomplete *required* step (this is what the
-   user must do next)
-3. **Optional opportunities** — incomplete *optional* steps that can be done
-   before or alongside the blocker
-4. **Upcoming required steps** — required steps after the current blocker
-   (show as "coming up" so user can plan ahead)
+1. **Next** — the first incomplete *required* step. Exactly one.
+2. **Optional** — at most one incomplete *optional* catalog step that can run now and does not replace Next.
 
-If the user provided an argument (e.g. "just finished design-review"), use that
-to advance past the step they named even if the artifact check is ambiguous.
+If catalog text says the optional runs after a still-incomplete required step, omit it — unless session state queued it now; then keep it and append `(does not replace /command)`.
 
----
+If the user named a just-finished step (e.g. "just finished design-review"), advance past that step when the artifact check is ambiguous.
 
-## Step 6: Check for In-Progress Work
+`clarify` only when Next would be **MANUAL** and there is no count or file evidence. Do not `clarify` after the report.
 
-If `active.md` shows an active task or epic:
-- Surface it prominently at the top: "It looks like you were working on [X]"
-- Suggest continuing it or confirm if it's done
+If the user passed a topic (`/studio-help testing`): facts stay. Next is the topic skill only when it can run now; otherwise Next stays the required step and the topic skill may appear as Optional under the same Optional rules. Do not list multiple topic skills.
+
+Do not print upcoming required steps. `/gate-check` appears only when it *is* Next.
 
 ---
 
-## Step 7: Present Output
+## Step 6: Present Output
 
-Keep it **short and direct**. This is a quick orientation, not a report.
+Print only this shape. No headings, no Done list, no Coming up, no gate warning, no "fresh session", no skill catalog.
 
 ```
-## Where You Are: [Phase Label]
+Phase  [Phase Label]
+[Noun] [counts or named status — 1–2 lines, current phase only]
+Focus  [path] — [short status]
 
-**In progress:** [from active.md, if any]
+Next: /command  [named target]
 
-### ✓ Done
-- [completed step name]
-- [completed step name]
+Optional: /command (does not replace /next-command)
 
-### → Next up (REQUIRED)
-**[Step name]** — [description]
-Command: `[/command]`
-
-### ~ Also available (OPTIONAL)
-- **[Step name]** — [description] → `/command`
-- **[Step name]** — [description] → `/command`
-
-### Coming up after that
-- [Next required step name] (`/command`)
-- [Next required step name] (`/command`)
-
----
-Approaching **[next phase]** gate → run `/gate-check` when ready.
+studio-help done.
 ```
 
-**Formatting rules:**
-- `✓` for confirmed complete
-- `→` for the current required next step (only one — the first blocker)
-- `~` for optional steps available now
-- Show commands inline as backtick code
-- If a step has no command (e.g. "Implement Stories"), explain what to do instead of showing a slash command
-- For MANUAL steps, ask the user: "I can't tell if [step] is done — has it been completed?"
+**Rows**
 
-Verdict: **COMPLETE** — next steps identified.
+- `Phase` always.
+- 1–2 fact lines after it: counts or named artifacts for this phase only (`GDDs  8 written · 1 approved (Economy) · 7 Designed`, `Sprint  4 · 3 in-progress · 1 blocked`, `Concept  missing`). Never a completed-step list.
+- `Focus` only when `active.md` or an in-progress artifact exists. Omit the row otherwise.
+- `Next:` exactly one row, always prefixed `Next:`. If the catalog step has `command:`, print `Next: /command  [named target]`. If it has no command (e.g. `accessibility-doc`), print `Next: [imperative]  [named path]` — still that one row, never a paragraph or a second recommendation.
+- `Optional:` at most one line. Omit the row when nothing qualifies.
+- Done line last, exactly: `studio-help done.` Print nothing after it.
 
----
+Never auto-run the next skill.
 
-## Step 8: Gate Warning (if close)
-
-After the current phase's steps, check if the user is likely approaching a gate:
-- If all required steps in the current phase are complete (or nearly complete),
-  add: "You're close to the **[Current] → [Next]** gate. Run `/gate-check` when ready."
-- If multiple required steps remain, skip the gate warning — it's not relevant yet.
-
----
-
-## Step 9: Escalation Paths
-
-After the recommendations, if the user seems stuck or confused, add:
-
-```
----
-Need more detail?
-- `/project-stage-detect` — full gap analysis with all missing artifacts listed
-- `/gate-check` — formal readiness check for your next phase
-- `/studio-start` — re-orient from scratch
-```
-
-Only show this if the user's input suggested confusion (e.g. "I don't know", "stuck",
-"lost", "not sure"). Don't show it for simple "what's next?" queries.
-
----
-
-## Collaborative Protocol
-
-- **Never auto-run the next skill.** Recommend it, let the user invoke it.
-- **Ask about MANUAL steps** rather than assuming complete or incomplete.
-- **Match the user's tone** — if they sound stressed ("I'm totally lost"), be
-  reassuring and give one action, not a list of six.
-- **One primary recommendation** — the user should leave knowing exactly one thing
-  to do next. Optional steps and "coming up" are secondary context.
+If nothing exists to infer (no stage.txt, no concept, no engine pin): `Phase  Concept`, fact `Concept  missing`, `Next: /studio-start`. Do not print a full workflow map.

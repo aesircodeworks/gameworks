@@ -6,15 +6,11 @@
 
 ## Skill Summary
 
-`/studio-help` analyzes what has been done and what comes next in the project workflow.
-It runs on model tier Light (read-only, formatting task) and reads `production/stage.txt`,
-the active sprint file, and recent session state to produce a concise situational
-guidance summary. The skill optionally accepts a context query (e.g., `/studio-help testing`)
-to surface relevant skills for a specific topic.
+`/studio-help` is a read-only navigator. It reads `production/stage.txt`, catalog artifacts, and session state, then prints a fact block, exactly one Next, at most one Optional, and `studio-help done.`
 
-The output is always informational — no files are written and no director gates
-are invoked. The verdict is always HELP COMPLETE. The skill serves as a workflow
-navigator, suggesting 2-3 next skills based on the current project state.
+It is not a full audit (`/project-stage-detect`) and not a sprint snapshot (`/sprint-status`). A topic argument (e.g. `/studio-help testing`) may retarget Next or Optional; it does not print a skill list.
+
+No files are written. No director gates. Verdict line is always `studio-help done.`
 
 ---
 
@@ -24,9 +20,11 @@ Verified automatically by `/skill-test static` — no fixture needed.
 
 - [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings
-- [ ] Contains verdict keyword: HELP COMPLETE
+- [ ] Contains verdict keyword: COMPLETE
+- [ ] Instructs the done line `studio-help done.`
 - [ ] Does NOT contain "May I write" language (skill is read-only)
-- [ ] Has a next-step handoff (suggests 2-3 relevant skills based on state)
+- [ ] Does NOT instruct "Also installed", "Where You Are", "Coming up", or "fresh session"
+- [ ] Has a next-step handoff: exactly one `Next:` line in the output template
 
 ---
 
@@ -48,71 +46,72 @@ None. `/studio-help` is a read-only navigation skill. No director gates apply.
 **Input:** `/studio-help`
 
 **Expected behavior:**
-1. Skill reads stage.txt and active sprint
-2. Skill identifies current sprint number and in-progress story count
-3. Skill outputs: current stage, sprint summary, and 3 suggested next skills
-   (e.g., `/sprint-status`, `/dev-story`, `/story-done`)
-4. Suggestions are ranked by relevance to current sprint state
-5. Verdict is HELP COMPLETE
+1. Skill reads stage.txt and sprint / `sprint-status.yaml`
+2. Output matches the fact / Next / Optional / done shape
+3. `Phase  Production` is present
+4. A Sprint fact line includes the sprint identity and in-progress count
+5. `Focus` names the active artifact when `active.md` has one
+6. Exactly one `Next:` line, a Production command with a named story or path (e.g. `/dev-story`)
+7. No Done list, Coming up, Also installed, or gate warning
+8. Last line is `studio-help done.`
 
 **Assertions:**
-- [ ] Current stage is shown (Production)
-- [ ] Active sprint number and story count are mentioned
-- [ ] Exactly 2-3 next-skill suggestions are given (not a list of all skills)
-- [ ] Suggestions are appropriate for Production stage
-- [ ] Verdict is HELP COMPLETE
+- [ ] Current stage is shown as `Phase  Production`
+- [ ] Sprint identity and in-progress count appear on a fact line
+- [ ] Exactly one `Next:` line
+- [ ] Next is a Production-stage command with a named target
+- [ ] Output has no "Also installed", "Coming up", or "✓ Done"
+- [ ] Last line is `studio-help done.`
 - [ ] No files are written
 
 ---
 
-### Case 2: Concept Stage — Shows concept-to-systems-design workflow path
+### Case 2: Concept Stage — Engine set, concept missing
 
 **Fixture:**
 - `production/stage.txt` contains `Concept`
 - No sprint files, no GDD files
-- `technical-preferences.md` is configured (engine selected)
+- `docs/technical-preferences.md` is configured (engine selected)
 
 **Input:** `/studio-help`
 
 **Expected behavior:**
-1. Skill reads stage.txt — detects Concept stage
-2. Skill outputs the Concept-stage workflow: brainstorm → map-systems → design-system
-3. Suggested skills are: `/brainstorm`, `/map-systems` (if concept exists)
-4. Current progress is noted: "Engine configured, concept not yet created"
+1. Skill reads stage.txt — Concept
+2. Fact lines cover engine / concept status, not a workflow map
+3. `Next:` is `/brainstorm` or `/setup-engine` as the first incomplete required step
+4. No Production-stage commands as Next
 
 **Assertions:**
-- [ ] Stage is identified as Concept
-- [ ] Workflow path shows the expected sequence for this stage
-- [ ] Suggestions do not include Production-stage skills (e.g., `/dev-story`)
-- [ ] Verdict is HELP COMPLETE
+- [ ] Stage is `Phase  Concept`
+- [ ] Fact lines note concept missing and/or engine configured
+- [ ] Exactly one `Next:` line; not `/dev-story`
+- [ ] Last line is `studio-help done.`
 
 ---
 
-### Case 3: No stage.txt — Shows full workflow overview
+### Case 3: No stage.txt — Fresh project
 
 **Fixture:**
 - No `production/stage.txt`
 - No sprint files
-- `technical-preferences.md` has placeholders
+- `docs/technical-preferences.md` has placeholders or is absent
 
 **Input:** `/studio-help`
 
 **Expected behavior:**
-1. Skill cannot determine stage from stage.txt
-2. Skill runs project-stage-detect logic to infer stage from artifacts
-3. If stage cannot be inferred: outputs the full workflow overview from
-   Concept through Release as a reference map
-4. Primary suggestion is `/studio-start` to begin configuration
+1. Skill infers Concept from missing artifacts
+2. Does not print a Concept-through-Release map
+3. `Next: /studio-start`
 
 **Assertions:**
 - [ ] Skill does not crash when stage.txt is absent
-- [ ] Full workflow overview is shown when stage cannot be determined
-- [ ] `/studio-start` or `/project-stage-detect` is a top suggestion
-- [ ] Verdict is HELP COMPLETE
+- [ ] No full workflow overview
+- [ ] `Next: /studio-start`
+- [ ] Last line is `studio-help done.`
 
 ---
 
-### Case 4: Context Query — User asks for help with testing
+### Case 4: Topic query — testing
 
 **Fixture:**
 - `production/stage.txt` contains `Production`
@@ -121,17 +120,17 @@ None. `/studio-help` is a read-only navigation skill. No director gates apply.
 **Input:** `/studio-help testing`
 
 **Expected behavior:**
-1. Skill reads context query: "testing"
-2. Skill surfaces skills relevant to testing: `/qa-plan`, `/smoke-check`,
-   `/regression-suite`, `/test-setup`, `/test-evidence-review`
-3. Output is focused on testing workflow, not general sprint navigation
-4. Currently in-review story is highlighted as a testing candidate
+1. Facts stay Production (sprint / focus)
+2. Next is one testing command that can run now (e.g. `/test-evidence-review` on the in-review story), or Next stays the required step and the testing command is Optional
+3. Does not list three testing skills
+4. Does not make `/sprint-plan` Next
 
 **Assertions:**
-- [ ] Context query is acknowledged in output ("Help topic: testing")
-- [ ] At least 3 testing-relevant skills are listed
-- [ ] General sprint skills (e.g., `/sprint-plan`) are not the primary suggestions
-- [ ] Verdict is HELP COMPLETE
+- [ ] `Phase  Production` is present
+- [ ] Exactly one `Next:` line
+- [ ] Next or Optional is a testing-relevant command with a named target
+- [ ] No list of 3+ testing skills
+- [ ] Last line is `studio-help done.`
 
 ---
 
@@ -143,7 +142,7 @@ None. `/studio-help` is a read-only navigation skill. No director gates apply.
 **Input:** `/studio-help`
 
 **Expected behavior:**
-1. Skill produces workflow guidance summary
+1. Skill prints the fact / Next / done shape
 2. No director agents are spawned
 3. No gate IDs appear in output
 4. No write tool is called
@@ -152,25 +151,51 @@ None. `/studio-help` is a read-only navigation skill. No director gates apply.
 - [ ] No director gate is invoked
 - [ ] No write tool is called
 - [ ] No gate skip messages appear
-- [ ] Verdict is HELP COMPLETE without any gate check
+- [ ] Last line is `studio-help done.` without a gate check
+
+---
+
+### Case 6: Systems Design — facts then one review
+
+**Fixture:**
+- `production/stage.txt` contains `Systems Design`
+- Eight GDDs written; one Approved; seven Designed
+- `production/session-state/active.md` points at `design/gdd/audio.md` with review queued
+
+**Input:** `/studio-help`
+
+**Expected behavior:**
+1. `Phase  Systems Design`
+2. One GDD fact line with written / approved / Designed counts (named approved system)
+3. `Focus  design/gdd/audio.md — review queued`
+4. Does not `clarify` on `design-system`; index/GDD counts are enough
+5. `Next: /design-review  design/gdd/audio.md`
+6. Optional `/consistency-check` only if it can run now; if catalog order is after an incomplete `/review-all-gdds` and session queued it, include `(does not replace /design-review)`
+7. No `/review-all-gdds` or `/gate-check` except as Next when that step is the blocker
+8. No "fresh session"
+
+**Assertions:**
+- [ ] Fact line is counts, not a Done list
+- [ ] Next names `design/gdd/audio.md`
+- [ ] Does not `clarify`
+- [ ] `/gate-check` and `/review-all-gdds` are absent unless they are Next
+- [ ] Last line is `studio-help done.`
 
 ---
 
 ## Protocol Compliance
 
-- [ ] Reads stage, sprint, and session state before generating suggestions
-- [ ] Suggestions are specific to the current project state (not generic)
-- [ ] Context query (if provided) narrows the suggestion set
+- [ ] Reads stage, sprint, and session state before printing
+- [ ] Output is facts + one `Next:` row + optional Optional + `studio-help done.`
+- [ ] A required catalog step with no `command:` still uses `Next: [imperative]  [named path]`, not a paragraph
+- [ ] Topic query does not expand into a skill list
 - [ ] Does not write any files
-- [ ] Verdict is HELP COMPLETE in all cases
+- [ ] Last line is `studio-help done.` in all cases
 
 ---
 
 ## Coverage Notes
 
-- The case where the active sprint is complete (all stories Done) is not
-  separately tested; the skill would suggest `/sprint-plan` for the next sprint.
-- The `/studio-help` skill does not validate whether suggested skills are available —
-  it assumes standard skill catalog availability.
-- Stage detection fallback (when stage.txt is absent) delegates to the same
-  logic as `/project-stage-detect` and is not re-tested here in detail.
+- A completed sprint (all stories Done) is not separately tested; Next would be `/sprint-plan`.
+- The skill does not validate that suggested skills are installed.
+- Stage fallback when stage.txt is absent uses the same inference as `/project-stage-detect` and is not re-tested in detail.
