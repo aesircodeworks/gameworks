@@ -19,7 +19,7 @@ skills/quality/framework-qa/
 ├── references/
 │   ├── README.md              ← you are here
 │   ├── authoring-policy.md    ← how to run tests and where files live
-│   ├── catalog.yaml           ← master registry: 73 workflow skills + 49 role skills
+│   ├── catalog.yaml           ← master registry: 73 workflow skills + 50 role skills
 │   ├── quality-rubric.md      ← category-specific pass/fail metrics for /skill-test category
 │   └── results/               ← test run outputs (written by /skill-test spec, gitignored)
 └── templates/
@@ -66,7 +66,7 @@ a game workspace. Game workspaces have no `skills/` tree.
 ### See full coverage picture
 
 ```
-/skill-test audit                   # 73 workflow + 49 role: has-spec, last tested, result
+/skill-test audit                   # 73 workflow + 50 role: has-spec, last tested, result
 ```
 
 ### Improve a failing skill
@@ -103,6 +103,7 @@ a game workspace. Game workspaces have no `skills/` tree.
 | `godot` | godot-specialist, godot-gdscript-specialist, godot-csharp-specialist, godot-shader-specialist, godot-gdextension-specialist |
 | `unity` | unity-specialist, unity-ui-specialist, unity-shader-specialist, unity-dots-specialist, unity-addressables-specialist |
 | `unreal` | unreal-specialist, ue-gas-specialist, ue-replication-specialist, ue-umg-specialist, ue-blueprint-specialist |
+| `threejs` | threejs-specialist |
 | `operations` | devops-engineer, security-engineer, performance-analyst, analytics-engineer, community-manager |
 | `creative` | writer, world-builder, game-designer, economy-designer, systems-designer, prototyper |
 

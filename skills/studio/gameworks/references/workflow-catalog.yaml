@@ -17,7 +17,7 @@ phases:
       required: true
       artifact:
         glob: docs/technical-preferences.md
-        pattern: 'Engine\*\*: (Godot|Unity|Unreal)'
+        pattern: 'Engine\*\*: (Godot|Unity|Unreal|Three\.js)'
       description: Configure engine, pin version, set naming conventions and performance
         budgets
     - id: game-concept

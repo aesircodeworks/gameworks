@@ -50,6 +50,8 @@
       godot-csharp-specialist      -- C#: .NET patterns, [Signal] delegates, async, type-safe node access
       godot-shader-specialist      -- Shaders: Godot shading language, visual shaders, VFX
       godot-gdextension-specialist -- Native: C++/Rust bindings, GDExtension, build systems
+
+    threejs-specialist -- Three.js lead: WebGPURenderer, TSL, glTF, color, loop (no sub-roles)
 ```
 
 ### Legend

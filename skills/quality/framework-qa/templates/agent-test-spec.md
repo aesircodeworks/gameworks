@@ -2,7 +2,7 @@
 
 # Agent Spec: [agent-name]
 
-> **Tier**: [directors | leads | specialists | godot | unity | unreal | operations | creative]
+> **Tier**: [directors | leads | specialists | godot | unity | unreal | threejs | operations | creative]
 > **Category**: [director | lead | specialist | engine | operations | creative]
 > **Spec written**: [YYYY-MM-DD]
 > **Role skill**: `skills/agents/[name]/SKILL.md`

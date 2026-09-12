@@ -43,7 +43,7 @@ Start with the matching task workflow or path rule; load additional relevant ski
 | Audio | `team-audio` or `asset-spec` | `audio-director` for direction; `sound-designer` for assets |
 | Game design | `quick-design` or `design-system` | `game-designer`; `systems-designer` for interacting mechanics |
 | Framework/Hermes | `framework-qa`; installed `hermes-agent` for runtime questions | `tools-programmer` for framework tooling; keep game workspaces separate |
-| Engine APIs | `engine-reference` | Existing Godot, Unity, or Unreal specialist matching the requested API |
+| Engine APIs | `engine-reference` | Existing Godot, Unity, Unreal, or Three.js specialist matching the requested API |
 
 ## Linked references
 

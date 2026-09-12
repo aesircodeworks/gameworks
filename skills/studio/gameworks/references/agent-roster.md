@@ -62,6 +62,7 @@ domain lead) should delegate to specialists.
 | `unreal-specialist` | Unreal Engine 5 | Medium | Blueprint vs C++, GAS overview, UE subsystems, Unreal optimization |
 | `unity-specialist` | Unity | Medium | MonoBehaviour vs DOTS, Addressables, URP/HDRP, Unity optimization |
 | `godot-specialist` | Godot 4 | Medium | GDScript patterns, node/scene architecture, signals, Godot optimization |
+| `threejs-specialist` | Three.js | Medium | WebGPURenderer, TSL, scene graph, glTF, color management, loop/dispose; no sub-roles |
 
 ### Unreal Engine Sub-Specialists
 

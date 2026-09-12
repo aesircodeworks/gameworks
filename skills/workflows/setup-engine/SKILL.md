@@ -24,8 +24,8 @@ When this skill is invoked:
 
 Four modes:
 
-- **Full spec**: `/setup-engine godot 4.6` — engine and version provided
-- **Engine only**: `/setup-engine unity` — engine provided, version will be looked up
+- **Full spec**: `/setup-engine godot 4.6` — engine and version provided (also `threejs r186` / `threejs 0.186.0 r3f`)
+- **Engine only**: `/setup-engine unity` — engine provided, version will be looked up (`threejs` is valid; `threejs r3f` selects the R3F app layer)
 - **No args**: `/setup-engine` — fully guided mode (engine recommendation + version)
 - **Refresh**: `/setup-engine refresh` — update reference docs (see Section 10)
 - **Upgrade**: `/setup-engine upgrade [old-version] [new-version]` — migrate to a new engine version (see Section 11)
@@ -48,7 +48,7 @@ If no engine is specified, run an interactive engine selection process:
 
 **Question 1 — Prior experience** (ask this first, always, via `clarify`):
 - Prompt: "Have you worked in any of these engines before?"
-- Options: `Godot` / `Unity` / `Unreal Engine 5` / `Multiple — I'll explain` / `None of them`
+- Options: `Godot` / `Unity` / `Unreal Engine 5` / `Three.js` / `Multiple — I'll explain` / `None of them`
 - If they pick a specific engine → recommend that engine. Prior experience outweighs all other factors. Confirm with them and skip the matrix.
 - If "None" or "Multiple" → continue to the questions below.
 
@@ -58,11 +58,11 @@ If no engine is specified, run an interactive engine selection process:
 - Prompt: "What platforms are you targeting for this game?"
 - Options: `PC (Steam / Epic)` / `Mobile (iOS / Android)` / `Console` / `Web / Browser` / `Multiple platforms`
 - Platform rules that feed directly into the recommendation:
-  - Mobile → Unity strongly preferred; Unreal is a poor fit; Godot is viable for simple mobile
-  - Console → Unity or Unreal; Godot console support requires third-party publishers or significant extra work
-  - Web → Godot exports cleanly to web; Unity WebGL is functional; Unreal has poor web support
-  - PC only → all engines viable; other factors decide
-  - Multiple → Unity is the most portable across PC/mobile/console
+  - Mobile → Unity strongly preferred; Unreal is a poor fit; Godot is viable for simple mobile; Three.js is mobile *web* only
+  - Console → Unity or Unreal; Godot console support requires third-party publishers or significant extra work; Three.js is not a console engine
+  - Web → Three.js is native (WebGPU default, WebGL 2 fallback); Godot exports cleanly to web; Unity WebGL is functional; Unreal has poor web support
+  - PC only → Godot, Unity, Unreal all viable; Three.js needs a wrapper (Electron) for a desktop SKU
+  - Multiple → Unity is the most portable across PC/mobile/console; Three.js is web-first only
 
 1. **What kind of game?** (2D, 3D, or both?)
 2. **Primary input method?** (keyboard/mouse, gamepad, touch, or mixed?)
@@ -94,13 +94,20 @@ Do NOT use a simple scoring matrix that eliminates engines. Instead, reason thro
 - Licensing reality: 5% royalty only applies AFTER $1M gross revenue per title. For a first game or any game that doesn't reach $1M, it costs nothing. This threshold is high enough that most indie developers will never pay it.
 - Best fit: AAA-quality 3D; large open-world games; photorealistic visuals; developers with C++ experience or willing to use Blueprint; games targeting high-end PC/console where visual fidelity is a core selling point
 
+**Three.js**
+- Genuine strengths: Web-first 3D; MIT; tiny core vs a studio engine; glTF-native; Vite iteration; no revenue share; you own the stack
+- Real limitations: Not a game engine — no editor, physics, InputMap, HUD toolkit, navmesh, or netcode. You assemble those. No console SKU. Mobile WebGPU support varies; thermal/memory limits remain (WebGL 1 dropped in r163)
+- Licensing reality: MIT. No install or revenue gate
+- Best fit: Browser games, 3D marketing, WebXR, prototypes that must ship on the web. TypeScript developers. Poor fit for offline console SKUs or teams that need an editor
+
 **Genre-specific guidance** (factor this into the recommendation):
 - 2D any style → Godot strongly preferred
 - 3D stylized / atmospheric / contained world → Godot viable, Unity solid alternative
 - 3D open world (large, seamless) → Unity or Unreal; Godot is not production-proven for this
 - 3D photorealistic / AAA-quality → Unreal
+- 3D in the browser → Three.js
 - Mobile-first → Unity strongly preferred
-- Console-first → Unity or Unreal; Godot console support requires extra work
+- Console-first → Unity or Unreal; Godot console support requires extra work; not Three.js
 - Horror / narrative / walking sim → any engine; match to art style and team experience
 - Action RPG / Soulslike → Unity or Unreal for 3D; community support and assets matter here
 - Platformer 2D → Godot
@@ -132,7 +139,10 @@ Once the engine is chosen:
 - If version was provided, use it
 - If no version provided, use web_search to find the latest stable release:
   - Search: `"[engine] latest stable version [current year]"`
+  - For Three.js also check npm `three` (`rNNN` = `0.NNN.0`)
   - Confirm with the user: "The latest stable [engine] is [version]. Use this?"
+  - Accept `/setup-engine threejs`, `three.js`, or `three` as the same engine (slug `threejs`)
+  - Accept a Three.js app-layer token `r3f` / `react` (Vanilla vs React Three Fiber). If omitted, ask in Section 4.
 
 ---
 
@@ -151,6 +161,19 @@ If Godot was chosen, ask the user which language to use **before** showing the p
 > Which will this project primarily use?"
 
 Record the choice. It determines the AGENTS.md template, naming conventions, specialist routing, and which agent is spawned for code files throughout the project.
+
+### App layer (Three.js only)
+
+If Three.js was chosen, ask which app layer to use **before** showing the proposed Technology Stack, unless the invocation already included `r3f` / `react` (use R3F) or `vanilla` (use Vanilla):
+
+> "Three.js app layer:
+>
+>   **A) Vanilla (Recommended)** — TypeScript + Vite + `WebGPURenderer` from `three/webgpu`. Official three.js path. Fastest to reason about.
+>   **B) React Three Fiber** — React + `@react-three/fiber` wrapping the same pinned `three`. Use if the team already thinks in React. Still WebGPU by default; HUD stays DOM unless you later add drei Html for world labels.
+>
+> Which will this project use?"
+
+Record the choice. It determines the AGENTS.md template, Allowed Libraries (`@react-three/fiber` only when R3F is chosen), and whether agents may emit JSX/`Canvas`.
 
 ---
 
@@ -178,6 +201,8 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 - **Build System**: Unreal Build Tool (UBT)
 - **Asset Pipeline**: Unreal Content Pipeline
 ```
+
+**For Three.js** — use the template matching the app layer chosen above. See **Appendix B**.
 
 ---
 
@@ -218,6 +243,8 @@ Fill in:
 - Booleans: `b` prefix (e.g., `bIsAlive`)
 - Files: Match class without prefix (e.g., `PlayerController.h`)
 
+**For Three.js** — see **Appendix B** for Vanilla vs R3F variants.
+
 ### Input & Platform Section
 
 Populate `## Input & Platform` using the answers gathered in Section 2 (or extracted
@@ -256,11 +283,11 @@ Example filled section:
   - Prompt: "Should I set default performance budgets now, or leave them for later?"
   - Options: `[A] Set defaults now (60fps, 16.6ms frame budget, engine-appropriate draw call limit)` / `[B] Leave as [TO BE CONFIGURED] — I'll set these when I know my target hardware`
   - If [A]: populate with the suggested defaults. If [B]: leave as placeholder.
-- **Testing**: Suggest engine-appropriate framework (GUT for Godot, NUnit for Unity, etc.) — ask before adding.
+- **Testing**: Suggest engine-appropriate framework (GdUnit4 for Godot, NUnit for Unity, Vitest + Playwright for Three.js, etc.) — ask before adding.
 - **Forbidden Patterns**: Leave as placeholder — do NOT pre-populate.
 - **Allowed Libraries**: Leave as placeholder — do NOT pre-populate dependencies the project does not currently need. Only add a library here when it is actively being integrated, not speculatively.
 
-> **Guardrail**: Never add speculative dependencies to Allowed Libraries. For example, do NOT add GodotSteam unless Steam integration is actively beginning in this session. Post-launch integrations should be added to Allowed Libraries when that work begins, not during engine setup.
+> **Guardrail**: Never add speculative dependencies to Allowed Libraries. For example, do NOT add GodotSteam unless Steam integration is actively beginning in this session. Post-launch integrations should be added to Allowed Libraries when that work begins, not during engine setup. Exception: when the user chose **Three.js + React Three Fiber**, add `@react-three/fiber` (and `react` / `react-dom`) because that is the app layer being integrated now. Do **not** add `@react-three/drei` until a helper from it is actually used. Do **not** add R3F packages on the Vanilla path.
 
 ### Engine Specialists Routing
 
@@ -313,11 +340,16 @@ Also populate the `## Engine Specialists` section in `technical-preferences.md` 
 | General architecture review | unreal-specialist |
 ```
 
+**For Three.js** — see **Appendix B** for Vanilla vs R3F routing tables.
+
 ### Collaborative Step
 Present the filled-in preferences to the user. For Godot, include the chosen language and note where the full naming conventions and routing tables live:
 > "Here are the default technical preferences for [engine] ([language if Godot]). The naming conventions and specialist routing are in Appendix A of this skill — I'll apply the [GDScript/C#/Both] variant. Want to customize any of these, or shall I save the defaults?"
 
-For all other engines, present the defaults directly without referencing the appendix.
+For Three.js, include the chosen app layer:
+> "Here are the default technical preferences for Three.js ([Vanilla|React Three Fiber]). Naming and routing are in Appendix B — I'll apply that variant. Want to customize any of these, or shall I save the defaults?"
+
+For Unity and Unreal, present the defaults directly without referencing an appendix.
 
 Wait for approval before writing the file.
 
@@ -332,6 +364,7 @@ Check whether the engine version is likely beyond the LLM's training data.
 - Godot: training data likely covers up to ~4.3
 - Unity: training data likely covers up to ~2023.x / early 6000.x
 - Unreal: training data likely covers up to ~5.3 / early 5.4
+- Three.js: training data likely covers up to ~r176 / early r177; r178+ is HIGH RISK
 
 Compare the user's chosen version against these baselines:
 
@@ -372,7 +405,9 @@ add context cost with minimal value.
 
 ### If BEYOND training data (MEDIUM or HIGH RISK):
 
-Create the full reference doc set by searching the web:
+If the profile already has `skill_view('engine-reference', file_path='references/<engine>/VERSION.md')`, copy that snapshot into the game workspace (`docs/engine-reference/<engine>/`) as the starting set, then web_search only for changes newer than the snapshot's Last verified date.
+
+Otherwise create the full reference doc set by searching the web:
 
 1. **Search for the official migration/upgrade guide**:
    - `"[engine] [old version] to [new version] migration guide"`
@@ -571,7 +606,7 @@ After setup is complete, output:
 Engine Setup Complete
 =====================
 Engine:          [name] [version]
-Language:        [GDScript | C# | GDScript + C# | C# | C++ + Blueprint]
+Language:        [GDScript | C# | GDScript + C# | C# | C++ + Blueprint | TypeScript | TypeScript + React (R3F)]
 Knowledge Risk:  [LOW/MEDIUM/HIGH]
 Reference Docs:  [created/skipped]
 AGENTS.md:       [updated]
@@ -600,6 +635,8 @@ Verdict: **COMPLETE** — engine configured and reference docs populated.
 - Never write technical preferences anywhere except `docs/technical-preferences.md` in the game workspace
 - If web_search returns ambiguous results, show the user and let them decide
 - When the user chose **GDScript**: copy the GDScript AGENTS.md template from Appendix A1 exactly. NEVER add "C++ via GDExtension" to the Language field. GDScript projects may use GDExtension, but it is not a primary project language. The `godot-gdextension-specialist` in the routing table is available for when native extensions are needed — it does not make C++ a project language.
+- When the user chose **Three.js Vanilla**: copy Appendix B1 Vanilla. Do not add React or `@react-three/fiber`.
+- When the user chose **Three.js R3F**: copy Appendix B1 React Three Fiber. Add `@react-three/fiber` + `react` / `react-dom` to Allowed Libraries. Do not add `@react-three/drei` until a helper is used.
 
 ---
 
@@ -735,4 +772,92 @@ Use GDScript conventions for `.gd` files and C# conventions for `.cs` files. Mix
 | Project config (.csproj, NuGet) | godot-csharp-specialist |
 | Native extension / plugin files (.gdextension, C++) | godot-gdextension-specialist |
 | General architecture review | godot-specialist |
+```
+
+---
+
+## Appendix B — Three.js App Layer
+
+Vanilla vs React Three Fiber. Referenced from Sections 4 and 5 — only when Three.js is the chosen engine.
+
+### B1. AGENTS.md Technology Stack Templates
+
+**Vanilla:**
+```markdown
+- **Engine**: Three.js [version] (npm `three@[x.y.z]`)
+- **Language**: TypeScript
+- **App layer**: Vanilla (`three/webgpu`)
+- **Renderer**: WebGPURenderer (`three/webgpu`); WebGLRenderer is the compatibility fallback
+- **Build System**: Vite
+- **Asset Pipeline**: glTF/GLB + static `public/` (GLTFLoader; DRACO/KTX2/meshopt only when used)
+```
+
+**React Three Fiber:**
+```markdown
+- **Engine**: Three.js [version] (npm `three@[x.y.z]`)
+- **Language**: TypeScript + React
+- **App layer**: React Three Fiber (`@react-three/fiber` wrapping the pinned `three`)
+- **Renderer**: WebGPURenderer (`three/webgpu`) when the installed R3F version supports it; otherwise WebGLRenderer as documented fallback
+- **Build System**: Vite
+- **Asset Pipeline**: glTF/GLB + static `public/` (GLTFLoader / drei helpers only when used)
+```
+
+> **Guardrail**: Do not write R3F into a Vanilla project's Language or App layer fields. Do not add `@react-three/drei` at setup.
+
+### B2. Naming Conventions
+
+**Vanilla and R3F (TypeScript):**
+- Classes / types: PascalCase (e.g., `PlayerController`)
+- Methods: camelCase (e.g., `takeDamage()`)
+- Private fields: camelCase (e.g., `currentHealth`)
+- Files: PascalCase matching class (e.g., `PlayerController.ts`); R3F components may be `.tsx`
+- Constants: PascalCase or UPPER_SNAKE_CASE
+- Folders: `src/core`, `src/game`, `src/entities`, `src/systems` (framework `src/gameplay/**` remap is a separate issue)
+- R3F: React components PascalCase; keep one `Canvas` owner; do not nest extra WebGL/WebGPU renderers
+
+### B3. Engine Specialists Routing
+
+**Vanilla:**
+```markdown
+## Engine Specialists
+- **Primary**: threejs-specialist
+- **Language/Code Specialist**: threejs-specialist (TypeScript — primary covers it)
+- **Shader Specialist**: threejs-specialist (TSL default; GLSL on the WebGL fallback)
+- **UI Specialist**: threejs-specialist (DOM HUD; `ui-programmer` implements)
+- **Additional Specialists**: none. Rapier is opt-in; WebGLRenderer is the compatibility fallback. Do not add R3F on this path.
+- **Routing Notes**: Invoke primary for architecture, renderer choice, loaders, color management, and loop ownership. Delegate implementation to gameplay-programmer, ui-programmer, technical-artist, or engine-programmer. Do not invent threejs sub-roles. Do not emit `@react-three/fiber` JSX.
+
+### File Extension Routing
+
+| File Extension / Type | Specialist to Spawn |
+|-----------------------|---------------------|
+| Game code (.ts, .js) | threejs-specialist |
+| Shader / material files (TSL, NodeMaterial; .glsl / ShaderMaterial on WebGL fallback) | threejs-specialist |
+| UI / screen files (DOM/CSS HUD) | threejs-specialist |
+| Scene / prefab / level files (code-built scenes, .glb) | threejs-specialist |
+| Native extension / plugin files (WASM physics, Draco/Basis) | threejs-specialist |
+| General architecture review | threejs-specialist |
+```
+
+**React Three Fiber:**
+```markdown
+## Engine Specialists
+- **Primary**: threejs-specialist
+- **Language/Code Specialist**: threejs-specialist (TypeScript + React — primary covers R3F)
+- **Shader Specialist**: threejs-specialist (TSL default; GLSL on the WebGL fallback)
+- **UI Specialist**: threejs-specialist (DOM HUD still default; drei `Html` only for world labels)
+- **Additional Specialists**: none. `@react-three/fiber` is the app layer. Add `@react-three/drei` only when a helper is used. Rapier remains opt-in.
+- **Routing Notes**: Invoke primary for Canvas/renderer ownership, R3F vs vanilla three interop, loaders, and color management. Keep a single Canvas. Reconcile R3F color/tone-mapping defaults with Aesir (`SRGBColorSpace`, ACES). Delegate implementation to gameplay-programmer, ui-programmer, technical-artist, or engine-programmer.
+
+### File Extension Routing
+
+| File Extension / Type | Specialist to Spawn |
+|-----------------------|---------------------|
+| Game code (.ts, .tsx, .js, .jsx) | threejs-specialist |
+| R3F Canvas / scene graph | threejs-specialist |
+| Shader / material files (TSL, NodeMaterial; .glsl / ShaderMaterial on WebGL fallback) | threejs-specialist |
+| UI / screen files (DOM/CSS HUD; drei Html for world labels only) | threejs-specialist |
+| Scene / prefab / level files (.glb) | threejs-specialist |
+| Native extension / plugin files (WASM physics, Draco/Basis) | threejs-specialist |
+| General architecture review | threejs-specialist |
 ```

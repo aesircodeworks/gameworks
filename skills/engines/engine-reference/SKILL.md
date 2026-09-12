@@ -1,6 +1,6 @@
 ---
 name: engine-reference
-description: Check Godot, Unity, or Unreal APIs.
+description: Check Godot, Unity, Unreal, or Three.js APIs.
 version: 1.0.0
 author: Donchitos; Hermes adaptation by Aesir Codeworks
 license: MIT

@@ -119,6 +119,11 @@ Engine-specific monitoring guidance:
 - Record: Physical Memory Used (MB), Physical Memory Available
 - Alert threshold: Physical Memory Used growth > 50MB over the full soak
 
+**Three.js:**
+- Chrome DevTools Memory + `performance.memory` (Chrome) if exposed
+- Record: JS heap (MB), renderer info (geometries, textures, calls) from the game's diagnostics object if present
+- Alert threshold: JS heap growth > 20% from T+0 after the first 15 minutes; textures/geometries climbing without scene growth
+
 ### Stability observation items (if focus = stability or all)
 
 At each checkpoint, note:
@@ -162,6 +167,7 @@ Before starting the soak:
   - **Godot**: Debugger → Monitors tab → Memory section visible
   - **Unity**: Memory Profiler window open
   - **Unreal**: `stat memory` ready in console
+  - **Three.js**: Chrome DevTools Memory + renderer diagnostics overlay if present
 - [ ] Soak target confirmed: [session design intent from game concept]
 - [ ] Prior known issues to watch for: [from most recent playtest / qa-plan]
 

@@ -253,6 +253,34 @@ public static class GameFactory
 
 ---
 
+### Three.js (Vitest / TypeScript)
+
+**Base helper** (`tests/helpers/gameAssertions.ts`):
+
+```ts
+import { expect } from 'vitest';
+
+export function assertInRange(
+  value: number,
+  min: number,
+  max: number,
+  label = 'value',
+): void {
+  expect(value, `${label} ${value} outside [${min}, ${max}]`).toBeGreaterThanOrEqual(min);
+  expect(value).toBeLessThanOrEqual(max);
+}
+```
+
+**Factory helper** (`tests/helpers/gameFactory.ts`):
+
+```ts
+export function makePlayer(health = 100): { health: number; maxHealth: number } {
+  return { health, maxHealth: health };
+}
+```
+
+---
+
 ### Unreal Engine (C++)
 
 **Base helper** (`tests/helpers/GameTestHelpers.h`):
@@ -384,7 +412,8 @@ After writing: Verdict: **COMPLETE** — helper files created.
 "Helper files created. To use them in a test:
 - Godot: `class_name` is auto-imported — no explicit import needed
 - Unity: Add `using` directive or reference the test assembly
-- Unreal: `#include \"tests/helpers/GameTestHelpers.h\"`"
+- Unreal: `#include \"tests/helpers/GameTestHelpers.h\"`
+- Three.js: `import { assertInRange } from '../helpers/gameAssertions'`"
 
 ---
 

@@ -9,7 +9,7 @@ and separate from any game project.
 
 | File | Purpose |
 |------|---------|
-| `catalog.yaml` | Master registry for all 73 workflow skills and 49 role skills. Contains category, spec path, and last-test tracking fields. Always read this first when running any test command. |
+| `catalog.yaml` | Master registry for all 73 workflow skills and 50 role skills. Contains category, spec path, and last-test tracking fields. Always read this first when running any test command. |
 | `quality-rubric.md` | Category-specific pass/fail metrics. Read the matching `###` section for the skill's category when running `/skill-test category`. |
 | `skills/<category>/<name>/references/behavior-spec.md` | Behavioral spec for a skill or role — 5 test cases + protocol compliance assertions. Lives next to the skill, not in this folder. |
 | `templates/skill-test-spec.md` | Template for writing new skill spec files. |
@@ -78,6 +78,7 @@ unity       → unity-specialist, unity-ui-specialist, unity-shader-specialist,
               unity-dots-specialist, unity-addressables-specialist
 unreal      → unreal-specialist, ue-gas-specialist, ue-replication-specialist,
               ue-umg-specialist, ue-blueprint-specialist
+threejs     → threejs-specialist
 operations  → devops-engineer, security-engineer, performance-analyst,
               analytics-engineer, community-manager
 creative    → writer, world-builder, game-designer, economy-designer,

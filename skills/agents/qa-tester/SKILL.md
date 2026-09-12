@@ -88,6 +88,23 @@ public class [SystemName]Tests
 }
 ```
 
+#### Three.js (TypeScript / Vitest)
+
+```ts
+import { describe, it, expect } from 'vitest';
+
+describe('[SystemName]', () => {
+  it('[scenario]_[expected]', () => {
+    const subject = new [ClassName]();
+    const result = subject.[method]([args]);
+    expect(result).toBeCloseTo([expected], 3);
+  });
+});
+```
+
+Canvas / visual checks use Playwright, not Vitest. Do not assert WebGL pixels
+in a Node unit test.
+
 #### Unreal (C++)
 
 ```cpp

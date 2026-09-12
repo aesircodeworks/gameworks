@@ -5,7 +5,7 @@
 > **How to go from zero to a shipped game using the Agent Architecture.**
 >
 > This guide walks you through every phase of game development using the
-> 49-agent system, 73 slash commands, and 11 automated hooks. It assumes you
+> 50-agent system, 73 slash commands, and 11 automated hooks. It assumes you
 > have Hermes Agent installed and are working from the project root.
 >
 > The pipeline has 7 phases. Each phase has a formal gate (`/gate-check`)
@@ -234,7 +234,8 @@ Or with a specific engine:
 **Why this matters:** Once you set the engine, the system knows which
 engine-specialist agents to use. If you pick Godot, agents like
 `godot-specialist`, `godot-gdscript-specialist`, and `godot-shader-specialist`
-become your go-to experts.
+become your go-to experts. If you pick Three.js, `threejs-specialist` is the
+engine lead (no sub-roles).
 
 ### Step 1.4: Decompose Your Concept Into Systems
 
@@ -1216,7 +1217,8 @@ Tier 3 (Specialists):  gameplay-programmer, engine-programmer,
                        unity-shader-specialist, unity-addressables-specialist,
                        unity-ui-specialist, unreal-specialist,
                        ue-blueprint-specialist, ue-gas-specialist,
-                       ue-replication-specialist, ue-umg-specialist
+                       ue-replication-specialist, ue-umg-specialist,
+                       threejs-specialist
 ```
 
 **Coordination rules:**
@@ -1386,6 +1388,7 @@ Reads existing code and generates GDD-format design documentation from it.
 | Unreal Blueprints | `ue-blueprint-specialist` | 3 | Medium |
 | Unreal replication | `ue-replication-specialist` | 3 | Medium |
 | Unreal UMG/CommonUI | `ue-umg-specialist` | 3 | Medium |
+| Three.js-specific help | `threejs-specialist` | 3 | Medium |
 
 ### Agent Hierarchy
 

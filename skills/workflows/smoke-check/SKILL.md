@@ -112,6 +112,15 @@ If test result files exist (XML or JSON), read the most recent one and parse
 PASS/FAIL counts. If no artifacts exist: "Unity tests must be run from the
 editor or CI pipeline. Please confirm test status manually before proceeding."
 
+**Three.js:**
+```bash
+npx vitest run 2>&1
+```
+If `package.json` has `test` / `verify:visual` scripts, prefer those. For canvas
+checks: `npx playwright test` (use `channel: 'chromium'`, `workers: 1`). If
+neither script exists: "Three.js tests not found — confirm `vitest` or
+`playwright` in package.json, or run `/test-setup`."
+
 **Unreal Engine:**
 ```bash
 # List most recent Unreal automation logs (bash) — on Windows PowerShell use the fallback below

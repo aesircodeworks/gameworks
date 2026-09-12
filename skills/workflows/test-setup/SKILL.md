@@ -45,7 +45,7 @@ A test framework installed at sprint four costs 3 sprints.
    - Use search_files with `file_glob="tests/unit/**"` and `file_glob="tests/integration/**"` — do subdirectories exist?
    - Use search_files with `file_glob=".github/workflows/**"` — does a CI workflow file exist?
    - Use search_files with `file_glob="tests/gdunit4_runner.gd"` (Godot) or `file_glob="tests/EditMode/**"` (Unity) or
-     `file_glob="Source/Tests/**"` (Unreal) for engine-specific artifacts.
+     `file_glob="Source/Tests/**"` (Unreal) or `file_glob="playwright.config.*"` (Three.js) for engine-specific artifacts.
 
 3. **Report findings**:
    - "Engine: [engine]. Test directory: [found / not found]. CI workflow: [found / not found]."
@@ -99,7 +99,7 @@ After approval, create the following files:
 # Test Infrastructure
 
 **Engine**: [engine name + version]
-**Test Framework**: [GdUnit4 | Unity Test Framework | UE Automation]
+**Test Framework**: [GdUnit4 | Unity Test Framework | UE Automation | Vitest + Playwright]
 **CI**: `.github/workflows/tests.yml`
 **Setup date**: [date]
 
@@ -198,6 +198,22 @@ Note in the README: **Enabling Unity Test Framework**
 ```
 Window → General → Test Runner
 (Unity Test Framework is included by default in Unity 2019+)
+```
+
+#### Three.js (`Engine: Three.js`)
+
+Create `tests/unit/README.md`:
+```markdown
+# Unit tests
+Logic tests (formulas, state) run with Vitest. No WebGL required.
+```
+
+Note in the README: **Running Three.js tests**
+```
+npm test                 # Playwright (if configured) or vitest — use package.json scripts
+npx vitest run           # Logic unit tests
+npx playwright test      # Browser / canvas tests (channel: chromium, workers: 1)
+npm run build            # tsc && vite build
 ```
 
 #### Unreal Engine (`Engine: Unreal` or `Engine: UE5`)
@@ -351,6 +367,47 @@ jobs:
 
 Note: UE CI requires a self-hosted runner with Unreal Editor installed.
 Set the `UE_EDITOR_PATH` environment variable on the runner.
+
+### Three.js
+
+Create `.github/workflows/tests.yml`:
+
+```yaml
+name: Automated Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Vitest + Playwright
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck and unit tests
+        run: npx vitest run
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright
+        run: npx playwright test
+```
 
 ---
 

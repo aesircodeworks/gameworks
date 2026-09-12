@@ -923,6 +923,11 @@ agents:
   last_spec: ''
   last_spec_result: ''
   category: engine
+- name: threejs-specialist
+  spec: skills/agents/threejs-specialist/references/behavior-spec.md
+  last_spec: ''
+  last_spec_result: ''
+  category: engine
 - name: devops-engineer
   spec: skills/agents/devops-engineer/references/behavior-spec.md
   last_spec: ''

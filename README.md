@@ -17,7 +17,7 @@ The original MIT license and copyright notice are preserved in `LICENSE`. Aesir 
 | Category | Count | Description |
 |----------|-------|-------------|
 | Workflow skills | 73 | Studio commands (`/brainstorm`, `/dev-story`, …) |
-| Role skills | 49 | Director, lead, and specialist roles for `delegate_task` |
+| Role skills | 50 | Director, lead, and specialist roles for `delegate_task` |
 | Rule skills | 11 | Path-aware practices for a target game workspace |
 | Support/core skills | 7 | Routing, templates, bootstrap, engine reference, QA, status, memory policy |
 | Shell hooks | 11 | Hermes wire-protocol lifecycle hooks |
@@ -55,7 +55,7 @@ Design work follows Question → Options → Decision → Draft → Approval →
 
 Game workspaces get `AGENTS.md` (engine pin) and `docs/technical-preferences.md` from `/project-bootstrap` and `/setup-engine`. Those files live in the game, not in this distribution.
 
-Engine references for Godot, Unity, and Unreal live behind `/engine-reference`. Read that engine's `VERSION.md` before suggesting post-cutoff APIs.
+Engine references for Godot, Unity, Unreal, and Three.js live behind `/engine-reference`. Read that engine's `VERSION.md` before suggesting post-cutoff APIs.
 
 Load skill-bundled files with `skill_view('skill-name', file_path='...')`. Never treat a spaced skill-folder string as a write path.
 

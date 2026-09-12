@@ -182,6 +182,60 @@ None. `/setup-engine` is a technical configuration skill. No director gates appl
 
 ---
 
+### Case 6: Three.js Vanilla — app-layer fork, not Godot language
+
+**Fixture:**
+- `docs/technical-preferences.md` is missing
+- Engine argument provided: `threejs`
+
+**Input:** `/setup-engine threejs`
+
+**Expected behavior:**
+1. Skill skips engine-selection (argument provided)
+2. Skill does NOT ask GDScript vs C#
+3. Skill asks Vanilla vs React Three Fiber (unless `r3f` / `vanilla` was in the args)
+4. User picks Vanilla (Recommended)
+5. Technology Stack is Three.js + TypeScript + Vanilla + Vite + WebGPU; no `@react-three/fiber` in Allowed Libraries
+6. Specialist routing: primary `threejs-specialist` for `.ts`; no invented sub-roles
+7. Knowledge risk for r178+ is HIGH; full `docs/engine-reference/threejs/` snapshot is required
+8. Asks before writing `AGENTS.md` and `docs/technical-preferences.md`; verdict COMPLETE
+
+**Assertions:**
+- [ ] Engine field is Three.js (not Godot/Unity/Unreal)
+- [ ] Language field is TypeScript
+- [ ] App layer is Vanilla
+- [ ] Routing table includes `.ts` and maps to `threejs-specialist`
+- [ ] No Godot language clarify is shown
+- [ ] `@react-three/fiber` is not added to Allowed Libraries
+- [ ] Verdict is COMPLETE
+
+---
+
+### Case 7: Three.js + R3F — app-layer argument skips the ask
+
+**Fixture:**
+- `docs/technical-preferences.md` is missing
+- Engine argument provided: `threejs r3f`
+
+**Input:** `/setup-engine threejs r3f`
+
+**Expected behavior:**
+1. Skill skips engine-selection and the Vanilla vs R3F ask
+2. Technology Stack App layer is React Three Fiber; Language is TypeScript + React
+3. Allowed Libraries includes `@react-three/fiber` and `react` / `react-dom`
+4. Allowed Libraries does **not** include `@react-three/drei`
+5. Routing table includes `.tsx` → `threejs-specialist`
+6. Asks before writing; verdict COMPLETE
+
+**Assertions:**
+- [ ] App layer is React Three Fiber
+- [ ] `@react-three/fiber` is listed in Allowed Libraries
+- [ ] `@react-three/drei` is not added at setup
+- [ ] Routing table includes `.tsx`
+- [ ] Verdict is COMPLETE
+
+---
+
 ## Protocol Compliance
 
 - [ ] Presents draft configuration before asking to write

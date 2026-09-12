@@ -175,6 +175,8 @@ None. `/test-setup` is a scaffolding utility. No director gates apply.
 
 ## Coverage Notes
 
+- Three.js test scaffolding (Vitest + Playwright) follows the same flow as
+  Case 1 with `npx vitest run` / `npx playwright test` instead of GdUnit4.
 - Unreal Engine test scaffolding (headless runner with `-nullrhi`) follows the
   same pattern as Cases 1 and 2 and is not separately fixture-tested.
 - CI integration file generation (e.g., `.github/workflows/test.yml`) is

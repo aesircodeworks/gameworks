@@ -67,6 +67,9 @@ by default.
 For Unreal projects: automation logs go to `Saved/Logs/`. Use search_files for
 `Result: Success` and `Result: Fail` patterns.
 
+For Three.js projects: Vitest/Playwright output under `test-results/` or
+Playwright HTML report; JUnit XML if configured.
+
 ### Option B — Local log files
 
 If a path argument is provided, read that file directly.
@@ -99,6 +102,7 @@ For each CI log or result file found, parse:
   - Godot: `PASSED` / `FAILED` adjacent to test names
   - Unreal: `Result: Success` / `Result: Fail`
   - Unity: `Test passed` / `Test failed`
+  - Three.js: Vitest `FAIL` / Playwright `Error:` adjacent to test titles
 
 Build a table: `test_id → [run1_result, run2_result, run3_result, ...]`
 
@@ -124,7 +128,7 @@ For each flaky test, classify the likely cause:
 | **Timing / async** | Fails after awaiting signals or timers; pass rate correlates with system load | Add explicit await/synchronisation; avoid time-based delays |
 | **Order dependency** | Fails when run after specific other tests; passes in isolation | Add proper setup/teardown; ensure test isolation |
 | **Random seed** | Fails intermittently with no pattern; involves RNG | Pass explicit seed; don't use `randf()` in tests |
-| **Resource leak** | Fails more often later in a test run | Fix cleanup in teardown; check orphan nodes (Godot) or object disposal (Unity) |
+| **Resource leak** | Fails more often later in a test run | Fix cleanup in teardown; check orphan nodes (Godot), object disposal (Unity), or `dispose()` of Three.js GPU resources |
 | **External state** | Fails when a file, scene, or global exists from a prior test | Isolate test from file system; use in-memory mocks |
 | **Floating point** | Fails on comparisons like `== 0.5` | Use epsilon comparison (`is_equal_approx`, `Assert.AreApproximately`) |
 | **Scene/prefab load race** | Fails when scenes are not yet ready | Await one frame after instantiation; use `await get_tree().process_frame` |

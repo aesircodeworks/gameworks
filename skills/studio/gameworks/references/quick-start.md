@@ -5,11 +5,11 @@
 ## What Is This?
 
 This is a complete Hermes Agent agent architecture for game development. It
-organizes 49 specialized AI agents into a studio hierarchy that mirrors
+organizes 50 specialized AI agents into a studio hierarchy that mirrors
 real game development teams, with defined responsibilities, delegation
 rules, and coordination protocols. It includes engine-specialist agents
-for Godot, Unity, and Unreal — each with dedicated sub-specialists for
-major engine subsystems. All design agents and templates are grounded in
+for Godot, Unity, Unreal, and Three.js. Godot, Unity, and Unreal have
+dedicated sub-specialists; Three.js uses a single lead. All design agents and templates are grounded in
 established game design theory (MDA Framework, Self-Determination Theory,
 Flow State, Bartle Player Types). Use whichever engine set matches your project.
 
@@ -58,6 +58,7 @@ Ask yourself: "What department would handle this in a real studio?"
 | Get Unreal Engine advice | `unreal-specialist` | Medium |
 | Get Unity advice | `unity-specialist` | Medium |
 | Get Godot advice | `godot-specialist` | Medium |
+| Get Three.js advice | `threejs-specialist` | Medium |
 | Design GAS abilities/effects | `ue-gas-specialist` | Medium |
 | Define BP/C++ boundaries | `ue-blueprint-specialist` | Medium |
 | Implement UE replication | `ue-replication-specialist` | Medium |
@@ -238,7 +239,7 @@ If you already know what you need, jump directly to the relevant path:
 If you already have a game concept and engine choice:
 
 1. **Set up the engine** — Run `/setup-engine [engine] [version]`
-   (e.g., `/setup-engine godot 4.6`) — also creates `docs/technical-preferences.md`
+   (e.g., `/setup-engine godot 4.6` or `/setup-engine threejs 0.186.0`) — also creates `docs/technical-preferences.md`
 2. **Write the Game Pillars** — delegate to `creative-director`
 3. **Decompose into systems** — Run `/map-systems` to enumerate systems and dependencies
 4. **Design each system** — Run `/design-system [system-name]` for GDDs in dependency order
@@ -278,7 +279,7 @@ config.yaml                        -- Hermes hook and profile settings
 skills/
   studio/                          -- Studio routing and operating references
   workflows/                       -- 73 slash-command workflows
-  agents/                          -- 49 specialist role definitions
+  agents/                          -- 50 specialist role definitions
   rules/                           -- 11 path-specific rule skills
   support/                         -- Bootstrap, templates, and status helpers
   engines/                         -- Version-pinned engine references

@@ -19,6 +19,6 @@ metadata:
 
 # Framework QA
 
-73 workflow specs and 49 agent specs. Catalog: `references/catalog.yaml`. Rubric: `references/quality-rubric.md`. Authoring policy: `references/authoring-policy.md`.
+73 workflow specs and 50 agent specs. Catalog: `references/catalog.yaml`. Rubric: `references/quality-rubric.md`. Authoring policy: `references/authoring-policy.md`.
 
 Templates: `templates/skill-test-spec.md`, `templates/agent-test-spec.md`.
