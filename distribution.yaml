@@ -1,5 +1,5 @@
 name: aesir-gameworks
-version: 1.1.0
+version: 1.2.0
 description: "Hermes-native game studio workflow derived from Claude Code Game Studios"
 hermes_requires: ">=0.21.0"
 author: "Aesir Gameworks contributors; derived from work by Donchitos"
