@@ -15,7 +15,6 @@ metadata:
     - project-templates
     - engine-reference
     - framework-qa
-    - studio-status
     - memory-policy
 ---
 

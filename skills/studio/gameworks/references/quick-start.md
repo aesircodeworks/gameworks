@@ -281,7 +281,7 @@ skills/
   workflows/                       -- 73 slash-command workflows
   agents/                          -- 50 specialist role definitions
   rules/                           -- 11 path-specific rule skills
-  support/                         -- Bootstrap, templates, and status helpers
+  support/                         -- Bootstrap and templates
   engines/                         -- Version-pinned engine references
   quality/                         -- Framework QA specifications
 

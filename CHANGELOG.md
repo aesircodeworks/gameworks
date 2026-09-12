@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Removed leftover `/studio-status` (Claude Code statusline snapshot). Use `/studio-help` and `/sprint-status`.
 - Skills no longer finish with a `clarify` "what next?" menu. When a workflow is done, it says so and lists real follow-ups as bullets (concrete names, no placeholders, no "open a fresh session" as a choice). `clarify` stays for in-skill write approvals, ambiguities, and error recovery.
 - CI on `main` (`.github/workflows/release.yml`) tags `vX.Y.Z` from `distribution.yaml` and publishes the GitHub Release from the matching CHANGELOG heading when they do not already exist.
 
