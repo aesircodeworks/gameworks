@@ -31,7 +31,7 @@ Do not bump every skill's frontmatter `version` unless that skill's contract cha
 
 Run this when the user says release, ship, create a release, or bump the version. This is a distribution ship, not a game `/team-release`.
 
-**Shipped** = named `distribution.yaml` version + folded changelog + commit + `gameworks` profile updated from this tree.
+**Shipped** = named `distribution.yaml` version + folded changelog + commit on `main` + push + `vX.Y.Z` tag + GitHub Release + `gameworks` profile updated from this tree.
 
 1. Confirm this repo is the distribution (`distribution.yaml` at the root, `skills/studio/` present). If this is a game workspace, stop.
 2. Read `distribution.yaml` (`version`, `hermes_requires`), `CHANGELOG.md` **Unreleased**, and `git status` / `git diff`.
@@ -44,12 +44,15 @@ Run this when the user says release, ship, create a release, or bump the version
 6. Set `distribution.yaml` `version:` to the new number.
 7. Move Unreleased bullets under `## X.Y.Z — <short title>`. Leave an empty `## Unreleased` heading above it.
 8. Commit `distribution.yaml`, `CHANGELOG.md`, and the files that belong to this version. Do not commit `.grok/`, `.env`, `auth.json`, memories, or sessions.
-9. Point `gameworks` at this tree:
-   - `hermes profile info gameworks` — if the recorded source is this directory, run `hermes profile update gameworks --yes`
-   - otherwise `hermes profile install <this-repo-path> --name gameworks --force --yes`
-   - Do not pass `--force-config` unless the user asked to reset `config.yaml`
-10. Report: new version, changelog heading, commit, whether `gameworks` was updated.
+9. Push `main` to `origin`.
+10. Tag the release commit `vX.Y.Z` (match `distribution.yaml`) and push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`.
+11. Create a GitHub Release for that tag. Title is the changelog heading (`X.Y.Z — <short title>`). Body is the bullets under that heading. Use `gh release create vX.Y.Z --title "..." --notes "..."`.
+12. Point `gameworks` at this tree:
+    - `hermes profile info gameworks` — if the recorded source is this directory, run `hermes profile update gameworks --yes`
+    - otherwise `hermes profile install <this-repo-path> --name gameworks --force --yes`
+    - Do not pass `--force-config` unless the user asked to reset `config.yaml`
+13. Report: new version, changelog heading, commit, tag, GitHub Release URL, whether `gameworks` was updated.
 
-Do not create a GitHub Release, git tag, or CI job unless the user asked for one.
+Do not invent a CI job unless the user asked for one.
 
 Feature requests submitted as PRs will be closed. Open an issue instead.

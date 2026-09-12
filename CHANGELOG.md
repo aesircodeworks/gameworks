@@ -14,7 +14,7 @@
 - Skills no longer use spaced skill-folder path shorthands (`` `gameworks references/` ``, `` `project-templates templates/` ``, `` `framework-qa references/` ``). Hermes treated those as a write path (`gameworksreferences/`). Bundled files load via `skill_view('skill-name', file_path='...')`.
 - `/setup-engine` writes engine prefs only to the game-workspace file `docs/technical-preferences.md`. It copies the profile template through `skill_view`; it does not write into the installed profile.
 - Root `AGENTS.md` and `CONTRIBUTING.md` now state profile-development rules, including changelog + `distribution.yaml` version bumps. The root file is not `distribution_owned`.
-- Release is a documented procedure (`CONTRIBUTING.md` ## Release): bump `distribution.yaml`, fold Unreleased, commit, `hermes profile update gameworks`. No GitHub release or tag unless asked.
+- Release is a documented procedure (`CONTRIBUTING.md` ## Release): bump `distribution.yaml`, fold Unreleased, commit, push, tag `vX.Y.Z`, GitHub Release, `hermes profile update gameworks`. No CI job unless asked.
 - README covers install, update, game-workspace use, and profile-development / release pointers.
 
 ## 1.1.0 — Hermes runtime alignment
