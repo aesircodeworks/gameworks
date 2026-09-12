@@ -397,47 +397,30 @@ Create the `production/` directory if it does not exist.
 
 ---
 
-## Phase 7: Offer First Action
+## Phase 7: Done
 
-After writing the plan, don't stop there. Pick the single highest-priority gap
-and offer to handle it immediately using `clarify`. Choose the first
-branch that applies:
+After writing the plan, `/adopt` is finished. Do not call `clarify`. The user is
+not inside this workflow anymore.
 
-**If there are parenthetical status values in systems-index.md:**
-Use `clarify`:
-- "The most urgent fix is `systems-index.md` — [N] rows have parenthetical status
-  values (e.g. `Needs Revision (see notes)`) that break /gate-check,
-  /create-stories, and /architecture-review right now. I can fix these in-place."
-  - "Fix it now — edit systems-index.md"
-  - "I'll fix it myself"
-  - "Done — leave me with the plan"
+Print a done line, then follow-ups as a bullet list — only real items, with real
+names. Pick the highest-priority remaining gap first; do not offer a menu.
 
-**If ADRs are missing `## Status` (and no parenthetical issue):**
-Use `clarify`:
-- "The most urgent fix is adding `## Status` to [N] ADR(s): [list filenames].
-  Without it, /story-readiness silently passes all ADR checks. Start with
-  [first affected filename]?"
-  - "Yes — retrofit [first affected filename] now"
-  - "Retrofit all [N] ADRs one by one"
-  - "I'll handle ADRs myself"
+**Done line:** `Adoption plan is written. /adopt is done.`
 
-**If GDDs are missing Acceptance Criteria (and no blocking issues above):**
-Use `clarify`:
-- "The most urgent gap is missing Acceptance Criteria in [N] GDD(s):
-  [list filenames]. Without them, /create-stories can't generate stories.
-  Start with [highest-priority GDD filename]?"
-  - "Yes — add Acceptance Criteria to [GDD filename] now"
-  - "Do all [N] GDDs one by one"
-  - "I'll handle GDDs myself"
+**Follow-ups** (first matching group only, then any other real HIGH/BLOCKING gaps
+as extra bullets):
 
-**If no BLOCKING or HIGH gaps exist:**
-Use `clarify`:
-- "No blocking gaps — this project is template-compatible. What next?"
-  - "Walk me through the medium-priority improvements"
-  - "Run /project-stage-detect for a broader health check"
-  - "Done — I'll work through the plan at my own pace"
+- Parenthetical status values in `systems-index.md` — name the rows; they break
+  `/gate-check`, `/create-stories`, and `/architecture-review`
+- ADRs missing `## Status` — list filenames; `/architecture-decision retrofit <file>`
+- GDDs missing Acceptance Criteria — list filenames; without them `/create-stories`
+  cannot generate stories
+- If no BLOCKING or HIGH gaps: `/project-stage-detect` for a broader health check;
+  otherwise nothing required
 
-> **Adoption plan saved to `docs/adoption-plan-[date].md`.** Re-run `/adopt` at any time to re-check remaining gaps as you complete them.
+Do not offer "Stop here" or "Done — leave me with the plan".
+
+> Re-run `/adopt` at any time to re-check remaining gaps.
 
 ---
 
@@ -447,7 +430,7 @@ Use `clarify`:
 2. **Show the summary first** — let the user see scope before asking to write
 3. **Confirm write scope** — confirm authorization for this target or changeset if not already supplied. Preserve required content decisions and later workflow gates.
 4. **Offer, don't force** — the plan is advisory; the user decides what to fix and when
-5. **One action at a time** — after handing off the plan, offer one specific next step,
-   not a list of six things to do simultaneously
+5. **Done means done** — after the plan is written, list remaining gaps as bullets
+   with concrete names. Do not close with `clarify`.
 6. **Never regenerate existing artifacts** — only fill gaps in what exists;
    do not rewrite GDDs, ADRs, or stories that already have content

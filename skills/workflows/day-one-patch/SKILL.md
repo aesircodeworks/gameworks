@@ -208,24 +208,24 @@ If writing this target is not already authorized, ask: "May I write this patch r
 
 ---
 
-## Phase 7: Next Steps
+## Phase 7: Done
 
-After the patch record is written:
+`/day-one-patch` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
 
-1. Run `/patch-notes` to generate the player-facing version of the patch notes
-2. Run `/bug-report verify [BUG-ID]` for each fixed bug after the patch is live
-3. Run `/bug-report close [BUG-ID]` for each verified fix
-4. Schedule a post-launch review 48–72 hours after launch using `/retrospective launch`
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-**If any S1 bugs remain open after the patch:**
-> "⚠️ S1 bugs remain open and were not patched. These are accepted risks. Document them in the rollback plan trigger conditions — if they occur at scale, rollback may be preferable to a follow-up patch."
+**Done line:** `Day-one patch record is written. /day-one-patch is done.`
 
-Use `clarify`:
-- Prompt: "Day-one patch complete. What's next?"
-- Options:
-  - `[A] Run /patch-notes — generate player-facing patch notes`
-  - `[B] Run /bug-report to log any issues found post-deploy`
-  - `[C] Stop here`
+**Follow-ups:**
+
+- `/patch-notes` — player-facing notes
+- `/bug-report verify <BUG-ID>` for each fixed bug after the patch is live
+- `/bug-report close <BUG-ID>` for each verified fix
+- `/retrospective launch` — 48–72 hours after launch
+- If S1 bugs remain open: they are accepted risks; name them in the rollback plan triggers
+
+Do not offer "Stop here".
 
 ---
 

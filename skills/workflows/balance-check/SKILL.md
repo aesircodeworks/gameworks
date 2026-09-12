@@ -111,23 +111,27 @@ Run domain-specific checks:
 
 ## Phase 6: Fix & Verify Cycle
 
-After presenting the report, use `clarify`:
-- Prompt: "Balance check complete. What would you like to do next?"
-- Options:
-  - `[A] Fix highest-priority issue now — walk me through it`
-  - `[B] Save report to design/balance/balance-check-[system]-[date].md`
-  - `[C] Stop here — I'll review the findings manually`
+After presenting the report, `/balance-check` is finished. Do not call `clarify`
+for "what next?".
 
-If [A]:
-- Ask which issue to address first (refer to the Recommendations table by priority row)
-- Guide the user to update the relevant data file in `assets/data/` or formula in `design/balance/`
-- After each fix, offer to re-run the relevant balance checks to verify no new outliers were introduced
-- If the fix changes a tuning knob defined in a GDD or referenced by an ADR, remind the user:
-  > "This value is defined in a design document. Run `/propagate-design-change [path]` on the affected GDD to find downstream impacts before committing."
+If the report has not been written and writing this target is not already
+authorized, use `clarify` only for the write:
 
-If [B]:
-- Write the report to `design/balance/balance-check-[system]-[date].md` (create the directory if needed). Use the current date for [date] in YYYY-MM-DD format.
-- Confirm the file was written, then end with: "Re-run `/balance-check` after fixes to verify."
+- "May I write this report to `design/balance/balance-check-[system]-[date].md`?"
+  - [A] Yes — write it
+  - [B] No — leave it in the conversation
 
-If [C]:
-- Summarize open issues and end with: "Re-run `/balance-check` after fixes to verify."
+Then print a done line and follow-ups as bullets — only real items, with real names.
+
+**Done line:** `Balance check is done. Summary: [HEALTHY / CONCERNS / CRITICAL ISSUES].`
+
+**Follow-ups** (omit any that do not apply):
+
+- Highest-priority issue from the Recommendations table, named, with the file to
+  change (`assets/data/...` or `design/balance/...`)
+- If a fix would change a GDD tuning knob or ADR-referenced value:
+  `/propagate-design-change <path>`
+- `Re-run /balance-check` after fixes
+
+Do not offer "Stop here". Do not walk through a fix unless the user asks after
+the skill has ended.

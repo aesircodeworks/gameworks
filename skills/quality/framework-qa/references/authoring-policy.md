@@ -43,6 +43,24 @@ Do not require `argument-hint`, `user-invocable`, `allowed-tools`, `context`,
 Hermes tools: `read_file`, `search_files` (params: `query`, `file_glob`, `context`),
 `write_file`, `patch`, `terminal`, `delegate_task`, `clarify`.
 
+## Skill completion (no closing `clarify`)
+
+Do not end a skill with a `clarify` menu. When the skill's work is finished:
+
+1. Say that the skill is done (e.g. `Architecture review is done. Verdict: CONCERNS.`).
+2. If there are real follow-ups, list them as bullets with concrete commands and names.
+   Never `[system]` or another placeholder. Never "open a fresh session" as if it were
+   a selectable action. Never "Stop here".
+3. Do not call `clarify`. The user is not inside that workflow anymore.
+
+`clarify` remains for in-skill decisions only: write approvals, ambiguous inputs,
+error recovery, and optional continuation of *this* skill's remaining work
+(e.g. revise the document just reviewed). A bullet list after a done line satisfies
+`/skill-test` Check 5. A closing "what next?" widget does not.
+
+`/create-architecture` Phase 8 is the reference handoff: done output, concrete
+commands, no widget.
+
 ## Skill categories
 
 ```

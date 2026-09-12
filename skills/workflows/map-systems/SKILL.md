@@ -272,66 +272,40 @@ If the user declined: **Verdict: BLOCKED** — user did not approve the write.
 
 ---
 
-## Phase 6: Design Individual Systems (Handoff to /design-system)
+## Phase 6: Named or `next` system
 
-This phase is entered when:
-- The user says "yes" to designing systems after creating the index
-- The user invokes `/map-systems [system-name]`
-- The user invokes `/map-systems next`
+If the user invoked `/map-systems [system-name]` or `/map-systems next`, resolve
+the system (named, or highest-priority undesigned by design order) and include
+`/design-system <name>` in the Phase 7 bullet list. Do not invoke `/design-system`
+from this skill. Do not loop. Do not call `clarify`.
 
-### Step 6a: Select the System
-
-- If a system name was provided, find it in the systems index
-- If `next` was used, pick the highest-priority undesigned system (by design order)
-- If the user just finished the index, ask:
-  "Would you like to start designing individual systems now? The first system in
-  the design order is [name]. Or would you prefer to stop here and come back later?"
-
-Use `clarify` for: "Start designing [system-name] now, pick a different
-system, or stop here?"
-
-### Step 6b: Hand Off to /design-system
-
-Once a system is selected, invoke the `/design-system [system-name]` skill.
-
-The `/design-system` skill handles the full GDD authoring process:
-- Gathers context from game concept, systems index, and dependency GDDs
-- Creates a file skeleton immediately
-- Walks through all 8 required sections one at a time (collaborative, incremental)
-- Cross-references existing docs to prevent contradictions
-- Routes to specialist agents for domain expertise
-- Writes each section to file as soon as it's approved
-- Runs `/design-review` when complete
-- Updates the systems index
-
-**Do not duplicate the /design-system workflow here.** This skill owns the systems
-*index*; `/design-system` owns individual system *GDDs*.
-
-### Step 6c: Loop or Stop
-
-After `/design-system` completes, use `clarify`:
-- "Continue to the next system ([next system name])?"
-- "Pick a different system?"
-- "Stop here for this session?"
-
-If continuing, return to Step 6a.
+This skill owns the systems *index*; `/design-system` owns individual *GDDs*.
 
 ---
 
-## Phase 7: Suggest Next Steps
+## Phase 7: Done
 
-After the systems index is created (or after designing some systems), present next actions using `clarify`:
+`/map-systems` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
 
-- "Systems index is written. What would you like to do next?"
-  - [A] Start designing GDDs — run `/design-system [first-system-in-order]`
-  - [B] Run `/gate-check systems-design` — triggers the CD-SYSTEMS and TD-SYSTEM-BOUNDARY gates automatically for a formal director sign-off on the system set
-  - [C] Stop here for this session
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-**The gate-check option ([B]) is worth highlighting**: running `/gate-check systems-design` triggers both the CD-SYSTEMS and TD-SYSTEM-BOUNDARY gates, catching scope issues, missing systems, and boundary problems before they're locked in across many documents. It is optional but recommended for new projects.
+**Done line:** `Systems index is written. /map-systems is done.`
 
-After any individual GDD is completed:
-- "Run `/design-review design/gdd/[system].md` in a fresh session to validate quality"
-- "Run `/gate-check systems-design` when all MVP GDDs are complete"
+**Follow-ups** (omit any that do not apply):
+
+- `/design-system <first-system-in-order>` — start GDDs (real system name)
+- `/gate-check systems-design` — CD-SYSTEMS and TD-SYSTEM-BOUNDARY sign-off on the set
+
+Do not offer "Stop here".
+
+`/gate-check systems-design` is optional but recommended for new projects: it
+catches scope issues, missing systems, and boundary problems before they lock in
+across many documents.
+
+After any individual GDD is completed (if this session also ran `/design-system`):
+- `/design-review design/gdd/<system>.md` — real path
+- `/gate-check systems-design` when all MVP GDDs are complete
 
 ---
 

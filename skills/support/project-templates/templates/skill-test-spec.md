@@ -85,7 +85,7 @@ No files exist in design/gdd/."]
 
 - [ ] Uses scoped write authorization before `write_file` / `patch`
 - [ ] Presents findings or report before asking for write approval
-- [ ] Ends with a recommended next step or follow-up skill
+- [ ] Ends with a recommended next step or follow-up skill as bullets after a done line (not a closing `clarify` menu)
 - [ ] Never auto-creates files without explicit user approval
 - [ ] Does not skip phases or jump straight to a verdict without checking
 

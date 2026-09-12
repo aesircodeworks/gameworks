@@ -593,29 +593,30 @@ Do not create `production/session-state/active.md` unless that path is already a
 
 ---
 
-## Phase 7: Handoff
+## Phase 7: Done
 
-After all file writes are complete, use `clarify` for a closing widget.
+After all file writes are complete, `/review-all-gdds` is finished. Do not call
+`clarify`. The user is not inside this workflow anymore.
 
-Before building options, check project state:
-- Are there any Warning-level items that are simple edits (flagged with "30-second edit", "brief addition", or similar)? → offer inline quick-fix option
-- Are any GDDs in the "Flagged for Revision" table? → offer /design-review option for each
-- Read systems-index.md for the next system with Status: Not Started → offer /design-system option
-- Is the verdict PASS or CONCERNS? → offer /gate-check or /create-architecture
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-Build the option list dynamically — only include options that apply:
+Before listing, check:
+- Warning-level items that are simple edits ("30-second edit", "brief addition")
+- GDDs in the "Flagged for Revision" table
+- Next system in systems-index.md with Status: Not Started
+- Verdict PASS or CONCERNS
 
-**Option pool:**
-- `[_] Apply quick fix: [W-XX description] in [gdd-name].md — [effort estimate]` (one option per simple-edit warning; only for Warning-level, not Blocking)
-- `[_] Run /design-review [flagged-gdd-path] — address flagged warnings` (one per flagged GDD, if any)
-- `[_] Run /design-system [next-system] — next in design order` (always include, name the actual system)
-- `[_] Run /create-architecture — begin architecture (verdict is PASS/CONCERNS)` (include if verdict is not FAIL)
-- `[_] Run /gate-check — validate Systems Design phase gate` (include if verdict is PASS)
-- `[_] Stop here`
+**Done line:** `Cross-GDD review is done. Verdict: [PASS / CONCERNS / FAIL].`
 
-Assign letters A, B, C… only to included options. Mark the most pipeline-advancing option as `(recommended)`.
+**Follow-ups** (omit any that do not apply):
 
-Never end the skill with plain text. Always close with this widget.
+- Quick fix: [W-XX description] in [gdd-name].md — [effort] (Warning-level only)
+- `/design-review <flagged-gdd-path>` — one per flagged GDD, real path
+- `/design-system <next-system>` — real name, next in design order
+- `/create-architecture` — if verdict is not FAIL
+- `/gate-check systems-design` — if verdict is PASS
+
+Do not offer "Stop here". Never end with a widget.
 
 ---
 

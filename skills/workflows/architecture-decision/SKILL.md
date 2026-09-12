@@ -435,33 +435,34 @@ changing, set the old entry to `status: superseded_by: ADR-[NNNN]` and add the n
 
 ---
 
-## 6. Closing Next Steps
+## 6. Done
 
-After the ADR is written (and registry optionally updated), close with `clarify`.
+`/architecture-decision` is finished. Do not call `clarify`. The user is not inside
+this workflow anymore.
 
-Before generating the widget:
-1. Read `docs/registry/architecture.yaml` — check if any priority ADRs are still unwritten (look for ADRs flagged in technical-preferences.md or systems-index.md as prerequisites)
-2. Check if all prerequisite ADRs are now written. If yes, include a "Start writing GDDs" option.
-3. List ALL remaining priority ADRs as individual options — not just the next one or two.
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-Widget format:
-```
-ADR-[NNNN] written and registry updated. What would you like to do next?
-[1] Write [next-priority-adr-name] — [brief description from prerequisites list]
-[2] Write [another-priority-adr] — [brief description]  (include ALL remaining ones)
-[N] Start writing GDDs — run `/design-system [first-undesigned-system]` (only show if all prerequisite ADRs are written)
-[N+1] Stop here for this session
-```
+**Done line:** `ADR-[NNNN] is written. Registry: [updated / skipped].`
 
-If there are no remaining priority ADRs and no undesigned GDD systems, offer only "Stop here" and suggest running `/architecture-review` in a fresh session.
+Before listing follow-ups:
+1. Read `docs/registry/architecture.yaml` — remaining priority ADRs (from technical-preferences.md or systems-index.md prerequisites)
+2. Note the first undesigned GDD system if all prerequisite ADRs are now written
 
-**Always include this fixed notice in the closing output (do NOT omit it):**
+**Follow-ups** (omit any that do not apply):
 
-> To validate ADR coverage against your GDDs, open a **fresh Hermes Agent session**
-> and run `/architecture-review`.
->
+- Remaining priority ADRs — one bullet each, real title, never a placeholder:
+  `/architecture-decision <title>` — [brief description]
+- If all prerequisite ADRs are written and a GDD is still undesigned:
+  `/design-system <first-undesigned-system>`
+- If no remaining priority ADRs: `/architecture-review` in a **new session**
+  (do not run it in this one — the reviewer must be independent of this
+  authoring context)
+
+Do not offer "Stop here".
+
+**Always include this notice (do NOT omit it):**
+
 > **Never run `/architecture-review` in the same session as `/architecture-decision`.**
-> The reviewing agent must be independent of the authoring context to give an unbiased
-> assessment. Running it here would invalidate the review.
+> The reviewing agent must be independent of the authoring context.
 
 Update any stories that were `Status: Blocked` pending this ADR to `Status: Ready`.

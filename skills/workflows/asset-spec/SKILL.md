@@ -293,16 +293,23 @@ Ask: "May I update `design/assets/asset-manifest.md`?"
 
 ---
 
-## Phase 6: Close
+## Phase 6: Done
 
-Use `clarify`:
-- Prompt: "Asset specs complete for **[target]**. What's next?"
-- Options:
-  - `[A] Spec another system — /asset-spec system:[next-system]`
-  - `[B] Spec a level — /asset-spec level:[level-name]`
-  - `[C] Spec a character — /asset-spec character:[character-name]`
-  - `[D] Run /asset-audit — validate delivered assets against specs`
-  - `[E] Stop here`
+`/asset-spec` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
+
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
+
+**Done line:** `Asset specs are written for [target]. /asset-spec is done.`
+
+**Follow-ups** (omit any that do not apply):
+
+- Next undesigned system — `/asset-spec system:<name>` (real name)
+- A level still unspecified — `/asset-spec level:<name>`
+- A character still unspecified — `/asset-spec character:<name>`
+- `/asset-audit` — validate delivered assets against specs
+
+Do not offer "Stop here".
 
 ---
 

@@ -453,30 +453,28 @@ echo -n "Production" > production/stage.txt
 
 ---
 
-## 7. Closing Next-Step Widget
+## 7. Done
 
-After the verdict is presented and any stage.txt update is complete, close with a structured next-step prompt using `clarify`.
+`/gate-check` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
 
-**Tailor the options to the gate that just ran:**
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
+
+**Done line:** `Gate check is done. Gate: [name]. Verdict: [PASS / CONCERNS / FAIL].`
+
+**Follow-ups** — the two most logical next skills for this gate (omit "Stop here").
+Name real systems and files. Never leave `[next-system]` as a placeholder.
 
 For **systems-design PASS**:
-```
-Gate passed. What would you like to do next?
-[A] Run /create-architecture — produce your master architecture blueprint and ADR work plan (recommended next step)
-[B] Design more GDDs first — return here when all MVP systems are complete
-[C] Stop here for this session
-```
+- `/create-architecture` — master architecture blueprint and ADR work plan
+- More GDDs first if MVP systems are still undesigned — `/design-system <name>`
 
-> **Note for systems-design PASS**: `/create-architecture` is the required next step before writing any ADRs. It produces the master architecture document and a prioritized list of ADRs to write. Running `/architecture-decision` without this step means writing ADRs without a blueprint — skip it at your own risk.
+> `/create-architecture` is the required next step before writing any ADRs. Running `/architecture-decision` without that blueprint means writing ADRs without a map — skip it at your own risk.
 
 For **technical-setup PASS**:
-```
-Gate passed. What would you like to do next?
-[A] Run /create-control-manifest — generate the layer rules manifest from your Accepted ADRs (do this first)
-[B] Run /vertical-slice — build the Vertical Slice (do this before writing epics — validate fun first)
-[C] Write more ADRs first — run /architecture-decision [next-system]
-[D] Stop here for this session
-```
+- `/create-control-manifest` — layer rules from Accepted ADRs (do this first)
+- `/vertical-slice` — validate fun before writing epics
+- Remaining ADRs, if any, as `/architecture-decision <real title>`
 
 > **Note for technical-setup PASS**: The Pre-Production sequence is deliberately ordered
 > to validate fun before committing to detailed planning:
@@ -493,7 +491,7 @@ Gate passed. What would you like to do next?
 > epics written before that discovery will be partially wrong. Validate fun cheaply first,
 > then plan in detail. This is the #1 lesson from GDC postmortem data.
 
-For all other gates, offer the two most logical next steps for that phase plus "Stop here".
+For all other gates, the two most logical next skills for that phase as bullets. Do not offer "Stop here".
 
 ---
 

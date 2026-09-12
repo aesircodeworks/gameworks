@@ -199,52 +199,46 @@ This skill is read-only — no files are written during Phase 4.
 
 ## Phase 5: Next Steps
 
-Use `clarify` for ALL closing interactions. Never plain text.
+`clarify` is for in-skill work only: the optional "revise now" path, and write
+approvals for systems-index / review-log. Do not close the skill with a widget.
 
-**First widget — what to do next:**
+**If NEEDS REVISION or MAJOR REVISION NEEDED** — optional continuation of this
+review (still in-skill):
 
-If APPROVED (first-pass, no revision needed), proceed directly to the systems-index widget, review-log widget, then the final closing widget. Do not show a separate "what to do" widget — the final closing widget covers next steps.
-
-If NEEDS REVISION or MAJOR REVISION NEEDED, options:
 - `[A] Revise the GDD now — address blocking items together`
-- `[B] Stop here — revise in a separate session`
-- `[C] Accept as-is and move on (only if all items are advisory)`
+- `[B] Leave the GDD as-is for now`
+
+Do not offer "Stop here" or "Accept as-is" as a third menu. If the user wants to
+accept advisory-only items, they can say so.
 
 **If user selects [A] — Revise now:**
 
-Work through all blocking items, asking for design decisions only where you cannot resolve the issue from the GDD and existing docs alone. Group all design-decision questions into a single multi-tab `clarify` before making any edits — do not interrupt mid-revision for each blocker individually.
+Work through all blocking items, asking for design decisions only where you cannot
+resolve the issue from the GDD and existing docs alone. Group all design-decision
+questions into a single multi-tab `clarify` before making any edits — do not
+interrupt mid-revision for each blocker individually.
 
-After all revisions are complete, show a summary table (blocker → fix applied) and use `clarify` for a **post-revision closing widget**:
+After all revisions are complete, show a summary table (blocker → fix applied).
+Then the skill is done — no post-revision widget.
 
-- Prompt: "Revisions complete — [N] blockers resolved. What next?"
-- Note current context usage: if context is above ~50%, add: "(Recommended: /clear before re-review — this session has used X% context. A full re-review runs 5 agents and needs clean context.)"
-- Options:
-  - `[A] Re-review in a new session — run /design-review [doc-path] after /clear`
-  - `[B] Accept revisions and mark Approved — update systems index, skip re-review`
-  - `[C] Move to next system — /design-system [next-system] (#N in design order)`
-  - `[D] Stop here`
+**Write approvals (APPROVED path):**
 
-Never end the revision flow with plain text. Always close with this widget.
-
-**Second widget — tracking records (combined, for APPROVED path):**
-
-When the verdict is APPROVED, use a single `clarify` with `multiSelect: true` to batch the two tracking updates:
+When the verdict is APPROVED, use a single `clarify` with `multiSelect: true` to
+batch the two tracking updates:
 - Prompt: "Verdict: APPROVED. I can update the tracking records now. Select any you'd like me to complete:"
 - Options:
   - `Update systems-index.md status to 'Approved' for [system]`
   - `Append approval entry to design/gdd/reviews/[doc-name]-review-log.md`
 
-If the review-log option is selected, append the same format as below. Execute both selected actions before showing the final closing widget.
+If the review-log option is selected, append the same format as below.
 
-When the verdict is NEEDS REVISION or MAJOR REVISION NEEDED, use separate widgets as before:
+When the verdict is NEEDS REVISION or MAJOR REVISION NEEDED, use write-approval
+`clarify` (not a next-step menu):
 
-Use a second `clarify`:
-- Prompt: "May I update `design/gdd/systems-index.md` to mark [system] as [In Review / Approved]?"
-- Options: `[A] Yes — update it` / `[B] No — leave it as-is`
-
-Use a third `clarify`:
-- Prompt: "May I append this review summary to `design/gdd/reviews/[doc-name]-review-log.md`? This creates a revision history so future re-reviews can track what changed."
-- Options: `[A] Yes — append to review log` / `[B] No — skip`
+- "May I update `design/gdd/systems-index.md` to mark [system] as [In Review / Approved]?"
+  - `[A] Yes — update it` / `[B] No — leave it as-is`
+- "May I append this review summary to `design/gdd/reviews/[doc-name]-review-log.md`?"
+  - `[A] Yes — append to review log` / `[B] No — skip`
 
 If yes, append an entry in this format:
 ```
@@ -258,22 +252,24 @@ Prior verdict resolved: [Yes / No / First review]
 
 ---
 
-**Final closing widget — always show after all file writes complete:**
+**Done** — after writes (or declined writes) complete. Do not call `clarify`.
 
-Once the systems-index and review-log widgets are answered, check project state and show one final `clarify`:
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-Before building options, read:
-- `design/gdd/systems-index.md` — find any system with Status: In Review or NEEDS REVISION (other than the one just reviewed)
-- Count `.md` files in `design/gdd/` (excluding game-concept.md, systems-index.md) to determine if `/review-all-gdds` is worth offering (≥2 GDDs)
-- Find the next system with Status: Not Started in design order
+Before listing, read:
+- `design/gdd/systems-index.md` — other systems still In Review or NEEDS REVISION
+- Count `.md` files in `design/gdd/` (excluding game-concept.md, systems-index.md)
+- Next system with Status: Not Started in design order
 
-Build the option list dynamically — only include options that are genuinely next:
-- `[_] Run /design-review [other-gdd-path] — [system name] is still [In Review / NEEDS REVISION]` (include if another GDD needs review)
-- `[_] Run /consistency-check — verify this GDD's values don't conflict with existing GDDs` (always include if ≥1 other GDD exists)
-- `[_] Run /review-all-gdds — holistic design-theory review across all designed systems` (include if ≥2 GDDs exist)
-- `[_] Run /design-system [next-system] — next in design order` (always include, name the actual system)
-- `[_] Stop here`
+**Done line:** `Design review is done. Verdict: [APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED].`
 
-Assign letters A, B, C… only to included options. Mark the most pipeline-advancing option as `(recommended)`.
+**Follow-ups** (omit any that do not apply):
 
-Never end the skill with plain text after file writes. Always close with this widget.
+- `/design-review <other-gdd-path>` — real path, if another GDD is still In Review / NEEDS REVISION
+- `/consistency-check` — if ≥1 other GDD exists
+- `/review-all-gdds` — if ≥2 GDDs exist
+- `/design-system <next-system>` — real name, next in design order
+- After revisions: `/design-review <doc-path>` again (if context is above ~50%, note that a full re-review needs a new session)
+
+Do not offer "Stop here". If context is above ~50% after a revision pass, add a
+plain note (not a menu): a full re-review runs 5 agents and needs clean context.

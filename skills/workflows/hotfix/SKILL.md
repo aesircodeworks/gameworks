@@ -183,9 +183,15 @@ If STILL PRESENT: the hotfix failed — immediately re-open, assess rollback, an
 
 Schedule a post-incident review within 48 hours using `/retrospective hotfix`.
 
-Use `clarify`:
-- Prompt: "Hotfix complete. What's the next step?"
-- Options:
-  - `[A] Run /smoke-check to verify the fix`
-  - `[B] Run /patch-notes to document this hotfix`
-  - `[C] Stop here`
+`/hotfix` is finished. Do not call `clarify`.
+
+**Done line:** `Hotfix is done. Bug: [BUG-ID]. Verify: [VERIFIED FIXED / STILL PRESENT].`
+
+**Follow-ups** (omit any that do not apply):
+
+- `/smoke-check` — verify the deployed fix
+- `/patch-notes` — document this hotfix
+- `/retrospective hotfix` — within 48 hours
+- If STILL PRESENT: rollback, re-open the bug, escalate
+
+Do not offer "Stop here".

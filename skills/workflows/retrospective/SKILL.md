@@ -210,17 +210,21 @@ If no, stop here. Verdict: **BLOCKED** — user declined write.
 
 ---
 
-## Phase 6: Next Steps
+## Phase 6: Done
 
-Use `clarify`:
-- Prompt: "Retrospective complete. The action items and velocity data are ready. Would you like to start sprint planning now with this data pre-loaded?"
-- Options:
-  - `[A] Yes — open sprint planning with retro action items and velocity delta pre-populated`
-  - `[B] No — I'll reference the retrospective file manually when I'm ready`
+`/retrospective` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
 
-If the user selects [A]: Proceed to invoke `/sprint-plan new`, passing the retrospective file path and a summary of the action items and velocity change so the sprint planner can reference them.
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-- If this was a milestone retrospective, run `/gate-check` to formally assess readiness for the next phase.
+**Done line:** `Retrospective is written. /retrospective is done.`
+
+**Follow-ups:**
+
+- `/sprint-plan new` — action items and velocity delta are in the retro file
+- If this was a milestone retrospective: `/gate-check` for the next phase
+
+Do not offer "Stop here". Do not invoke `/sprint-plan` from this skill.
 
 ### Guidelines
 

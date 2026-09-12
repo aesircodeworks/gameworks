@@ -177,19 +177,24 @@ This skill is read-only — no files are written.
 
 ---
 
-## Phase 9: Next Steps
+## Phase 9: Done
 
-Use `clarify`:
-- Prompt: "Code review complete — verdict: [APPROVED / CHANGES REQUIRED / MAJOR REVISION]. How would you like to proceed?"
-- Options (adjust based on verdict):
-  - If APPROVED:
-    - `[A] Run /story-done to mark the story complete`
-    - `[B] Stop here`
-  - If CHANGES REQUIRED or MAJOR REVISION:
-    - `[A] Fix the issues and re-run /code-review`
-    - `[B] Run /story-done anyway with noted exceptions`
-    - `[C] Stop here`
+`/code-review` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
 
-If an ARCHITECTURAL VIOLATION is found:
-- If the violation contradicts an **existing ADR**: fix the implementation to comply with `docs/architecture/[adr-file].md`. If the design has legitimately changed, run `/architecture-decision` to formally *revise* the existing ADR — do not create a competing one.
-- If **no ADR exists** for the pattern that was violated: run `/architecture-decision` to document the correct approach before fixing the code.
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
+
+**Done line:** `Code review is done. Verdict: [APPROVED / APPROVED WITH SUGGESTIONS / CHANGES REQUIRED].`
+
+**Follow-ups** (omit any that do not apply):
+
+- If APPROVED: `/story-done <story-path>` — real path if known
+- If CHANGES REQUIRED or MAJOR REVISION: the issues to fix, named; then re-run
+  `/code-review` on the same files
+- If an ARCHITECTURAL VIOLATION contradicts an **existing ADR**: comply with
+  `docs/architecture/<adr-file>.md`, or `/architecture-decision` to revise that ADR
+  — do not create a competing one
+- If **no ADR exists** for the violated pattern: `/architecture-decision <title>`
+  (real title) before fixing the code
+
+Do not offer "Stop here".

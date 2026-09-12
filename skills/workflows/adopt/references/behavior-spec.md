@@ -34,7 +34,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has ≥2 phase headings
 - [ ] Contains severity tier keywords: BLOCKING, HIGH, MEDIUM, LOW
 - [ ] Documents scoped write authorization: asks for missing scope or decisions, not repeated permission for approved edits
-- [ ] Has a next-step handoff at the end (e.g., offering to fix the highest-priority gap immediately)
+- [ ] Has a next-step handoff at the end (done line + follow-up bullets, no closing `clarify`)
 
 ---
 
@@ -68,7 +68,7 @@ None. `/adopt` is a brownfield audit utility. No director gates apply.
 7. Summary reports: "No blocking gaps — this project is template-compatible"
 8. Uses `clarify` to ask about writing the plan; user selects write
 9. Adoption plan is written to `docs/adoption-plan-[date].md`
-10. Phase 7 offers next action: no blocking gaps, offers options for next steps
+10. Phase 7 prints a done line and follow-up bullets (no closing `clarify`)
 
 **Assertions:**
 - [ ] Skill reads silently before presenting any output
@@ -76,7 +76,7 @@ None. `/adopt` is a brownfield audit utility. No director gates apply.
 - [ ] Gap counts show 0 BLOCKING, 0 HIGH, 0 MEDIUM (or only LOW)
 - [ ] `clarify` is used before writing the adoption plan
 - [ ] Adoption plan file is written to `docs/adoption-plan-[date].md`
-- [ ] Phase 7 offers a specific next action (not just a list)
+- [ ] Phase 7 ends with a done line and follow-up bullets (no closing `clarify`)
 
 ---
 
@@ -108,7 +108,7 @@ None. `/adopt` is a brownfield audit utility. No director gates apply.
    - Step 4 (MEDIUM): Add Formulas to `combat.md`
 5. Gap Preview shows BLOCKING items as bullets (actual file names), HIGH/MEDIUM as counts
 6. `clarify` asks to write the plan; writes after approval
-7. Phase 7 offers to fix the highest-priority gap (ADR Status) immediately
+7. Phase 7 lists remaining BLOCKING/HIGH gaps as bullets with real filenames
 
 **Assertions:**
 - [ ] BLOCKING gaps are listed as explicit file-name bullets in the Gap Preview
@@ -116,7 +116,7 @@ None. `/adopt` is a brownfield audit utility. No director gates apply.
 - [ ] Migration plan items are in BLOCKING-first order
 - [ ] Each plan item includes the fix command or manual steps
 - [ ] `clarify` is used before writing
-- [ ] Phase 7 offers to immediately retrofit the first BLOCKING item
+- [ ] Phase 7 lists the first BLOCKING item as a follow-up bullet (real filename, no closing `clarify`)
 
 ---
 

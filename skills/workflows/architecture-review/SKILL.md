@@ -610,34 +610,34 @@ Engine: [name + version]
 
 ---
 
-## Phase 9: Handoff
+## Phase 9: Done
 
-After completing the review and writing approved files, present:
+`/architecture-review` is finished. Do not call `clarify`. The user is not inside
+this workflow anymore.
 
-1. **Immediate actions**: List the top 3 ADRs to create (highest-impact gaps first,
-   Foundation layer before Feature layer)
-2. **Pre-gate checklist**: Check whether these exist via search_files and mark each ✅ or ❌:
-   - `tests/unit/` and `tests/integration/` directories — if ❌: run `/test-setup`
-   - `.github/workflows/tests.yml` — if ❌: run `/test-setup`
-   - `design/accessibility-requirements.md` — if ❌: run `/ux-design`
-   - `design/ux/interaction-patterns.md` — if ❌: run `/ux-design`
-   Present ❌ items as required steps before gate-check. Do not offer `/gate-check`
-   as an option if any item is ❌ — offer the missing skill to run instead.
-3. **Rerun trigger**: "Re-run `/architecture-review` after each new ADR is written
-   to verify coverage improves"
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-Then close with `clarify` tailored to the pre-gate checklist state:
-- If ADR gaps remain or any pre-gate item is ❌:
-  - "Architecture review complete. What would you like to do next?"
-    - [A] Write a missing ADR — open a fresh session and run `/architecture-decision [system]`
-    - [B] Run `/test-setup` — required before gate-check (only show if test infrastructure is ❌)
-    - [C] Run `/ux-design` — required before gate-check (only show if UX/accessibility files are ❌)
-    - [D] Stop here for this session
-- If all pre-gate checklist items are ✅ and no blocking ADR gaps remain:
-  - "Architecture review complete. All pre-gate items confirmed. What would you like to do next?"
-    - [A] Run `/gate-check pre-production`
-    - [B] Write a missing ADR — open a fresh session and run `/architecture-decision [system]`
-    - [C] Stop here for this session
+**Done line:** `Architecture review is done. Verdict: [PASS / CONCERNS / FAIL].`
+
+**Follow-ups** (omit any group that does not apply):
+
+- **Missing ADRs** — one bullet per gap from this review's Required ADRs / coverage
+  gaps, highest-impact and Foundation layer first, top 3 at most. Use the real
+  title from the report. Never `[system]` or another placeholder.
+  Command: `/architecture-decision <title>`
+- **Pre-gate gaps** — via `search_files`, mark each ✅ or ❌:
+  - `tests/unit/` and `tests/integration/` directories
+  - `.github/workflows/tests.yml`
+  - `design/accessibility-requirements.md`
+  - `design/ux/interaction-patterns.md`
+  For each ❌, a bullet naming the missing path and the skill to run
+  (`/test-setup` for tests/CI, `/ux-design` for accessibility / interaction patterns).
+  Do not list `/gate-check` if any of these is ❌.
+- **Ready for gate** — only if every pre-gate item is ✅ and there are no blocking
+  ADR gaps: `/gate-check pre-production`
+- **Rerun** — if gaps remain: `Re-run /architecture-review after each new ADR.`
+
+Do not offer "Stop here". Do not tell the user to open a fresh session as an action.
 
 ---
 
@@ -672,3 +672,5 @@ If any spawned agent returns BLOCKED, errors, or fails to complete:
    with grouped options — not a separate plain-text question per file.
 6. **Non-blocking** — the verdict is advisory; the user decides whether to continue
    despite CONCERNS or even FAIL findings
+7. **Done means done** — after Phase 9, do not call `clarify`. Follow-ups are
+   bullets with concrete names. The review has ended.

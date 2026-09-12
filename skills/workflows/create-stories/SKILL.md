@@ -308,23 +308,28 @@ Find the row in the index table matching this epic (by epic name or slug). Updat
 
 ---
 
-## 7. After Writing
+## 7. Done
 
-Use `clarify` to close with context-aware next steps:
+`/create-stories` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
+
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
 Check:
-- Are there other epics in `production/epics/` without stories yet? List them.
-- Is this the last epic? If so, include `/sprint-plan` as an option.
+- Other epics in `production/epics/` without stories yet — list their slugs
+- Whether this was the last epic without stories
 
-Widget:
-- Prompt: "[N] stories written to `production/epics/[epic-slug]/`. What next?"
-- Options (include all that apply):
-  - `[A] Start implementing — run /story-readiness [first-story-path]` (Recommended)
-  - `[B] Create stories for [next-epic-slug] — run /create-stories [slug]` (only if other epics have no stories yet)
-  - `[C] Plan the sprint — run /sprint-plan new` (only if all epics have stories)
-  - `[D] Stop here for this session`
+**Done line:** `[N] stories written to `production/epics/[epic-slug]/`. /create-stories is done.`
 
-Note in output: "Work through stories in order — each story's `Depends on:` field tells you what must be DONE before you can start it."
+**Follow-ups** (omit any that do not apply):
+
+- `/story-readiness <first-story-path>` — first story in this epic (real path)
+- `/create-stories <slug>` — each remaining epic that still has no stories
+- `/sprint-plan new` — only if every epic now has stories
+
+Do not offer "Stop here".
+
+Note: "Work through stories in order — each story's `Depends on:` field tells you what must be DONE before you can start it."
 
 ---
 

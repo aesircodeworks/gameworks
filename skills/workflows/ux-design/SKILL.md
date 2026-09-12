@@ -898,24 +898,28 @@ Update `production/session-state/active.md` with:
 - Sections: All written
 - Next: [suggestion]
 
-### 6b: Suggest Next Step
+### 6b: Done
 
-Before presenting options, state clearly:
+`/ux-design` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
 
-> "This spec should be validated with `/ux-review` before it enters the
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
+
+**Done line:** `UX spec is written: design/ux/[filename].md. /ux-design is done.`
+
+Then:
+
+> This spec should be validated with `/ux-review` before it enters the
 > implementation pipeline. The Pre-Production gate requires all key screen specs
-> to have a review verdict."
+> to have a review verdict.
 
-Then use `clarify`:
-- "Run `/ux-review [filename]` now, or do something else first?"
-  - Options:
-    - "Run `/ux-review` now — validate this spec"
-    - "Design another screen first, then review all specs together"
-    - "Update the interaction pattern library with new patterns from this spec"
-    - "Stop here for this session"
+**Follow-ups** (omit any that do not apply):
 
-If the user picks "Design another screen first", add a note: "Reminder: run
-`/ux-review` on all completed specs before running `/gate-check pre-production`."
+- `/ux-review <filename>` — real filename
+- Another screen still undesigned — `/ux-design <screen>` (real name)
+- New patterns from this spec still missing from the library — name them
+
+Do not offer "Stop here".
 
 ### 6c: Cross-Link Related Specs
 
@@ -970,7 +974,7 @@ This skill follows the collaborative design principle at every step:
    - Phase 2: "Ready to start, or need more context?"
    - Phase 3: "May I create the skeleton?"
    - Phase 4 (each section): design questions, approach options, draft approval
-   - Phase 5: "Run cross-reference check? What's next?"
+   - Phase 5: write approvals for cross-reference / index updates; then the skill is done (bullets, no widget)
 3. **"May I write to [filepath]?"** before the skeleton and before each section write
 4. **Incremental writing**: Each section is written to file immediately after approval
 5. **Session state updates**: After every section write

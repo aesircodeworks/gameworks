@@ -212,30 +212,32 @@ Handle verdict per standard rules in `director-gates.md`. Record the verdict in 
 
 ---
 
-## Phase 6: Close
+## Phase 6: Done
 
-Before presenting next steps, check project state:
-- Does `design/gdd/systems-index.md` exist? → map-systems is done, skip that option
-- Does `docs/technical-preferences.md` contain a configured engine (not `[TO BE CONFIGURED]`)? → setup-engine is done, skip that option
-- Does `design/gdd/` contain any `*.md` files? → design-system has been run, skip that option
-- Does `design/gdd/gdd-cross-review-*.md` exist? → review-all-gdds is done
-- Do GDDs exist (check above)? → include /consistency-check option
+`/art-bible` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
 
-Use `clarify` for next steps. Only include options that are genuinely next based on the state check above:
+Before listing follow-ups, check project state:
+- Does `design/gdd/systems-index.md` exist?
+- Does `docs/technical-preferences.md` contain a configured engine (not `[TO BE CONFIGURED]`)?
+- Does `design/gdd/` contain any `*.md` files besides the concept?
+- Does `design/gdd/gdd-cross-review-*.md` exist?
 
-**Option pool — include only if not already done:**
-- `[_] Run /map-systems — decompose the concept into systems before writing GDDs` (skip if systems-index.md exists)
-- `[_] Run /setup-engine — configure the engine (asset standards may need revisiting after engine is set)` (skip if engine configured)
-- `[_] Run /design-system — start the first GDD` (skip if any GDDs exist)
-- `[_] Run /review-all-gdds — cross-GDD consistency check (required before Technical Setup gate)` (skip if gdd-cross-review-*.md exists)
-- `[_] Run /asset-spec — generate per-asset visual specs and AI generation prompts from approved GDDs` (include if GDDs exist)
-- `[_] Run /consistency-check — scan existing GDDs against the art bible for visual direction conflicts` (include if GDDs exist)
-- `[_] Run /create-architecture — author the master architecture document (next Technical Setup step)`
-- `[_] Stop here`
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
-Assign letters A, B, C… only to the options actually included. Mark the most logical pipeline-advancing option as `(recommended)`.
+**Done line:** `Art bible is written. /art-bible is done.`
 
-> **Always include** `/create-architecture` and Stop here as options — these are always valid next steps once the art bible is complete.
+**Follow-ups** (include only if not already done):
+
+- `/map-systems` — if no systems-index.md
+- `/setup-engine` — if engine is not configured
+- `/design-system <first-system>` — if no GDDs exist (real name if known)
+- `/review-all-gdds` — if GDDs exist and no `gdd-cross-review-*.md`
+- `/asset-spec` — if GDDs exist
+- `/consistency-check` — if GDDs exist
+- `/create-architecture` — next Technical Setup step once the bible is complete
+
+Do not offer "Stop here".
 
 ---
 

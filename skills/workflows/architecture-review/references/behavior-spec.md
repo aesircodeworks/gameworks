@@ -182,7 +182,7 @@ In `solo` mode: both gates are skipped with equivalent notes.
 - [ ] TD-ARCHITECTURE and LP-FEASIBILITY spawn in parallel in full mode
 - [ ] Skipped gates are noted by name and mode in lean/solo output
 - [ ] Verdict is one of exactly: APPROVED, NEEDS REVISION, MAJOR REVISION NEEDED
-- [ ] Ends with next-step handoff appropriate to verdict
+- [ ] Ends with a done line and follow-up bullets (no closing `clarify`)
 
 ---
 

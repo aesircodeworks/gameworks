@@ -295,16 +295,19 @@ Record this block only in an already-authorized task checkpoint; otherwise repor
 <!-- CONSISTENCY-CHECK: [date] | GDDs checked: [N] | Conflicts found: [N] | Report: docs/consistency-report-[date].md -->
 ```
 
-Then close with an `clarify` widget:
+Then print a done line and follow-ups as bullets. Do not call `clarify`.
 
-- **Prompt**: "Consistency check complete — [N] conflicts found. What next?"
-- **Options**:
-  - `[A] Fix the highest-priority conflict now`
-  - `[B] Save full report and stop`
-  - `[C] Run /design-review on the most conflicted GDD`
-  - `[D] Stop here`
+**Done line:** `Consistency check is done. Conflicts found: [N].`
 
-Never end the skill with plain text. Always close with this widget.
+**Follow-ups** (omit any that do not apply):
+
+- Highest-priority conflict, named (GDD A vs GDD B, type)
+- `/design-review <most-conflicted-gdd>` — real path
+- If PASS: `/review-all-gdds` or `/create-architecture` if all MVP GDDs are complete
+- If conflicts: fix flagged GDDs, then re-run `/consistency-check`
+- If STALE REGISTRY: update the registry, then re-run
+
+Do not offer "Stop here". Never end with a widget.
 
 ---
 

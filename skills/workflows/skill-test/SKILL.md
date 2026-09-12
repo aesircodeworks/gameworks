@@ -131,12 +131,16 @@ language is found.
 Do not score a tools allowlist. Write capability is whatever the body instructs.
 
 ### Check 5 — Next-Step Handoff
-The skill must end with a recommended next action or follow-up path. Look for:
+The skill must end with a recommended next action or follow-up path as prose or
+bullets after an explicit done line. Look for:
 - A final section mentioning another skill (e.g., `/story-done`, `/gate-check`)
 - "Recommended next" or "next step" phrasing
-- A "Follow-Up" or "After this" section
+- A "Follow-Up", "Done", or "After this" section
 
 **WARN** if absent.
+**FAIL** if the skill instructs a closing `clarify` / "what would you like to do
+next" menu after its work is finished. Follow-ups must be a bullet list, not a
+widget. In-skill `clarify` (write approvals, ambiguities, error recovery) is fine.
 
 ### Check 6 — Hermes Metadata
 Inspect `metadata.hermes`:

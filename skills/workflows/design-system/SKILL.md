@@ -781,16 +781,23 @@ Update `production/session-state/active.md` with:
 - Sections: All 8 written
 - Next: [suggest next system from design order]
 
-### 5f: Suggest Next Steps
+### 5f: Done
 
-Use `clarify`:
-- "What's next?"
-  - Options:
-    - "Run `/consistency-check` — verify this GDD's values don't conflict with existing GDDs (recommended before designing the next system)"
-    - "Design next system ([next-in-order])" — if undesigned systems remain
-    - "Fix review findings" — if design-review flagged issues
-    - "Stop here for this session"
-    - "Run `/gate-check`" — if enough MVP systems are designed
+`/design-system` is finished. Do not call `clarify`. The user is not inside this
+workflow anymore.
+
+Print a done line, then follow-ups as a bullet list — only real items, with real names.
+
+**Done line:** `GDD is written: design/gdd/[system-name].md. /design-system is done.`
+
+**Follow-ups** (omit any that do not apply):
+
+- `/consistency-check` — verify this GDD's values against existing GDDs
+- Next undesigned system (real name from design order) — `/design-system <name>`
+- Review findings still open — name them; do not invent a "fix" menu
+- `/gate-check systems-design` — only if enough MVP systems are designed
+
+Do not offer "Stop here".
 
 ---
 
@@ -849,7 +856,7 @@ This skill follows the collaborative design principle at every step:
    - Phase 2: "Ready to start, or need more context?"
    - Phase 3: "May I create the skeleton?"
    - Phase 4 (each section): Design questions, approach options, draft approval
-   - Phase 5: "Run design review? Update systems index? What's next?"
+   - Phase 5: write approvals for design-review / systems index; then the skill is done (bullets, no widget)
 3. **"May I write to [filepath]?"** before the skeleton and before each section write
 4. **Incremental writing**: Each section is written to file immediately after approval
 5. **Session state updates**: After every section write
