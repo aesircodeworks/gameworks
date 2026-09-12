@@ -9,6 +9,6 @@ Read `CONTRIBUTING.md` before editing skills or hooks.
 
 On any behavior, skill, hook, or packaging change, note it under `CHANGELOG.md` **Unreleased**. Do not bump `distribution.yaml` until a release.
 
-When the user says **release**, **ship**, **create a release**, or **bump the version**: follow `CONTRIBUTING.md` ## Release. That includes a `vX.Y.Z` git tag and a GitHub Release. Do not invent a CI job. Do not wait for a second design discussion if Unreleased has items.
+When the user says **release**, **ship**, **create a release**, or **bump the version**: follow `CONTRIBUTING.md` ## Release. Push `main`; CI tags `vX.Y.Z` and publishes the GitHub Release. Do not wait for a second design discussion if Unreleased has items.
 
 Shipped means: `distribution.yaml` version bumped, Unreleased folded into that heading, commit on `main`, pushed, tagged, GitHub Release published, `gameworks` updated from this tree.

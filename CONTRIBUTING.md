@@ -45,14 +45,11 @@ Run this when the user says release, ship, create a release, or bump the version
 7. Move Unreleased bullets under `## X.Y.Z — <short title>`. Leave an empty `## Unreleased` heading above it.
 8. Commit `distribution.yaml`, `CHANGELOG.md`, and the files that belong to this version. Do not commit `.grok/`, `.env`, `auth.json`, memories, or sessions.
 9. Push `main` to `origin`.
-10. Tag the release commit `vX.Y.Z` (match `distribution.yaml`) and push the tag: `git tag vX.Y.Z && git push origin vX.Y.Z`.
-11. Create a GitHub Release for that tag. Title is the changelog heading (`X.Y.Z — <short title>`). Body is the bullets under that heading. Use `gh release create vX.Y.Z --title "..." --notes "..."`.
-12. Point `gameworks` at this tree:
+10. CI (`.github/workflows/release.yml`) tags `vX.Y.Z` from `distribution.yaml` and publishes the GitHub Release when they do not already exist. Title is the changelog heading (`X.Y.Z — <short title>`). Body is the bullets under that heading. Do not tag or `gh release create` locally unless that workflow failed.
+11. Point `gameworks` at this tree:
     - `hermes profile info gameworks` — if the recorded source is this directory, run `hermes profile update gameworks --yes`
     - otherwise `hermes profile install <this-repo-path> --name gameworks --force --yes`
     - Do not pass `--force-config` unless the user asked to reset `config.yaml`
-13. Report: new version, changelog heading, commit, tag, GitHub Release URL, whether `gameworks` was updated.
-
-Do not invent a CI job unless the user asked for one.
+12. Report: new version, changelog heading, commit, tag, GitHub Release URL, whether `gameworks` was updated.
 
 Feature requests submitted as PRs will be closed. Open an issue instead.

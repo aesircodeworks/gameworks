@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- CI on `main` (`.github/workflows/release.yml`) tags `vX.Y.Z` from `distribution.yaml` and publishes the GitHub Release from the matching CHANGELOG heading when they do not already exist.
+
 ## 1.2.0 — Three.js engine and profile hygiene
 
 - First-class Three.js engine support: `threejs-specialist`, `/setup-engine` / `/brainstorm` option, and `engine-reference/references/threejs/` pinned at r186 (`three@0.186.0`). Vanilla TypeScript + Vite + **WebGPURenderer** (`three/webgpu`, TSL) is the default app layer; **React Three Fiber** is a `/setup-engine` choice (`threejs r3f`). WebGLRenderer is the compatibility fallback. Rapier remains opt-in. Sidecar Three.js skill packs are not vendored.

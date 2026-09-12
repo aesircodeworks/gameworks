@@ -63,7 +63,7 @@ Load skill-bundled files with `skill_view('skill-name', file_path='...')`. Never
 
 Root `AGENTS.md` is for agents working **on this distribution**. It is not installed into `gameworks`. Read `CONTRIBUTING.md` before editing skills or hooks.
 
-On behavior, skill, hook, or packaging changes, note them under `CHANGELOG.md` **Unreleased**. To ship, say **release** and follow `CONTRIBUTING.md` ## Release (bump `distribution.yaml`, fold Unreleased, commit, push, tag, GitHub Release, `hermes profile update gameworks`).
+On behavior, skill, hook, or packaging changes, note them under `CHANGELOG.md` **Unreleased**. To ship, say **release** and follow `CONTRIBUTING.md` ## Release (bump `distribution.yaml`, fold Unreleased, commit, push; CI tags and GitHub Release; `hermes profile update gameworks`).
 
 ## Session continuity
 
