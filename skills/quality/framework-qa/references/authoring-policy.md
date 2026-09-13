@@ -47,7 +47,8 @@ Hermes tools: `read_file`, `search_files` (params: `query`, `file_glob`, `contex
 
 Do not end a skill with a `clarify` menu. When the skill's work is finished:
 
-1. Say that the skill is done (e.g. `Architecture review is done. Verdict: CONCERNS.`).
+1. Say that the skill is done (e.g. `Architecture review is done. Verdict: CONCERNS.`
+   when that verdict is still live).
 2. If there are real follow-ups, list them as bullets with concrete commands and names.
    Never `[system]` or another placeholder. Never "open a fresh session" as if it were
    a selectable action. Never "Stop here".
@@ -60,6 +61,11 @@ error recovery, and optional continuation of *this* skill's remaining work
 
 `/create-architecture` Phase 8 is the reference handoff: done output, concrete
 commands, no widget.
+
+If a later phase writes the artifact just scored, the done line must not reprint
+the pre-write verdict as live status. Label the old result as a scoring-pass and
+state that the live verdict is unscored, then follow up with re-score of the
+patched file — not "run the same review again."
 
 ## Skill categories
 

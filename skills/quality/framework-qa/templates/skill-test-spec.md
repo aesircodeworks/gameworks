@@ -139,6 +139,7 @@ These should pass before any behavioral testing (`/skill-test static` — 7 chec
 - [ ] Uses scoped write authorization before `write_file` / `patch` (or is read-only and skips this)
 - [ ] Presents findings/draft to user before requesting approval
 - [ ] Ends with a recommended next step or follow-up action as bullets after a done line (not a closing `clarify` menu)
+- [ ] If the skill can mutate an artifact it just scored, a post-write done line does not reprint the pre-write verdict as live status
 - [ ] Does not auto-create files without user approval
 
 ---

@@ -140,7 +140,7 @@ Issue all delegate_task calls simultaneously. Do NOT spawn one at a time.
 After all specialists respond, spawn `creative-director` as the **senior reviewer**:
 - Provide: the GDD, all specialist findings, any disagreements between them
 - Ask: "Synthesise these findings. What are the most important issues? Do you agree with the specialists? What is your overall verdict on this design?"
-- The creative-director's synthesis becomes the **final verdict** in Phase 4.
+- The creative-director's synthesis is the **scoring-pass verdict** in Phase 4. It is live document status only if Phase 5 does not write the GDD.
 
 ### Step 4 — Surface disagreements
 
@@ -218,12 +218,21 @@ resolve the issue from the GDD and existing docs alone. Group all design-decisio
 questions into a single multi-tab `clarify` before making any edits — do not
 interrupt mid-revision for each blocker individually.
 
-After all revisions are complete, show a summary table (blocker → fix applied).
-Then the skill is done — no post-revision widget.
+After all revisions are written:
 
-**Write approvals (APPROVED path):**
+1. Show a summary table (blocker → fix applied).
+2. Re-read the patched GDD. For each Phase 4 blocking item, mark **Addressed** or
+   **Still present** from the text only. This is edit-verification, not a new
+   design verdict. Do not print APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED
+   from this check. Do not spawn specialists again in this session.
+3. Continue to **Write approvals — GDD patched after Phase 4**. Do not use the
+   unpatched closer.
 
-When the verdict is APPROVED, use a single `clarify` with `multiSelect: true` to
+No post-revision `clarify` menu.
+
+**Write approvals — file not patched (Phase 4 score is still live):**
+
+When the Phase 4 verdict is APPROVED, use a single `clarify` with `multiSelect: true` to
 batch the two tracking updates:
 - Prompt: "Verdict: APPROVED. I can update the tracking records now. Select any you'd like me to complete:"
 - Options:
@@ -232,8 +241,8 @@ batch the two tracking updates:
 
 If the review-log option is selected, append the same format as below.
 
-When the verdict is NEEDS REVISION or MAJOR REVISION NEEDED, use write-approval
-`clarify` (not a next-step menu):
+When the Phase 4 verdict is NEEDS REVISION or MAJOR REVISION NEEDED and the GDD
+was not written after Phase 4, use write-approval `clarify` (not a next-step menu):
 
 - "May I update `design/gdd/systems-index.md` to mark [system] as [In Review / Approved]?"
   - `[A] Yes — update it` / `[B] No — leave it as-is`
@@ -250,6 +259,28 @@ Summary: [2-3 sentence summary of key findings from creative-director verdict]
 Prior verdict resolved: [Yes / No / First review]
 ```
 
+**Write approvals — GDD patched after Phase 4:**
+
+The Phase 4 score is not live status. Do not mark systems-index Approved. Do not
+stamp Needs Revision as if the patched file failed.
+
+- systems-index: write-approval to set Status to `In Review` (waiting for re-score)
+  only if it is not already `In Review`. Never `Approved`. Never `Needs Revision`
+  from the pre-patch score.
+- review-log: write-approval to append. If writing, label Phase 4 as a scoring-pass
+  on pre-patch text:
+
+```
+## Review — [YYYY-MM-DD] — Scoring pass: [NEEDS REVISION / MAJOR REVISION NEEDED] (pre-patch)
+Scope signal: [S/M/L/XL]
+Specialists: [list]
+Blocking items: [count] | Recommended: [count]
+Patches applied: [N] blockers
+Live verdict: unscored — specialists have not read the patched text
+Summary: [2-3 sentence summary of key findings from creative-director verdict]
+Prior verdict resolved: [Yes / No / First review]
+```
+
 ---
 
 **Done** — after writes (or declined writes) complete. Do not call `clarify`.
@@ -261,15 +292,30 @@ Before listing, read:
 - Count `.md` files in `design/gdd/` (excluding game-concept.md, systems-index.md)
 - Next system with Status: Not Started in design order
 
+**If the GDD was not written after Phase 4:**
+
 **Done line:** `Design review is done. Verdict: [APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED].`
+
+**If the GDD was patched after Phase 4:**
+
+**Done line:** `Design review is done. Pre-patch score: [NEEDS REVISION / MAJOR REVISION NEEDED]. Patched [N] blockers. Live verdict: unscored.`
+
+Do not put the Phase 4 score in a live `Verdict:` slot after a GDD write.
 
 **Follow-ups** (omit any that do not apply):
 
+- If patched: `Re-score the patched file (specialists have not read it): /design-review <doc-path>`
 - `/design-review <other-gdd-path>` — real path, if another GDD is still In Review / NEEDS REVISION
 - `/consistency-check` — if ≥1 other GDD exists
 - `/review-all-gdds` — if ≥2 GDDs exist
 - `/design-system <next-system>` — real name, next in design order
-- After revisions: `/design-review <doc-path>` again (if context is above ~50%, note that a full re-review needs a new session)
 
-Do not offer "Stop here". If context is above ~50% after a revision pass, add a
-plain note (not a menu): a full re-review runs 5 agents and needs clean context.
+Do not offer "Stop here". Do not say "run /design-review again".
+If context is above ~50% after a revision pass, add a plain note (not a menu): a
+full re-review runs 5 agents and needs clean context.
+
+## Pitfalls
+
+- **Stale verdict after mutation:** Phase 4 scored the pre-patch text. After
+  Revise now, that score is history, not live status. Headline `Live verdict:
+  unscored` and point follow-up at re-scoring the patched file.

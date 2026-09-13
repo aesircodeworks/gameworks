@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- `/design-review` no longer prints a pre-patch verdict as live status after Revise now. The closer states the scoring-pass, patch count, and `Live verdict: unscored`, and follow-up is re-score of the patched file.
 - `/studio-help` prints a fact block, one Next, at most one Optional, and `studio-help done.` It no longer lists Done, Coming up, or Also installed.
 - Removed leftover `/studio-status` (Claude Code statusline snapshot). Use `/studio-help` and `/sprint-status`.
 - Skills no longer finish with a `clarify` "what next?" menu. When a workflow is done, it says so and lists real follow-ups as bullets (concrete names, no placeholders, no "open a fresh session" as a choice). `clarify` stays for in-skill write approvals, ambiguities, and error recovery.

@@ -46,7 +46,7 @@ read-only and must not trigger director gates during the analysis phase.
 | **R5 — Structured findings** | Output contains a per-section status table or checklist before the final verdict |
 
 > **Exceptions:**
-> - `design-review`: Body may instruct `write_file` / `patch` for an optional "Revise now" path and review logs; all writes gated by scoped authorization. R1 is satisfied because the reviewed document is never silently modified.
+> - `design-review`: Body may instruct `write_file` / `patch` for an optional "Revise now" path and review logs; all writes gated by scoped authorization. R1 is satisfied because the reviewed document is never silently modified. After Revise now, R3 applies to the Phase 4 scoring-pass only. The post-patch done line must use `Pre-patch score:` and `Live verdict: unscored` — not a live `Verdict:` from the three-word vocabulary.
 > - `architecture-review`: Spawns TD-ARCHITECTURE and LP-FEASIBILITY gates after its analysis is complete. This is intentional — architecture review is high-stakes and benefits from director sign-off. R4 is satisfied because the gates run post-analysis, not during it.
 
 ---

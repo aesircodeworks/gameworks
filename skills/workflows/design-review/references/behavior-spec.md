@@ -11,8 +11,10 @@ the project's 8-section design standard (Overview, Player Fantasy, Detailed
 Rules, Formulas, Edge Cases, Dependencies, Tuning Knobs, Acceptance Criteria).
 It checks for internal consistency, implementability, and cross-system
 conflicts. It produces a verdict of APPROVED, NEEDS REVISION, or MAJOR
-REVISION NEEDED. It is a read-only skill (no file writes) and runs as a
-`context: fork` subagent.
+REVISION NEEDED. Phase 4 is read-only. Phase 5 may write the GDD on an
+authorized Revise now path, plus optional systems-index / review-log
+updates. After a GDD write, the closer must not treat the Phase 4 score
+as live status.
 
 ---
 
@@ -23,7 +25,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Has required frontmatter fields: `name`, `description`, `metadata.hermes`
 - [ ] Has ≥2 phase headings or numbered steps
 - [ ] Contains verdict keywords: APPROVED, NEEDS REVISION, MAJOR REVISION NEEDED
-- [ ] Does NOT require "May I write" language (read-only skill — `Hermes tools` excludes write_file/patch)
+- [ ] If the body instructs `write_file` or `patch`, scoped write-authorization language is present (Phase 5 Revise now and tracking writes). Phase 4 is read-only.
 - [ ] Output format is documented (review template shown in skill body)
 
 ---
@@ -81,7 +83,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Output explicitly names each missing section (Formulas, Edge Cases, Tuning Knobs, Acceptance Criteria)
 - [ ] Verdict is MAJOR REVISION NEEDED (not APPROVED or NEEDS REVISION) when ≥3 sections are missing
 - [ ] Output does not suggest the document is implementation-ready
-- [ ] Skill does not write any files (read-only enforcement)
+- [ ] Skill does not write any files on this path (no Revise now)
 
 ---
 
@@ -155,12 +157,40 @@ Verified automatically by `/skill-test static` — no fixture needed.
 
 ---
 
+### Case 6: Partial Path — Revise now, then closer
+
+**Fixture:**
+- GDD exists with a NEEDS REVISION scoring-pass (e.g. 7/8, vague ACs)
+- User selects Revise now and blocking items are patched
+
+**Input:** `/design-review design/gdd/[document].md` then `[A] Revise the GDD now`
+
+**Expected behavior:**
+1. Phase 4 outputs NEEDS REVISION on the pre-patch text
+2. Phase 5 patches blockers, shows a summary table, re-reads the GDD for edit-verification
+3. Done line is `Design review is done. Pre-patch score: NEEDS REVISION. Patched [N] blockers. Live verdict: unscored.`
+4. Follow-up is `Re-score the patched file (specialists have not read it): /design-review <doc-path>`
+5. Skill does not print `Verdict: NEEDS REVISION` as live status after the write
+6. Skill does not mark systems-index Approved or Needs Revision from the pre-patch score
+7. Skill does not spawn a second specialist pass in this session
+
+**Assertions:**
+- [ ] Done line contains `Live verdict: unscored`
+- [ ] Done line does not use `Verdict: NEEDS REVISION` after the GDD was patched
+- [ ] Follow-up names re-scoring the patched file, not "again"
+- [ ] Edit-verification does not issue APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED
+- [ ] systems-index is not set to Approved from this pass
+- [ ] Review-log entries (if written) label the Phase 4 result as a pre-patch scoring-pass
+
+---
+
 ## Protocol Compliance
 
-- [ ] Does NOT use write_file or patch (read-only skill)
+- [ ] Does NOT use write_file or patch during Phase 4. Phase 5 writes only with scoped authorization
 - [ ] Presents complete findings before any verdict
-- [ ] Does not ask for approval before producing output (no writes to approve)
-- [ ] Ends with recommended next step (e.g., fix issues and re-run, or proceed to `/map-systems`)
+- [ ] Does not ask for approval before producing the Phase 4 review (no writes to approve yet)
+- [ ] Ends with a done line and follow-up bullets (no closing `clarify`)
+- [ ] After Revise now, the done line does not reprint the Phase 4 verdict as live status
 
 ---
 
@@ -172,3 +202,5 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - The skill's `context: fork` behavior (running as a subagent) is not tested
   at the spec level — this is a runtime behavior verified manually.
 - Performance and edge cases involving very large GDD files are not in scope.
+- Case 6 covers the post-mutation closer. Unpatched NEEDS REVISION still uses
+  `Design review is done. Verdict: NEEDS REVISION.`
