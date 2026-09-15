@@ -12,8 +12,8 @@ Rules, Formulas, Edge Cases, Dependencies, Tuning Knobs, Acceptance Criteria).
 It checks for internal consistency, implementability, and cross-system
 conflicts. It produces a verdict of APPROVED, NEEDS REVISION, or MAJOR
 REVISION NEEDED. Phase 4 is read-only. Phase 5 may write the GDD on an
-authorized Revise now path, plus optional systems-index / review-log
-updates. After a GDD write, the closer must not treat the Phase 4 score
+authorized Revise now path that explicitly includes applicable systems-index
+updates, plus an independently optional review log. After a GDD write, the closer must not treat the Phase 4 score
 as live status.
 
 ---
@@ -163,7 +163,7 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - GDD exists with a NEEDS REVISION scoring-pass (e.g. 7/8, vague ACs)
 - User selects Revise now and blocking items are patched
 
-**Input:** `/design-review design/gdd/[document].md` then `[A] Revise the GDD now`
+**Input:** `/design-review design/gdd/[document].md` then approve the proposed fixes and displayed index update
 
 **Expected behavior:**
 1. Phase 4 outputs NEEDS REVISION on the pre-patch text
@@ -181,6 +181,33 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Edit-verification does not issue APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED
 - [ ] systems-index is not set to Approved from this pass
 - [ ] Review-log entries (if written) label the Phase 4 result as a pre-patch scoring-pass
+
+---
+
+### Case 7: Companion approval — fixes and tracking in one decision
+
+**Fixture:** A NEEDS REVISION GDD with an existing `Designed` systems-index row.
+**Input:** Approve the displayed GDD fixes and `In Review` transition; decline logging.
+
+**Assertions:**
+- [ ] Before approval, shows concrete GDD/index paths, fixes, and current → proposed status.
+- [ ] One `clarify` call collects the action and independent optional review-log choice.
+- [ ] Applies and verifies the GDD and index changes without another index or log prompt.
+- [ ] Does not write the declined review log; the patched GDD remains unscored, never Approved.
+- [ ] GDD-only approval is a selectable action, not dependent on free-text override; leaves the index unchanged and does not re-offer it.
+- [ ] At most four action choices and five questions per call; dependent design decisions are resolved before write approval.
+- [ ] With all applicable writes already authorized, performs them without another approval.
+
+### Case 8: Companion boundaries — no-op, absent, declined, and partial writes
+
+**Variants and assertions:**
+- [ ] Row already `In Review`: omits the status write/question but can still apply approved fixes.
+- [ ] Index or row missing, including an untracked concept: skips/reports tracking; creates neither.
+- [ ] Unpatched APPROVED: offers `Approved` plus optional log together, without automatically writing either.
+- [ ] Unpatched NEEDS REVISION: tracking-only approval changes the row to `In Review`, not the GDD.
+- [ ] All writes declined: stays read-only, with no repeated permission question.
+- [ ] Index write fails after GDD write: reports the partial state, not synchronized success.
+- [ ] A newly discovered design choice still needs resolution before the affected edit.
 
 ---
 

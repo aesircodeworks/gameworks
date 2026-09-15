@@ -563,16 +563,17 @@ FAIL: One or more blocking issues must be resolved before architecture begins.
 
 ## Phase 6: Write Report and Flag GDDs
 
-Use `clarify` for write permission:
-If writing this target is not already authorized, ask: "May I write this review to `design/gdd/gdd-cross-review-[date].md`?"
-- Options: `[A] Yes — write the report` / `[B] No — skip`
+Show the report path and the current → proposed systems-index rows for flagged
+GDDs. Use one `clarify` call with independent yes/no questions for:
+- Writing `design/gdd/gdd-cross-review-[date].md` (resolve the actual date).
+- Updating the shown rows in `design/gdd/systems-index.md`, if any need changing.
 
-If any GDDs are flagged for revision, use a second `clarify`:
-- Prompt: "Should I update the systems index to mark these GDDs as needing revision? ([list of flagged GDDs])"
-- Options: `[A] Yes — update systems index` / `[B] No — leave as-is`
-- If yes: update each flagged GDD's Status field in systems-index.md to "Needs Revision".
-  (Do NOT append parentheticals to the status value — other skills match "Needs Revision"
-  as an exact string and parentheticals break that match.)
+Skip questions for already-authorized or declined targets. Omit no-op rows; if
+the index or a flagged row is missing, report it rather than creating it silently.
+Apply only the selected writes, without a second index prompt. For approved row
+updates, Status must be exactly `Needs Revision` — no parentheticals. Verify the
+selected writes and report partial failures. Reviewing alone grants no write
+permission, and selecting the report does not select the index.
 
 ### Session State Update
 

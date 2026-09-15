@@ -190,19 +190,24 @@ For each flaky test:
 
 ## 7. Update Regression Suite + Optional Report File
 
-Ask: "May I update the quarantine section of `tests/regression-suite.md`
-with the flaky tests found?"
+Show the proposed quarantine rows and the concrete report path. Use one `clarify`
+call with independent yes/no choices for appending those rows to
+`tests/regression-suite.md` and writing the optional report to
+`production/qa/flakiness-report-[date].md`. Ask only for missing authorization;
+omit the quarantine choice when there are no new rows. Report a missing suite
+rather than silently creating it. Selecting the report does not select quarantine.
 
-If yes: use `patch` to append entries to the Quarantined Tests table.
-Never remove existing quarantine entries — only add new ones.
-
-If writing this target is not already authorized, ask: "May I write a full flakiness report to
-`production/qa/flakiness-report-[date].md`?"
+Apply and verify only the selected writes, with no second permission prompt.
+Never remove existing quarantine entries or disable tests as part of this write.
+Honor declined targets; report-only and quarantine-only selections are valid.
 
 The full report includes per-test analysis with cause details and
 engine-specific fix snippets.
 
-After writing:
+After selected writes (or declined writes), print:
+`Flakiness analysis is done. Written: [actual paths or none]. Skipped: [declined targets or none].`
+Report any failed writes separately. Then list applicable follow-ups without a
+closing `clarify`:
 
 - For each quarantined test: "Add the engine-specific skip annotation to
   disable this test in CI. Re-enable after the root cause is fixed."
@@ -220,7 +225,9 @@ After writing:
   "suspected" not "confirmed"; ask if more run data is available
 - **Fix is always the goal** — quarantine is temporary; surface the fix
   direction even when recommending quarantine
-- **Ask before writing** — both the regression-suite update and the report
-  file require explicit approval. On write: Verdict: **COMPLETE** — flakiness report written. On decline: Verdict: **BLOCKED** — user declined write.
+- **Approve the selected scope once** — regression-suite and optional report
+  writes require explicit approval, grouped in Section 7. Report which files were
+  actually written or skipped; declining an optional output does not block the
+  completed analysis.
 - **Flakiness in CI is a team problem** — surface the list and recommended
   actions clearly; do not just silently quarantine without the team knowing

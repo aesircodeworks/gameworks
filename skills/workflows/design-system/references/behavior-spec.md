@@ -78,7 +78,7 @@ In `solo` mode: CD-GDD-ALIGN is skipped. Output notes:
 **Assertions:**
 - [ ] Skeleton file is created with all 8 section headers before any content is written
 - [ ] CD-GDD-ALIGN runs on each section in lean mode (not skipped)
-- [ ] "May I write" is asked per section (not once for all sections)
+- [ ] Each section draft requires its own design approval; selecting "Approve — write it to file" does not trigger another write-permission question
 - [ ] Each section is written individually after gate + user approval
 - [ ] All 8 sections are present in the final GDD file
 
@@ -178,6 +178,24 @@ In `solo` mode: CD-GDD-ALIGN is skipped. Output notes:
 - [ ] Skeleton section header remains (preserves structure)
 - [ ] Skill tracks and lists incomplete sections at the end of the session
 - [ ] Skill does NOT write "TBD" or placeholder content without user approval
+
+---
+
+### Companion approval regression — GDD completion tracking
+
+**Fixture:** New system with an existing `Not Started` index row; later registry
+candidates include one new fact and one conflicting existing value.
+
+**Assertions:**
+- [ ] Skeleton approval names the GDD and independently offers the completion-time index row/link/count changes.
+- [ ] Selecting that companion does not mark a skeleton `Designed`; the update waits for completed design and required gates.
+- [ ] At 5b, displays actual registry candidates and any still-unapproved index changes in one form.
+- [ ] Does not ask again for an already-selected index update, or re-offer a declined one.
+- [ ] Does not silently add a missing index row or modify a conflicting registry value.
+- [ ] Section-design approvals and CD-GDD-ALIGN remain required as specified by review mode.
+- [ ] Verifies index writes authorized in Phase 3 or 5b; registry-only approval with no prior index approval leaves the index unchanged.
+- [ ] If registry/index writing fails after the GDD completes, reports each target as written/skipped/failed without claiming synchronization or undoing the GDD.
+- [ ] Skeleton/section/index approvals do not authorize session-state writes; without explicit checkpoint scope, reports progress in the response.
 
 ---
 

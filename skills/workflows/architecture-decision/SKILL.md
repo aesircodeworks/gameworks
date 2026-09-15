@@ -383,25 +383,8 @@ developers reading the GDD from implementing the wrong interface.
 
 If no inconsistencies: skip this block silently.
 
-5. **Write approval** — Use `clarify`:
-
-If GDD sync issues were found:
-- "ADR draft is complete. How would you like to proceed?"
-  - [A] Write ADR + update GDD in the same pass
-  - [B] Write ADR only — I'll update the GDD manually
-  - [C] Not yet — I need to review further
-
-If no GDD sync issues:
-- "ADR draft is complete. May I write it?"
-  - [A] Write ADR to `docs/architecture/adr-[NNNN]-[slug].md`
-  - [B] Not yet — I need to review further
-
-If yes to any write option, write the file, creating the directory if needed.
-For option [A] with GDD update: also update the GDD file(s) to use the new names.
-
-6. **Update Architecture Registry**
-
-Scan the written ADR for new architectural stances that should be registered:
+5. **Prepare the full write scope** — Before approving the ADR write, scan the
+final draft for architectural stances to register in `docs/registry/architecture.yaml`:
 - State it claims ownership of
 - Interface contracts it defines (signal signatures, method APIs)
 - Performance budget it claims
@@ -418,20 +401,34 @@ Registry candidates from this ADR:
   EXISTING (referenced_by update only): player_health → already registered ✅
 ```
 
+Read the existing registry and show the exact new entries / `referenced_by`
+changes alongside the ADR path and any GDD naming diff. Resolve conflicting
+stances or supersession as explicit architecture decisions first; approval of
+routine appends does not authorize them.
+
+Use one `clarify` call for missing authorization:
+- ADR action: write `docs/architecture/adr-[NNNN]-[slug].md` plus the shown GDD
+  edits; write ADR only; or defer. Omit the GDD choice if no sync is required.
+- An independent optional yes/no choice to include the displayed registry
+  changes when the ADR is written. Omit no-op changes.
+
+Honor ADR-only approval and prior authorization; do not re-offer a declined
+registry update. If the user defers the ADR, do not register the unwritten draft.
+Write and verify only the selected targets, without a later registry prompt.
+Report skipped or failed companion writes accurately.
+
+6. **Apply Approved Architecture Registry Changes**
+
 **Registry append logic**: When writing to `docs/registry/architecture.yaml`, do NOT assume sections are empty. The file may already have entries from previous ADRs written in this session. Before each `patch` call:
 1. Read the current state of `docs/registry/architecture.yaml`
 2. Find the correct section (state_ownership, interfaces, forbidden_patterns, api_decisions)
 3. Append the new entry AFTER the last existing entry in that section — do not try to replace a `[]` placeholder that may no longer exist
 4. If the section has entries already, use the closing content of the last entry as the `old_string` anchor, and append the new entry after it
 
-**BLOCKING — do not write to `docs/registry/architecture.yaml` without explicit user approval.**
-
-Ask using `clarify`:
-- "May I update `docs/registry/architecture.yaml` with these [N] new stances?"
-  - Options: "Yes — update the registry", "Not yet — I want to review the candidates", "Skip registry update"
-
-Only proceed if the user selects yes. If yes: append new entries. Never modify existing entries — if a stance is
-changing, set the old entry to `status: superseded_by: ADR-[NNNN]` and add the new entry.
+Only proceed for registry changes explicitly selected in step 5 or already
+authorized. Append new entries and update the approved `referenced_by` arrays.
+Do not silently change existing stances. Supersession requires its own explicit
+decision covering the old entry and replacement, even when appends were approved.
 
 ---
 

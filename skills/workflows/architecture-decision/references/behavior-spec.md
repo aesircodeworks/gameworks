@@ -186,6 +186,21 @@ In `solo` mode: both gates are skipped. ADR is written with Status: Proposed.
 
 ---
 
+### Companion approval regression — ADR and architecture registry
+
+**Fixture:** A drafted ADR adds a new interface and references an existing stance;
+another candidate conflicts with an existing stance.
+
+**Assertions:**
+- [ ] Extracts registry candidates from the final draft and reads existing entries before the ADR write approval.
+- [ ] Shows exact ADR/GDD/registry targets and changes in one form; registry opt-in is independent.
+- [ ] Selected routine registry changes are applied without a later registry prompt.
+- [ ] ADR-only approval leaves the registry unchanged; deferring the ADR does not register an unwritten draft.
+- [ ] Conflicts/supersession require an explicit architecture decision; routine append approval is insufficient.
+- [ ] Prior authorization is reused, declines are honored, and partial writes are reported accurately.
+
+---
+
 ## Protocol Compliance
 
 - [ ] All 6 required sections authored before gate review

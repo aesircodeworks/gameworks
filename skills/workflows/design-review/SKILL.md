@@ -199,57 +199,71 @@ This skill is read-only — no files are written during Phase 4.
 
 ## Phase 5: Next Steps
 
-`clarify` is for in-skill work only: the optional "revise now" path, and write
-approvals for systems-index / review-log. Do not close the skill with a widget.
+`clarify` is for in-skill decisions and missing write authorization only. Do not
+close the skill with a widget. Follow the scoped-approval rules in
+`skill_view('gameworks', file_path='references/collaborative-design-principle.md')`.
 
-**If NEEDS REVISION or MAJOR REVISION NEEDED** — optional continuation of this
-review (still in-skill):
+### Approve the changeset once
 
-- `[A] Revise the GDD now — address blocking items together`
-- `[B] Leave the GDD as-is for now`
+Before offering actions, read `design/gdd/systems-index.md` if it exists and locate
+the reviewed system's row. Show the proposed GDD fixes and any companion status
+change with concrete paths and the current → proposed status. Omit a status write
+if already correct. If the index or row is absent (including an untracked concept
+doc), skip it and report why; do not create an index or invent a row.
 
-Do not offer "Stop here" or "Accept as-is" as a third menu. If the user wants to
-accept advisory-only items, they can say so.
+**If NEEDS REVISION or MAJOR REVISION NEEDED**, offer these in-skill choices in
+one `clarify` action question, substituting real paths and the system name:
 
-**If user selects [A] — Revise now:**
+- `[A] Apply the proposed GDD fixes and set this system to In Review in design/gdd/systems-index.md`
+- `[B] Apply the GDD fixes only — leave the index unchanged`
+- `[C] Leave the GDD unchanged; only set this system to In Review in design/gdd/systems-index.md`
+- `[D] Skip GDD and index updates`
 
-Work through all blocking items, asking for design decisions only where you cannot
-resolve the issue from the GDD and existing docs alone. Group all design-decision
-questions into a single multi-tab `clarify` before making any edits — do not
-interrupt mid-revision for each blocker individually.
+When no status write is needed, omit the index clause from A and omit B/C. A
+explicitly authorizes both displayed changes; do not ask again for the index
+after patching. B declines the index update. C does not accept the design or
+change its verdict. Do not offer "Stop here" or "Accept as-is". Honor narrower
+user approval without writing or re-offering declined companion targets.
 
-After all revisions are written:
+In the **same `clarify` call**, offer a separate optional yes/no question to append
+the outcome to `design/gdd/reviews/[doc-name]-review-log.md`, using its real path.
+State that edits will be logged as a pre-patch score plus an unscored patched
+state. Logging is not required to accept fixes. Resolve substantive design
+questions before this approval when their answers determine the proposed fixes;
+only independent questions belong in the same form. Respect `clarify` limits
+(5 questions, 4 choices per question). Newly discovered design decisions still
+need resolution before affected edits, not automatic approval as bookkeeping.
+
+**If APPROVED**, there are no blocking fixes to authorize. Use one `clarify` call
+with independent yes/no questions for the applicable status change to `Approved`
+and the optional review-log append. Do not ask about no-op or absent index rows.
+
+If the user already authorized any of these exact writes, perform those without
+re-asking and ask only about the remaining scope. A review-only request authorizes
+none of them. If all applicable writes are authorized or declined, no approval
+prompt remains. Do not introduce a second log or index prompt after revisions.
+
+### Apply the approved changeset
+
+**If user selects [A] or [B] — Revise now:**
+
+Work through all blocking items within the approved scope. After revisions:
 
 1. Show a summary table (blocker → fix applied).
 2. Re-read the patched GDD. For each Phase 4 blocking item, mark **Addressed** or
    **Still present** from the text only. This is edit-verification, not a new
    design verdict. Do not print APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED
    from this check. Do not spawn specialists again in this session.
-3. Continue to **Write approvals — GDD patched after Phase 4**. Do not use the
-   unpatched closer.
+3. Apply and verify the already-authorized tracking writes using **GDD patched
+   after Phase 4** below. Do not use the unpatched closer.
 
-No post-revision `clarify` menu.
+No post-revision `clarify` menu. If a write fails, report the actual partial state;
+do not claim the GDD and tracking records are synchronized.
 
-**Write approvals — file not patched (Phase 4 score is still live):**
+**File not patched (Phase 4 score is still live):**
 
-When the Phase 4 verdict is APPROVED, use a single `clarify` with `multiSelect: true` to
-batch the two tracking updates:
-- Prompt: "Verdict: APPROVED. I can update the tracking records now. Select any you'd like me to complete:"
-- Options:
-  - `Update systems-index.md status to 'Approved' for [system]`
-  - `Append approval entry to design/gdd/reviews/[doc-name]-review-log.md`
-
-If the review-log option is selected, append the same format as below.
-
-When the Phase 4 verdict is NEEDS REVISION or MAJOR REVISION NEEDED and the GDD
-was not written after Phase 4, use write-approval `clarify` (not a next-step menu):
-
-- "May I update `design/gdd/systems-index.md` to mark [system] as [In Review / Approved]?"
-  - `[A] Yes — update it` / `[B] No — leave it as-is`
-- "May I append this review summary to `design/gdd/reviews/[doc-name]-review-log.md`?"
-  - `[A] Yes — append to review log` / `[B] No — skip`
-
-If yes, append an entry in this format:
+For authorized index writes, set `Approved` only for APPROVED; otherwise set
+`In Review`. If the log append was selected, append an entry in this format:
 ```
 ## Review — [YYYY-MM-DD] — Verdict: [APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED]
 Scope signal: [S/M/L/XL]
@@ -259,16 +273,16 @@ Summary: [2-3 sentence summary of key findings from creative-director verdict]
 Prior verdict resolved: [Yes / No / First review]
 ```
 
-**Write approvals — GDD patched after Phase 4:**
+**GDD patched after Phase 4:**
 
 The Phase 4 score is not live status. Do not mark systems-index Approved. Do not
 stamp Needs Revision as if the patched file failed.
 
-- systems-index: write-approval to set Status to `In Review` (waiting for re-score)
-  only if it is not already `In Review`. Never `Approved`. Never `Needs Revision`
-  from the pre-patch score.
-- review-log: write-approval to append. If writing, label Phase 4 as a scoring-pass
-  on pre-patch text:
+- systems-index: if included in the approved changeset, set Status to `In Review`
+  (waiting for re-score) without another prompt. Skip if already `In Review`.
+  Never `Approved`. Never `Needs Revision` from the pre-patch score.
+- review-log: append only if selected in the initial approval. Label Phase 4 as a
+  scoring-pass on pre-patch text:
 
 ```
 ## Review — [YYYY-MM-DD] — Scoring pass: [NEEDS REVISION / MAJOR REVISION NEEDED] (pre-patch)

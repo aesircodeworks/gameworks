@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Batch companion writes into the original approval in `/design-review`, `/design-system`, `/architecture-decision`, `/architecture-review`, `/review-all-gdds`, `/asset-spec`, `/quick-design`, and `/test-flakiness`. Show target paths and changes up front, retain independent optional outputs, skip no-ops and repeat permission questions, and preserve substantive design/review gates. Patched GDDs remain `In Review`, not automatically `Approved`.
+
+- Add a self-contained beginner HTML user guide covering all 73 workflows, 140 skills, hooks, project recipes, SVG diagrams, and bundled offline references.
+
 - `/design-review` no longer prints a pre-patch verdict as live status after Revise now. The closer states the scoring-pass, patch count, and `Live verdict: unscored`, and follow-up is re-score of the patched file.
 - `/studio-help` prints a fact block, one Next, at most one Optional, and `studio-help done.` It no longer lists Done, Coming up, or Also installed.
 - Removed leftover `/studio-status` (Claude Code statusline snapshot). Use `/studio-help` and `/sprint-status`.

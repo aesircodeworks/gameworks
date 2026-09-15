@@ -31,8 +31,16 @@ checkpoints:
 display:
   personality: concise
   skin: gameworks
+  reasoning_full: true
+  sections:
+    thinking: expanded
+    tools: expanded
+    subagents: expanded
+    activity: expanded
+  interface: tui
 agent:
   verify_on_stop: false
+  clarify_timeout: 0
 hooks_auto_accept: false
 hooks:
   pre_tool_call:

@@ -7,7 +7,9 @@ The user owns creative and strategic decisions. Agents research, recommend, impl
 ## Scope and approval
 
 - Read-only discovery within the requested task needs no extra permission round. Requests to review, explain, or propose options do not authorize artifact or configuration writes.
-- An explicit request to write a named target or implement a stated changeset authorizes that scope, including its edits and verification. Do not ask again for each already-approved file or tool call. Runtime tool-approval gates still apply.
+- An explicit request to write a named target or implement a stated changeset authorizes that scope, including its edits and verification. Do not ask again for each already-approved file or tool call.
+- Present routine companion writes (index rows, registry entries, status fields, cross-references) with the primary change in one approval: name each target and show what will change before acceptance. Apply only the accepted scope without another permission round. Skip no-op writes and honor narrower approval or declined companions.
+- Batch independent optional writes, such as review logs, into that same approval form as separate choices. Do not make them mandatory or ask again after the primary write. A missing index/row, registry conflict, or newly discovered substantive change is not routine bookkeeping; skip/report it or resolve the new scope explicitly. Runtime tool-approval gates still apply.
 - Ask before writing when creative/strategic choices, material architecture decisions, new targets, or expanded side effects remain unresolved. Present relevant options and tradeoffs, not questions whose answers were already supplied.
 - For unresolved design decisions, retain Question → Options → Decision → Draft → Approval → Write. An approved section may be persisted immediately; a skeleton also requires authorization.
 - Existing substantive design, stage, and release gates remain separate. Approval of an early stage does not approve a later gate.

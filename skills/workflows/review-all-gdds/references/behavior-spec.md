@@ -162,10 +162,24 @@ review; delegating to a director gate would create a circular dependency.
 
 ---
 
+### Companion approval regression — report and flagged system rows
+
+**Fixture:** Cross-review flags two existing rows; one is already `Needs Revision`.
+
+**Assertions:**
+- [ ] Shows report path and current → proposed rows before a single approval form.
+- [ ] Report and index are independent choices; either, both, or neither may be selected.
+- [ ] Only changed, existing rows are offered; missing rows are reported, not silently added.
+- [ ] Writes exact `Needs Revision` without parentheticals, only when authorized.
+- [ ] No second index prompt, no reapproval of prior scope, no re-offer of declined writes.
+- [ ] Reports failed companion writes instead of claiming complete synchronization.
+
+---
+
 ## Protocol Compliance
 
 - [ ] Phase 1 (consistency) and Phase 2 (design theory) spawned in parallel — not sequentially
-- [ ] Remains read-only; any proposed artifact edits require a separately authorized write workflow, not a generic permission loop
+- [ ] Review remains read-only until the single Phase 6 approval selects report/index writes; does not edit reviewed GDD content
 - [ ] Findings table shown before any write ask
 - [ ] Verdict is one of exactly: CONSISTENT, MINOR ISSUES, MAJOR ISSUES
 - [ ] Ends with appropriate handoff: MAJOR ISSUES → fix and re-run; MINOR ISSUES → may proceed with awareness; CONSISTENT → `/create-architecture`

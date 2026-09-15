@@ -239,9 +239,16 @@ Combine the agent outputs into a draft spec per asset. Present all specs in conv
 **Status:** Needed
 ```
 
-After presenting all specs, use `clarify`:
-- Prompt: "Asset specs for **[target]** — [N] assets. Review complete?"
-- Options: `[A] Approve all — write to file` / `[B] Revise a specific asset` / `[C] Regenerate with different direction`
+Before approval, show the concrete spec path and the proposed context rows/counts
+for `design/assets/asset-manifest.md`. If the manifest is missing, explicitly
+include its creation. Then use `clarify`:
+- Prompt: "Asset specs for **[target]** — [N] assets, with the manifest changes shown above. Review complete?"
+- Options: `[A] Approve — write the spec and manifest changes` / `[B] Revise a specific asset` / `[C] Regenerate with different direction` / `[D] Approve spec only — leave the manifest unchanged`
+
+A authorizes both displayed targets. D authorizes only the spec; do not write or
+re-offer the manifest. If no manifest changes are needed, omit D and the manifest
+clause from A. Ask only for missing authorization if the user has already
+approved this changeset.
 
 If [B]: ask which asset and what to change. Revise inline and re-present. Do NOT re-spawn agents for minor text revisions — only re-spawn if the visual direction itself needs to change.
 
@@ -266,7 +273,8 @@ Write the file with:
 [all asset specs in ASSET-NNN format]
 ```
 
-Then update `design/assets/asset-manifest.md`. If it doesn't exist, create it:
+If included in the approved changeset, update `design/assets/asset-manifest.md`.
+Create it only if that creation was explicitly included in the approval:
 
 ```markdown
 # Asset Manifest
@@ -289,7 +297,9 @@ Then update `design/assets/asset-manifest.md`. If it doesn't exist, create it:
 
 If the manifest already exists, append the new context block and update the Progress Summary counts.
 
-Ask: "May I update `design/assets/asset-manifest.md`?"
+Do not ask again for the approved manifest write. Verify the spec and selected
+manifest changes; report any skipped or failed write rather than claiming both
+are synchronized.
 
 ---
 

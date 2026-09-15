@@ -379,17 +379,10 @@ The GDD should be revised before its system enters implementation.
 If no revision flags are found, write: "No GDD revision flags — all GDD assumptions
 are consistent with verified engine behaviour."
 
-Before asking, display the proposed change inline — show the current systems-index row for each flagged GDD and the proposed updated row side by side so the user can see exactly what will change.
-
-Then use `clarify`:
-- "I found [N] GDD revision flag(s). May I update the systems index?"
-  - [A] Yes — apply all [N] updates to the systems index now
-  - [B] Show me the full diff first, then ask again
-  - [C] No — leave the systems index unchanged for now
-
-If [A]: apply the updates. Status field must be exactly `Needs Revision` — no parentheticals
-(other skills match that exact string and parentheticals break the match).
-If [B]: display the complete proposed systems-index section, then re-ask with `clarify`.
+Prepare the current → proposed systems-index rows for flagged GDDs and carry
+them into the Phase 8 approval; do not interrupt the review for a separate write
+prompt. Status must be exactly `Needs Revision` — no parentheticals. Omit no-op
+rows and report missing index/rows rather than creating them silently.
 
 ---
 
@@ -466,18 +459,29 @@ FAIL: Critical gaps (Foundation/Core layer requirements uncovered),
 
 ## Phase 8: Write and Update Traceability Index
 
-Use `clarify` for the write approval:
-- "Review complete. What would you like to write?"
-  - [A] Write all three files (review report + traceability index + TR registry)
-  - [B] Write review report only — `docs/architecture/architecture-review-[date].md`
-  - [C] Don't write anything yet — I need to review the findings first
+Show each proposed output and registry/index diff, with real paths, before
+approval. Resolve requirement deprecations explicitly; general registry approval
+does not authorize them. Use one `clarify` call for the remaining write choices:
+- An output-selection question (`multi_select: true`) listing the review report
+  at `docs/architecture/architecture-review-[date].md`, traceability index at
+  `docs/architecture/architecture-traceability.md`, TR registry at
+  `docs/architecture/tr-registry.yaml`, and (only in `rtm` mode) RTM at
+  `docs/architecture/requirements-traceability.md`.
+- An independent optional yes/no choice for the displayed systems-index flags
+  from Phase 5b, when any rows need changing.
+- An independent optional yes/no choice to append the displayed conflict entries
+  to `docs/consistency-failures.md`, only when conflicts and that file exist.
+
+The user may select a subset or decline all. Skip questions for already-authorized
+or declined writes and omit no-ops. Apply and verify only selected targets;
+report-only approval does not authorize registries, flags, or logs. Do not ask
+again for the registry, RTM, or other approved companions. Report partial failures
+without claiming all records were updated. Review-only requests remain read-only.
 
 ### RTM Output (rtm mode only)
 
-For `rtm` mode, use `clarify`:
-- "May I write the full Requirements Traceability Matrix?"
-  - [A] Yes — write to `docs/architecture/requirements-traceability.md`
-  - [B] Not yet — show me the full RTM data first, then ask again
+For `rtm` mode, show the full RTM before the combined approval above. Write it
+only if selected there or already authorized; do not ask again.
 
 RTM file format:
 
@@ -537,10 +541,8 @@ Requirements where the full chain is broken, prioritised by layer:
 
 ### TR Registry Update
 
-Also ask: "May I update `docs/architecture/tr-registry.yaml` with new requirement
-IDs from this review?"
-
-If yes:
+If the TR registry was selected in the combined approval, apply the displayed
+changes without another prompt:
 - **Append** any new TR-IDs that weren't in the registry before this review
 - **Update** `requirement` text and `revised` date for any entries whose GDD
   wording changed (ID stays the same)
@@ -554,8 +556,8 @@ across every subsequent architecture review.
 
 ### Reflexion Log Update
 
-After writing the review report, append any 🔴 CONFLICT entries found in Phase 4
-to `docs/consistency-failures.md` (if the file exists):
+If the optional log append was selected, append the approved 🔴 CONFLICT entries
+found in Phase 4 to `docs/consistency-failures.md` (if the file exists):
 
 ```markdown
 ### [YYYY-MM-DD] — /architecture-review — 🔴 CONFLICT
@@ -572,8 +574,8 @@ append when it already exists.
 
 ### Session State Update
 
-After writing all approved files, silently append to
-`production/session-state/active.md`:
+After writing all approved files, record this only in an already-authorized
+`production/session-state/active.md`; otherwise report it in the response:
 
     ## Session Extract — /architecture-review [date]
     - Verdict: [PASS / CONCERNS / FAIL]

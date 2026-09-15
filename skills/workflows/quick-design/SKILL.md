@@ -233,12 +233,16 @@ tracking threshold — quick spec is sufficient."]
 
 ## 4. Approval and Filing
 
-Present the draft to the user in full. Then use `clarify`:
-- Prompt: "Here's the Quick Design Spec draft. How do you want to proceed?"
-- Options:
-  - `[A] Approve — write it as shown`
-  - `[B] Revise — I'll describe what to change`
-  - `[C] This grew too large — redirect to /design-system instead`
+Present the draft in full with its concrete `design/quick-specs/` path. If it
+requires a GDD update, show the exact old → new text, GDD path, and section before
+approval. In one `clarify` call ask:
+- Action: `[A] Approve — write the spec as shown` / `[B] Revise — I'll describe what to change` / `[C] This grew too large — redirect to /design-system instead`
+- When applicable, a separate yes/no choice to include the displayed GDD changes
+  if the spec is approved. This is explicit consent for those edits, not inferred
+  from approval of the spec. Honor a spec-only selection.
+
+Omit questions for scope already authorized. If B changes the proposed GDD edits,
+show the revised diff before asking to approve the changed scope.
 
 If [B]: collect the requested changes, revise the draft, and re-present this widget.
 If [C]: stop. Verdict: **REDIRECTED** — use `/design-system` for this change.
@@ -253,14 +257,10 @@ of the change (e.g., `jump-height-tuning-2026-03-10`,
 If yes, create the `design/quick-specs/` directory if it does not exist, then
 write the file.
 
-If a GDD update is required (flagged in the spec), ask separately after
-writing the quick spec:
-
-"This spec modifies rules in [System Name]. May I update
-`design/gdd/[filename].md` — specifically the [section name] section?"
-
-Show the exact text that would be changed (old vs. new) before asking. Do not
-make GDD edits without explicit approval.
+Apply and verify any GDD changes selected in the same approval, without a second
+prompt after writing the spec. If declined, leave the GDD unchanged and report
+its update as pending; do not re-offer it. New design choices or expanded scope
+still require explicit approval.
 
 ---
 

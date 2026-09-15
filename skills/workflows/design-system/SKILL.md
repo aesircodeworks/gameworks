@@ -223,8 +223,8 @@ Use `clarify`:
 
 ## 3. Create File Skeleton
 
-Once the user confirms, **immediately** create the GDD file with empty section
-headers. This ensures incremental writes have a target.
+After the skeleton write is authorized below, immediately create the GDD file
+with empty section headers. This ensures incremental writes have a target.
 
 Use the template structure from `skill_view('project-templates', file_path='templates/game-design-document.md')`:
 
@@ -291,16 +291,32 @@ Use the template structure from `skill_view('project-templates', file_path='temp
 [To be designed]
 ```
 
-Ask: "May I create the skeleton file at `design/gdd/[system-name].md`?"
+In one `clarify` call, request any missing authorization for the skeleton at
+`design/gdd/[system-name].md` and offer an independent optional completion update:
+link that GDD, set the existing system row to `Designed`, and recalculate progress
+counts in `design/gdd/systems-index.md` once the GDD is complete. Show the exact
+row and path first. Do not offer a missing/no-op row or infer completion from a
+skeleton. If selected, retain this authorization through 5d without asking again;
+if declined, do not re-offer it in Phase 5. This does not approve section designs
+or bypass CD-GDD-ALIGN. Registry candidates still require their own displayed
+content and authorization once known in 5b.
 
-If the user declines: Stop with the following message:
+If the user declines the skeleton (not merely the optional index update), stop
+with the following message:
 > "Verdict: **BLOCKED** — skeleton creation declined. The design session cannot proceed without the skeleton file, as all subsequent phases use it as the base. Re-run `/design-system [system]` when ready to create the file."
 Do not proceed to Section A.
 
-After writing, update `production/session-state/active.md`:
+Session checkpoints are a separate target: skeleton, section, and index approval
+do not authorize `production/session-state/active.md`. Only if that target is
+already explicitly authorized, record progress there after the skeleton and
+each subsequent section write; otherwise report progress in the response.
+This condition applies to every session-state instruction below, including 5e.
+
+For an authorized checkpoint:
 - Use search_files with `file_glob="production/session-state/active.md"` to check if the file exists.
-- If it **does not exist**: use `write_file` to create it. Never attempt `patch` on a file that may not exist.
-- If it **already exists**: use `patch` to update the relevant fields.
+- If creation was authorized and it **does not exist**: use `write_file` to create it.
+- If it **already exists** and updates were authorized: use `patch` on the relevant fields.
+- Otherwise leave it untouched; do not infer creation permission from an existing-file update scope.
 
 File content:
 - Task: Designing [system-name] GDD
@@ -365,9 +381,10 @@ Context  ->  Questions  ->  Options  ->  Decision  ->  Draft  ->  Approval  ->  
    - If new (not in registry): flag it as a candidate for registry registration
      (will be handled in Phase 5).
 
-After writing each section, update `production/session-state/active.md` with the
-completed section name. Use search_files with `file_glob="production/session-state/active.md"` to check if the file exists — use `write_file` to create
-it if absent, `patch` to update it if present.
+After writing each section, record the completed section in
+`production/session-state/active.md` only under the checkpoint authorization
+rules in Phase 3. Otherwise report progress in the response, without creating
+or updating that file.
 
 ### Section-Specific Guidance
 
@@ -733,11 +750,15 @@ Registry candidates from this GDD:
     - [constant_name] [constant]: value=[N] ← matches registry ✅
 ```
 
-Ask: "May I update `design/registry/entities.yaml` with these [N] new entries
-and update `referenced_by` for the existing entries?"
+Prepare the systems-index row/link/count changes from 5d now as well. Show both
+sets of changes, then use one `clarify` call with independent choices for
+`design/registry/entities.yaml` and `design/gdd/systems-index.md`. Ask only for
+writes not already authorized; omit no-op updates. Honor declined targets without
+re-offering them in 5d. Do not add missing index rows silently.
 
-If yes: append new entries and update `referenced_by` arrays. Never modify
-existing `value` / attribute fields without surfacing it as a conflict first.
+For approved registry changes, append new entries and update `referenced_by`
+arrays. Existing `value` / attribute conflicts require a separate design decision;
+never treat them as routine bookkeeping covered by approval of new entries.
 
 ### 5c: Offer Design Review
 
@@ -770,11 +791,17 @@ After the GDD is complete (and optionally reviewed):
   - Design Doc: link to `design/gdd/[system-name].md`
 - Update the Progress Tracker counts
 
-Ask: "May I update the systems index at `design/gdd/systems-index.md`?"
+Apply and verify the index changes authorized in Phase 3 or 5b, without another
+prompt. If neither approval includes the index, leave it unchanged and report it.
+Report the GDD, registry, and index individually as written, skipped, or failed.
+If a companion write fails, report the partial state; do not claim synchronization
+or undo the completed GDD. Newly discovered scope still needs explicit authorization.
 
 ### 5e: Update Session State
 
-Update `production/session-state/active.md` with:
+Only if checkpoint writes were authorized under Phase 3, update
+`production/session-state/active.md` with the following; otherwise report it in
+the response without a file write:
 - Task: [system-name] GDD
 - Status: Complete (or In Review if design-review was run)
 - File: design/gdd/[system-name].md
@@ -856,10 +883,10 @@ This skill follows the collaborative design principle at every step:
    - Phase 2: "Ready to start, or need more context?"
    - Phase 3: "May I create the skeleton?"
    - Phase 4 (each section): Design questions, approach options, draft approval
-   - Phase 5: write approvals for design-review / systems index; then the skill is done (bullets, no widget)
-3. **"May I write to [filepath]?"** before the skeleton and before each section write
+   - Phase 5: one approval for applicable registry / systems-index writes; independent design review remains a follow-up, not an inline gate
+3. **Scoped write approval** for the skeleton and each section: accepting the displayed draft for writing is sufficient; do not ask a second "May I write?" for the same approved section
 4. **Incremental writing**: Each section is written to file immediately after approval
-5. **Session state updates**: After every section write
+5. **Session state updates**: After every section write only within explicitly authorized checkpoint scope; otherwise report progress in the response
 6. **Cross-referencing**: Every section checks existing GDDs for conflicts
 7. **Specialist routing**: Complex sections get expert agent input, presented to
    the user for decision — never written silently

@@ -169,12 +169,26 @@ review specs separately but this is not a gate within this skill.
 
 ---
 
+### Companion approval regression — spec and manifest
+
+**Fixture:** Approved asset drafts; the manifest either exists or must be created.
+
+**Assertions:**
+- [ ] Before approval, shows the concrete spec path and manifest rows/count changes, explicitly naming creation if needed.
+- [ ] Accepting the combined changeset authorizes both files; no later manifest prompt.
+- [ ] Spec-only approval is a selectable action; leaves the manifest untouched and does not re-offer it.
+- [ ] When the manifest needs no changes, removes the duplicate spec-only option and the manifest clause from the combined action.
+- [ ] Revising an asset is not permission to write the spec or manifest.
+- [ ] Previously authorized targets are not re-approved; skipped/failed writes are reported accurately.
+
+---
+
 ## Protocol Compliance
 
 - [ ] Reads GDD, art bible, and design system before generating spec
 - [ ] Includes all 6 spec components (dimensions, animations, palette, style, tech, checklist)
 - [ ] Flags missing dependencies (art bible, GDD) with DEPENDENCY GAP notes
-- [ ] Asks "May I write" (or "May I update") per asset
+- [ ] Obtains missing authorization for selected assets and manifest changes together, without repeated per-file approval
 - [ ] Handles batch approval or individual selections without writing declined assets
 - [ ] Verdict is COMPLETE when all approved specs are written
 

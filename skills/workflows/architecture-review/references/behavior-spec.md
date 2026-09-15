@@ -69,7 +69,7 @@ In `solo` mode: both gates are skipped with equivalent notes.
 - [ ] All 8 required sections are checked and reported
 - [ ] TD-ARCHITECTURE and LP-FEASIBILITY spawn in parallel (not sequentially)
 - [ ] Verdict is APPROVED when all sections are present and no conflicts exist
-- [ ] Skill does NOT write any files
+- [ ] Skill does NOT write any files unless the user explicitly selects outputs in Phase 8
 - [ ] Next-step handoff to `/create-control-manifest` or `/create-epics` is present
 
 ---
@@ -175,9 +175,26 @@ In `solo` mode: both gates are skipped with equivalent notes.
 
 ---
 
+### Companion approval regression — review outputs and tracking
+
+**Fixture:** Review generates a report, traceability index, new TR-ID, GDD revision
+flag, conflict-log candidate, and one proposed requirement deprecation. Repeat in `rtm` mode.
+
+**Assertions:**
+- [ ] Defers systems-index write selection to Phase 8 instead of interrupting the review.
+- [ ] Shows actual paths/diffs and collects output, flag, and optional log selections in one form.
+- [ ] Selecting report, traceability index, and TR registry does not cause a second registry prompt.
+- [ ] RTM is included in the same output selection only in `rtm` mode; no extra RTM prompt.
+- [ ] Report-only and decline-all choices do not write registries, index, logs, or unauthorized checkpoints.
+- [ ] Registry selection does not authorize requirement deprecation; that remains an explicit decision.
+- [ ] No-op/missing rows are not written; a missing reflexion log is not created.
+- [ ] Writes only selected targets and reports partial failures; reviewing alone remains read-only.
+
+---
+
 ## Protocol Compliance
 
-- [ ] Does NOT write any files (read-only skill)
+- [ ] Review is read-only; Phase 8 writes only explicitly selected outputs and tracking changes
 - [ ] Presents section completeness check before issuing verdict
 - [ ] TD-ARCHITECTURE and LP-FEASIBILITY spawn in parallel in full mode
 - [ ] Skipped gates are noted by name and mode in lean/solo output

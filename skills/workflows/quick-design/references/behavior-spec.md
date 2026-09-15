@@ -165,6 +165,19 @@ Full GDD review is not needed for sub-4-hour single-system features.
 
 ---
 
+### Companion approval regression — spec and GDD sync
+
+**Fixture:** A small change with a known GDD section update and a drafted quick spec.
+
+**Assertions:**
+- [ ] Shows the real spec path and exact old → new GDD text before approval.
+- [ ] Uses one form for spec action and independent, conditional GDD opt-in.
+- [ ] On approval of both, writes/verifies both without a post-spec GDD prompt.
+- [ ] Spec-only approval leaves the GDD unchanged, reports its update pending, and does not re-offer it.
+- [ ] Revise/redirect choices do not write either target; changed GDD edits require approval of the new diff.
+
+---
+
 ## Protocol Compliance
 
 - [ ] Scope check runs before drafting (redirects to `/design-system` if scope too large)

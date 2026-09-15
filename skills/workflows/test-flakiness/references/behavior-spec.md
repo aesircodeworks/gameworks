@@ -156,13 +156,27 @@ are invoked.
 2. No director gate is invoked regardless of review mode
 3. Verdict is CONFIRMED FLAKY
 4. Skill presents findings and offers optional written report
-5. If user opts in: "May I write to `production/qa/flakiness-report-[date].md`?"
+5. Collect report and applicable quarantine-table opt-ins in one approval form; selecting a displayed target authorizes its write
 
 **Assertions:**
 - [ ] No director gate is invoked in any review mode
 - [ ] CONFIRMED FLAKY verdict requires history-based evidence (not just source patterns)
-- [ ] Optional report requires "May I write" before writing
+- [ ] Optional report needs explicit selection, not a second "May I write" after it is selected
 - [ ] Flakiness report is advisory for qa-lead; skill does not auto-disable tests
+
+---
+
+### Companion approval regression — quarantine rows and optional report
+
+**Fixture:** Findings contain a new quarantine candidate and enough data for a report.
+
+**Assertions:**
+- [ ] Shows named quarantine rows and the real report path before one form with independent choices.
+- [ ] Report-only, quarantine-only, both, and neither are valid; writes only the selected scope.
+- [ ] No second report prompt, no repeated approval, and no re-offer of declined targets.
+- [ ] Omits unchanged quarantine rows and reports a missing suite instead of creating it silently.
+- [ ] Does not modify test annotations or disable tests under authorization to update the tracking table.
+- [ ] Declining the optional report does not block completed analysis or falsely claim a report was written.
 
 ---
 
