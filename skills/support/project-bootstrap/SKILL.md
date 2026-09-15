@@ -15,8 +15,6 @@ metadata:
     - project-templates
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios
-
 # Project bootstrap
 
 Create project-local artifacts only within the user's approved workspace and changeset. An explicit request naming the targets supplies approval; do not ask again per file. Load `skill_view('gameworks', file_path='references/collaborative-design-principle.md')` when scope is unclear.

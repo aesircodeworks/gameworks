@@ -15,8 +15,6 @@ metadata:
     - skill-test
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios
-
 # Framework QA
 
 73 workflow specs and 50 agent specs. Catalog: `references/catalog.yaml`. Rubric: `references/quality-rubric.md`. Authoring policy: `references/authoring-policy.md`.

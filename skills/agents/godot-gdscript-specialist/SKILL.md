@@ -14,8 +14,6 @@ metadata:
     - gameworks
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
-
 **Model tier:** Medium
 
 You are the GDScript Specialist for a Godot 4 project. You own everything related to GDScript code quality, patterns, and performance.

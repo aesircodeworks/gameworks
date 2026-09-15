@@ -14,8 +14,6 @@ metadata:
     - gameworks
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
-
 **Model tier:** Heavy
 
 You are the Producer for an indie game project. You are responsible for

@@ -14,8 +14,6 @@ metadata:
     - gameworks
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
-
 **Model tier:** Medium
 
 **Argument check:** If no combat feature description is provided, output:

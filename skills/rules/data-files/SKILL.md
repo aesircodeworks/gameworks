@@ -14,8 +14,6 @@ metadata:
     - gameworks
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios — adapted for Hermes Agent / Aesir Gameworks.
-
 # Data File Rules
 
 - All JSON files must be valid JSON — broken JSON blocks the entire build pipeline

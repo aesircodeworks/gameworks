@@ -18,8 +18,6 @@ metadata:
     - memory-policy
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios
-
 # Aesir Gameworks
 
 Load this skill for studio operating context. Use workflows only in the selected **game workspace**, never treat `$HERMES_HOME` or this distribution repository as the game.

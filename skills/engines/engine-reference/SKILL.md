@@ -14,8 +14,6 @@ metadata:
     - gameworks
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios
-
 # Engine reference
 
 Do not suggest post-cutoff APIs until you have read, for the selected engine:

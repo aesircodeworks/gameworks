@@ -15,8 +15,6 @@ metadata:
     - project-bootstrap
 ---
 
-> **Upstream:** Derived from Claude Code Game Studios by Donchitos (MIT). https://github.com/Donchitos/Claude-Code-Game-Studios
-
 # Project templates
 
 Load a template with `skill_view('project-templates', file_path='templates/<name>.md')` and copy into the **game workspace** after path approval.
