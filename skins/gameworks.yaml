@@ -3,7 +3,7 @@
 # Design direction:
 #   - Single dark theme authored for near-black terminals.
 #   - Retro + minimalist visual language.
-#   - Mostly grayscale, with restrained indigo reserved for interaction/focus.
+#   - Mostly grayscale, with restrained orange reserved for interaction/focus.
 #   - Clear but muted semantic colors for success, warning, and error states.
 #   - Unicode symbols are allowed, but colorful emoji are intentionally avoided.
 #
@@ -20,7 +20,7 @@
 name: gameworks
 
 # Shown in Hermes skin listings.
-description: "Retro-minimal dark terminal skin for Aesir Gameworks with restrained indigo accents and clear semantic states."
+description: "Retro-minimal dark terminal skin for Aesir Gameworks with restrained orange accents and clear semantic states."
 
 colors:
   # ---------------------------------------------------------------------------
@@ -34,11 +34,11 @@ colors:
   # Brand and interactive accents
   # ---------------------------------------------------------------------------
 
-  # General active/focus accent. Indigo is intentionally used sparingly.
-  ui_accent: "#527A9E"
+  # General active/focus accent. Tailwind orange-600, used sparingly.
+  ui_accent: "#F54900"
 
   # Primary interactive color used by cross-surface GUI/TUI consumers.
-  ui_primary: "#6E94B4"
+  ui_primary: "#F54900"
 
   # Banner section accent. Kept neutral so the banner stays mostly monochrome.
   banner_accent: "#B0B0B0"
@@ -129,8 +129,8 @@ colors:
   # User prompt text.
   prompt: "#EDEDED"
 
-  # Input-area horizontal rule. One of the few deliberate indigo focus cues.
-  input_rule: "#527A9E"
+  # Input-area horizontal rule. One of the few deliberate orange focus cues.
+  input_rule: "#F54900"
 
   # Agent response box border.
   response_border: "#5E5E5E"
@@ -142,21 +142,21 @@ colors:
   # Selection / completion UI
   # ---------------------------------------------------------------------------
 
-  # Mouse/text selection background. Indigo fill strong enough to read against
-  # the near-black surface while keeping light text above WCAG AA.
-  selection_bg: "#3C5872"
+  # Mouse/text selection background. Orange-600 mixed toward the near-black
+  # surface while keeping light text above WCAG AA.
+  selection_bg: "#973004"
 
   # Completion menu base surface.
   completion_menu_bg: "#0D0D0D"
 
-  # Active completion row. Subtle indigo focus state.
-  completion_menu_current_bg: "#182128"
+  # Active completion row. Subtle orange focus state.
+  completion_menu_current_bg: "#2D1308"
 
   # Completion metadata column base surface.
   completion_menu_meta_bg: "#0D0D0D"
 
   # Metadata column for the active completion row.
-  completion_menu_meta_current_bg: "#182128"
+  completion_menu_meta_current_bg: "#2D1308"
 
   # ---------------------------------------------------------------------------
   # Session chrome
@@ -276,13 +276,9 @@ tool_emojis:
 # Startup banner art
 # -----------------------------------------------------------------------------
 
-banner_logo: |
-  █████╗ ███████╗███████╗██╗██████╗
-  ██╔══██╗██╔════╝██╔════╝██║██╔══██╗
-  ███████║█████╗  ███████╗██║██████╔╝
-  ██╔══██║██╔══╝  ╚════██║██║██╔══██╗
-  ██║  ██║███████╗███████║██║██║  ██║
-  ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═╝
+# Hermes prints `banner_logo or HERMES_AGENT_LOGO`. An empty string would restore
+# the built-in Hermes wordmark, so keep a non-empty blank instead.
+banner_logo: " "
 
 # Monochrome retro CRT with a clear, empty screen.
 banner_hero: |

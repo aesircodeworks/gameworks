@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `gameworks` skin: swap indigo accents for Tailwind orange-600 (`#F54900`); drop the AESIR wordmark. CRT hero art is unchanged.
+
 - Batch companion writes into the original approval in `/design-review`, `/design-system`, `/architecture-decision`, `/architecture-review`, `/review-all-gdds`, `/asset-spec`, `/quick-design`, and `/test-flakiness`. Show target paths and changes up front, retain independent optional outputs, skip no-ops and repeat permission questions, and preserve substantive design/review gates. Patched GDDs remain `In Review`, not automatically `Approved`.
 
 - Add a self-contained beginner HTML user guide covering all 73 workflows, 140 skills, hooks, project recipes, SVG diagrams, and bundled offline references.
