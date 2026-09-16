@@ -13,8 +13,11 @@ It checks for internal consistency, implementability, and cross-system
 conflicts. It produces a verdict of APPROVED, NEEDS REVISION, or MAJOR
 REVISION NEEDED. Phase 4 is read-only. Phase 5 may write the GDD on an
 authorized Revise now path that explicitly includes applicable systems-index
-updates, plus an independently optional review log. After a GDD write, the closer must not treat the Phase 4 score
-as live status.
+updates, plus an independently optional review log. Full and lean repeat the
+review after approved fixes in the same invocation, preserving the selected
+`--depth`: full respawns specialists then creative-director; lean delegates
+neither. Solo stops at Phase 4 without writes or a revision loop. A verdict
+always describes the text actually reviewed, never a later unreviewed edit.
 
 ---
 
@@ -151,49 +154,56 @@ Verified automatically by `/skill-test static` — no fixture needed.
 **Assertions:**
 - [ ] Skill does NOT spawn any director gate agent (CD-, TD-, PR-, AD- prefixed agents)
 - [ ] Skill does NOT read `review-mode.txt` or equivalent mode file
-- [ ] The `--review` flag or `full` mode state has NO effect on whether directors spawn
-- [ ] Output does not contain any "Gate: [GATE-ID]" entries
-- [ ] Skill IS the review — it does not delegate the review to a director
+- [ ] `--depth`, not global review mode or `--review`, selects the review pipeline.
+- [ ] Output does not contain any "Gate: [GATE-ID]" entries.
+- [ ] Full spawns creative-director as a senior reviewer after specialists, not as a director gate; lean and solo do not spawn it.
 
 ---
 
-### Case 6: Partial Path — Revise now, then closer
+### Case 6: Full mode — Revise now, then review the updated GDD
 
 **Fixture:**
-- GDD exists with a NEEDS REVISION scoring-pass (e.g. 7/8, vague ACs)
-- User selects Revise now and blocking items are patched
+- GDD receives NEEDS REVISION in the first pass
+- User approves the displayed fixes and conditional index transitions; accepts logging
+- The complete specialist and creative-director re-review approves the patched text
 
-**Input:** `/design-review design/gdd/[document].md` then approve the proposed fixes and displayed index update
+**Input:** `/design-review design/gdd/light-manipulation.md --depth full`
 
 **Expected behavior:**
-1. Phase 4 outputs NEEDS REVISION on the pre-patch text
-2. Phase 5 patches blockers, shows a summary table, re-reads the GDD for edit-verification
-3. Done line is `Design review is done. Pre-patch score: NEEDS REVISION. Patched [N] blockers. Live verdict: unscored.`
-4. Follow-up is `Re-score the patched file (specialists have not read it): /design-review <doc-path>`
-5. Skill does not print `Verdict: NEEDS REVISION` as live status after the write
-6. Skill does not mark systems-index Approved or Needs Revision from the pre-patch score
-7. Skill does not spawn a second specialist pass in this session
+1. Specialists review in parallel, then `creative-director` synthesizes their findings
+2. Phase 4 presents NEEDS REVISION before any changes are offered
+3. Phase 5 applies approved fixes, verifies them, and sets the authorized index row to `In Review`
+4. In the same invocation, reloads the current GDD and repeats Phases 1-4
+5. Spawns all relevant specialists on the complete updated text, then a fresh creative-director review using the new findings
+6. Presents Phase 4 again with the new APPROVED verdict
+7. Applies the already-authorized `Approved` transition and appends the current review entry
+8. Closes with `Design review is done. Verdict: APPROVED.`
 
 **Assertions:**
-- [ ] Done line contains `Live verdict: unscored`
-- [ ] Done line does not use `Verdict: NEEDS REVISION` after the GDD was patched
-- [ ] Follow-up names re-scoring the patched file, not "again"
-- [ ] Edit-verification does not issue APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED
-- [ ] systems-index is not set to Approved from this pass
-- [ ] Review-log entries (if written) label the Phase 4 result as a pre-patch scoring-pass
+- [ ] Default depth and explicit `--depth full` both use this cycle.
+- [ ] Edit-verification alone never establishes APPROVED.
+- [ ] A complete new specialist pass precedes the new creative-director synthesis.
+- [ ] Updated text, prior findings, and applied fixes reach reviewers; old responses are not reused as current evidence.
+- [ ] Re-review is not restricted to a targeted subset of the relevant specialists.
+- [ ] Both Phase 4 reports are presented; no done line is printed between passes.
+- [ ] No separate execution or re-review permission question is required after approved fixes.
+- [ ] The final verdict describes the updated GDD, not the pre-patch score.
+- [ ] `Approved` is written only after re-review and only within the displayed authorization.
+- [ ] Logs distinguish the pre-patch score from the completed re-review; the latest entry is current.
+- [ ] No same-file re-score follow-up appears after a completed re-review.
 
 ---
 
 ### Case 7: Companion approval — fixes and tracking in one decision
 
 **Fixture:** A NEEDS REVISION GDD with an existing `Designed` systems-index row.
-**Input:** Approve the displayed GDD fixes and `In Review` transition; decline logging.
+**Input:** Approve the displayed GDD fixes and `In Review` → conditional `Approved` transitions; decline logging.
 
 **Assertions:**
 - [ ] Before approval, shows concrete GDD/index paths, fixes, and current → proposed status.
 - [ ] One `clarify` call collects the action and independent optional review-log choice.
 - [ ] Applies and verifies the GDD and index changes without another index or log prompt.
-- [ ] Does not write the declined review log; the patched GDD remains unscored, never Approved.
+- [ ] Does not write the declined review log; the patched GDD stays unscored until a complete re-review, and `Approved` requires that re-review to approve it.
 - [ ] GDD-only approval is a selectable action, not dependent on free-text override; leaves the index unchanged and does not re-offer it.
 - [ ] At most four action choices and five questions per call; dependent design decisions are resolved before write approval.
 - [ ] With all applicable writes already authorized, performs them without another approval.
@@ -201,13 +211,66 @@ Verified automatically by `/skill-test static` — no fixture needed.
 ### Case 8: Companion boundaries — no-op, absent, declined, and partial writes
 
 **Variants and assertions:**
-- [ ] Row already `In Review`: omits the status write/question but can still apply approved fixes.
+- [ ] Row already `In Review`: skips that immediate no-op write; may offer the later conditional `Approved` transition with fixes.
 - [ ] Index or row missing, including an untracked concept: skips/reports tracking; creates neither.
 - [ ] Unpatched APPROVED: offers `Approved` plus optional log together, without automatically writing either.
 - [ ] Unpatched NEEDS REVISION: tracking-only approval changes the row to `In Review`, not the GDD.
 - [ ] All writes declined: stays read-only, with no repeated permission question.
 - [ ] Index write fails after GDD write: reports the partial state, not synchronized success.
 - [ ] A newly discovered design choice still needs resolution before the affected edit.
+- [ ] Approval limited to `In Review` does not authorize a later `Approved` transition; obtain authorization for that new scope.
+
+---
+
+### Case 9: Lean mode — same revision cycle, no delegation
+
+**Fixture:** First pass needs fixes; user approves GDD-only edits and declines logging; main review of the patched text approves it.
+**Input:** `/design-review design/gdd/light-manipulation.md --depth lean`
+
+**Assertions:**
+- [ ] Repeats Phases 1-3 and 4 on the current text after approved fixes in the same invocation.
+- [ ] Skips all of Phase 3b on every pass: neither specialists nor creative-director are spawned.
+- [ ] Output states no specialists were consulted and does not fabricate a Senior Verdict.
+- [ ] The main reviewer's new verdict is presented before closure.
+- [ ] Declined index/log writes remain declined across all passes.
+- [ ] Global review mode cannot upgrade lean to full.
+
+### Case 10: Solo mode — return the review without Phase 5
+
+**Variants:** APPROVED, NEEDS REVISION, and MAJOR REVISION NEEDED.
+**Input:** `/design-review design/gdd/light-manipulation.md --depth solo`
+
+**Assertions:**
+- [ ] Runs Phases 1-3 and 4 without any delegation, even when global review mode is full.
+- [ ] Returns the structured review and main reviewer's verdict to the caller.
+- [ ] Does not enter Phase 5, prompt for edits, or write the GDD, index, or log.
+- [ ] Does not begin a revision loop or fabricate specialist/director findings.
+
+### Case 11: Further revisions — continue or decline inside this invocation
+
+**Fixture:** The first patch is followed by a completed re-review that still needs revision.
+**Variants:** `--depth full` and `--depth lean`; user approves another batch or declines it.
+
+**Assertions:**
+- [ ] Presents the new Phase 4 findings before offering the next batch of fixes.
+- [ ] New design choices and changes outside the approved scope require approval.
+- [ ] Approval repeats the same-depth review cycle; full retains the whole relevant panel and director, lean spawns neither.
+- [ ] No arbitrary pass limit or automatic mode downgrade is introduced.
+- [ ] Previously accepted/declined log and index choices are retained without repeat prompts.
+- [ ] Declining further fixes closes with the latest completed verdict, not `unscored` or the initial score.
+- [ ] Tracking-only selection does not cause another review of unchanged text.
+- [ ] Prior pass findings are retained even if logging was declined.
+
+### Case 12: Interrupted re-review — no stale or fabricated verdict
+
+**Fixture:** A GDD was patched, but a required specialist/director (full) or main review (lean) cannot complete.
+
+**Assertions:**
+- [ ] Reports the actual failure and incomplete review; does not silently switch depth.
+- [ ] Does not declare APPROVED from edit-verification, old findings, or partial specialist results.
+- [ ] Leaves authorized tracking `In Review`, not `Approved`.
+- [ ] Reports `Live verdict: unscored` and the pre-patch score as history.
+- [ ] A recovery follow-up, if needed, names the real path and original `--depth`.
 
 ---
 
@@ -216,8 +279,8 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - [ ] Does NOT use write_file or patch during Phase 4. Phase 5 writes only with scoped authorization
 - [ ] Presents complete findings before any verdict
 - [ ] Does not ask for approval before producing the Phase 4 review (no writes to approve yet)
-- [ ] Ends with a done line and follow-up bullets (no closing `clarify`)
-- [ ] After Revise now, the done line does not reprint the Phase 4 verdict as live status
+- [ ] Full/lean end with a done line and relevant follow-up bullets (no closing `clarify`); solo returns Phase 4 to its caller.
+- [ ] After Revise now, the done line uses the completed re-review verdict, or `unscored` only when re-review could not complete.
 
 ---
 
@@ -226,8 +289,8 @@ Verified automatically by `/skill-test static` — no fixture needed.
 - Cross-system consistency checking (Case 3 in the skill's own phase list) is
   not directly tested here because it requires multiple GDD files to compare;
   this is covered by the `/review-all-gdds` spec instead.
-- The skill's `context: fork` behavior (running as a subagent) is not tested
-  at the spec level — this is a runtime behavior verified manually.
+- These cases check the written workflow contract, not live model behavior or
+  delegation performance. Runtime execution requires a game workspace.
 - Performance and edge cases involving very large GDD files are not in scope.
-- Case 6 covers the post-mutation closer. Unpatched NEEDS REVISION still uses
-  `Design review is done. Verdict: NEEDS REVISION.`
+- Cases 6 and 9-12 cover full/lean revision cycles, solo isolation, decline, and
+  interrupted re-review. Unpatched NEEDS REVISION retains its live verdict.

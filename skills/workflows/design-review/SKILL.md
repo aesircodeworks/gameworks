@@ -20,11 +20,11 @@ metadata:
 
 Extract `--depth [full|lean|solo]` if present. Default is `full` when no flag is given.
 
-**Note**: `--depth` controls the *analysis depth* of this skill (how many specialist agents are spawned). It is independent of the global review mode in `production/review-mode.txt`, which controls director gate spawning. These are two different concepts — `--depth` is about how thoroughly *this* skill analyses the document.
+**Note**: `--depth` controls this skill's analysis, not the global director-gate mode or `--review` flag. Do not read the global review-mode file to select reviewers. Preserve the selected depth throughout this invocation, including every revision cycle.
 
-- **`full`**: Complete review — all phases + specialist agent delegation (Phase 3b)
-- **`lean`**: All phases, no specialist agents — faster, single-session analysis
-- **`solo`**: Phases 1-4 only, no delegation, no Phase 5 next-step prompt — use when called from within another skill
+- **`full`**: All phases. Every review pass spawns all relevant specialists, then `creative-director` (Phase 3b). After approved fixes, repeat the review in this invocation.
+- **`lean`**: All phases, with the same revision loop but no delegation — neither specialists nor `creative-director`. The main reviewer repeats its own analysis.
+- **`solo`**: Phases 1-4 only, no delegation. Return the review to the caller; no Phase 5, write prompts, fixes, tracking writes, or revision loop.
 
 ---
 
@@ -81,7 +81,7 @@ Evaluate against the Design Document Standard checklist:
 **This phase is MANDATORY in full mode.** Do not skip it.
 
 **Before spawning any agents**, print this notice:
-> "Full review: spawning specialist agents in parallel. This typically takes 8–15 minutes. Use `--review lean` for faster single-session analysis."
+> "Full review: spawning specialist agents in parallel. This typically takes 8–15 minutes. Use `--depth lean` for faster single-session analysis."
 
 ### Step 1 — Identify all domains the GDD touches
 
@@ -138,7 +138,7 @@ Issue all delegate_task calls simultaneously. Do NOT spawn one at a time.
 After all specialists respond, spawn `creative-director` as the **senior reviewer**:
 - Provide: the GDD, all specialist findings, any disagreements between them
 - Ask: "Synthesise these findings. What are the most important issues? Do you agree with the specialists? What is your overall verdict on this design?"
-- The creative-director's synthesis is the **scoring-pass verdict** in Phase 4. It is live document status only if Phase 5 does not write the GDD.
+- The creative-director's synthesis is the **scoring-pass verdict** in Phase 4. It describes only the text reviewed in this pass; a later GDD edit invalidates it until re-review.
 
 ### Step 4 — Surface disagreements
 
@@ -191,7 +191,9 @@ Label clearly: "Rough scope signal: M (producer should verify before sprint plan
 ### Verdict: [APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED]
 ```
 
-This skill is read-only — no files are written during Phase 4.
+No files are written during Phase 4. Present this output after **every** review pass, not just the first. On a same-invocation re-review, use the preceding pass as the prior review even when logging was declined.
+
+In `lean` and `solo`, state `Specialists consulted: none (--depth [mode])`, omit specialist-only sections, and give the main reviewer's verdict; never attribute it to an unspawned creative director. In `solo`, stop here and return the review without entering Phase 5.
 
 ---
 
@@ -201,32 +203,36 @@ This skill is read-only — no files are written during Phase 4.
 close the skill with a widget. Follow the scoped-approval rules in
 `skill_view('gameworks', file_path='references/collaborative-design-principle.md')`.
 
-### Approve the changeset once
+### Approve each new changeset once
 
 Before offering actions, read `design/gdd/systems-index.md` if it exists and locate
-the reviewed system's row. Show the proposed GDD fixes and any companion status
-change with concrete paths and the current → proposed status. Omit a status write
-if already correct. If the index or row is absent (including an untracked concept
-doc), skip it and report why; do not create an index or invent a row.
+the reviewed system's row. Show the proposed GDD fixes and companion status
+changes with concrete paths: current → `In Review` after editing → `Approved`
+**only if a subsequent review approves the updated GDD**. Skip an immediate
+status write if already correct; a later conditional transition is not a no-op.
+If the index or row is absent (including an untracked concept doc), skip it and
+report why; do not create an index or invent a row.
 
 **If NEEDS REVISION or MAJOR REVISION NEEDED**, offer these in-skill choices in
 one `clarify` action question, substituting real paths and the system name:
 
-- `[A] Apply the proposed GDD fixes and set this system to In Review in design/gdd/systems-index.md`
+- `[A] Apply the proposed GDD fixes and update this system in design/gdd/systems-index.md: In Review after editing, then Approved only if re-review approves it`
 - `[B] Apply the GDD fixes only — leave the index unchanged`
 - `[C] Leave the GDD unchanged; only set this system to In Review in design/gdd/systems-index.md`
 - `[D] Skip GDD and index updates`
 
-When no status write is needed, omit the index clause from A and omit B/C. A
-explicitly authorizes both displayed changes; do not ask again for the index
-after patching. B declines the index update. C does not accept the design or
-change its verdict. Do not offer "Stop here" or "Accept as-is". Honor narrower
-user approval without writing or re-offering declined companion targets.
+When no index update is applicable, omit the index clause from A and omit B/C. A
+explicitly authorizes the displayed fixes and conditional status transitions;
+do not ask again for those transitions after patching or re-review. B declines
+index updates for this invocation. C authorizes only `In Review`, does not
+accept the design, and does not trigger the revision loop. Do not offer "Stop
+here" or "Accept as-is". Honor narrower user approval without writing or
+re-offering declined companion targets.
 
 In the **same `clarify` call**, offer a separate optional yes/no question to append
-the outcome to `design/gdd/reviews/[doc-name]-review-log.md`, using its real path.
-State that edits will be logged as a pre-patch score plus an unscored patched
-state. Logging is not required to accept fixes. Resolve substantive design
+review entries for this invocation to `design/gdd/reviews/[doc-name]-review-log.md`,
+using its real path. Distinguish pre-patch scores from subsequent reviews of
+the updated text. Logging is not required to accept fixes. Resolve substantive design
 questions before this approval when their answers determine the proposed fixes;
 only independent questions belong in the same form. Respect `clarify` limits
 (5 questions, 4 choices per question). Newly discovered design decisions still
@@ -239,7 +245,12 @@ and the optional review-log append. Do not ask about no-op or absent index rows.
 If the user already authorized any of these exact writes, perform those without
 re-asking and ask only about the remaining scope. A review-only request authorizes
 none of them. If all applicable writes are authorized or declined, no approval
-prompt remains. Do not introduce a second log or index prompt after revisions.
+prompt remains. Carry the index and log choices across passes without re-asking
+or re-offering declined targets. If only a narrower transition was authorized,
+ask before a different transition; never infer permission for `Approved`.
+A new batch of GDD fixes still needs approval unless already within the user's
+explicitly authorized scope. Approval of one batch is not permission for every
+future design change.
 
 ### Apply the approved changeset
 
@@ -249,16 +260,33 @@ Work through all blocking items within the approved scope. After revisions:
 
 1. Show a summary table (blocker → fix applied).
 2. Re-read the patched GDD. For each Phase 4 blocking item, mark **Addressed** or
-   **Still present** from the text only. This is edit-verification, not a new
-   design verdict. Do not print APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED
-   from this check. Do not spawn specialists again in this session.
+   **Still present** from the text. This verifies the edits; it is not a verdict.
 3. Apply and verify the already-authorized tracking writes using **GDD patched
-   after Phase 4** below. Do not use the unpatched closer.
+   since the latest Phase 4** below. The previous verdict is now historical.
+4. **Return to Phases 1-4 in this invocation**, reading the current GDD and
+   refreshing relevant context. In `full`, repeat **all of Phase 3b**: spawn
+   every relevant specialist in parallel on the complete updated document, then
+   spawn `creative-director` with that document and the new specialist findings.
+   Include the prior findings and applied fixes as context, not as a substitute
+   for reading the updated text. Do not reuse old specialist responses or limit
+   the panel to the changed sections. In `lean`, repeat Phases 1-3 and 4 yourself;
+   skip Phase 3b entirely, including the creative director. Never switch modes
+   implicitly. `solo` never enters this path.
+5. Present the new Phase 4 review, then return to Phase 5. If APPROVED, finish
+   the authorized tracking writes and close. Otherwise offer the newly proposed
+   fixes and repeat after approval. If fixes are declined (including tracking-only
+   selection), close with the latest reviewed verdict. No separate invocation
+   or fixed iteration limit is required.
 
-No post-revision `clarify` menu. If a write fails, report the actual partial state;
-do not claim the GDD and tracking records are synchronized.
+Do not print the done line between passes or ask whether to re-review after
+authorized fixes: re-review is part of this workflow. `clarify` remains for
+new changeset approval and substantive decisions, not a closing menu. If a
+write or required review fails, report the actual partial state and missing
+work; do not claim synchronization or APPROVED from an incomplete pass. If
+the patched text has not received a complete review at the selected depth,
+use the unscored fallback below, not the previous verdict or a silent downgrade.
 
-**File not patched (Phase 4 score is still live):**
+**Current GDD reviewed (no GDD edit since the latest Phase 4):**
 
 For authorized index writes, set `Approved` only for APPROVED; otherwise set
 `In Review`. If the log append was selected, append an entry in this format:
@@ -267,14 +295,14 @@ For authorized index writes, set `Approved` only for APPROVED; otherwise set
 Scope signal: [S/M/L/XL]
 Specialists: [list]
 Blocking items: [count] | Recommended: [count]
-Summary: [2-3 sentence summary of key findings from creative-director verdict]
+Summary: [2-3 sentence summary of key findings from this pass's reviewer]
 Prior verdict resolved: [Yes / No / First review]
 ```
 
-**GDD patched after Phase 4:**
+**GDD patched since the latest Phase 4:**
 
-The Phase 4 score is not live status. Do not mark systems-index Approved. Do not
-stamp Needs Revision as if the patched file failed.
+Until re-review completes, the previous score is not live status. Do not mark
+systems-index Approved or stamp Needs Revision as if the patched file failed.
 
 - systems-index: if included in the approved changeset, set Status to `In Review`
   (waiting for re-score) without another prompt. Skip if already `In Review`.
@@ -288,14 +316,15 @@ Scope signal: [S/M/L/XL]
 Specialists: [list]
 Blocking items: [count] | Recommended: [count]
 Patches applied: [N] blockers
-Live verdict: unscored — specialists have not read the patched text
-Summary: [2-3 sentence summary of key findings from creative-director verdict]
+Post-patch state: unscored — awaiting re-review at the selected depth
+Summary: [2-3 sentence summary of key findings from this pass's reviewer]
 Prior verdict resolved: [Yes / No / First review]
 ```
 
 ---
 
-**Done** — after writes (or declined writes) complete. Do not call `clarify`.
+**Done** — after the revision loop and final authorized writes (or declined
+writes) complete. Do not call `clarify` merely to close the skill.
 
 Print a done line, then follow-ups as a bullet list — only real items, with real names.
 
@@ -304,30 +333,33 @@ Before listing, read:
 - Count `.md` files in `design/gdd/` (excluding game-concept.md, systems-index.md)
 - Next system with Status: Not Started in design order
 
-**If the GDD was not written after Phase 4:**
+**If the current GDD has a completed Phase 4 review (including after revisions):**
 
 **Done line:** `Design review is done. Verdict: [APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED].`
 
-**If the GDD was patched after Phase 4:**
+**Only if interrupted after a GDD edit without a completed re-review:**
 
 **Done line:** `Design review is done. Pre-patch score: [NEEDS REVISION / MAJOR REVISION NEEDED]. Patched [N] blockers. Live verdict: unscored.`
 
-Do not put the Phase 4 score in a live `Verdict:` slot after a GDD write.
+Do not put a pre-patch score in a live `Verdict:` slot. A completed re-review
+replaces it with a verdict on the updated document.
 
 **Follow-ups** (omit any that do not apply):
 
-- If patched: `Re-score the patched file (specialists have not read it): /design-review <doc-path>`
+- Only if re-review could not complete: `Complete review of the patched file: /design-review <doc-path> --depth <selected-depth>` — name the actual blocker; use the real path and selected depth. Do not suggest another run after a completed re-review.
 - `/design-review <other-gdd-path>` — real path, if another GDD is still In Review / NEEDS REVISION
 - `/consistency-check` — if ≥1 other GDD exists
 - `/review-all-gdds` — if ≥2 GDDs exist
 - `/design-system <next-system>` — real name, next in design order
 
-Do not offer "Stop here". Do not say "run /design-review again".
-If context is above ~50% after a revision pass, add a plain note (not a menu): a
-full re-review runs 5 agents and needs clean context.
+Do not offer "Stop here" or require a fresh session as the normal revision path.
 
 ## Pitfalls
 
-- **Stale verdict after mutation:** Phase 4 scored the pre-patch text. After
-  Revise now, that score is history, not live status. Headline `Live verdict:
-  unscored` and point follow-up at re-scoring the patched file.
+- **Stale verdict after mutation:** A patched GDD remains unscored until the
+  selected-depth review completes on its current text. Editing alone cannot
+  establish APPROVED.
+- **Mode leakage:** Only `full` delegates specialists and the creative director.
+  `lean` re-reviews without agents; `solo` returns at Phase 4 without edits.
+- **Repeated execution:** Run the review–approve fixes–re-review cycle inside
+  this invocation, preserving depth and companion-write choices across passes.

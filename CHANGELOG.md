@@ -10,7 +10,7 @@
 
 - Add a self-contained beginner HTML user guide covering all 73 workflows, 140 skills, hooks, project recipes, SVG diagrams, and bundled offline references.
 
-- `/design-review` no longer prints a pre-patch verdict as live status after Revise now. The closer states the scoring-pass, patch count, and `Live verdict: unscored`, and follow-up is re-score of the patched file.
+- `/design-review` now repeats review → approved fixes → re-review within one invocation. `--depth full` respawns all relevant specialists then `creative-director` each pass; `lean` repeats the main review without delegation; `solo` returns at Phase 4 without edits. Preserve tracking approvals across passes, present each updated verdict, and reserve `Live verdict: unscored` for interrupted re-reviews.
 - `/studio-help` prints a fact block, one Next, at most one Optional, and `studio-help done.` It no longer lists Done, Coming up, or Also installed.
 - Removed leftover `/studio-status` (Claude Code statusline snapshot). Use `/studio-help` and `/sprint-status`.
 - Skills no longer finish with a `clarify` "what next?" menu. When a workflow is done, it says so and lists real follow-ups as bullets (concrete names, no placeholders, no "open a fresh session" as a choice). `clarify` stays for in-skill write approvals, ambiguities, and error recovery.
