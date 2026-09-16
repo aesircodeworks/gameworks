@@ -149,14 +149,15 @@ colors:
   # Completion menu base surface.
   completion_menu_bg: "#0D0D0D"
 
-  # Active completion row. Subtle orange focus state.
-  completion_menu_current_bg: "#2D1308"
+  # Active completion/session/slash row. Same fill as text selection so
+  # selected menu items and selected text share one highlight.
+  completion_menu_current_bg: "#973004"
 
   # Completion metadata column base surface.
   completion_menu_meta_bg: "#0D0D0D"
 
   # Metadata column for the active completion row.
-  completion_menu_meta_current_bg: "#2D1308"
+  completion_menu_meta_current_bg: "#973004"
 
   # ---------------------------------------------------------------------------
   # Session chrome
