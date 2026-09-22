@@ -190,6 +190,8 @@ Date: [date]
 Registry entries checked: [N entities, N items, N formulas, N constants]
 GDDs scanned: [N] ([list names])
 
+### Verdict: PASS | CONFLICTS FOUND
+
 ---
 
 ### Conflicts Found (must resolve before architecture)
@@ -226,9 +228,14 @@ GDDs scanned: [N] ([list names])
 Verdict: PASS | CONFLICTS FOUND
 ```
 
-**Verdict:**
+**Verdict (stated at the top of the report):**
 - **PASS** — no conflicts. Registry and GDDs agree on all checked values.
 - **CONFLICTS FOUND** — one or more conflicts detected. List resolution steps.
+
+**Closure contract:** this skill ends with the artifact state front and center —
+PASS, or an explicit ask for each conflict's resolution (which document is
+authoritative, with a proposed default), never a conflict list filed only into
+the report or reflexion log.
 
 ---
 

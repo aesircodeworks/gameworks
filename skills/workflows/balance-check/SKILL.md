@@ -112,12 +112,9 @@ Run domain-specific checks:
 After presenting the report, `/balance-check` is finished. Do not call `clarify`
 for "what next?".
 
-If the report has not been written and writing this target is not already
-authorized, use `clarify` only for the write:
-
-- "May I write this report to `design/balance/balance-check-[system]-[date].md`?"
-  - [A] Yes — write it
-  - [B] No — leave it in the conversation
+Write the report to `design/balance/balance-check-[system]-[date].md` without
+asking (suffix `-v2`, `-v3`, … if taken) — review reports are the skill's own
+record and never need a write prompt.
 
 Then print a done line and follow-ups as bullets — only real items, with real names.
 

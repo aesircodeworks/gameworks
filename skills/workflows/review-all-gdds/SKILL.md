@@ -492,6 +492,8 @@ Date: [date]
 GDDs Reviewed: [N]
 Systems Covered: [list]
 
+### Verdict: [PASS / CONCERNS / FAIL]
+
 ---
 
 ### Consistency Issues
@@ -549,6 +551,7 @@ Scenarios walked: [N]
 
 ### Verdict: [PASS / CONCERNS / FAIL]
 
+Verdict levels (stated at the top of the report):
 PASS: No blocking issues. Warnings present but don't prevent architecture.
 CONCERNS: Warnings present that should be resolved but are not blocking.
 FAIL: One or more blocking issues must be resolved before architecture begins.
@@ -557,21 +560,42 @@ FAIL: One or more blocking issues must be resolved before architecture begins.
 [Specific list of what must change in which GDD]
 ```
 
+### Closure contract
+
+The review ends in one of two states, front and center:
+
+1. **The artifact set is approved** — PASS, verdict first.
+2. **A decision request** — for CONCERNS or FAIL, collect every warning that
+   is actually an unresolved design decision (dominant strategies, economic
+   imbalance, difficulty scaling, ownership conflicts) into ONE `clarify` call
+   (max 5 questions, 4 choices each) **before** the Phase 6 write approval.
+   Each question names the affected GDDs and proposes a default. The user's
+   answers are recorded as decisions: accepted defaults become concrete
+   follow-up edits or `Decided:` entries in the report; declined options are
+   logged as declined. A decision once made does not resurface as a warning in
+   a later `/review-all-gdds` run.
+
+Never close with a CONCERNS verdict whose decisions live only in the report
+file. If there are more decisions than the `clarify` limit, present the rest
+as a numbered list immediately after the widget, defaults first — still
+questions to the user, not prose to skim.
+
 ---
 
 ## Phase 6: Write Report and Flag GDDs
 
-Show the report path and the current → proposed systems-index rows for flagged
-GDDs. Use one `clarify` call with independent yes/no questions for:
-- Writing `design/gdd/gdd-cross-review-[date].md` (resolve the actual date).
-- Updating the shown rows in `design/gdd/systems-index.md`, if any need changing.
+Write the report to `design/gdd/gdd-cross-review-[date].md` without asking —
+review reports, review logs, and reflexion logs are the skill's own record and
+never need a write prompt. If the dated name is taken, suffix `-v2`, `-v3`, …
+Design artifacts (GDDs, registry, systems-index) still require approval.
 
-Skip questions for already-authorized or declined targets. Omit no-op rows; if
-the index or a flagged row is missing, report it rather than creating it silently.
-Apply only the selected writes, without a second index prompt. For approved row
-updates, Status must be exactly `Needs Revision` — no parentheticals. Verify the
-selected writes and report partial failures. Reviewing alone grants no write
-permission, and selecting the report does not select the index.
+Show the report path and the current → proposed systems-index rows for flagged
+GDDs. Use one `clarify` call with an independent yes/no question for updating
+the shown rows in `design/gdd/systems-index.md`, if any need changing. Omit
+no-op rows; if the index or a flagged row is missing, report it rather than
+creating it silently. For approved row updates, Status must be exactly `Needs
+Revision` — no parentheticals. Verify the selected writes and report partial
+failures. Reviewing alone grants no write permission for design artifacts.
 
 ### Session State Update
 
@@ -583,10 +607,9 @@ After writing the report (and updating systems index if approved), Record this b
     - Flagged for revision: [comma-separated list, or "None"]
     - Blocking issues: [N — brief one-line descriptions, or "None"]
     - Recommended next: [the Phase 7 handoff action, condensed to one line]
-    - Report: design/gdd/gdd-cross-review-[date].md   ← only if user approved the write
-    - Report: (not written — user declined at [date])  ← only if user declined the write
+    - Report: design/gdd/gdd-cross-review-[date].md
 
-Use the appropriate line based on the user's response to the write-permission widget in Phase 6.
+The report is always written; the index line reflects the user's Phase 6 choice.
 
 Do not create `production/session-state/active.md` unless that path is already authorized.
 
@@ -642,7 +665,7 @@ If any spawned agent returns BLOCKED, errors, or fails to complete:
    architecture; be clear about which do
 4. **Don't make design decisions** — flag contradictions and options, but never
    unilaterally decide which GDD is "right"
-5. **Ask before writing** — confirm before writing the report or updating the
-   systems index
+5. **Ask before writing design artifacts** — the report is written
+   automatically; confirm before updating the systems index
 6. **Be specific** — every issue must cite the exact GDD, section, and text
    involved; no vague warnings

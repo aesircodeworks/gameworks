@@ -366,6 +366,8 @@ Art Director:       [READY / CONCERNS / NOT READY]
 **Date**: [date]
 **Checked by**: gate-check skill
 
+### Verdict: [PASS / CONCERNS / FAIL]
+
 ### Required Artifacts: [X/Y present]
 - [x] design/gdd/game-concept.md — exists, 2.4KB
 - [ ] docs/architecture/ — MISSING (no ADRs found)

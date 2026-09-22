@@ -405,6 +405,8 @@ Engine: [name + version]
 GDDs Reviewed: [N]
 ADRs Reviewed: [M]
 
+### Verdict: [PASS / CONCERNS / FAIL]
+
 ---
 
 ### Traceability Summary
@@ -441,6 +443,7 @@ For each gap:
 
 ### Verdict: [PASS / CONCERNS / FAIL]
 
+Verdict levels (stated at the top of the report):
 PASS: All requirements covered, no conflicts, engine consistent
 CONCERNS: Some gaps or partial coverage, but no blocking conflicts
 FAIL: Critical gaps (Foundation/Core layer requirements uncovered),
@@ -453,18 +456,37 @@ FAIL: Critical gaps (Foundation/Core layer requirements uncovered),
 [Prioritised list of ADRs to create, most foundational first]
 ```
 
+### Closure contract
+
+The review ends in one of two states, front and center:
+
+1. **The artifact set is approved** — PASS, verdict first.
+2. **A decision request** — for CONCERNS or FAIL, collect the warnings that
+   are actually unresolved design decisions (coverage trade-offs, conflicting
+   ADR directions, engine-risk acceptances) into ONE `clarify` call (max 5
+   questions, 4 choices each) **before** the Phase 8 write approval. Each
+   question proposes a default; answers are recorded in the report as
+   `Decided:` entries or concrete follow-up actions. A decision once made does
+   not resurface as a warning in a later run.
+
+Never close with a CONCERNS verdict whose decisions live only in the report
+file. Decisions beyond the `clarify` limit are presented as a numbered list
+right after the widget, defaults first.
+
 ---
 
 ## Phase 8: Write and Update Traceability Index
 
-Show each proposed output and registry/index diff, with real paths, before
+Write the review report to `docs/architecture/architecture-review-[date].md`
+without asking (suffix `-v2`, `-v3`, … if taken) — review reports are the
+skill's own record and never need a write prompt. Design artifacts still do:
+show each proposed registry/index diff and output, with real paths, before
 approval. Resolve requirement deprecations explicitly; general registry approval
-does not authorize them. Use one `clarify` call for the remaining write choices:
-- An output-selection question (`multi_select: true`) listing the review report
-  at `docs/architecture/architecture-review-[date].md`, traceability index at
-  `docs/architecture/architecture-traceability.md`, TR registry at
-  `docs/architecture/tr-registry.yaml`, and (only in `rtm` mode) RTM at
-  `docs/architecture/requirements-traceability.md`.
+does not authorize them. Use one `clarify` call for the remaining write choices
+(an output-selection question, `multi_select: true`) listing the traceability
+index at `docs/architecture/architecture-traceability.md`, the TR registry at
+`docs/architecture/tr-registry.yaml`, and (only in `rtm` mode) the RTM at
+`docs/architecture/requirements-traceability.md`.
 - An independent optional yes/no choice for the displayed systems-index flags
   from Phase 5b, when any rows need changing.
 - An independent optional yes/no choice to append the displayed conflict entries

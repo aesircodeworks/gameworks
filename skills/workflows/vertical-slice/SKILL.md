@@ -251,10 +251,9 @@ text with real observations.
 - What would we change about the slice scope if we ran this again?
 ```
 
-If writing this target is not already authorized, ask: "May I write this report to
-`prototypes/[concept-name]-vertical-slice/REPORT.md`?"
-
-If yes, write the file. Then update `prototypes/index.md` (create if it does not
+Write the report to `prototypes/[concept-name]-vertical-slice/REPORT.md`
+without asking — review reports are the skill's own record and never need a
+write prompt. Then update `prototypes/index.md` (create if it does not
 exist) — append one row to the vertical slice table: concept name, date, verdict,
 and a link to the REPORT.md. Note whether this was a first-run slice or a re-run
 after a PIVOT. The velocity log in this report is some of the most valuable data in

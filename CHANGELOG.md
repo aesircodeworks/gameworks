@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 1.3.0 — Review closure contract
+
+- Review closure contract across the review family (`/design-review`, `/review-all-gdds`, `/architecture-review`, `/consistency-check`, `/gate-check`): the verdict is the first section of every report, and every review ends either with the artifact approved or with one consolidated decision request — unresolved design decisions are asked to the user with proposed defaults via a single `clarify`, never buried in report prose or logs. A user-accepted Open Question parking is decided and does not resurface in later reviews.
+
+- `/design-review` 2.0.0: blocking is a closed five-item list (wrong buildable meaning, rule contradiction, wrong/degenerate formula, untestable stated AC, missing required section); wording, labeling, citation hygiene, and style findings are suggestions that never gate the verdict. New `APPROVED WITH SUGGESTIONS` verdict (matching `/code-review`). Default depth is now `lean` (`full` opts into the specialist panel). Re-review after fixes is a delta pass over patched sections and direct consumers — full panel respawn only when rules, formulas, or system sets changed — under a convergence cap: from the second scored pass, reviewers rule only on prior blockers and patch-introduced defects. One review-log entry per invocation; systems-index statuses reduced to Draft / In Review / Approved; the pre-patch "scoring pass" log format is dropped. Test spec (`references/behavior-spec.md`) rewritten to the new contract.
+
+- `/design-system` 1.1.0: slimmed from 914 to ~290 lines by deduplicating the per-section review-mode checks, delegation mandates, and scoped-write authorization prose into single shared blocks, without changing the section cycle or write-approval semantics. New Open Questions consent rule: every Open Question must be offered to the user with a proposed default before the GDD is declared complete — silent parking is a protocol violation, so GDDs stop accumulating unanswered questions that reviews must later re-raise.
+
+- Review self-records no longer prompt for write permission: review reports (`/review-all-gdds`, `/architecture-review`, `/balance-check`, `/prototype`, `/vertical-slice`), review logs (`/design-review`), and reflexion logs are written automatically to their conventional dated paths (`-v2`, `-v3` on collision). Approval prompts remain for design artifacts only — GDDs, registry, systems-index, stage files. Rationale: a review's own output record is not game state; asking "may I write my own report?" was a pure round-trip.
+
 - Drop the per-skill `Upstream:` Donchitos attribution blockquote from all 140 `SKILL.md` files. Attribution stays in `NOTICE.md`, `LICENSE`, and `README.md`.
 
 - `gameworks` skin: swap indigo accents for Tailwind orange-600 (`#F54900`); drop the AESIR wordmark. CRT hero art is unchanged.
@@ -11,7 +21,6 @@
 
 - Add a self-contained beginner HTML user guide covering all 73 workflows, 140 skills, hooks, project recipes, SVG diagrams, and bundled offline references.
 
-- `/design-review` now repeats review → approved fixes → re-review within one invocation. `--depth full` respawns all relevant specialists then `creative-director` each pass; `lean` repeats the main review without delegation; `solo` returns at Phase 4 without edits. Preserve tracking approvals across passes, present each updated verdict, and reserve `Live verdict: unscored` for interrupted re-reviews.
 - `/studio-help` prints a fact block, one Next, at most one Optional, and `studio-help done.` It no longer lists Done, Coming up, or Also installed.
 - Removed leftover `/studio-status` (Claude Code statusline snapshot). Use `/studio-help` and `/sprint-status`.
 - Skills no longer finish with a `clarify` "what next?" menu. When a workflow is done, it says so and lists real follow-ups as bullets (concrete names, no placeholders, no "open a fresh session" as a choice). `clarify` stays for in-skill write approvals, ambiguities, and error recovery.
