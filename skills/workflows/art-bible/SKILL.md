@@ -18,6 +18,8 @@ metadata:
 
 **Model tier:** Medium
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 Resolve the review mode (once, store for all gate spawns this run):
 1. If `--review [full|lean|solo]` was passed → use that
 2. Else read `production/review-mode.txt` → use that value

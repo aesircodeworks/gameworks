@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- File-reading discipline across discovery phases: `art-bible`, `design-system`, `ux-design`, `sprint-plan`, `asset-spec`, `map-systems`, `create-architecture`, `architecture-decision`, `review-all-gdds`, `adopt`, `changelog`, `patch-notes`, and `studio-start` now state that project files are read with `read_file`/`search_files`, never batched into a shell command or script — Tirith scans every terminal command and a generated read-script gets flagged for user approval, stalling the session. New "Reading Project Files" section in `gameworks/references/context-management.md` documents the rule (terminal stays for shell-native work: git, builds, test runners).
+
 ## 1.3.0 — Review closure contract
 
 - Review closure contract across the review family (`/design-review`, `/review-all-gdds`, `/architecture-review`, `/consistency-check`, `/gate-check`): the verdict is the first section of every report, and every review ends either with the artifact approved or with one consolidated decision request — unresolved design decisions are asked to the user with proposed defaults via a single `clarify`, never buried in report prose or logs. A user-accepted Open Question parking is decided and does not resurface in later reviews.

@@ -26,7 +26,7 @@ This skill is the entry point for new users. It does NOT assume you have a game 
 
 ## Phase 1: Detect Project State
 
-Before asking anything, silently gather context so you can tailor your guidance. Do NOT show these results unprompted — they inform your recommendations, not the conversation opener.
+Before asking anything, silently gather context so you can tailor your guidance. Do NOT show these results unprompted — they inform your recommendations, not the conversation opener. Use `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
 
 Check:
 - **Engine configured?** Read the game-workspace file `docs/technical-preferences.md` (not the profile template `skills/studio/gameworks/references/technical-preferences.md`). If the file is missing, or the Engine field contains `[TO BE CONFIGURED]`, the engine is unset.

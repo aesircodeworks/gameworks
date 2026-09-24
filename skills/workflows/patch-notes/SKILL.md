@@ -27,6 +27,8 @@ If no version is provided, ask the user before proceeding.
 
 ## Phase 2: Gather Change Data
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 - Read the internal changelog at `production/releases/[version]/changelog.md` if it exists
 - Also check `docs/CHANGELOG.md` for the relevant version entry
 - Run `git log` between the previous release tag and current tag/HEAD as a fallback

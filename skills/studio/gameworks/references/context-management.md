@@ -7,6 +7,14 @@ Context is the most critical resource in a Hermes Agent session. Manage it activ
 When deciding whether a checkpoint or document write is authorized, load
 `collaborative-design-principle.md`. Context management does not expand write scope.
 
+## Reading Project Files
+
+Read project files with `read_file` and `search_files` — never batch file reads
+into a shell command or script. Hermes scans every terminal command with Tirith
+before execution, and a generated read-script can be flagged as suspicious,
+pausing the session for user approval. Reserve `terminal` for shell-native work
+(git, builds, test runners).
+
 ## File-Backed State (Primary Strategy)
 
 **The file is the memory, not the conversation.** Conversations are ephemeral and

@@ -128,6 +128,8 @@ Extract:
 
 Read all source material **before** asking the user anything.
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 ### Required reads:
 - **Art bible**: Read `design/art/art-bible.md` — fail if missing:
   > "No art bible found. Run `/art-bible` first — asset specs are anchored to the art bible's visual rules and asset standards."

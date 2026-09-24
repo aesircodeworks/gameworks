@@ -43,7 +43,7 @@ See `skill_view('gameworks', file_path='references/director-gates.md')` for the 
 
 ## Phase 0: Load All Context
 
-Before anything else, load the full project context in this order:
+Before anything else, load the full project context in this order. Read files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval):
 
 ### 0a. Engine Context (Critical)
 

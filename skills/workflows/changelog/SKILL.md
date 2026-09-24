@@ -26,7 +26,7 @@ Verify the repository is initialized: run `git rev-parse --is-inside-work-tree` 
 
 ## Phase 2: Gather Change Data
 
-Read the git log since the last tag or release:
+Read the git log since the last tag or release (this one is shell work — `terminal` is correct here). For file reads, use `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval):
 
 ```
 git log --oneline [last-tag]..HEAD

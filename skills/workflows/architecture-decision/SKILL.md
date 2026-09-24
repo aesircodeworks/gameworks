@@ -134,6 +134,8 @@ Scan `docs/architecture/` for existing ADRs to find the next number.
 
 Read related code, existing ADRs, and relevant GDDs from `design/gdd/`.
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 ### 3a: Architecture Registry Check (BLOCKING gate)
 
 Read `docs/registry/architecture.yaml`. Extract entries relevant to this ADR's

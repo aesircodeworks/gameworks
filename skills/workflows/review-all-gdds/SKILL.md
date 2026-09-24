@@ -52,7 +52,8 @@ completeness. This skill reviews the *relationships* between all GDDs.
 ### Phase 1a — L0: Summary Scan (fast, low tokens)
 
 Before reading any full document, use search_files to extract `## Summary` sections
-from all GDD files:
+from all GDD files (search_files and read_file only — never batch file reads into a
+shell command or script; Tirith scans every terminal command and will pause for approval):
 
 ```
 search_files query="## Summary" file_glob="design/gdd/*.md" context=5

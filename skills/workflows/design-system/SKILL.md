@@ -51,6 +51,8 @@ Otherwise normalize the system name to kebab-case for the filename.
 
 Read everything relevant **before** asking the user anything.
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 **Required:** `design/gdd/game-concept.md` (fail: "Run `/brainstorm` first"),
 `design/gdd/systems-index.md` (fail: "Run `/map-systems` first"), the system's
 index row (warn if unlisted), and `design/registry/entities.yaml` if present —

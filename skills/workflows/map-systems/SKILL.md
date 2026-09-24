@@ -41,6 +41,8 @@ See `skill_view('gameworks', file_path='references/director-gates.md')` for the 
 Read the game concept and any existing design work. This provides the raw material
 for systems decomposition.
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 **Required:**
 - Read `design/gdd/game-concept.md` — **fail with a clear message if missing**:
   > "No game concept found at `design/gdd/game-concept.md`. Run `/brainstorm` first

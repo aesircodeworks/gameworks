@@ -40,6 +40,8 @@ See `skill_view('gameworks', file_path='references/director-gates.md')` for the 
 
 ## Phase 1: Gather Context
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 1. **Read the current milestone** from `production/milestones/`.
 
 2. **Read the previous sprint** (if any) from `production/sprints/` to

@@ -168,7 +168,7 @@ For each story file found:
 
 ### 2f: Technical Preferences Audit
 
-Read `docs/technical-preferences.md`. Check each field for `[TO BE CONFIGURED]`:
+Read `docs/technical-preferences.md` with `read_file` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval). Check each field for `[TO BE CONFIGURED]`:
 - Engine, Language, Rendering, Physics → HIGH if unconfigured (ADR skills fail)
 - Naming conventions → MEDIUM
 - Performance budgets → MEDIUM

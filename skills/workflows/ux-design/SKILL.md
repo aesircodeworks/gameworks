@@ -43,6 +43,8 @@ for the filename (e.g., "Main Menu" becomes `main-menu`).
 Read all relevant context **before** asking the user anything. The skill's value
 comes from arriving informed.
 
+Read project files with `read_file`/`search_files` — never batch file reads into a shell command or script (Tirith scans every terminal command and will pause for approval).
+
 ### 2a: Required Reads
 
 - **Game concept**: Read `design/gdd/game-concept.md` — if missing, warn:
