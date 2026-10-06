@@ -6,7 +6,7 @@
 
 - `/gate-check` writes its report to `production/gate-checks/[date]-[from]-to-[to].md` automatically for every verdict (`-v2`, `-v3` on collision) instead of asking "May I write this gate check report?". The report is the skill's own output, and `/day-one-patch` reads it for the release gate verdict. The `production/stage.txt` confirmation is unchanged.
 
-- `docs/user-guide.html` is now a small beginner guide (3.9 MB → 64 KB): the embedded copies of all 140 skills and the 269-file reference shelf are removed, since they had drifted from the source skills; full instructions live in `skills/`. Adds workflow diagrams for first session, gate-check verdicts, design review, the story loop, the sprint cycle, adoption, and bug handling; corrects the edition label to 1.3.0; lists `production/gate-checks/` among workspace files.
+- Remove `docs/user-guide.html`. The embedded copies of all 140 skills and the 269-file reference shelf had drifted from the source skills; full instructions live in `skills/`. The README no longer links to it.
 
 ## 1.3.0 — Review closure contract
 
