@@ -45,8 +45,6 @@ Confirm the recorded source with `hermes profile info gameworks`. If there is no
 
 ## Use
 
-Read the [beginner’s user guide](docs/user-guide.html) for setup, everyday workflow recipes with diagrams, testing, troubleshooting, and hooks. Download or open the HTML file in a browser; it is self-contained.
-
 Work in a **game workspace**, not this repository.
 
 1. Create or open the game project directory.
