@@ -4,6 +4,10 @@
 
 - File-reading discipline across discovery phases: `art-bible`, `design-system`, `ux-design`, `sprint-plan`, `asset-spec`, `map-systems`, `create-architecture`, `architecture-decision`, `review-all-gdds`, `adopt`, `changelog`, `patch-notes`, and `studio-start` now state that project files are read with `read_file`/`search_files`, never batched into a shell command or script — Tirith scans every terminal command and a generated read-script gets flagged for user approval, stalling the session. New "Reading Project Files" section in `gameworks/references/context-management.md` documents the rule (terminal stays for shell-native work: git, builds, test runners).
 
+- `/gate-check` writes its report to `production/gate-checks/[date]-[from]-to-[to].md` automatically for every verdict (`-v2`, `-v3` on collision) instead of asking "May I write this gate check report?". The report is the skill's own output, and `/day-one-patch` reads it for the release gate verdict. The `production/stage.txt` confirmation is unchanged.
+
+- `docs/user-guide.html` is now a small beginner guide (3.9 MB → 64 KB): the embedded copies of all 140 skills and the 269-file reference shelf are removed, since they had drifted from the source skills; full instructions live in `skills/`. Adds workflow diagrams for first session, gate-check verdicts, design review, the story loop, the sprint cycle, adoption, and bug handling; corrects the edition label to 1.3.0; lists `production/gate-checks/` among workspace files.
+
 ## 1.3.0 — Review closure contract
 
 - Review closure contract across the review family (`/design-review`, `/review-all-gdds`, `/architecture-review`, `/consistency-check`, `/gate-check`): the verdict is the first section of every report, and every review ends either with the artifact approved or with one consolidated decision request — unresolved design decisions are asked to the user with proposed defaults via a single `clarify`, never buried in report prose or logs. A user-accepted Open Question parking is decided and does not resurface in later reviews.

@@ -437,6 +437,18 @@ Do NOT reference the draft verdict text — re-check specific files or ask the u
 
 ---
 
+## 5b. Write the Gate Check Report
+
+Write the final report (Section 5 format, including the Chain-of-Verification line)
+to `production/gate-checks/[date]-[current-phase]-to-[target-phase].md` without
+asking — the report is this skill's own output record, not game state. If the name
+is taken, suffix `-v2`, `-v3`, … Write it for every verdict, including FAIL.
+
+`/day-one-patch` reads the most recent file in `production/gate-checks/` for the
+release gate verdict.
+
+---
+
 ## 6. Update Stage on PASS
 
 When the verdict is **PASS** and the user confirms they want to advance:
@@ -541,7 +553,8 @@ This skill follows the collaborative design principle:
 2. **Ask about unknowns**: Don't assume PASS for things you can't verify
 3. **Present findings**: Show the full checklist with status
 4. **User decides**: The verdict is a recommendation — the user makes the final call
-If writing this target is not already authorized, ask: "May I write this gate check report to production/gate-checks/?"
+5. **Ask before advancing the stage**: the report is written automatically; confirm
+   before updating `production/stage.txt`
 6. **Never auto-fix**: If required artifacts are missing, report the FAIL verdict and
    name the skill to run (e.g. "run `/test-setup`"). Do NOT create missing files or
    re-run the gate automatically. Creating files to manufacture a PASS defeats the
